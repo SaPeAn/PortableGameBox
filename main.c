@@ -1,5 +1,5 @@
 
-/*------------------------ПОДКЛЮЧАЕМЫЕ ФАЙЛЫ----------------------------------*/
+/*------------------------------INCLUDES--------------------------------------*/
 #include "config.h"
 #include "common.h"
 #include <stdlib.h>
@@ -14,10 +14,10 @@
 
 /*----------------------------------------------------------------------------*/
 
-/*-----------------------ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ--------------------------------*/
+/*----------------------------GLOBAL VARIABLES--------------------------------*/
 uint32 mainTimeCounter = 0;
-uint32 dispCounter = 0;
 uint32 countTime = 0;
+uint32 counter = 0;
 uint16 countPeriod = 1000;
 uint8  countDirect = 1;
 uint8  countOn = 0;
@@ -38,7 +38,7 @@ typedef struct{
 systime Time;
 /*----------------------------------------------------------------------------*/   
 
-/*----------------------------ДОП. ФУНКЦ�?�? ДЛЯ MAIN---------------------------*/
+/*-------------------------------Funcs for MAIN-------------------------------*/
 uint16 GetPrd(void)
 {
   static int i = 1;
@@ -65,15 +65,17 @@ void Counting(uint16 cPrd, uint8 cOn, uint8 cDirect, uint32 counterMax){
     }
 /*----------------------------------------------------------------------------*/
 
-/*-----------------------------ОБРАБОТКА ПРЕРЫВАН�?Й---------------------------*/
+/*---------------------------------INTERRAPTS---------------------------------*/
 void __interrupt() systemTime_int(void)
 {
   if (TMR1IE && TMR1IF)
   {
-    TMR1L += 32;
-    TMR1H = 209;
+    Nop();
+    TMR1H = 217;
+    TMR1L -= 3;
     TMR1IF = 0;
     timestamp++;
+    Nop();
     return;
   }
   
@@ -92,24 +94,24 @@ void __interrupt() systemTime_int(void)
 /*-----------------------------------MAIN-------------------------------------*/
 void main(void) 
 {
-/*-------------------------------�?Н�?Ц�?АЛ�?ЗАЦ�?Я--------------------------------*/
+/*-------------------------------Initialization-------------------------------*/
   TMR0_init();
   TMR1_init();
   Interrupt_init();
   randinit();
   //USART_init();
-  Delay_ms(100);           // задержка нужна для led096
+  //Delay_ms(100);           // need for LED096
   LCD_Init();
   LCD_Erase();
   //Led096Init();
   //Led130Init();
   //Led130Full();
-  btn_t B1 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 5, &timestamp);
+  btn_t B6 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 5, &timestamp);
   btn_t B2 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 5, &timestamp);
   btn_t B3 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 5, &timestamp);
   btn_t B4 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 6, &timestamp);
   btn_t B5 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 6, &timestamp);
-  btn_t B6 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
+  btn_t B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
   btn_t B7 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 7, &timestamp);
   btn_t B8 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 7, &timestamp);
   btn_t B9 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
@@ -149,17 +151,15 @@ void main(void)
   comet_t Comet[COMET_MAX] = {0};
   uint8 Max_Piu = 1;
   uint8 Max_Comet = 4;
-  uint8 HDig = 0;
-  uint8 MDig = 0;
-  uint8 LDig = 0;
-  
+  uint8 KillCounter = 0;
   uint8 StartFl = 0;
+  uint8 ScoreLb[] = "SCORE: ";
+  uint8 Score[4];
 //---------------------------------------------------------
 
-/*-----------------------------ОСНОВНОЙ Ц�?КЛ----------------------------------*/
+/*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
-  {
-    
+  { 
     
     
 #if 1
@@ -170,13 +170,21 @@ void main(void)
       TestBtn(&B5); TestBtn(&B6); TestBtn(&B7); TestBtn(&B8);
       
       
-      if(timestamp - mainTimeCounter > 500){
+      if(timestamp - counter > 500){
         LCD_Erase();
         print_cometa(getrand(6), getrand(100));
-        mainTimeCounter = timestamp;
+        counter = timestamp;
       }
       if(B1.BtnON){B1.BtnON = 0; StartFl = 1;}
       
+      #if 1 // print clock
+      Counting(1000, 1, 1, 359999);
+      Time.hour = (uint8)(mainTimeCounter/3600);
+      Time.min = (uint8)((mainTimeCounter%3600)/60);
+      Time.sec = (uint8)(mainTimeCounter%60);
+      if(prntClk) LCD_PrintClock(Time.hour, Time.min, Time.sec);
+      #endif
+    
     }
     
     while(StartFl)
@@ -188,15 +196,11 @@ void main(void)
         if(Comet[i].stat == 2) print_distr_cometa(Comet[i].pg, Comet[i].cl);
       }
 
-      LDig = dispCounter%10;
-      MDig = dispCounter%100/10;
-      HDig = (uint8)dispCounter/100;
-      uint8 cl_digits[4] = {dig_to_smb(HDig), dig_to_smb(MDig), dig_to_smb(LDig), '\0'};
-      uint8 Schet[] = "SCORE: ";
-      LCD_printStr8x5(Schet, 0, 37);
-      LCD_printStr8x5(cl_digits, 0, 73);
+      u8_to_str(Score, KillCounter);
+      LCD_printStr8x5(ScoreLb, 0, 37);
+      LCD_printStr8x5(Score, 0, 73);
       
-      switch(dispCounter)
+      switch(KillCounter)
       {
         case 20: Max_Piu = 2; break;
         case 50: Max_Piu = 4; break;
@@ -275,7 +279,7 @@ void main(void)
           {
             Comet[i].stat = 2;
             Piu[j].en = 0;
-            dispCounter++;
+            if(KillCounter <= 254) KillCounter++;
           }
         }
       }
@@ -294,13 +298,7 @@ void main(void)
     }
 #endif
     
-#if 0 // print clock
-    Counting(countPeriod, 1, countDirect, 359999);
-    Time.hour = (uint8)(mainTimeCounter/3600);
-    Time.min = (uint8)((mainTimeCounter%3600)/60);
-    Time.sec = (uint8)(mainTimeCounter%60);
-    if(prntClk) LCD_PrintClock(Time.hour, Time.min, Time.sec);
-#endif
+
     
     
   }

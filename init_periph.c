@@ -32,6 +32,6 @@ void TMR0_init(void)
 void TMR1_init(void)
 {
   T1CON = 0b00000101;
-  TMR1L = 32;
-  TMR1H = 209;    
+  TMR1L = 241;
+  TMR1H = 217;    
 }
