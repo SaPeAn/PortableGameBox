@@ -11,7 +11,7 @@
 //#include "drv_I2C.h"
 #include "drv_lcdST7565_SPI.h"
 //#include "drv_usart.h"
-
+#include "drv_adc.h"
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------GLOBAL VARIABLES--------------------------------*/
@@ -156,13 +156,24 @@ void main(void)
   uint8 ScoreLb[] = "SCORE: ";
   uint8 Score[4];
 //---------------------------------------------------------
-
+  uint8 ox, oy, batlvl;
+  uint8 test_str[4];
 /*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
   { 
+      ox = adc_getval_an0();
+      oy = adc_getval_an1();
+      batlvl = adc_getval_an2();
+      u8_to_str(test_str, ox);
+      LCD_printStr8x5(test_str, 1, 37);
+      u8_to_str(test_str, oy);
+      LCD_printStr8x5(test_str, 3, 37);
+      u8_to_str(test_str, batlvl);
+      LCD_printStr8x5(test_str, 5, 37);
+      Delay_ms(100);
     
     
-#if 1
+#if 0
     while(!StartFl)
     {
       Tar.en = 1;
