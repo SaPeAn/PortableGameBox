@@ -63,6 +63,16 @@ void Counting(uint16 cPrd, uint8 cOn, uint8 cDirect, uint32 counterMax){
     if(mainTimeCounter > counterMax && countDirect) mainTimeCounter = 0;
     if(mainTimeCounter > counterMax && !countDirect) mainTimeCounter = counterMax;
     }
+
+void GeneratePWM(uint8 duty_cycle)
+{
+  PR2 = 0xFF;
+  CCPR2L = duty_cycle;  
+  TRISB &= 0b11110111;
+  T2CON = 0b00000100;
+  CCP2CON = 0b00001100;
+  
+}
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------------INTERRAPTS---------------------------------*/
@@ -106,15 +116,10 @@ void main(void)
   //Led096Init();
   //Led130Init();
   //Led130Full();
-  btn_t B6 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 5, &timestamp);
-  btn_t B2 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 5, &timestamp);
-  btn_t B3 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 5, &timestamp);
-  btn_t B4 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 6, &timestamp);
-  btn_t B5 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 6, &timestamp);
   btn_t B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
-  btn_t B7 = CreateBtn(&TRISB, &PORTB, &LATB, 2, 7, &timestamp);
-  btn_t B8 = CreateBtn(&TRISB, &PORTB, &LATB, 3, 7, &timestamp);
-  btn_t B9 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
+  btn_t B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
+  btn_t B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
+  btn_t B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
 /*----------------------------------------------------------------------------*/
   
 /*--------------------------------ПЕРЕМЕННЫЕ----------------------------------*/
@@ -159,6 +164,7 @@ void main(void)
 //---------------------------------------------------------
   uint8 ox, oy, batlvl;
   uint8 tempstr[6];
+  uint8 bright = 200;
 /*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
   { 
@@ -166,10 +172,12 @@ void main(void)
 #if 1
     while(!StartFl)
     {
+      
       Tar.en = 1;
-      TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4); 
-      TestBtn(&B5); TestBtn(&B6); TestBtn(&B7); TestBtn(&B8);
+      TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
       batlvl = adc_getval_an2();
+      if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; bright +=10; if(bright >= 240) bright = 240;}
+      if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; bright -=10; if(bright <= 10) bright = 10;}
       
       
       if(timestamp - counter > 500){
@@ -187,6 +195,8 @@ void main(void)
       if(prntClk) LCD_PrintClock(Time.hour, Time.min, Time.sec);
       #endif
       print_bat_level(batlvl, 0, 105);
+      GeneratePWM(bright);
+      Delay_ms(100);
     }
     
     while(StartFl)
@@ -225,8 +235,7 @@ void main(void)
       }
       //-----------------------------------------
 
-      TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4); 
-      TestBtn(&B5); TestBtn(&B6); TestBtn(&B7); TestBtn(&B8);
+      TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
       ox = adc_getval_an0();
       oy = adc_getval_an1();
 
