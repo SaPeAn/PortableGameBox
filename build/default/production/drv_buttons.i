@@ -114,7 +114,7 @@ void TestBtn(btn_t* btn)
     btn->StuckON = 0;
     btn->btnTimer = *(btn->timecounter);
   }
-  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 100) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
+  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 1000) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
     btn->HoldON = 1;
     if(btn->Toggle) btn->Toggle = 0;
     else btn->Toggle = 1;
