@@ -110,7 +110,7 @@ void Led096PrintBat(uint8 level) // level = 0, 1, 2, 3, 4, 5, 6, 7, 8
   I2C_Start();
   I2C_WriteByte(DEV_ADDR);
   I2C_WriteByte(0x40);
-  for(uint8 i = 0; i < 64; i++) I2C_WriteByte(battary[8-level][i]);
+  for(uint8 i = 0; i < 64; i++) I2C_WriteByte(battary_1[8-level][i]);
   I2C_Stop();
 }
 

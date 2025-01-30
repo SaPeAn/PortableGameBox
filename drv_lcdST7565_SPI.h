@@ -24,6 +24,7 @@ void print_ufo(uint8, uint8);
 void print_piu(uint8, uint8);
 void print_cometa(uint8, uint8);
 void print_distr_cometa(uint8, uint8);
+void print_bat_level(uint8, uint8, uint8);
 
 #ifdef	__cplusplus
 }

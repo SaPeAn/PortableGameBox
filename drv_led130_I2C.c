@@ -127,7 +127,7 @@ void Led130PrintBat(uint8 level, uint8 stPage, uint8 stCol) // level = 0, 1, 2, 
     I2C_Start();
     I2C_WriteByte(DEV_ADDR);
     I2C_WriteByte(0x40); 
-    I2C_WriteByte(battary[8-level][i]);
+    I2C_WriteByte(battary_1[8-level][i]);
     I2C_Stop();
   }
  

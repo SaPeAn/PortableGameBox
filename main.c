@@ -11,7 +11,7 @@
 //#include "drv_I2C.h"
 #include "drv_lcdST7565_SPI.h"
 //#include "drv_usart.h"
-
+#include "drv_adc.h"
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------GLOBAL VARIABLES--------------------------------*/
@@ -151,23 +151,25 @@ void main(void)
   comet_t Comet[COMET_MAX] = {0};
   uint8 Max_Piu = 1;
   uint8 Max_Comet = 4;
+  uint32 TimeComet = 100;
   uint8 KillCounter = 0;
   uint8 StartFl = 0;
   uint8 ScoreLb[] = "SCORE: ";
   uint8 Score[4];
 //---------------------------------------------------------
-
+  uint8 ox, oy, batlvl;
+  uint8 tempstr[6];
 /*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
   { 
-    
-    
+     
 #if 1
     while(!StartFl)
     {
       Tar.en = 1;
       TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4); 
       TestBtn(&B5); TestBtn(&B6); TestBtn(&B7); TestBtn(&B8);
+      batlvl = adc_getval_an2();
       
       
       if(timestamp - counter > 500){
@@ -184,7 +186,7 @@ void main(void)
       Time.sec = (uint8)(mainTimeCounter%60);
       if(prntClk) LCD_PrintClock(Time.hour, Time.min, Time.sec);
       #endif
-    
+      print_bat_level(batlvl, 0, 105);
     }
     
     while(StartFl)
@@ -196,7 +198,7 @@ void main(void)
         if(Comet[i].stat == 2) print_distr_cometa(Comet[i].pg, Comet[i].cl);
       }
 
-      u8_to_str(Score, KillCounter);
+      u16_to_str(Score, KillCounter, DISABLE);
       LCD_printStr8x5(ScoreLb, 0, 37);
       LCD_printStr8x5(Score, 0, 73);
       
@@ -225,11 +227,13 @@ void main(void)
 
       TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4); 
       TestBtn(&B5); TestBtn(&B6); TestBtn(&B7); TestBtn(&B8);
+      ox = adc_getval_an0();
+      oy = adc_getval_an1();
 
-      if(B2.BtnON || B2.HoldON || B2.StuckON){B2.BtnON = 0; Tar.pg--; if(Tar.pg == 255) Tar.pg = 0;}
-      if(B8.BtnON || B8.HoldON || B8.StuckON){B8.BtnON = 0; Tar.pg++; if(Tar.pg == 7) Tar.pg = 6;}
-      if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; Tar.cl += 8; if(Tar.cl > 100) Tar.cl = 100;}
-      if(B6.BtnON || B6.HoldON || B6.StuckON){B6.BtnON = 0; Tar.cl -= 8; if(Tar.cl > 100) Tar.cl = 0;}
+      if(oy > 150){Tar.pg--; if(Tar.pg == 255) Tar.pg = 0;}
+      if(oy < 100){Tar.pg++; if(Tar.pg == 7) Tar.pg = 6;}
+      if(ox > 150){Tar.cl += 8; if(Tar.cl > 100) Tar.cl = 100;}
+      if(ox < 100){Tar.cl -= 8; if(Tar.cl > 100) Tar.cl = 0;}
 
 
       if(B1.BtnON || B1.HoldON || B1.StuckON){ 
@@ -249,9 +253,9 @@ void main(void)
 
       for(uint8 i = 0; i < Max_Comet; i++)
       {
-        if(Comet[i].stat == 0 && ((timestamp - mainTimeCounter) > 1000))
+        if(Comet[i].stat == 0 && ((timestamp - TimeComet) > 1000))
         {
-          mainTimeCounter = timestamp;
+          TimeComet = timestamp;
           Comet[i].stat = 1;
           Comet[i].cl = 100;
           Comet[i].pg = getrand(6);
@@ -295,6 +299,7 @@ void main(void)
 
       Delay_ms(50);
       LCD_Erase();
+      Counting(1000, 1, 1, 359999);
     }
 #endif
     

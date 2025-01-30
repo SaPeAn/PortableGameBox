@@ -5,6 +5,9 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+
+#define     ENABLE     1
+#define     DISABLE    0    
     
 typedef unsigned char    uint8;
 typedef char             int8; 
@@ -18,7 +21,7 @@ void Delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
-void  u8_to_str(uint8*, uint8);
+void  u16_to_str(uint8*, uint16, uint8);
 
 #ifdef	__cplusplus
 }

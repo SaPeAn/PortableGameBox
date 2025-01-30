@@ -135,6 +135,15 @@ void print_distr_cometa(uint8 page, uint8 col)
   LCD_SendData(distr_cometa[1], 28);
 }
 
+void print_bat_level(uint8 lvl, uint8 page, uint8 col)
+{
+  if(lvl < 188) lvl = 188;
+  if(lvl > 238) lvl = 238;
+  lvl = 5 - (lvl - 188)/9;
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(battary_2[lvl], 20);
+}
+
 void LCD_Set_PageColumn(uint8 page, uint8 col)
 {
   uint8 colL = col & 0x0F;
