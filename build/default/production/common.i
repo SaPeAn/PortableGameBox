@@ -8,14 +8,7 @@
 # 2 "<built-in>" 2
 # 1 "common.c" 2
 # 1 "./common.h" 1
-
-
-
-
-
-
-
-
+# 12 "./common.h"
 typedef unsigned char uint8;
 typedef char int8;
 typedef unsigned int uint16;
@@ -28,7 +21,7 @@ void Delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
-void u8_to_str(uint8*, uint8);
+void u16_to_str(uint8*, uint16, uint8);
 # 1 "common.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.50\\pic\\include\\c99\\stdlib.h" 1 3
@@ -164,28 +157,25 @@ uint8 dig_to_smb(uint8 dig)
   return 0;
 }
 
-void u8_to_str(uint8* str, uint8 num)
+void u16_to_str(uint8* str, uint16 num, uint8 ZF)
 {
-  str[0] = num/100;
-  str[1] = (num%100)/10;
-  str[2] = num%10;
-  if(num > 99)
+  str[0] = dig_to_smb(num/10000);
+  num %= 10000;
+  str[1] = dig_to_smb(num/1000);
+  num %= 1000;
+  str[2] = dig_to_smb(num/100);
+  num %= 100;
+  str[3] = dig_to_smb(num/10);
+  str[4] = dig_to_smb(num%10);
+  str[5] = '\0';
+  if(ZF)
   {
-    for(uint8 i = 0; i < 3; i++) {
-    str[i] = dig_to_smb(str[i]);
+    int j = 0;
+    for(int i = 0; i < 6; i++)
+    {
+      if((str[i] == '0') && !j) continue;
+      str[j] = str[i];
+      j++;
     }
-    str[3] = '\0';
-  }
-  if((num > 9) && (num < 100))
-  {
-    for(uint8 i = 0; i < 2; i++) {
-    str[i] = dig_to_smb(str[i+1]);
-    }
-    str[2] = '\0';
-  }
-  if(num < 10)
-  {
-    str[0] = dig_to_smb(str[2]);
-    str[1] = '\0';
   }
 }

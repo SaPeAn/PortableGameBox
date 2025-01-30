@@ -17,14 +17,7 @@
 
 
 # 1 "./common.h" 1
-
-
-
-
-
-
-
-
+# 12 "./common.h"
 typedef unsigned char uint8;
 typedef char int8;
 typedef unsigned int uint16;
@@ -37,7 +30,7 @@ void Delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
-void u8_to_str(uint8*, uint8);
+void u16_to_str(uint8*, uint16, uint8);
 # 9 "./drv_buttons.h" 2
 
 
