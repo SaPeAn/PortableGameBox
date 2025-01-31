@@ -16,12 +16,25 @@ typedef int              int16;
 typedef unsigned long    uint32;
 typedef long             int32;  
 
-uint32 timestamp = 0; //System timer (ms) from power on or last restart
+typedef struct{
+  uint8 sec;
+  uint8 min;
+  uint8 hour;
+} systime;
+
+systime Time;
+
+uint32 CommonCounter;
+
+uint32 timestamp; //System timer (ms) from power on or last restart
+
+void GetTime(systime*);
 void Delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
 void  u16_to_str(uint8*, uint16, uint8);
+
 
 #ifdef	__cplusplus
 }

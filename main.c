@@ -2,67 +2,18 @@
 /*------------------------------INCLUDES--------------------------------------*/
 #include "config.h"
 #include "common.h"
-#include <stdlib.h>
 #include "init_periph.h"
-//#include "drv_7seg.h"
 #include "drv_buttons.h"
-//#include "drv_led130_I2C.h"
-//#include "drv_led096_I2C.h"
-//#include "drv_I2C.h"
+#include "drv_I2C.h"
 #include "drv_lcdST7565_SPI.h"
-//#include "drv_usart.h"
 #include "drv_adc.h"
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------GLOBAL VARIABLES--------------------------------*/
-uint32 mainTimeCounter = 0;
-uint32 countTime = 0;
 uint32 counter = 0;
-uint16 countPeriod = 1000;
-uint8  countDirect = 1;
-uint8  countOn = 0;
-uint8 Array[] = "Hello, World!!!!";
-
-typedef struct {
-uint8 USART_buf[100];
-uint8 BufMax;
-uint8 WritePos;
-} UART_DATA;
-UART_DATA UBuf = {0};
-
-typedef struct{
-  uint8 sec;
-  uint8 min;
-  uint8 hour;
-} systime;
-systime Time;
 /*----------------------------------------------------------------------------*/   
 
 /*-------------------------------Funcs for MAIN-------------------------------*/
-uint16 GetPrd(void)
-{
-  static int i = 1;
-  uint16 prd;
-  if(i == 4) i = 0;
-  switch (i) {
-    case 0: prd = 1000; break;
-    case 1: prd = 100; break;
-    case 2: prd = 10; break;
-    case 3: prd = 1; break;
-  }
-  i++;
-  return prd;  
-}
-void Counting(uint16 cPrd, uint8 cOn, uint8 cDirect, uint32 counterMax){
-  static uint32 cTime = 0;
-  if(((timestamp - cTime) >= cPrd) && (cOn)) { 
-    cTime = timestamp;
-    if(cDirect)  mainTimeCounter++;
-    if(!cDirect) mainTimeCounter--;
-      }
-    if(mainTimeCounter > counterMax && countDirect) mainTimeCounter = 0;
-    if(mainTimeCounter > counterMax && !countDirect) mainTimeCounter = counterMax;
-    }
 
 void GeneratePWM(uint8 duty_cycle)
 {
@@ -88,16 +39,6 @@ void __interrupt() systemTime_int(void)
     Nop();
     return;
   }
-  
-  if(RCIE && RCIF)
-  {
-    RCIF = 0;
-    UBuf.USART_buf[UBuf.WritePos] = RCREG;
-    UBuf.WritePos++;
-    if(UBuf.BufMax < 100) UBuf.BufMax++;
-    if(UBuf.WritePos > 99) UBuf.WritePos = 0;
-    return;
-  }
 }
 /*----------------------------------------------------------------------------*/
 
@@ -109,23 +50,15 @@ void main(void)
   TMR1_init();
   Interrupt_init();
   randinit();
-  //USART_init();
-  //Delay_ms(100);           // need for LED096
   LCD_Init();
   LCD_Erase();
-  //Led096Init();
-  //Led130Init();
-  //Led130Full();
+  
   btn_t B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
   btn_t B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
   btn_t B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
   btn_t B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
 /*----------------------------------------------------------------------------*/
   
-/*--------------------------------ПЕРЕМЕННЫЕ----------------------------------*/
-  uint8 prntClk = 1;
-  
-/*----------------------------------------------------------------------------*/
 //------------------------------Game stucts-----------------------
   typedef struct {
     uint8 en;
@@ -188,12 +121,13 @@ void main(void)
       if(B1.BtnON){B1.BtnON = 0; StartFl = 1;}
       
       #if 1 // print clock
-      Counting(1000, 1, 1, 359999);
-      Time.hour = (uint8)(mainTimeCounter/3600);
-      Time.min = (uint8)((mainTimeCounter%3600)/60);
-      Time.sec = (uint8)(mainTimeCounter%60);
-      if(prntClk) LCD_PrintClock(Time.hour, Time.min, Time.sec);
+      Time.hour = (uint8)(timestamp/3600000);
+      Time.min = (uint8)((timestamp%3600000)/60000);
+      Time.sec = (uint8)((timestamp%60000)/1000);
+      LCD_PrintClock(Time.hour, Time.min, Time.sec);
       #endif
+
+      
       print_bat_level(batlvl, 0, 105);
       GeneratePWM(bright);
       Delay_ms(100);
@@ -308,13 +242,9 @@ void main(void)
 
       Delay_ms(50);
       LCD_Erase();
-      Counting(1000, 1, 1, 359999);
     }
 #endif
-    
-
-    
-    
+ 
   }
 /*----------------------------------------------------------------------------*/
   //return;

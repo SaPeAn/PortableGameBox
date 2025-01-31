@@ -1,5 +1,5 @@
 #include "drv_adc.h"
-#include <pic18f2550.h>
+#include <xc.h>
 
 
 void adc_init()
