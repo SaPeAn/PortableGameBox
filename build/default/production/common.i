@@ -16,7 +16,19 @@ typedef int int16;
 typedef unsigned long uint32;
 typedef long int32;
 
-uint32 timestamp = 0;
+typedef struct{
+  uint8 sec;
+  uint8 min;
+  uint8 hour;
+} systime;
+
+systime Time;
+
+uint32 CommonCounter;
+
+uint32 timestamp;
+
+void GetTime(systime*);
 void Delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);

@@ -1,16 +1,23 @@
 Version 4.0 HI-TECH Software Intermediate Code
+"19 ./common.h
+[; ;./common.h: 19: typedef struct{
+[s S1 `uc 1 `uc 1 `uc 1 ]
+[n S1 . sec min hour ]
 "56 C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h
 [; ;C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h: 56: void srand (unsigned);
 [v _srand `(v ~T0 @X0 0 ef1`ui ]
 "55
 [; ;C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h: 55: int rand (void);
 [v _rand `(i ~T0 @X0 0 ef ]
-"19 ./common.h
-[; ;./common.h: 19: uint32 timestamp = 0;
+"25 ./common.h
+[; ;./common.h: 25: systime Time;
+[v _Time `S1 ~T0 @X0 1 e ]
+"27
+[; ;./common.h: 27: uint32 CommonCounter;
+[v _CommonCounter `ul ~T0 @X0 1 e ]
+"29
+[; ;./common.h: 29: uint32 timestamp;
 [v _timestamp `ul ~T0 @X0 1 e ]
-[i _timestamp
--> -> -> 0 `i `l `ul
-]
 "5 common.c
 [; ;common.c: 5: void Delay_ms(uint32 ms)
 [v _Delay_ms `(v ~T0 @X0 1 ef1`ul ]
@@ -30,14 +37,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _temp _timestamp ]
 "8
 [; ;common.c: 8:   while((timestamp - temp) < ms);
-[e $U 7  ]
-[e :U 8 ]
-[e :U 7 ]
-[e $ < - _timestamp _temp _ms 8  ]
+[e $U 8  ]
 [e :U 9 ]
+[e :U 8 ]
+[e $ < - _timestamp _temp _ms 9  ]
+[e :U 10 ]
 "9
 [; ;common.c: 9: }
-[e :UE 6 ]
+[e :UE 7 ]
 }
 "11
 [; ;common.c: 11: void randinit(void)
@@ -52,7 +59,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _srand (1 -> -> _timestamp `uc `ui ]
 "14
 [; ;common.c: 14: }
-[e :UE 10 ]
+[e :UE 11 ]
 }
 "16
 [; ;common.c: 16: uint8 getrand(uint8 N)
@@ -70,10 +77,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "18
 [; ;common.c: 18:   return (rand() % (N + 1));
 [e ) -> % ( _rand ..  + -> _N `i -> 1 `i `uc ]
-[e $UE 11  ]
+[e $UE 12  ]
 "19
 [; ;common.c: 19: }
-[e :UE 11 ]
+[e :UE 12 ]
 }
 "21
 [; ;common.c: 21: uint8 dig_to_smb(uint8 dig)
@@ -90,84 +97,84 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "23
 [; ;common.c: 23:   switch (dig)
-[e $U 14  ]
+[e $U 15  ]
 "24
 [; ;common.c: 24:   {
 {
 "25
 [; ;common.c: 25:     case 0: return '0';
-[e :U 15 ]
+[e :U 16 ]
 [e ) -> -> 48 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "26
 [; ;common.c: 26:     case 1: return '1';
-[e :U 16 ]
+[e :U 17 ]
 [e ) -> -> 49 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "27
 [; ;common.c: 27:     case 2: return '2';
-[e :U 17 ]
+[e :U 18 ]
 [e ) -> -> 50 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "28
 [; ;common.c: 28:     case 3: return '3';
-[e :U 18 ]
+[e :U 19 ]
 [e ) -> -> 51 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "29
 [; ;common.c: 29:     case 4: return '4';
-[e :U 19 ]
+[e :U 20 ]
 [e ) -> -> 52 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "30
 [; ;common.c: 30:     case 5: return '5';
-[e :U 20 ]
+[e :U 21 ]
 [e ) -> -> 53 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "31
 [; ;common.c: 31:     case 6: return '6';
-[e :U 21 ]
+[e :U 22 ]
 [e ) -> -> 54 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "32
 [; ;common.c: 32:     case 7: return '7';
-[e :U 22 ]
+[e :U 23 ]
 [e ) -> -> 55 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "33
 [; ;common.c: 33:     case 8: return '8';
-[e :U 23 ]
+[e :U 24 ]
 [e ) -> -> 56 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "34
 [; ;common.c: 34:     case 9: return '9';
-[e :U 24 ]
+[e :U 25 ]
 [e ) -> -> 57 `ui `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "35
 [; ;common.c: 35:   }
 }
-[e $U 13  ]
+[e $U 14  ]
+[e :U 15 ]
+[e [\ _dig , $ -> 0 `i 16
+ , $ -> 1 `i 17
+ , $ -> 2 `i 18
+ , $ -> 3 `i 19
+ , $ -> 4 `i 20
+ , $ -> 5 `i 21
+ , $ -> 6 `i 22
+ , $ -> 7 `i 23
+ , $ -> 8 `i 24
+ , $ -> 9 `i 25
+ 14 ]
 [e :U 14 ]
-[e [\ _dig , $ -> 0 `i 15
- , $ -> 1 `i 16
- , $ -> 2 `i 17
- , $ -> 3 `i 18
- , $ -> 4 `i 19
- , $ -> 5 `i 20
- , $ -> 6 `i 21
- , $ -> 7 `i 22
- , $ -> 8 `i 23
- , $ -> 9 `i 24
- 13 ]
-[e :U 13 ]
 "36
 [; ;common.c: 36:   return 0;
 [e ) -> -> 0 `i `uc ]
-[e $UE 12  ]
+[e $UE 13  ]
 "37
 [; ;common.c: 37: }
-[e :UE 12 ]
+[e :UE 13 ]
 }
 "39
 [; ;common.c: 39: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
@@ -213,7 +220,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = *U + _str * -> -> 5 `i `x -> -> # *U _str `i `x -> -> 0 `ui `uc ]
 "50
 [; ;common.c: 50:   if(ZF)
-[e $ ! != -> _ZF `i -> 0 `i 26  ]
+[e $ ! != -> _ZF `i -> 0 `i 27  ]
 "51
 [; ;common.c: 51:   {
 {
@@ -226,17 +233,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 6 `i 27  ]
-[e $U 28  ]
-[e :U 27 ]
+[e $ < _i -> 6 `i 28  ]
+[e $U 29  ]
+[e :U 28 ]
 "54
 [; ;common.c: 54:     {
 {
 "55
 [; ;common.c: 55:       if((str[i] == '0') && !j) continue;
-[e $ ! && == -> *U + _str * -> _i `x -> -> # *U _str `i `x `ui -> 48 `ui ! != _j -> 0 `i 30  ]
-[e $U 29  ]
-[e :U 30 ]
+[e $ ! && == -> *U + _str * -> _i `x -> -> # *U _str `i `x `ui -> 48 `ui ! != _j -> 0 `i 31  ]
+[e $U 30  ]
+[e :U 31 ]
 "56
 [; ;common.c: 56:       str[j] = str[i];
 [e = *U + _str * -> _j `x -> -> # *U _str `i `x *U + _str * -> _i `x -> -> # *U _str `i `x ]
@@ -246,16 +253,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 "58
 [; ;common.c: 58:     }
 }
-[e :U 29 ]
+[e :U 30 ]
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 6 `i 27  ]
-[e :U 28 ]
+[e $ < _i -> 6 `i 28  ]
+[e :U 29 ]
 }
 "59
 [; ;common.c: 59:   }
 }
-[e :U 26 ]
+[e :U 27 ]
 "60
 [; ;common.c: 60: }
-[e :UE 25 ]
+[e :UE 26 ]
 }
