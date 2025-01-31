@@ -18,7 +18,7 @@
 #define   RSE     PORTAbits.RA4    //Display reset
 #define   CS      PORTCbits.RC6
 
-#define  SW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
+#define  HW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
 
 //----------------------Software SPI-----------------------------------------
 #ifdef SW_SPI

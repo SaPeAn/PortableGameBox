@@ -15,14 +15,26 @@ uint32 counter = 0;
 
 /*-------------------------------Funcs for MAIN-------------------------------*/
 
-void GeneratePWM(uint8 duty_cycle)
+void BrightPWM(uint8 duty_cycle)
 {
   PR2 = 0xFF;
-  CCPR2L = duty_cycle;  
-  TRISB &= 0b11110111;
+  CCPR2L = duty_cycle;
   T2CON = 0b00000100;
   CCP2CON = 0b00001100;
-  
+}
+
+void Sounds(uint16 delay)
+{
+  uint16 j;
+  for(uint8 i = 0; i < 100; i++)
+  {  
+    PORTCbits.RC2 = 1;
+    j = delay;
+    while(j--);
+    PORTCbits.RC2 = 0;
+    j = delay;
+    while(j--);
+  }
 }
 /*----------------------------------------------------------------------------*/
 
@@ -52,6 +64,10 @@ void main(void)
   randinit();
   LCD_Init();
   LCD_Erase();
+  
+  TRISB &= 0b11110111; // for Brightness
+  TRISC &= 0b11111011; // for Sounds
+  PORTCbits.RC2 = 0;
   
   btn_t B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
   btn_t B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
@@ -90,10 +106,10 @@ void main(void)
   uint8 Max_Piu = 1;
   uint8 Max_Comet = 4;
   uint32 TimeComet = 100;
-  uint8 KillCounter = 0;
+  uint16 KillCounter = 0;
   uint8 StartFl = 0;
   uint8 ScoreLb[] = "SCORE: ";
-  uint8 Score[4];
+  uint8 Score[6];
 //---------------------------------------------------------
   uint8 ox, oy, batlvl;
   uint8 tempstr[6];
@@ -104,13 +120,12 @@ void main(void)
      
 #if 1
     while(!StartFl)
-    {
-      
+    {      
       Tar.en = 1;
       TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
       batlvl = adc_getval_an2();
-      if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; bright +=10; if(bright >= 240) bright = 240;}
-      if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; bright -=10; if(bright <= 10) bright = 10;}
+      if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; bright +=10; if(bright >= 240) bright = 240; Sounds(400);}
+      if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; bright -=10; if(bright <= 10) bright = 10; Sounds(400);}
       
       
       if(timestamp - counter > 500){
@@ -118,7 +133,7 @@ void main(void)
         print_cometa(getrand(6), getrand(100));
         counter = timestamp;
       }
-      if(B1.BtnON){B1.BtnON = 0; StartFl = 1;}
+      if(B1.BtnON){B1.BtnON = 0; StartFl = 1; Sounds(400);}
       
       #if 1 // print clock
       Time.hour = (uint8)(timestamp/3600000);
@@ -126,49 +141,14 @@ void main(void)
       Time.sec = (uint8)((timestamp%60000)/1000);
       LCD_PrintClock(Time.hour, Time.min, Time.sec);
       #endif
-
       
       print_bat_level(batlvl, 0, 105);
-      GeneratePWM(bright);
+      BrightPWM(bright);
       Delay_ms(100);
     }
     
     while(StartFl)
     {
-      //----------COMET PRINT-------------------------------
-      for(uint8 i = 0; i < Max_Comet; i++) 
-      {
-        if(Comet[i].stat == 1) print_cometa(Comet[i].pg, Comet[i].cl);
-        if(Comet[i].stat == 2) print_distr_cometa(Comet[i].pg, Comet[i].cl);
-      }
-
-      u16_to_str(Score, KillCounter, DISABLE);
-      LCD_printStr8x5(ScoreLb, 0, 37);
-      LCD_printStr8x5(Score, 0, 73);
-      
-      switch(KillCounter)
-      {
-        case 20: Max_Piu = 2; break;
-        case 50: Max_Piu = 4; break;
-        case 100: Max_Piu = 8; Max_Comet = 6; break;
-      }
-
-      if(Tar.en) print_ufo(Tar.pg, Tar.cl);
-
-      //--------PRINT BULLET---------------
-      for(uint8 i = 0; i < Max_Piu; i++)
-      {
-        if(Piu[i].en){
-          print_piu(Piu[i].pg, Piu[i].cl);
-          Piu[i].cl += 8;
-          if(Piu[i].cl > 120) {
-            Piu[i].en = 0;
-            Piu[i].cl = 0;
-          }
-        }
-      }
-      //-----------------------------------------
-
       TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
       ox = adc_getval_an0();
       oy = adc_getval_an1();
@@ -187,6 +167,7 @@ void main(void)
             Piu[i].en = 1; 
             Piu[i].pg = Tar.pg + 1; 
             Piu[i].cl = Tar.cl + 28;
+            Sounds(400);
             break;
           }
         }
@@ -216,7 +197,7 @@ void main(void)
         }
       }
       
-      if(!Tar.en) {StartFl = 0; Delay_ms(300);}
+      if(!Tar.en) {StartFl = 0; Sounds(900);}
       //------------COLLISION--------------
       for(uint8 j = 0; j < Max_Piu; j++)
       {
@@ -226,7 +207,8 @@ void main(void)
           {
             Comet[i].stat = 2;
             Piu[j].en = 0;
-            if(KillCounter <= 254) KillCounter++;
+            KillCounter++;
+            Sounds(600);
           }
         }
       }
@@ -239,9 +221,48 @@ void main(void)
           Tar.en = 0;
         }
       }
-
-      Delay_ms(50);
       LCD_Erase();
+      
+      
+      
+      switch(KillCounter)
+      {
+        case 20: Max_Piu = 2; break;
+        case 50: Max_Piu = 4; break;
+        case 100: Max_Piu = 8; Max_Comet = 6; break;
+      }
+      
+      
+      //----------COMET PRINT-------------------------------
+      for(uint8 i = 0; i < Max_Comet; i++) 
+      {
+        if(Comet[i].stat == 1) print_cometa(Comet[i].pg, Comet[i].cl);
+        if(Comet[i].stat == 2) {
+          print_distr_cometa(Comet[i].pg, Comet[i].cl);
+          Delay_ms(10);
+        }
+      }
+
+      if(Tar.en) print_ufo(Tar.pg, Tar.cl);
+
+      //--------PRINT BULLET---------------
+      for(uint8 i = 0; i < Max_Piu; i++)
+      {
+        if(Piu[i].en){
+          print_piu(Piu[i].pg, Piu[i].cl);
+          Piu[i].cl += 8;
+          if(Piu[i].cl > 120) {
+            Piu[i].en = 0;
+            Piu[i].cl = 0;
+          }
+        }
+      }
+      //-----------------------------------------
+      u16_to_str(Score, KillCounter, DISABLE);
+      LCD_printStr8x5(ScoreLb, 0, 37);
+      LCD_printStr8x5(Score, 0, 73);
+      
+      Delay_ms(50);
     }
 #endif
  
