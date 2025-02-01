@@ -125,10 +125,13 @@ void main(void)
 /*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
   { 
-     
+    I2C_init();
+    I2C_WriteByte(0xA3);
+    
+
     
     
-#if 1
+#if 0
     while(!StartFl)
     {      
       Tar.en = 1;
