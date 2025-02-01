@@ -1,11 +1,45 @@
 #include "common.h"
 #include <stdlib.h>
 
+uint8 clamp(uint8 val, uint8 min, uint8 max)
+{
+  if(val > max) val = max;
+  if(val < min) val = min;
+  return val;
+}
 
-void Delay_ms(uint32 ms)
+void delay_ms(uint32 ms)
 {
   uint32 temp = timestamp;
   while((timestamp - temp) < ms);
+}
+
+uint8 getbatlvl(uint8 Ubat)
+{
+  uint8 lvl = (239 - Ubat) / 8;
+  static uint8 Umax = 240;
+  static uint8 Umin = 228;
+  static uint8 reslvl = 0;
+  if(Ubat <= 180) return 100; // bat to low, immediately shotdown code - 100
+  Ubat = clamp(Ubat, 192, 240);
+  if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
+  else 
+    switch(lvl)
+    {
+      case 0: Umin = 228; Umax = 240; reslvl = 0; break;
+      case 1: Umin = 220; Umax = 236; reslvl = 1; break;
+      case 2: Umin = 212; Umax = 228; reslvl = 2; break;
+      case 3: Umin = 204; Umax = 220; reslvl = 3; break;
+      case 4: Umin = 196; Umax = 212; reslvl = 4; break;
+      case 5: Umin = 192; Umax = 204; reslvl = 5; break;
+    }
+}
+
+void gettime(systime_t* tm)
+{ 
+  tm->hour = (uint8)(timestamp/3600000);
+  tm->min = (uint8)((timestamp%3600000)/60000);
+  tm->sec = (uint8)((timestamp%60000)/1000);
 }
 
 void randinit(void)

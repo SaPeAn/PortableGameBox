@@ -10,7 +10,6 @@
 
 #include "drv_lcdST7565_SPI.h"
 #include <xc.h>
-#include "common.h"
 #include "display_data.h"
 #include <stdlib.h>
 
@@ -83,9 +82,9 @@ void LCD_Init(void)
   RSE = 1;
   RS = 1;
   CS = 1;
-  Delay_ms(1);
+  delay_ms(1);
   RSE = 0;
-  Delay_ms(1);
+  delay_ms(1);
   RSE = 1;
   RS = 0;
   LCD_WriteByte(0xA2 | 0);       // LCD Bias Set -- x=0 : 1/9 (default); x=1 :  1/7
@@ -137,9 +136,6 @@ void print_distr_cometa(uint8 page, uint8 col)
 
 void print_bat_level(uint8 lvl, uint8 page, uint8 col)
 {
-  if(lvl < 188) lvl = 188;
-  if(lvl > 238) lvl = 238;
-  lvl = 5 - (lvl - 188)/9;
   LCD_Set_PageColumn(page, col);
   LCD_SendData(battary_2[lvl], 20);
 }
@@ -175,15 +171,15 @@ uint8 LCD_printStr8x5(uint8 *str, uint8 page, uint8 col)
   return i;
 }
 
-void LCD_PrintClock(uint8 hour, uint8 min, uint8 sec)
+void LCD_PrintClock(systime_t tm)
 {
-  uint8 secL = sec%10;
-  uint8 minL = min%10;
-  uint8 hourL = hour%10;
-  sec /= 10;
-  min /= 10;
-  hour /= 10;
-  uint8 cl_digits[9] = {dig_to_smb(hour), dig_to_smb(hourL), ':', dig_to_smb(min), dig_to_smb(minL), ':', dig_to_smb(sec), dig_to_smb(secL), '\0'};
+  uint8 secL = tm.sec%10;
+  uint8 minL = tm.min%10;
+  uint8 hourL = tm.hour%10;
+  tm.sec /= 10;
+  tm.min /= 10;
+  tm.hour /= 10;
+  uint8 cl_digits[9] = {dig_to_smb(tm.hour), dig_to_smb(hourL), ':', dig_to_smb(tm.min), dig_to_smb(minL), ':', dig_to_smb(tm.sec), dig_to_smb(secL), '\0'};
   LCD_printStr8x5(cl_digits, 0, 41);
 }
 

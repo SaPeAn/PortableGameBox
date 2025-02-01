@@ -26,7 +26,7 @@ void BrightPWM(uint8 duty_cycle)
 void Sounds(uint16 delay)
 {
   uint16 j;
-  for(uint8 i = 0; i < 100; i++)
+  for(uint8 i = 0; i < 50; i++)
   {  
     PORTCbits.RC2 = 1;
     j = delay;
@@ -36,6 +36,14 @@ void Sounds(uint16 delay)
     while(j--);
   }
 }
+
+#if 0
+void RTC(void)
+  {
+    I2C_init();
+    I2C_WriteByte();
+  }
+#endif
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------------INTERRAPTS---------------------------------*/
@@ -111,19 +119,21 @@ void main(void)
   uint8 ScoreLb[] = "SCORE: ";
   uint8 Score[6];
 //---------------------------------------------------------
-  uint8 ox, oy, batlvl;
+  uint8 ox, oy, Ubat;
   uint8 tempstr[6];
   uint8 bright = 200;
 /*-------------------------------MAIN LOOP------------------------------------*/
   while(1)
   { 
      
+    
+    
 #if 1
     while(!StartFl)
     {      
       Tar.en = 1;
       TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
-      batlvl = adc_getval_an2();
+      Ubat = adc_getval_an2();
       if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; bright +=10; if(bright >= 240) bright = 240; Sounds(400);}
       if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; bright -=10; if(bright <= 10) bright = 10; Sounds(400);}
       
@@ -136,15 +146,15 @@ void main(void)
       if(B1.BtnON){B1.BtnON = 0; StartFl = 1; Sounds(400);}
       
       #if 1 // print clock
-      Time.hour = (uint8)(timestamp/3600000);
-      Time.min = (uint8)((timestamp%3600000)/60000);
-      Time.sec = (uint8)((timestamp%60000)/1000);
-      LCD_PrintClock(Time.hour, Time.min, Time.sec);
+      gettime(&Time);
+      LCD_PrintClock(Time);
       #endif
       
-      print_bat_level(batlvl, 0, 105);
+      print_bat_level(getbatlvl(Ubat), 0, 105);
+      u16_to_str(tempstr, Ubat, DISABLE);
+      LCD_printStr8x5(tempstr, 0, 0); 
       BrightPWM(bright);
-      Delay_ms(100);
+      delay_ms(100);
     }
     
     while(StartFl)
@@ -197,7 +207,7 @@ void main(void)
         }
       }
       
-      if(!Tar.en) {StartFl = 0; Sounds(900);}
+      if(!Tar.en) {StartFl = 0; Sounds(600);}
       //------------COLLISION--------------
       for(uint8 j = 0; j < Max_Piu; j++)
       {
@@ -208,7 +218,7 @@ void main(void)
             Comet[i].stat = 2;
             Piu[j].en = 0;
             KillCounter++;
-            Sounds(600);
+            Sounds(500);
           }
         }
       }
@@ -239,7 +249,7 @@ void main(void)
         if(Comet[i].stat == 1) print_cometa(Comet[i].pg, Comet[i].cl);
         if(Comet[i].stat == 2) {
           print_distr_cometa(Comet[i].pg, Comet[i].cl);
-          Delay_ms(10);
+          delay_ms(10);
         }
       }
 
@@ -262,7 +272,7 @@ void main(void)
       LCD_printStr8x5(ScoreLb, 0, 37);
       LCD_printStr8x5(Score, 0, 73);
       
-      Delay_ms(50);
+      delay_ms(50);
     }
 #endif
  

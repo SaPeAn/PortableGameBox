@@ -17,19 +17,18 @@ typedef unsigned long    uint32;
 typedef long             int32;  
 
 typedef struct{
-  uint8 sec;
-  uint8 min;
-  uint8 hour;
-} systime;
+  uint8   sec;
+  uint8   min;
+  uint8   hour;
+} systime_t;
 
-systime Time;
+systime_t Time;
+uint32 timestamp = 0; //System timer (ms) from power on or last restart
 
-uint32 CommonCounter;
-
-uint32 timestamp; //System timer (ms) from power on or last restart
-
-void GetTime(systime*);
-void Delay_ms(uint32);
+uint32 commoninit(void);
+void gettime(systime_t*);
+uint8 getbatlvl(uint8);
+void delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
