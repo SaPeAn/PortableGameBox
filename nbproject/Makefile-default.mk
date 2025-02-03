@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=common.c drv_I2C.c drv_buttons.c drv_lcdST7565_SPI.c init_periph.c main.c AsmSPI_Tx_Rx.asm drv_adc.c
+SOURCEFILES_QUOTED_IF_SPACED=common.c drv_lcdST7565_SPI.c main.c AsmSPI_Tx_Rx.asm ufo_battle.c swic.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_I2C.p1 ${OBJECTDIR}/drv_buttons.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/init_periph.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/drv_adc.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/common.p1.d ${OBJECTDIR}/drv_I2C.p1.d ${OBJECTDIR}/drv_buttons.p1.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d ${OBJECTDIR}/init_periph.p1.d ${OBJECTDIR}/main.p1.d ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d ${OBJECTDIR}/drv_adc.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/ufo_battle.p1 ${OBJECTDIR}/swic.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/common.p1.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d ${OBJECTDIR}/main.p1.d ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d ${OBJECTDIR}/ufo_battle.p1.d ${OBJECTDIR}/swic.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_I2C.p1 ${OBJECTDIR}/drv_buttons.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/init_periph.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/drv_adc.p1
+OBJECTFILES=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/ufo_battle.p1 ${OBJECTDIR}/swic.p1
 
 # Source Files
-SOURCEFILES=common.c drv_I2C.c drv_buttons.c drv_lcdST7565_SPI.c init_periph.c main.c AsmSPI_Tx_Rx.asm drv_adc.c
+SOURCEFILES=common.c drv_lcdST7565_SPI.c main.c AsmSPI_Tx_Rx.asm ufo_battle.c swic.c
 
 
 
@@ -96,22 +96,6 @@ ${OBJECTDIR}/common.p1: common.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/common.d ${OBJECTDIR}/common.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/common.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/drv_I2C.p1: drv_I2C.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_I2C.p1.d 
-	@${RM} ${OBJECTDIR}/drv_I2C.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_I2C.p1 drv_I2C.c 
-	@-${MV} ${OBJECTDIR}/drv_I2C.d ${OBJECTDIR}/drv_I2C.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_I2C.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/drv_buttons.p1: drv_buttons.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_buttons.p1.d 
-	@${RM} ${OBJECTDIR}/drv_buttons.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_buttons.p1 drv_buttons.c 
-	@-${MV} ${OBJECTDIR}/drv_buttons.d ${OBJECTDIR}/drv_buttons.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
 ${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
@@ -119,14 +103,6 @@ ${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_lcdST7565_SPI.p1 drv_lcdST7565_SPI.c 
 	@-${MV} ${OBJECTDIR}/drv_lcdST7565_SPI.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/init_periph.p1: init_periph.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/init_periph.p1.d 
-	@${RM} ${OBJECTDIR}/init_periph.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/init_periph.p1 init_periph.c 
-	@-${MV} ${OBJECTDIR}/init_periph.d ${OBJECTDIR}/init_periph.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/init_periph.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -136,13 +112,21 @@ ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/drv_adc.p1: drv_adc.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/ufo_battle.p1: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_adc.p1.d 
-	@${RM} ${OBJECTDIR}/drv_adc.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_adc.p1 drv_adc.c 
-	@-${MV} ${OBJECTDIR}/drv_adc.d ${OBJECTDIR}/drv_adc.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_adc.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/ufo_battle.p1.d 
+	@${RM} ${OBJECTDIR}/ufo_battle.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/ufo_battle.p1 ufo_battle.c 
+	@-${MV} ${OBJECTDIR}/ufo_battle.d ${OBJECTDIR}/ufo_battle.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/ufo_battle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/swic.p1: swic.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/swic.p1.d 
+	@${RM} ${OBJECTDIR}/swic.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/swic.p1 swic.c 
+	@-${MV} ${OBJECTDIR}/swic.d ${OBJECTDIR}/swic.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/swic.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 else
 ${OBJECTDIR}/common.p1: common.c  nbproject/Makefile-${CND_CONF}.mk 
@@ -153,22 +137,6 @@ ${OBJECTDIR}/common.p1: common.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/common.d ${OBJECTDIR}/common.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/common.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/drv_I2C.p1: drv_I2C.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_I2C.p1.d 
-	@${RM} ${OBJECTDIR}/drv_I2C.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_I2C.p1 drv_I2C.c 
-	@-${MV} ${OBJECTDIR}/drv_I2C.d ${OBJECTDIR}/drv_I2C.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_I2C.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/drv_buttons.p1: drv_buttons.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_buttons.p1.d 
-	@${RM} ${OBJECTDIR}/drv_buttons.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_buttons.p1 drv_buttons.c 
-	@-${MV} ${OBJECTDIR}/drv_buttons.d ${OBJECTDIR}/drv_buttons.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
 ${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
@@ -176,14 +144,6 @@ ${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_lcdST7565_SPI.p1 drv_lcdST7565_SPI.c 
 	@-${MV} ${OBJECTDIR}/drv_lcdST7565_SPI.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/init_periph.p1: init_periph.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/init_periph.p1.d 
-	@${RM} ${OBJECTDIR}/init_periph.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/init_periph.p1 init_periph.c 
-	@-${MV} ${OBJECTDIR}/init_periph.d ${OBJECTDIR}/init_periph.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/init_periph.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -193,13 +153,21 @@ ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/drv_adc.p1: drv_adc.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/ufo_battle.p1: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_adc.p1.d 
-	@${RM} ${OBJECTDIR}/drv_adc.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_adc.p1 drv_adc.c 
-	@-${MV} ${OBJECTDIR}/drv_adc.d ${OBJECTDIR}/drv_adc.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_adc.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/ufo_battle.p1.d 
+	@${RM} ${OBJECTDIR}/ufo_battle.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/ufo_battle.p1 ufo_battle.c 
+	@-${MV} ${OBJECTDIR}/ufo_battle.d ${OBJECTDIR}/ufo_battle.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/ufo_battle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/swic.p1: swic.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/swic.p1.d 
+	@${RM} ${OBJECTDIR}/swic.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/swic.p1 swic.c 
+	@-${MV} ${OBJECTDIR}/swic.d ${OBJECTDIR}/swic.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/swic.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

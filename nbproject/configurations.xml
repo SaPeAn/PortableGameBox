@@ -7,11 +7,9 @@
       <itemPath>common.h</itemPath>
       <itemPath>config.h</itemPath>
       <itemPath>display_data.h</itemPath>
-      <itemPath>drv_I2C.h</itemPath>
-      <itemPath>drv_buttons.h</itemPath>
       <itemPath>drv_lcdST7565_SPI.h</itemPath>
-      <itemPath>init_periph.h</itemPath>
-      <itemPath>drv_adc.h</itemPath>
+      <itemPath>ufo_battle.h</itemPath>
+      <itemPath>swic.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -26,13 +24,11 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>common.c</itemPath>
-      <itemPath>drv_I2C.c</itemPath>
-      <itemPath>drv_buttons.c</itemPath>
       <itemPath>drv_lcdST7565_SPI.c</itemPath>
-      <itemPath>init_periph.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>AsmSPI_Tx_Rx.asm</itemPath>
-      <itemPath>drv_adc.c</itemPath>
+      <itemPath>ufo_battle.c</itemPath>
+      <itemPath>swic.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

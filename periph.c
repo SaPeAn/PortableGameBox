@@ -1,6 +1,7 @@
 
-#include "init_periph.h"
+#include "periph.h"
 #include <xc.h>
+#include "drv_buttons.h"
 
 void Interrupt_init(void)
 {
@@ -22,16 +23,65 @@ void Interrupt_init(void)
   IPEN = 0;  SBOREN = 0; 
 }
 
-void TMR0_init(void)
+void timersinit(void)
 {
   T0CON = 0b11000111;
   TMR0L = 32;
   TMR0H = 209;
-}
 
-void TMR1_init(void)
-{
+
   T1CON = 0b00000101;
   TMR1L = 241;
   TMR1H = 217;    
 }
+
+
+uint8 adc_getval_an0()
+{
+  TRISA |= 0b00000111;
+  ADCON1 = 0b00001100;   
+  ADCON2 = 0b00010010;
+  ADCON0 = 0b00000001;
+  ADCON0bits.ADON = 1;
+  ADCON0bits.GODONE = 1;
+  while(ADCON0bits.GODONE);
+  return ADRESH;  
+}
+
+uint8 adc_getval_an1()
+{
+  TRISA |= 0b00000111;
+  ADCON1 = 0b00001100;   
+  ADCON2 = 0b00010010;
+  ADCON0 = 0b00000101;
+  ADCON0bits.ADON = 1;
+  ADCON0bits.GODONE = 1;
+  while(ADCON0bits.GODONE);
+  return ADRESH;  
+}
+
+uint8 adc_getval_an2()
+{
+  TRISA |= 0b00000111;
+  ADCON1 = 0b00001100;   
+  ADCON2 = 0b00010010;
+  ADCON0 = 0b00001001;
+  ADCON0bits.ADON = 1;
+  ADCON0bits.GODONE = 1;
+  while(ADCON0bits.GODONE);
+  return ADRESH;  
+}
+
+void initbuttons(void)
+{
+  B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
+  B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
+  B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
+  B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
+}
+
+void testbuttons(void)
+{ 
+  TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
+}
+  

@@ -13,9 +13,9 @@
 #include "display_data.h"
 #include <stdlib.h>
 
-#define   RS      PORTAbits.RA3    // 1-data/0-cmd
-#define   RSE     PORTAbits.RA4    //Display reset
-#define   CS      PORTCbits.RC6
+#define   RS      LATAbits.LA3    // 1-data/0-cmd
+#define   RSE     LATAbits.LA4    //Display reset
+#define   CS      LATCbits.LC6
 
 #define  HW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
 
@@ -26,9 +26,9 @@
 
 extern void SPI_TX(uint8);
 
-#define   SDO          PORTCbits.RC7
-#define   SCK          PORTBbits.RB1
-#define   CS           PORTCbits.RC6
+#define   SDO          LATCbits.LC7
+#define   SCK          LATBbits.LB1
+#define   CS           LATCbits.LC6
 #define   SDO_tris     TRISCbits.RC7
 #define   SCL_tris     TRISBbits.RB1
 #define   CS_tris      TRISCbits.RC6
@@ -47,7 +47,7 @@ void SPI_init(void)
 //----------------------Hardware SPI-----------------------------------------
 #ifdef   HW_SPI
 extern uint8 HW_SPI_TX(uint8);
-#define  SPI_TRANSMIT_FUNC      HW_SPI_TX
+#define  SPI_TRANSMIT_FUNC      SPI_transmit
 
 void SPI_init(void)
 {
@@ -55,7 +55,7 @@ void SPI_init(void)
   TRISBbits.RB0 = 1; // RB0 - SDI
   TRISCbits.RC7 = 0; // RC7 - SDO
   TRISCbits.RC6 = 0; // RC6 - CS
-  PORTCbits.RC6 = 1; // CS set
+  LATCbits.LC6 = 1; // CS set
   SSPCON1 = 0b00110010; // Enables serial port([5] - 1); Idle state for clock is a high level (CKP) ([4] - 1); 
                         // SPI Master mode, clock =  ([3-0] - 0000(SPI Fosc/4); 0001 (SPI Fosc/16); 0010 (SPI Fosc/64))
   
@@ -82,9 +82,9 @@ void LCD_Init(void)
   RSE = 1;
   RS = 1;
   CS = 1;
-  delay_ms(1);
+  delay_ms(2);
   RSE = 0;
-  delay_ms(1);
+  delay_ms(2);
   RSE = 1;
   RS = 0;
   LCD_WriteByte(0xA2 | 0);       // LCD Bias Set -- x=0 : 1/9 (default); x=1 :  1/7
@@ -136,6 +136,7 @@ void print_distr_cometa(uint8 page, uint8 col)
 
 void print_bat_level(uint8 lvl, uint8 page, uint8 col)
 {
+  if(lvl == 100) lvl = 5; // 100 -shutdown code
   LCD_Set_PageColumn(page, col);
   LCD_SendData(battary_2[lvl], 20);
 }
