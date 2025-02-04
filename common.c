@@ -22,7 +22,7 @@ void commoninit(void)
 {
   TRISB &= 0b11110111; // for Brightness
   TRISC &= 0b11111001; // RC2 - for Sounds, RC1 - Shut Down output
-  LATCbits.LC2 = 1;
+  LATCbits.LC2 = 0;
   LATCbits.LC1 = 1;
 }
 uint8 getbatlvl(uint8 Ubat)
