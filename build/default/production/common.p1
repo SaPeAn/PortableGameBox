@@ -888,8 +888,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;common.c: 24:   TRISC &= 0b11111001;
 [e =& _TRISC -> -> 249 `i `Vuc ]
 "25
-[; ;common.c: 25:   LATCbits.LC2 = 1;
-[e = . . _LATCbits 1 2 -> -> 1 `i `uc ]
+[; ;common.c: 25:   LATCbits.LC2 = 0;
+[e = . . _LATCbits 1 2 -> -> 0 `i `uc ]
 "26
 [; ;common.c: 26:   LATCbits.LC1 = 1;
 [e = . . _LATCbits 1 1 -> -> 1 `i `uc ]
