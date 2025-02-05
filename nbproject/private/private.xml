@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Projects/PIC_main/PortableGameBox/main.c</file>
             <file>file:/C:/Projects/PIC_main/PortableGameBox/common.c</file>
+            <file>file:/C:/Projects/PIC_main/PortableGameBox/AsmSPI_Tx_Rx.asm</file>
             <file>file:/C:/Projects/PIC_main/PortableGameBox/drv_swi2cRTC.c</file>
             <file>file:/C:/Projects/PIC_main/PortableGameBox/drv_lcdST7565_SPI.c</file>
             <file>file:/C:/Projects/PIC_main/PortableGameBox/ufo_battle.c</file>
