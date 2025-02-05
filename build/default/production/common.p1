@@ -11,75 +11,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./common.h: 65: typedef struct{
 [s S3 `*Vuc 1 `*Vuc 1 `uc 1 `uc 1 `*Cul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
 [n S3 . Port Lat inputmask outputmask timecounter btnTimer BtnFl BtnON Toggle HoldON StuckON ]
-"3035 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 3035: extern volatile unsigned char TRISB __attribute__((address(0xF93)));
-[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
-"3257
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 3257: extern volatile unsigned char TRISC __attribute__((address(0xF94)));
-[v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
-"2765
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2765:     struct {
-[s S119 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S119 . LATC0 LATC1 LATC2 . LATC6 LATC7 ]
-"2773
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2773:     struct {
-[s S120 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S120 . LC0 LC1 LC2 . LC6 LC7 ]
-"2764
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2764: typedef union {
-[u S118 `S119 1 `S120 1 ]
-[n S118 . . . ]
-"2782
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2782: extern volatile LATCbits_t LATCbits __attribute__((address(0xF8B)));
-[v _LATCbits `VS118 ~T0 @X0 0 e@3979 ]
-"6117
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 6117: extern volatile unsigned char PR2 __attribute__((address(0xFCB)));
-[v _PR2 `Vuc ~T0 @X0 0 e@4043 ]
-"5230
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 5230: extern volatile unsigned char CCPR2L __attribute__((address(0xFBB)));
-[v _CCPR2L `Vuc ~T0 @X0 0 e@4027 ]
-"6019
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 6019: extern volatile unsigned char T2CON __attribute__((address(0xFCA)));
-[v _T2CON `Vuc ~T0 @X0 0 e@4042 ]
-"5159
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 5159: extern volatile unsigned char CCP2CON __attribute__((address(0xFBA)));
-[v _CCP2CON `Vuc ~T0 @X0 0 e@4026 ]
-"27 ./drv_lcdST7565_SPI.h
-[; ;./drv_lcdST7565_SPI.h: 27: void LCD_Erase(void);
-[v _LCD_Erase `(v ~T0 @X0 0 ef ]
-"2372 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2372:     struct {
-[s S103 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S103 . RC0 RC1 RC2 . RC4 RC5 RC6 RC7 ]
-"2382
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2382:     struct {
-[s S104 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S104 . T1OSO T1OSI CCP1 . TX RX ]
-"2390
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2390:     struct {
-[s S105 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S105 . T13CKI . P1A . CK DT ]
-"2398
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2398:     struct {
-[s S106 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S106 . . CCP2 PA1 ]
-"2403
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2403:     struct {
-[s S107 :1 `uc 1 :1 `uc 1 ]
-[n S107 . . PA2 ]
-"2371
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2371: typedef union {
-[u S102 `S103 1 `S104 1 `S105 1 `S106 1 `S107 1 ]
-[n S102 . . . . . . ]
-"2408
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2408: extern volatile PORTCbits_t PORTCbits __attribute__((address(0xF82)));
-[v _PORTCbits `VS102 ~T0 @X0 0 e@3970 ]
-"28 ./drv_lcdST7565_SPI.h
-[; ;./drv_lcdST7565_SPI.h: 28: uint8 LCD_printStr8x5(uint8*, uint8, uint8);
-[v _LCD_printStr8x5 `(uc ~T0 @X0 0 ef3`*uc`uc`uc ]
-"93 ./common.h
-[; ;./common.h: 93: uint8 adc_getval_an2(void);
-[v _adc_getval_an2 `(uc ~T0 @X0 0 ef ]
 "56 C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h
 [; ;C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h: 56: void srand (unsigned);
 [v _srand `(v ~T0 @X0 0 ef1`ui ]
@@ -245,7 +176,85 @@ Version 4.0 HI-TECH Software Intermediate Code
 "6351
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 6351: extern volatile unsigned char TMR1H __attribute__((address(0xFCF)));
 [v _TMR1H `Vuc ~T0 @X0 0 e@4047 ]
-"2837
+"3035
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 3035: extern volatile unsigned char TRISB __attribute__((address(0xF93)));
+[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
+"3257
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 3257: extern volatile unsigned char TRISC __attribute__((address(0xF94)));
+[v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
+"2765
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2765:     struct {
+[s S119 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S119 . LATC0 LATC1 LATC2 . LATC6 LATC7 ]
+"2773
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2773:     struct {
+[s S120 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S120 . LC0 LC1 LC2 . LC6 LC7 ]
+"2764
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2764: typedef union {
+[u S118 `S119 1 `S120 1 ]
+[n S118 . . . ]
+"2782
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2782: extern volatile LATCbits_t LATCbits __attribute__((address(0xF8B)));
+[v _LATCbits `VS118 ~T0 @X0 0 e@3979 ]
+"87 ./common.h
+[; ;./common.h: 87: btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
+[v _CreateBtn `(S3 ~T0 @X0 0 ef6`*Vuc`*Vuc`*Vuc`Cuc`Cuc`*Cul ]
+"2256 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2256: extern volatile unsigned char PORTB __attribute__((address(0xF81)));
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"2647
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2647: extern volatile unsigned char LATB __attribute__((address(0xF8A)));
+[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
+"6117
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 6117: extern volatile unsigned char PR2 __attribute__((address(0xFCB)));
+[v _PR2 `Vuc ~T0 @X0 0 e@4043 ]
+"5230
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 5230: extern volatile unsigned char CCPR2L __attribute__((address(0xFBB)));
+[v _CCPR2L `Vuc ~T0 @X0 0 e@4027 ]
+"6019
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 6019: extern volatile unsigned char T2CON __attribute__((address(0xFCA)));
+[v _T2CON `Vuc ~T0 @X0 0 e@4042 ]
+"5159
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 5159: extern volatile unsigned char CCP2CON __attribute__((address(0xFBA)));
+[v _CCP2CON `Vuc ~T0 @X0 0 e@4026 ]
+"27 ./drv_lcdST7565_SPI.h
+[; ;./drv_lcdST7565_SPI.h: 27: void LCD_Erase(void);
+[v _LCD_Erase `(v ~T0 @X0 0 ef ]
+"2372 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2372:     struct {
+[s S103 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S103 . RC0 RC1 RC2 . RC4 RC5 RC6 RC7 ]
+"2382
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2382:     struct {
+[s S104 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S104 . T1OSO T1OSI CCP1 . TX RX ]
+"2390
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2390:     struct {
+[s S105 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S105 . T13CKI . P1A . CK DT ]
+"2398
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2398:     struct {
+[s S106 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S106 . . CCP2 PA1 ]
+"2403
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2403:     struct {
+[s S107 :1 `uc 1 :1 `uc 1 ]
+[n S107 . . PA2 ]
+"2371
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2371: typedef union {
+[u S102 `S103 1 `S104 1 `S105 1 `S106 1 `S107 1 ]
+[n S102 . . . . . . ]
+"2408
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2408: extern volatile PORTCbits_t PORTCbits __attribute__((address(0xF82)));
+[v _PORTCbits `VS102 ~T0 @X0 0 e@3970 ]
+"28 ./drv_lcdST7565_SPI.h
+[; ;./drv_lcdST7565_SPI.h: 28: uint8 LCD_printStr8x5(uint8*, uint8, uint8);
+[v _LCD_printStr8x5 `(uc ~T0 @X0 0 ef3`*uc`uc`uc ]
+"93 ./common.h
+[; ;./common.h: 93: uint8 adc_getval_an2(void);
+[v _adc_getval_an2 `(uc ~T0 @X0 0 ef ]
+"2837 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2837: extern volatile unsigned char TRISA __attribute__((address(0xF92)));
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
 "5400
@@ -299,12 +308,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5618
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 5618: extern volatile unsigned char ADRESH __attribute__((address(0xFC4)));
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
-"2256
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2256: extern volatile unsigned char PORTB __attribute__((address(0xF81)));
-[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
-"2647
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2647: extern volatile unsigned char LATB __attribute__((address(0xF8A)));
-[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
 "36 ./common.h
 [; ;./common.h: 36: uint32 timestamp = 0;
 [v _timestamp `ul ~T0 @X0 1 e ]
@@ -884,871 +887,256 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 333 ]
 }
 "21
-[; ;common.c: 21: void commoninit(void)
-[v _commoninit `(v ~T0 @X0 1 ef ]
+[; ;common.c: 21: void randinit(void)
+[v _randinit `(v ~T0 @X0 1 ef ]
 "22
 [; ;common.c: 22: {
 {
-[e :U _commoninit ]
-[f ]
-"23
-[; ;common.c: 23:   TRISB &= 0b11110111;
-[e =& _TRISB -> -> 247 `i `Vuc ]
-"24
-[; ;common.c: 24:   TRISC &= 0b11111001;
-[e =& _TRISC -> -> 249 `i `Vuc ]
-"25
-[; ;common.c: 25:   LATCbits.LC2 = 0;
-[e = . . _LATCbits 1 2 -> -> 0 `i `uc ]
-"26
-[; ;common.c: 26:   LATCbits.LC1 = 1;
-[e = . . _LATCbits 1 1 -> -> 1 `i `uc ]
-"27
-[; ;common.c: 27: }
-[e :UE 337 ]
-}
-"28
-[; ;common.c: 28: uint8 getbatlvl(uint8 Ubat)
-[v _getbatlvl `(uc ~T0 @X0 1 ef1`uc ]
-"29
-[; ;common.c: 29: {
-{
-[e :U _getbatlvl ]
-"28
-[; ;common.c: 28: uint8 getbatlvl(uint8 Ubat)
-[v _Ubat `uc ~T0 @X0 1 r1 ]
-"29
-[; ;common.c: 29: {
-[f ]
-"30
-[; ;common.c: 30:   uint8 lvl = (239 - Ubat) / 8;
-[v _lvl `uc ~T0 @X0 1 a ]
-[e = _lvl -> / - -> 239 `i -> _Ubat `i -> 8 `i `uc ]
-"31
-[; ;common.c: 31:   static uint8 Umax = 240;
-[v F2986 `uc ~T0 @X0 1 s Umax ]
-[i F2986
--> -> 240 `i `uc
-]
-"32
-[; ;common.c: 32:   static uint8 Umin = 228;
-[v F2987 `uc ~T0 @X0 1 s Umin ]
-[i F2987
--> -> 228 `i `uc
-]
-"33
-[; ;common.c: 33:   static uint8 reslvl = 0;
-[v F2988 `uc ~T0 @X0 1 s reslvl ]
-[i F2988
--> -> 0 `i `uc
-]
-"34
-[; ;common.c: 34:   if(Ubat <= 180) return 100;
-[e $ ! <= -> _Ubat `i -> 180 `i 339  ]
-[e ) -> -> 100 `i `uc ]
-[e $UE 338  ]
-[e :U 339 ]
-"35
-[; ;common.c: 35:   Ubat = clamp(Ubat, 192, 240);
-[e = _Ubat ( _clamp (3 , , _Ubat -> -> 192 `i `uc -> -> 240 `i `uc ]
-"36
-[; ;common.c: 36:   if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
-[e $ ! && <= -> _Ubat `i -> F2986 `i >= -> _Ubat `i -> F2987 `i 340  ]
-[e ) F2988 ]
-[e $UE 338  ]
-[e $U 341  ]
-"37
-[; ;common.c: 37:   else
-[e :U 340 ]
-"38
-[; ;common.c: 38:     switch(lvl)
-[e $U 343  ]
-"39
-[; ;common.c: 39:     {
-{
-"40
-[; ;common.c: 40:       case 0: Umin = 228; Umax = 240; reslvl = 0; break;
-[e :U 344 ]
-[e = F2987 -> -> 228 `i `uc ]
-[e = F2986 -> -> 240 `i `uc ]
-[e = F2988 -> -> 0 `i `uc ]
-[e $U 342  ]
-"41
-[; ;common.c: 41:       case 1: Umin = 220; Umax = 236; reslvl = 1; break;
-[e :U 345 ]
-[e = F2987 -> -> 220 `i `uc ]
-[e = F2986 -> -> 236 `i `uc ]
-[e = F2988 -> -> 1 `i `uc ]
-[e $U 342  ]
-"42
-[; ;common.c: 42:       case 2: Umin = 212; Umax = 228; reslvl = 2; break;
-[e :U 346 ]
-[e = F2987 -> -> 212 `i `uc ]
-[e = F2986 -> -> 228 `i `uc ]
-[e = F2988 -> -> 2 `i `uc ]
-[e $U 342  ]
-"43
-[; ;common.c: 43:       case 3: Umin = 204; Umax = 220; reslvl = 3; break;
-[e :U 347 ]
-[e = F2987 -> -> 204 `i `uc ]
-[e = F2986 -> -> 220 `i `uc ]
-[e = F2988 -> -> 3 `i `uc ]
-[e $U 342  ]
-"44
-[; ;common.c: 44:       case 4: Umin = 196; Umax = 212; reslvl = 4; break;
-[e :U 348 ]
-[e = F2987 -> -> 196 `i `uc ]
-[e = F2986 -> -> 212 `i `uc ]
-[e = F2988 -> -> 4 `i `uc ]
-[e $U 342  ]
-"45
-[; ;common.c: 45:       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
-[e :U 349 ]
-[e = F2987 -> -> 192 `i `uc ]
-[e = F2986 -> -> 204 `i `uc ]
-[e = F2988 -> -> 5 `i `uc ]
-[e $U 342  ]
-"46
-[; ;common.c: 46:     }
-}
-[e $U 342  ]
-[e :U 343 ]
-[e [\ _lvl , $ -> 0 `i 344
- , $ -> 1 `i 345
- , $ -> 2 `i 346
- , $ -> 3 `i 347
- , $ -> 4 `i 348
- , $ -> 5 `i 349
- 342 ]
-[e :U 342 ]
-[e :U 341 ]
-"47
-[; ;common.c: 47: }
-[e :UE 338 ]
-}
-"48
-[; ;common.c: 48: void BrightPWM(uint8 duty_cycle)
-[v _BrightPWM `(v ~T0 @X0 1 ef1`uc ]
-"49
-[; ;common.c: 49: {
-{
-[e :U _BrightPWM ]
-"48
-[; ;common.c: 48: void BrightPWM(uint8 duty_cycle)
-[v _duty_cycle `uc ~T0 @X0 1 r1 ]
-"49
-[; ;common.c: 49: {
-[f ]
-"50
-[; ;common.c: 50:   PR2 = 0xFF;
-[e = _PR2 -> -> 255 `i `uc ]
-"51
-[; ;common.c: 51:   CCPR2L = duty_cycle;
-[e = _CCPR2L _duty_cycle ]
-"52
-[; ;common.c: 52:   T2CON = 0b00000100;
-[e = _T2CON -> -> 4 `i `uc ]
-"53
-[; ;common.c: 53:   CCP2CON = 0b00001100;
-[e = _CCP2CON -> -> 12 `i `uc ]
-"54
-[; ;common.c: 54: }
-[e :UE 350 ]
-}
-"56
-[; ;common.c: 56: void Sounds(uint16 delay)
-[v _Sounds `(v ~T0 @X0 1 ef1`ui ]
-"57
-[; ;common.c: 57: {
-{
-[e :U _Sounds ]
-"56
-[; ;common.c: 56: void Sounds(uint16 delay)
-[v _delay `ui ~T0 @X0 1 r1 ]
-"57
-[; ;common.c: 57: {
-[f ]
-"58
-[; ;common.c: 58:   uint16 j;
-[v _j `ui ~T0 @X0 1 a ]
-"59
-[; ;common.c: 59:   for(uint8 i = 0; i < 50; i++)
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 50 `i 352  ]
-[e $U 353  ]
-[e :U 352 ]
-"60
-[; ;common.c: 60:   {
-{
-"61
-[; ;common.c: 61:     LATCbits.LC2 = 0;
-[e = . . _LATCbits 1 2 -> -> 0 `i `uc ]
-"62
-[; ;common.c: 62:     j = delay;
-[e = _j _delay ]
-"63
-[; ;common.c: 63:     while(j--);
-[e $U 355  ]
-[e :U 356 ]
-[e :U 355 ]
-[e $ != -- _j -> -> 1 `i `ui -> -> 0 `i `ui 356  ]
-[e :U 357 ]
-"64
-[; ;common.c: 64:     LATCbits.LC2 = 1;
-[e = . . _LATCbits 1 2 -> -> 1 `i `uc ]
-"65
-[; ;common.c: 65:     j = delay;
-[e = _j _delay ]
-"66
-[; ;common.c: 66:     while(j--);
-[e $U 358  ]
-[e :U 359 ]
-[e :U 358 ]
-[e $ != -- _j -> -> 1 `i `ui -> -> 0 `i `ui 359  ]
-[e :U 360 ]
-"67
-[; ;common.c: 67:   }
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 50 `i 352  ]
-[e :U 353 ]
-}
-"68
-[; ;common.c: 68: }
-[e :UE 351 ]
-}
-"70
-[; ;common.c: 70: void ShutDown(void)
-[v _ShutDown `(v ~T0 @X0 1 ef ]
-"71
-[; ;common.c: 71: {
-{
-[e :U _ShutDown ]
-[f ]
-"72
-[; ;common.c: 72:   LCD_Erase();
-[e ( _LCD_Erase ..  ]
-"73
-[; ;common.c: 73:   PORTCbits.RC1 = 0;
-[e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-"74
-[; ;common.c: 74:   LCD_printStr8x5("Low battery level!", 1, 10);
-[e ( _LCD_printStr8x5 (3 , , :s 1C -> -> 1 `i `uc -> -> 10 `i `uc ]
-"75
-[; ;common.c: 75:   LCD_printStr8x5("Device is", 3, 10);
-[e ( _LCD_printStr8x5 (3 , , :s 2C -> -> 3 `i `uc -> -> 10 `i `uc ]
-"76
-[; ;common.c: 76:   LCD_printStr8x5("shutting down!", 5, 10);
-[e ( _LCD_printStr8x5 (3 , , :s 3C -> -> 5 `i `uc -> -> 10 `i `uc ]
-"77
-[; ;common.c: 77:   while(1);
-[e :U 363 ]
-[e :U 362 ]
-[e $U 363  ]
-[e :U 364 ]
-"78
-[; ;common.c: 78: }
-[e :UE 361 ]
-}
-"80
-[; ;common.c: 80: void batcheck(void)
-[v _batcheck `(v ~T0 @X0 1 ef ]
-"81
-[; ;common.c: 81: {
-{
-[e :U _batcheck ]
-[f ]
-"82
-[; ;common.c: 82:   Ubat = adc_getval_an2();
-[e = _Ubat ( _adc_getval_an2 ..  ]
-"83
-[; ;common.c: 83:   batlvl = getbatlvl(Ubat);
-[e = _batlvl ( _getbatlvl (1 _Ubat ]
-"84
-[; ;common.c: 84:   if(batlvl == 100) ShutDown();
-[e $ ! == -> _batlvl `i -> 100 `i 366  ]
-[e ( _ShutDown ..  ]
-[e :U 366 ]
-"85
-[; ;common.c: 85: }
-[e :UE 365 ]
-}
-"88
-[; ;common.c: 88: void gettime(void)
-[v _gettime `(v ~T0 @X0 1 ef ]
-"89
-[; ;common.c: 89: {
-{
-[e :U _gettime ]
-[f ]
-"90
-[; ;common.c: 90:   rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
-[e = . . _rtcraw 0 0 -> / _timestamp -> -> 3600000 `l `ul `uc ]
-"91
-[; ;common.c: 91:   rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
-[e = . . _rtcraw 0 1 -> / % _timestamp -> -> 3600000 `l `ul -> -> 60000 `l `ul `uc ]
-"92
-[; ;common.c: 92:   rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
-[e = . . _rtcraw 0 2 -> / % _timestamp -> -> 60000 `l `ul -> -> -> 1000 `i `l `ul `uc ]
-"93
-[; ;common.c: 93: }
-[e :UE 367 ]
-}
-"95
-[; ;common.c: 95: void randinit(void)
-[v _randinit `(v ~T0 @X0 1 ef ]
-"96
-[; ;common.c: 96: {
-{
 [e :U _randinit ]
 [f ]
-"97
-[; ;common.c: 97:   srand((uint8)timestamp);
+"23
+[; ;common.c: 23:   srand((uint8)timestamp);
 [e ( _srand (1 -> -> _timestamp `uc `ui ]
-"98
-[; ;common.c: 98: }
-[e :UE 368 ]
+"24
+[; ;common.c: 24: }
+[e :UE 337 ]
 }
-"100
-[; ;common.c: 100: uint8 getrand(uint8 N)
+"26
+[; ;common.c: 26: uint8 getrand(uint8 N)
 [v _getrand `(uc ~T0 @X0 1 ef1`uc ]
-"101
-[; ;common.c: 101: {
+"27
+[; ;common.c: 27: {
 {
 [e :U _getrand ]
-"100
-[; ;common.c: 100: uint8 getrand(uint8 N)
+"26
+[; ;common.c: 26: uint8 getrand(uint8 N)
 [v _N `uc ~T0 @X0 1 r1 ]
-"101
-[; ;common.c: 101: {
+"27
+[; ;common.c: 27: {
 [f ]
-"102
-[; ;common.c: 102:   return (rand() % (N + 1));
+"28
+[; ;common.c: 28:   return (rand() % (N + 1));
 [e ) -> % ( _rand ..  + -> _N `i -> 1 `i `uc ]
-[e $UE 369  ]
-"103
-[; ;common.c: 103: }
-[e :UE 369 ]
+[e $UE 338  ]
+"29
+[; ;common.c: 29: }
+[e :UE 338 ]
 }
-"105
-[; ;common.c: 105: uint8 dig_to_smb(uint8 dig)
+"31
+[; ;common.c: 31: uint8 dig_to_smb(uint8 dig)
 [v _dig_to_smb `(uc ~T0 @X0 1 ef1`uc ]
-"106
-[; ;common.c: 106: {
+"32
+[; ;common.c: 32: {
 {
 [e :U _dig_to_smb ]
-"105
-[; ;common.c: 105: uint8 dig_to_smb(uint8 dig)
+"31
+[; ;common.c: 31: uint8 dig_to_smb(uint8 dig)
 [v _dig `uc ~T0 @X0 1 r1 ]
-"106
-[; ;common.c: 106: {
+"32
+[; ;common.c: 32: {
 [f ]
-"107
-[; ;common.c: 107:   switch (dig)
-[e $U 372  ]
-"108
-[; ;common.c: 108:   {
+"33
+[; ;common.c: 33:   switch (dig)
+[e $U 341  ]
+"34
+[; ;common.c: 34:   {
 {
-"109
-[; ;common.c: 109:     case 0: return '0';
-[e :U 373 ]
+"35
+[; ;common.c: 35:     case 0: return '0';
+[e :U 342 ]
 [e ) -> -> 48 `ui `uc ]
-[e $UE 370  ]
-"110
-[; ;common.c: 110:     case 1: return '1';
-[e :U 374 ]
+[e $UE 339  ]
+"36
+[; ;common.c: 36:     case 1: return '1';
+[e :U 343 ]
 [e ) -> -> 49 `ui `uc ]
-[e $UE 370  ]
-"111
-[; ;common.c: 111:     case 2: return '2';
-[e :U 375 ]
+[e $UE 339  ]
+"37
+[; ;common.c: 37:     case 2: return '2';
+[e :U 344 ]
 [e ) -> -> 50 `ui `uc ]
-[e $UE 370  ]
-"112
-[; ;common.c: 112:     case 3: return '3';
-[e :U 376 ]
+[e $UE 339  ]
+"38
+[; ;common.c: 38:     case 3: return '3';
+[e :U 345 ]
 [e ) -> -> 51 `ui `uc ]
-[e $UE 370  ]
-"113
-[; ;common.c: 113:     case 4: return '4';
-[e :U 377 ]
+[e $UE 339  ]
+"39
+[; ;common.c: 39:     case 4: return '4';
+[e :U 346 ]
 [e ) -> -> 52 `ui `uc ]
-[e $UE 370  ]
-"114
-[; ;common.c: 114:     case 5: return '5';
-[e :U 378 ]
+[e $UE 339  ]
+"40
+[; ;common.c: 40:     case 5: return '5';
+[e :U 347 ]
 [e ) -> -> 53 `ui `uc ]
-[e $UE 370  ]
-"115
-[; ;common.c: 115:     case 6: return '6';
-[e :U 379 ]
+[e $UE 339  ]
+"41
+[; ;common.c: 41:     case 6: return '6';
+[e :U 348 ]
 [e ) -> -> 54 `ui `uc ]
-[e $UE 370  ]
-"116
-[; ;common.c: 116:     case 7: return '7';
-[e :U 380 ]
+[e $UE 339  ]
+"42
+[; ;common.c: 42:     case 7: return '7';
+[e :U 349 ]
 [e ) -> -> 55 `ui `uc ]
-[e $UE 370  ]
-"117
-[; ;common.c: 117:     case 8: return '8';
-[e :U 381 ]
+[e $UE 339  ]
+"43
+[; ;common.c: 43:     case 8: return '8';
+[e :U 350 ]
 [e ) -> -> 56 `ui `uc ]
-[e $UE 370  ]
-"118
-[; ;common.c: 118:     case 9: return '9';
-[e :U 382 ]
+[e $UE 339  ]
+"44
+[; ;common.c: 44:     case 9: return '9';
+[e :U 351 ]
 [e ) -> -> 57 `ui `uc ]
-[e $UE 370  ]
-"119
-[; ;common.c: 119:   }
+[e $UE 339  ]
+"45
+[; ;common.c: 45:   }
 }
-[e $U 371  ]
-[e :U 372 ]
-[e [\ _dig , $ -> 0 `i 373
- , $ -> 1 `i 374
- , $ -> 2 `i 375
- , $ -> 3 `i 376
- , $ -> 4 `i 377
- , $ -> 5 `i 378
- , $ -> 6 `i 379
- , $ -> 7 `i 380
- , $ -> 8 `i 381
- , $ -> 9 `i 382
- 371 ]
-[e :U 371 ]
-"120
-[; ;common.c: 120:   return 0;
+[e $U 340  ]
+[e :U 341 ]
+[e [\ _dig , $ -> 0 `i 342
+ , $ -> 1 `i 343
+ , $ -> 2 `i 344
+ , $ -> 3 `i 345
+ , $ -> 4 `i 346
+ , $ -> 5 `i 347
+ , $ -> 6 `i 348
+ , $ -> 7 `i 349
+ , $ -> 8 `i 350
+ , $ -> 9 `i 351
+ 340 ]
+[e :U 340 ]
+"46
+[; ;common.c: 46:   return 0;
 [e ) -> -> 0 `i `uc ]
-[e $UE 370  ]
-"121
-[; ;common.c: 121: }
-[e :UE 370 ]
+[e $UE 339  ]
+"47
+[; ;common.c: 47: }
+[e :UE 339 ]
 }
-"123
-[; ;common.c: 123: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
+"49
+[; ;common.c: 49: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
 [v _u16_to_str `(v ~T0 @X0 1 ef3`*uc`ui`uc ]
-"124
-[; ;common.c: 124: {
+"50
+[; ;common.c: 50: {
 {
 [e :U _u16_to_str ]
-"123
-[; ;common.c: 123: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
+"49
+[; ;common.c: 49: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
 [v _str `*uc ~T0 @X0 1 r1 ]
 [v _num `ui ~T0 @X0 1 r2 ]
 [v _ZF `uc ~T0 @X0 1 r3 ]
-"124
-[; ;common.c: 124: {
+"50
+[; ;common.c: 50: {
 [f ]
-"125
-[; ;common.c: 125:   str[0] = dig_to_smb(num/10000);
+"51
+[; ;common.c: 51:   str[0] = dig_to_smb(num/10000);
 [e = *U + _str * -> -> 0 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 10000 `i `ui `uc ]
-"126
-[; ;common.c: 126:   num %= 10000;
+"52
+[; ;common.c: 52:   num %= 10000;
 [e =% _num -> -> 10000 `i `ui ]
-"127
-[; ;common.c: 127:   str[1] = dig_to_smb(num/1000);
+"53
+[; ;common.c: 53:   str[1] = dig_to_smb(num/1000);
 [e = *U + _str * -> -> 1 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 1000 `i `ui `uc ]
-"128
-[; ;common.c: 128:   num %= 1000;
+"54
+[; ;common.c: 54:   num %= 1000;
 [e =% _num -> -> 1000 `i `ui ]
-"129
-[; ;common.c: 129:   str[2] = dig_to_smb(num/100);
+"55
+[; ;common.c: 55:   str[2] = dig_to_smb(num/100);
 [e = *U + _str * -> -> 2 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 100 `i `ui `uc ]
-"130
-[; ;common.c: 130:   num %= 100;
+"56
+[; ;common.c: 56:   num %= 100;
 [e =% _num -> -> 100 `i `ui ]
-"131
-[; ;common.c: 131:   str[3] = dig_to_smb(num/10);
+"57
+[; ;common.c: 57:   str[3] = dig_to_smb(num/10);
 [e = *U + _str * -> -> 3 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 10 `i `ui `uc ]
-"132
-[; ;common.c: 132:   str[4] = dig_to_smb(num%10);
+"58
+[; ;common.c: 58:   str[4] = dig_to_smb(num%10);
 [e = *U + _str * -> -> 4 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> % _num -> -> 10 `i `ui `uc ]
-"133
-[; ;common.c: 133:   str[5] = '\0';
+"59
+[; ;common.c: 59:   str[5] = '\0';
 [e = *U + _str * -> -> 5 `i `x -> -> # *U _str `i `x -> -> 0 `ui `uc ]
-"134
-[; ;common.c: 134:   if(ZF)
-[e $ ! != -> _ZF `i -> 0 `i 384  ]
-"135
-[; ;common.c: 135:   {
+"60
+[; ;common.c: 60:   if(ZF)
+[e $ ! != -> _ZF `i -> 0 `i 353  ]
+"61
+[; ;common.c: 61:   {
 {
-"136
-[; ;common.c: 136:     int j = 0;
+"62
+[; ;common.c: 62:     int j = 0;
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
-"137
-[; ;common.c: 137:     for(int i = 0; i < 6; i++)
+"63
+[; ;common.c: 63:     for(int i = 0; i < 6; i++)
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 6 `i 385  ]
-[e $U 386  ]
-[e :U 385 ]
-"138
-[; ;common.c: 138:     {
+[e $ < _i -> 6 `i 354  ]
+[e $U 355  ]
+[e :U 354 ]
+"64
+[; ;common.c: 64:     {
 {
-"139
-[; ;common.c: 139:       if((str[i] == '0') && !j) continue;
-[e $ ! && == -> *U + _str * -> _i `x -> -> # *U _str `i `x `ui -> 48 `ui ! != _j -> 0 `i 388  ]
-[e $U 387  ]
-[e :U 388 ]
-"140
-[; ;common.c: 140:       str[j] = str[i];
+"65
+[; ;common.c: 65:       if((str[i] == '0') && !j) continue;
+[e $ ! && == -> *U + _str * -> _i `x -> -> # *U _str `i `x `ui -> 48 `ui ! != _j -> 0 `i 357  ]
+[e $U 356  ]
+[e :U 357 ]
+"66
+[; ;common.c: 66:       str[j] = str[i];
 [e = *U + _str * -> _j `x -> -> # *U _str `i `x *U + _str * -> _i `x -> -> # *U _str `i `x ]
-"141
-[; ;common.c: 141:       j++;
+"67
+[; ;common.c: 67:       j++;
 [e ++ _j -> 1 `i ]
-"142
-[; ;common.c: 142:     }
+"68
+[; ;common.c: 68:     }
 }
-[e :U 387 ]
+[e :U 356 ]
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 6 `i 385  ]
-[e :U 386 ]
+[e $ < _i -> 6 `i 354  ]
+[e :U 355 ]
 }
-"143
-[; ;common.c: 143:   }
+"69
+[; ;common.c: 69:   }
 }
-[e :U 384 ]
-"144
-[; ;common.c: 144: }
-[e :UE 383 ]
+[e :U 353 ]
+"70
+[; ;common.c: 70: }
+[e :UE 352 ]
 }
-"150
-[; ;common.c: 150: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
-[v _CreateBtn `(S3 ~T0 @X0 1 ef6`*Vuc`*Vuc`*Vuc`Cuc`Cuc`*Cul ]
-"151
-[; ;common.c: 151: {
-{
-[e :U _CreateBtn ]
-"150
-[; ;common.c: 150: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
-[v _Tris `*Vuc ~T0 @X0 1 r1 ]
-[v _Port `*Vuc ~T0 @X0 1 r2 ]
-[v _Lat `*Vuc ~T0 @X0 1 r3 ]
-[v _inputbit `Cuc ~T0 @X0 1 r4 ]
-[v _outputbit `Cuc ~T0 @X0 1 r5 ]
-[v _timecounter `*Cul ~T0 @X0 1 r6 ]
-"151
-[; ;common.c: 151: {
-[f ]
-"152
-[; ;common.c: 152:   btn_t BTN;
-[v _BTN `S3 ~T0 @X0 1 a ]
-"153
-[; ;common.c: 153:   BTN.Port = Port;
-[e = . _BTN 0 _Port ]
-"154
-[; ;common.c: 154:   BTN.Lat = Lat;
-[e = . _BTN 1 _Lat ]
-"155
-[; ;common.c: 155:   switch (inputbit)
-[e $U 391  ]
-"156
-[; ;common.c: 156: {
-{
-"157
-[; ;common.c: 157:     case 0: BTN.inputmask = 0b00000001; break;
-[e :U 392 ]
-[e = . _BTN 2 -> -> 1 `i `uc ]
-[e $U 390  ]
-"158
-[; ;common.c: 158:     case 1: BTN.inputmask = 0b00000010; break;
-[e :U 393 ]
-[e = . _BTN 2 -> -> 2 `i `uc ]
-[e $U 390  ]
-"159
-[; ;common.c: 159:     case 2: BTN.inputmask = 0b00000100; break;
-[e :U 394 ]
-[e = . _BTN 2 -> -> 4 `i `uc ]
-[e $U 390  ]
-"160
-[; ;common.c: 160:     case 3: BTN.inputmask = 0b00001000; break;
-[e :U 395 ]
-[e = . _BTN 2 -> -> 8 `i `uc ]
-[e $U 390  ]
-"161
-[; ;common.c: 161:     case 4: BTN.inputmask = 0b00010000; break;
-[e :U 396 ]
-[e = . _BTN 2 -> -> 16 `i `uc ]
-[e $U 390  ]
-"162
-[; ;common.c: 162:     case 5: BTN.inputmask = 0b00100000; break;
-[e :U 397 ]
-[e = . _BTN 2 -> -> 32 `i `uc ]
-[e $U 390  ]
-"163
-[; ;common.c: 163:     case 6: BTN.inputmask = 0b01000000; break;
-[e :U 398 ]
-[e = . _BTN 2 -> -> 64 `i `uc ]
-[e $U 390  ]
-"164
-[; ;common.c: 164:     case 7: BTN.inputmask = 0b10000000; break;
-[e :U 399 ]
-[e = . _BTN 2 -> -> 128 `i `uc ]
-[e $U 390  ]
-"165
-[; ;common.c: 165:   }
-}
-[e $U 390  ]
-[e :U 391 ]
-[e [\ _inputbit , $ -> 0 `i 392
- , $ -> 1 `i 393
- , $ -> 2 `i 394
- , $ -> 3 `i 395
- , $ -> 4 `i 396
- , $ -> 5 `i 397
- , $ -> 6 `i 398
- , $ -> 7 `i 399
- 390 ]
-[e :U 390 ]
-"166
-[; ;common.c: 166:   switch (outputbit)
-[e $U 401  ]
-"167
-[; ;common.c: 167:   {
-{
-"168
-[; ;common.c: 168:     case 0: BTN.outputmask = 0b11111110; break;
-[e :U 402 ]
-[e = . _BTN 3 -> -> 254 `i `uc ]
-[e $U 400  ]
-"169
-[; ;common.c: 169:     case 1: BTN.outputmask = 0b11111101; break;
-[e :U 403 ]
-[e = . _BTN 3 -> -> 253 `i `uc ]
-[e $U 400  ]
-"170
-[; ;common.c: 170:     case 2: BTN.outputmask = 0b11111011; break;
-[e :U 404 ]
-[e = . _BTN 3 -> -> 251 `i `uc ]
-[e $U 400  ]
-"171
-[; ;common.c: 171:     case 3: BTN.outputmask = 0b11110111; break;
-[e :U 405 ]
-[e = . _BTN 3 -> -> 247 `i `uc ]
-[e $U 400  ]
-"172
-[; ;common.c: 172:     case 4: BTN.outputmask = 0b11101111; break;
-[e :U 406 ]
-[e = . _BTN 3 -> -> 239 `i `uc ]
-[e $U 400  ]
-"173
-[; ;common.c: 173:     case 5: BTN.outputmask = 0b11011111; break;
-[e :U 407 ]
-[e = . _BTN 3 -> -> 223 `i `uc ]
-[e $U 400  ]
-"174
-[; ;common.c: 174:     case 6: BTN.outputmask = 0b10111111; break;
-[e :U 408 ]
-[e = . _BTN 3 -> -> 191 `i `uc ]
-[e $U 400  ]
-"175
-[; ;common.c: 175:     case 7: BTN.outputmask = 0b01111111; break;
-[e :U 409 ]
-[e = . _BTN 3 -> -> 127 `i `uc ]
-[e $U 400  ]
-"176
-[; ;common.c: 176:   }
-}
-[e $U 400  ]
-[e :U 401 ]
-[e [\ _outputbit , $ -> 0 `i 402
- , $ -> 1 `i 403
- , $ -> 2 `i 404
- , $ -> 3 `i 405
- , $ -> 4 `i 406
- , $ -> 5 `i 407
- , $ -> 6 `i 408
- , $ -> 7 `i 409
- 400 ]
-[e :U 400 ]
-"177
-[; ;common.c: 177:   *(Tris) |= BTN.inputmask;
-[e =| *U _Tris -> . _BTN 2 `uc ]
-"178
-[; ;common.c: 178:   *(Tris) &= BTN.outputmask;
-[e =& *U _Tris -> . _BTN 3 `uc ]
-"179
-[; ;common.c: 179:   *(Lat) |= ~BTN.outputmask;
-[e =| *U _Lat -> ~ -> . _BTN 3 `i `uc ]
-"181
-[; ;common.c: 181:   BTN.timecounter = timecounter;
-[e = . _BTN 4 _timecounter ]
-"182
-[; ;common.c: 182:   BTN.BtnFl = 0;
-[e = . _BTN 6 -> -> 0 `i `uc ]
-"183
-[; ;common.c: 183:   BTN.BtnON = 0;
-[e = . _BTN 7 -> -> 0 `i `uc ]
-"184
-[; ;common.c: 184:   BTN.Toggle = 0;
-[e = . _BTN 8 -> -> 0 `i `uc ]
-"185
-[; ;common.c: 185:   BTN.HoldON = 0;
-[e = . _BTN 9 -> -> 0 `i `uc ]
-"186
-[; ;common.c: 186:   BTN.StuckON = 0;
-[e = . _BTN 10 -> -> 0 `i `uc ]
-"187
-[; ;common.c: 187:   BTN.btnTimer = 0;
-[e = . _BTN 5 -> -> -> 0 `i `l `ul ]
-"188
-[; ;common.c: 188:   return BTN;
-[e ) _BTN ]
-[e $UE 389  ]
-"189
-[; ;common.c: 189: }
-[e :UE 389 ]
-}
-"191
-[; ;common.c: 191: void TestBtn(btn_t* btn)
-[v _TestBtn `(v ~T0 @X0 1 ef1`*S3 ]
-"192
-[; ;common.c: 192: {
-{
-[e :U _TestBtn ]
-"191
-[; ;common.c: 191: void TestBtn(btn_t* btn)
-[v _btn `*S3 ~T0 @X0 1 r1 ]
-"192
-[; ;common.c: 192: {
-[f ]
-"193
-[; ;common.c: 193:   *(btn->Lat) &= btn->outputmask;
-[e =& *U . *U _btn 1 -> . *U _btn 3 `uc ]
-"195
-[; ;common.c: 195:   if (!(*(btn->Port) & btn->inputmask) && !btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
-[e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i ! != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 411  ]
-{
-"196
-[; ;common.c: 196:     if(btn->Toggle) btn->Toggle = 0;
-[e $ ! != -> . *U _btn 8 `i -> 0 `i 412  ]
-[e = . *U _btn 8 -> -> 0 `i `uc ]
-[e $U 413  ]
-"197
-[; ;common.c: 197:     else btn->Toggle = 1;
-[e :U 412 ]
-[e = . *U _btn 8 -> -> 1 `i `uc ]
-[e :U 413 ]
-"198
-[; ;common.c: 198:     btn->BtnFl = 1;
-[e = . *U _btn 6 -> -> 1 `i `uc ]
-"199
-[; ;common.c: 199:     btn->btnTimer = *(btn->timecounter);
-[e = . *U _btn 5 *U . *U _btn 4 ]
-"200
-[; ;common.c: 200:     btn->BtnON = 1;
-[e = . *U _btn 7 -> -> 1 `i `uc ]
-"201
-[; ;common.c: 201:   }
-}
-[e :U 411 ]
-"202
-[; ;common.c: 202:   if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
-[e $ ! && && != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 414  ]
-{
-"203
-[; ;common.c: 203:     btn->BtnFl = 0;
-[e = . *U _btn 6 -> -> 0 `i `uc ]
-"204
-[; ;common.c: 204:     btn->HoldON = 0;
-[e = . *U _btn 9 -> -> 0 `i `uc ]
-"205
-[; ;common.c: 205:     btn->StuckON = 0;
-[e = . *U _btn 10 -> -> 0 `i `uc ]
-"206
-[; ;common.c: 206:     btn->btnTimer = *(btn->timecounter);
-[e = . *U _btn 5 *U . *U _btn 4 ]
-"207
-[; ;common.c: 207:   }
-}
-[e :U 414 ]
-"208
-[; ;common.c: 208:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 300) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
-[e $ ! && && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 300 `i `l `ul <= - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 415  ]
-{
-"209
-[; ;common.c: 209:     btn->HoldON = 1;
-[e = . *U _btn 9 -> -> 1 `i `uc ]
-"210
-[; ;common.c: 210:     if(btn->Toggle) btn->Toggle = 0;
-[e $ ! != -> . *U _btn 8 `i -> 0 `i 416  ]
-[e = . *U _btn 8 -> -> 0 `i `uc ]
-[e $U 417  ]
-"211
-[; ;common.c: 211:     else btn->Toggle = 1;
-[e :U 416 ]
-[e = . *U _btn 8 -> -> 1 `i `uc ]
-[e :U 417 ]
-"212
-[; ;common.c: 212:   }
-}
-[e :U 415 ]
-"213
-[; ;common.c: 213:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 2000)) {
-[e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 418  ]
-{
-"214
-[; ;common.c: 214:     btn->HoldON = 0;
-[e = . *U _btn 9 -> -> 0 `i `uc ]
-"215
-[; ;common.c: 215:     btn->StuckON = 1;
-[e = . *U _btn 10 -> -> 1 `i `uc ]
-"216
-[; ;common.c: 216:     if(btn->Toggle) btn->Toggle = 0;
-[e $ ! != -> . *U _btn 8 `i -> 0 `i 419  ]
-[e = . *U _btn 8 -> -> 0 `i `uc ]
-[e $U 420  ]
-"217
-[; ;common.c: 217:     else btn->Toggle = 1;
-[e :U 419 ]
-[e = . *U _btn 8 -> -> 1 `i `uc ]
-[e :U 420 ]
-"218
-[; ;common.c: 218:   }
-}
-[e :U 418 ]
-"220
-[; ;common.c: 220:   *(btn->Lat) |= ~btn->outputmask;
-[e =| *U . *U _btn 1 -> ~ -> . *U _btn 3 `i `uc ]
-"221
-[; ;common.c: 221: }
-[e :UE 410 ]
-}
-"224
-[; ;common.c: 224: void Interrupt_init(void)
+"74
+[; ;common.c: 74: void Interrupt_init(void)
 [v _Interrupt_init `(v ~T0 @X0 1 ef ]
-"225
-[; ;common.c: 225: {
+"75
+[; ;common.c: 75: {
 {
 [e :U _Interrupt_init ]
 [f ]
-"227
-[; ;common.c: 227:   GIE_GIEH = 1; PEIE_GIEL = 1; TMR0IE = 0; INT0IE = 0; RBIE = 0;
+"77
+[; ;common.c: 77:   GIE_GIEH = 1; PEIE_GIEL = 1; TMR0IE = 0; INT0IE = 0; RBIE = 0;
 [e = _GIE_GIEH -> -> 1 `i `b ]
 [e = _PEIE_GIEL -> -> 1 `i `b ]
 [e = _TMR0IE -> -> 0 `i `b ]
 [e = _INT0IE -> -> 0 `i `b ]
 [e = _RBIE -> -> 0 `i `b ]
-"229
-[; ;common.c: 229:   RBPU = 0; INTEDG0 = 0; INTEDG1 = 0; INTEDG2 = 0; TMR0IP = 0; RBIP = 0;
+"79
+[; ;common.c: 79:   RBPU = 0; INTEDG0 = 0; INTEDG1 = 0; INTEDG2 = 0; TMR0IP = 0; RBIP = 0;
 [e = _RBPU -> -> 0 `i `b ]
 [e = _INTEDG0 -> -> 0 `i `b ]
 [e = _INTEDG1 -> -> 0 `i `b ]
 [e = _INTEDG2 -> -> 0 `i `b ]
 [e = _TMR0IP -> -> 0 `i `b ]
 [e = _RBIP -> -> 0 `i `b ]
-"231
-[; ;common.c: 231:   INT2IP = 0; INT1IP = 0; INT2IE = 0; INT1IE = 0;
+"81
+[; ;common.c: 81:   INT2IP = 0; INT1IP = 0; INT2IE = 0; INT1IE = 0;
 [e = _INT2IP -> -> 0 `i `b ]
 [e = _INT1IP -> -> 0 `i `b ]
 [e = _INT2IE -> -> 0 `i `b ]
 [e = _INT1IE -> -> 0 `i `b ]
-"233
-[; ;common.c: 233:   ADIE = 0; RCIE = 0; TXIE = 0; SSPIE = 0; CCP1IE = 0; TMR2IE = 0; TMR1IE = 1;
+"83
+[; ;common.c: 83:   ADIE = 0; RCIE = 0; TXIE = 0; SSPIE = 0; CCP1IE = 0; TMR2IE = 0; TMR1IE = 1;
 [e = _ADIE -> -> 0 `i `b ]
 [e = _RCIE -> -> 0 `i `b ]
 [e = _TXIE -> -> 0 `i `b ]
@@ -1756,8 +1144,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _CCP1IE -> -> 0 `i `b ]
 [e = _TMR2IE -> -> 0 `i `b ]
 [e = _TMR1IE -> -> 1 `i `b ]
-"235
-[; ;common.c: 235:   OSCFIE = 0; CMIE = 0; USBIE = 0; EEIE = 0; BCLIE = 0; HLVDIE = 0; TMR3IE = 0; CCP2IE = 0;
+"85
+[; ;common.c: 85:   OSCFIE = 0; CMIE = 0; USBIE = 0; EEIE = 0; BCLIE = 0; HLVDIE = 0; TMR3IE = 0; CCP2IE = 0;
 [e = _OSCFIE -> -> 0 `i `b ]
 [e = _CMIE -> -> 0 `i `b ]
 [e = _USBIE -> -> 0 `i `b ]
@@ -1766,8 +1154,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _HLVDIE -> -> 0 `i `b ]
 [e = _TMR3IE -> -> 0 `i `b ]
 [e = _CCP2IE -> -> 0 `i `b ]
-"237
-[; ;common.c: 237:   ADIP = 0; RCIP = 0; TXIP = 0; SSPIP = 0; CCP1IP = 0; TMR2IP = 0; TMR1IP = 1;
+"87
+[; ;common.c: 87:   ADIP = 0; RCIP = 0; TXIP = 0; SSPIP = 0; CCP1IP = 0; TMR2IP = 0; TMR1IP = 1;
 [e = _ADIP -> -> 0 `i `b ]
 [e = _RCIP -> -> 0 `i `b ]
 [e = _TXIP -> -> 0 `i `b ]
@@ -1775,8 +1163,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _CCP1IP -> -> 0 `i `b ]
 [e = _TMR2IP -> -> 0 `i `b ]
 [e = _TMR1IP -> -> 1 `i `b ]
-"239
-[; ;common.c: 239:   OSCFIP = 0; CMIP = 0; USBIP = 0; EEIP = 0; BCLIP = 0; HLVDIP = 0; TMR3IP = 0; CCP2IP = 0;
+"89
+[; ;common.c: 89:   OSCFIP = 0; CMIP = 0; USBIP = 0; EEIP = 0; BCLIP = 0; HLVDIP = 0; TMR3IP = 0; CCP2IP = 0;
 [e = _OSCFIP -> -> 0 `i `b ]
 [e = _CMIP -> -> 0 `i `b ]
 [e = _USBIP -> -> 0 `i `b ]
@@ -1785,279 +1173,894 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _HLVDIP -> -> 0 `i `b ]
 [e = _TMR3IP -> -> 0 `i `b ]
 [e = _CCP2IP -> -> 0 `i `b ]
-"241
-[; ;common.c: 241:   IPEN = 0; SBOREN = 0;
+"91
+[; ;common.c: 91:   IPEN = 0; SBOREN = 0;
 [e = _IPEN -> -> 0 `i `b ]
 [e = _SBOREN -> -> 0 `i `b ]
-"242
-[; ;common.c: 242: }
-[e :UE 421 ]
+"92
+[; ;common.c: 92: }
+[e :UE 358 ]
 }
-"244
-[; ;common.c: 244: void timersinit(void)
+"94
+[; ;common.c: 94: void timersinit(void)
 [v _timersinit `(v ~T0 @X0 1 ef ]
-"245
-[; ;common.c: 245: {
+"95
+[; ;common.c: 95: {
 {
 [e :U _timersinit ]
 [f ]
-"246
-[; ;common.c: 246:   T0CON = 0b11000111;
+"96
+[; ;common.c: 96:   T0CON = 0b11000111;
 [e = _T0CON -> -> 199 `i `uc ]
-"247
-[; ;common.c: 247:   TMR0L = 32;
+"97
+[; ;common.c: 97:   TMR0L = 32;
 [e = _TMR0L -> -> 32 `i `uc ]
-"248
-[; ;common.c: 248:   TMR0H = 209;
+"98
+[; ;common.c: 98:   TMR0H = 209;
 [e = _TMR0H -> -> 209 `i `uc ]
-"251
-[; ;common.c: 251:   T1CON = 0b00000101;
+"100
+[; ;common.c: 100:   T1CON = 0b00000101;
 [e = _T1CON -> -> 5 `i `uc ]
-"252
-[; ;common.c: 252:   TMR1L = 241;
+"101
+[; ;common.c: 101:   TMR1L = 241;
 [e = _TMR1L -> -> 241 `i `uc ]
-"253
-[; ;common.c: 253:   TMR1H = 217;
+"102
+[; ;common.c: 102:   TMR1H = 217;
 [e = _TMR1H -> -> 217 `i `uc ]
-"254
-[; ;common.c: 254: }
-[e :UE 422 ]
+"103
+[; ;common.c: 103: }
+[e :UE 359 ]
 }
-"257
-[; ;common.c: 257: uint8 adc_getval_an0()
-[v _adc_getval_an0 `(uc ~T0 @X0 1 ef ]
-"258
-[; ;common.c: 258: {
+"105
+[; ;common.c: 105: void commoninit(void)
+[v _commoninit `(v ~T0 @X0 1 ef ]
+"106
+[; ;common.c: 106: {
 {
-[e :U _adc_getval_an0 ]
+[e :U _commoninit ]
 [f ]
-"259
-[; ;common.c: 259:   TRISA |= 0b00000111;
-[e =| _TRISA -> -> 7 `i `Vuc ]
-"260
-[; ;common.c: 260:   ADCON1 = 0b00001100;
-[e = _ADCON1 -> -> 12 `i `uc ]
-"261
-[; ;common.c: 261:   ADCON2 = 0b00010010;
-[e = _ADCON2 -> -> 18 `i `uc ]
-"262
-[; ;common.c: 262:   ADCON0 = 0b00000001;
-[e = _ADCON0 -> -> 1 `i `uc ]
-"263
-[; ;common.c: 263:   ADCON0bits.ADON = 1;
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"264
-[; ;common.c: 264:   ADCON0bits.GODONE = 1;
-[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"265
-[; ;common.c: 265:   while(ADCON0bits.GODONE);
-[e $U 424  ]
-[e :U 425 ]
-[e :U 424 ]
-[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 425  ]
-[e :U 426 ]
-"266
-[; ;common.c: 266:   return ADRESH;
-[e ) _ADRESH ]
-[e $UE 423  ]
-"267
-[; ;common.c: 267: }
-[e :UE 423 ]
+"107
+[; ;common.c: 107:   TRISB &= 0b11110111;
+[e =& _TRISB -> -> 247 `i `Vuc ]
+"108
+[; ;common.c: 108:   TRISC &= 0b11111001;
+[e =& _TRISC -> -> 249 `i `Vuc ]
+"109
+[; ;common.c: 109:   LATCbits.LC2 = 0;
+[e = . . _LATCbits 1 2 -> -> 0 `i `uc ]
+"110
+[; ;common.c: 110:   LATCbits.LC1 = 1;
+[e = . . _LATCbits 1 1 -> -> 1 `i `uc ]
+"111
+[; ;common.c: 111: }
+[e :UE 360 ]
 }
-"269
-[; ;common.c: 269: uint8 adc_getval_an1()
-[v _adc_getval_an1 `(uc ~T0 @X0 1 ef ]
-"270
-[; ;common.c: 270: {
-{
-[e :U _adc_getval_an1 ]
-[f ]
-"271
-[; ;common.c: 271:   TRISA |= 0b00000111;
-[e =| _TRISA -> -> 7 `i `Vuc ]
-"272
-[; ;common.c: 272:   ADCON1 = 0b00001100;
-[e = _ADCON1 -> -> 12 `i `uc ]
-"273
-[; ;common.c: 273:   ADCON2 = 0b00010010;
-[e = _ADCON2 -> -> 18 `i `uc ]
-"274
-[; ;common.c: 274:   ADCON0 = 0b00000101;
-[e = _ADCON0 -> -> 5 `i `uc ]
-"275
-[; ;common.c: 275:   ADCON0bits.ADON = 1;
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"276
-[; ;common.c: 276:   ADCON0bits.GODONE = 1;
-[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"277
-[; ;common.c: 277:   while(ADCON0bits.GODONE);
-[e $U 428  ]
-[e :U 429 ]
-[e :U 428 ]
-[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 429  ]
-[e :U 430 ]
-"278
-[; ;common.c: 278:   return ADRESH;
-[e ) _ADRESH ]
-[e $UE 427  ]
-"279
-[; ;common.c: 279: }
-[e :UE 427 ]
-}
-"281
-[; ;common.c: 281: uint8 adc_getval_an2()
-[v _adc_getval_an2 `(uc ~T0 @X0 1 ef ]
-"282
-[; ;common.c: 282: {
-{
-[e :U _adc_getval_an2 ]
-[f ]
-"283
-[; ;common.c: 283:   TRISA |= 0b00000111;
-[e =| _TRISA -> -> 7 `i `Vuc ]
-"284
-[; ;common.c: 284:   ADCON1 = 0b00001100;
-[e = _ADCON1 -> -> 12 `i `uc ]
-"285
-[; ;common.c: 285:   ADCON2 = 0b00010010;
-[e = _ADCON2 -> -> 18 `i `uc ]
-"286
-[; ;common.c: 286:   ADCON0 = 0b00001001;
-[e = _ADCON0 -> -> 9 `i `uc ]
-"287
-[; ;common.c: 287:   ADCON0bits.ADON = 1;
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"288
-[; ;common.c: 288:   ADCON0bits.GODONE = 1;
-[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"289
-[; ;common.c: 289:   while(ADCON0bits.GODONE);
-[e $U 432  ]
-[e :U 433 ]
-[e :U 432 ]
-[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 433  ]
-[e :U 434 ]
-"290
-[; ;common.c: 290:   return ADRESH;
-[e ) _ADRESH ]
-[e $UE 431  ]
-"291
-[; ;common.c: 291: }
-[e :UE 431 ]
-}
-"293
-[; ;common.c: 293: void initbuttons(void)
+"113
+[; ;common.c: 113: void initbuttons(void)
 [v _initbuttons `(v ~T0 @X0 1 ef ]
-"294
-[; ;common.c: 294: {
+"114
+[; ;common.c: 114: {
 {
 [e :U _initbuttons ]
 [f ]
-"295
-[; ;common.c: 295:   B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
+"115
+[; ;common.c: 115:   B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
 [e = _B1 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 4 `i `uc -> -> 6 `i `uc -> &U _timestamp `*Cul ]
-"296
-[; ;common.c: 296:   B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
+"116
+[; ;common.c: 116:   B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
 [e = _B2 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 4 `i `uc -> -> 7 `i `uc -> &U _timestamp `*Cul ]
-"297
-[; ;common.c: 297:   B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
+"117
+[; ;common.c: 117:   B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
 [e = _B3 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 5 `i `uc -> -> 6 `i `uc -> &U _timestamp `*Cul ]
-"298
-[; ;common.c: 298:   B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
+"118
+[; ;common.c: 118:   B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
 [e = _B4 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 5 `i `uc -> -> 7 `i `uc -> &U _timestamp `*Cul ]
-"299
-[; ;common.c: 299: }
-[e :UE 435 ]
+"119
+[; ;common.c: 119: }
+[e :UE 361 ]
 }
-"301
-[; ;common.c: 301: void testbuttons(void)
-[v _testbuttons `(v ~T0 @X0 1 ef ]
-"302
-[; ;common.c: 302: {
+"123
+[; ;common.c: 123: uint8 getbatlvl(uint8 Ubat)
+[v _getbatlvl `(uc ~T0 @X0 1 ef1`uc ]
+"124
+[; ;common.c: 124: {
 {
-[e :U _testbuttons ]
+[e :U _getbatlvl ]
+"123
+[; ;common.c: 123: uint8 getbatlvl(uint8 Ubat)
+[v _Ubat `uc ~T0 @X0 1 r1 ]
+"124
+[; ;common.c: 124: {
 [f ]
-"303
-[; ;common.c: 303:   TestBtn(&B1);
-[e ( _TestBtn (1 &U _B1 ]
-"304
-[; ;common.c: 304:   TestBtn(&B2);
-[e ( _TestBtn (1 &U _B2 ]
-"305
-[; ;common.c: 305:   TestBtn(&B3);
-[e ( _TestBtn (1 &U _B3 ]
-"306
-[; ;common.c: 306:   TestBtn(&B4);
-[e ( _TestBtn (1 &U _B4 ]
-"307
-[; ;common.c: 307: }
-[e :UE 436 ]
+"125
+[; ;common.c: 125:   uint8 lvl = (239 - Ubat) / 8;
+[v _lvl `uc ~T0 @X0 1 a ]
+[e = _lvl -> / - -> 239 `i -> _Ubat `i -> 8 `i `uc ]
+"126
+[; ;common.c: 126:   static uint8 Umax = 240;
+[v F3000 `uc ~T0 @X0 1 s Umax ]
+[i F3000
+-> -> 240 `i `uc
+]
+"127
+[; ;common.c: 127:   static uint8 Umin = 228;
+[v F3001 `uc ~T0 @X0 1 s Umin ]
+[i F3001
+-> -> 228 `i `uc
+]
+"128
+[; ;common.c: 128:   static uint8 reslvl = 0;
+[v F3002 `uc ~T0 @X0 1 s reslvl ]
+[i F3002
+-> -> 0 `i `uc
+]
+"129
+[; ;common.c: 129:   if(Ubat <= 180) return 100;
+[e $ ! <= -> _Ubat `i -> 180 `i 363  ]
+[e ) -> -> 100 `i `uc ]
+[e $UE 362  ]
+[e :U 363 ]
+"130
+[; ;common.c: 130:   Ubat = clamp(Ubat, 192, 240);
+[e = _Ubat ( _clamp (3 , , _Ubat -> -> 192 `i `uc -> -> 240 `i `uc ]
+"131
+[; ;common.c: 131:   if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
+[e $ ! && <= -> _Ubat `i -> F3000 `i >= -> _Ubat `i -> F3001 `i 364  ]
+[e ) F3002 ]
+[e $UE 362  ]
+[e $U 365  ]
+"132
+[; ;common.c: 132:   else
+[e :U 364 ]
+"133
+[; ;common.c: 133:     switch(lvl)
+[e $U 367  ]
+"134
+[; ;common.c: 134:     {
+{
+"135
+[; ;common.c: 135:       case 0: Umin = 228; Umax = 240; reslvl = 0; break;
+[e :U 368 ]
+[e = F3001 -> -> 228 `i `uc ]
+[e = F3000 -> -> 240 `i `uc ]
+[e = F3002 -> -> 0 `i `uc ]
+[e $U 366  ]
+"136
+[; ;common.c: 136:       case 1: Umin = 220; Umax = 236; reslvl = 1; break;
+[e :U 369 ]
+[e = F3001 -> -> 220 `i `uc ]
+[e = F3000 -> -> 236 `i `uc ]
+[e = F3002 -> -> 1 `i `uc ]
+[e $U 366  ]
+"137
+[; ;common.c: 137:       case 2: Umin = 212; Umax = 228; reslvl = 2; break;
+[e :U 370 ]
+[e = F3001 -> -> 212 `i `uc ]
+[e = F3000 -> -> 228 `i `uc ]
+[e = F3002 -> -> 2 `i `uc ]
+[e $U 366  ]
+"138
+[; ;common.c: 138:       case 3: Umin = 204; Umax = 220; reslvl = 3; break;
+[e :U 371 ]
+[e = F3001 -> -> 204 `i `uc ]
+[e = F3000 -> -> 220 `i `uc ]
+[e = F3002 -> -> 3 `i `uc ]
+[e $U 366  ]
+"139
+[; ;common.c: 139:       case 4: Umin = 196; Umax = 212; reslvl = 4; break;
+[e :U 372 ]
+[e = F3001 -> -> 196 `i `uc ]
+[e = F3000 -> -> 212 `i `uc ]
+[e = F3002 -> -> 4 `i `uc ]
+[e $U 366  ]
+"140
+[; ;common.c: 140:       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
+[e :U 373 ]
+[e = F3001 -> -> 192 `i `uc ]
+[e = F3000 -> -> 204 `i `uc ]
+[e = F3002 -> -> 5 `i `uc ]
+[e $U 366  ]
+"141
+[; ;common.c: 141:     }
 }
-"309
-[; ;common.c: 309: void rtcrawtobcd(void)
+[e $U 366  ]
+[e :U 367 ]
+[e [\ _lvl , $ -> 0 `i 368
+ , $ -> 1 `i 369
+ , $ -> 2 `i 370
+ , $ -> 3 `i 371
+ , $ -> 4 `i 372
+ , $ -> 5 `i 373
+ 366 ]
+[e :U 366 ]
+[e :U 365 ]
+"142
+[; ;common.c: 142: }
+[e :UE 362 ]
+}
+"144
+[; ;common.c: 144: void BrightPWM(uint8 duty_cycle)
+[v _BrightPWM `(v ~T0 @X0 1 ef1`uc ]
+"145
+[; ;common.c: 145: {
+{
+[e :U _BrightPWM ]
+"144
+[; ;common.c: 144: void BrightPWM(uint8 duty_cycle)
+[v _duty_cycle `uc ~T0 @X0 1 r1 ]
+"145
+[; ;common.c: 145: {
+[f ]
+"146
+[; ;common.c: 146:   PR2 = 0xFF;
+[e = _PR2 -> -> 255 `i `uc ]
+"147
+[; ;common.c: 147:   CCPR2L = duty_cycle;
+[e = _CCPR2L _duty_cycle ]
+"148
+[; ;common.c: 148:   T2CON = 0b00000100;
+[e = _T2CON -> -> 4 `i `uc ]
+"149
+[; ;common.c: 149:   CCP2CON = 0b00001100;
+[e = _CCP2CON -> -> 12 `i `uc ]
+"150
+[; ;common.c: 150: }
+[e :UE 374 ]
+}
+"152
+[; ;common.c: 152: void Sounds(uint16 delay)
+[v _Sounds `(v ~T0 @X0 1 ef1`ui ]
+"153
+[; ;common.c: 153: {
+{
+[e :U _Sounds ]
+"152
+[; ;common.c: 152: void Sounds(uint16 delay)
+[v _delay `ui ~T0 @X0 1 r1 ]
+"153
+[; ;common.c: 153: {
+[f ]
+"154
+[; ;common.c: 154:   uint16 j;
+[v _j `ui ~T0 @X0 1 a ]
+"155
+[; ;common.c: 155:   for(uint8 i = 0; i < 50; i++)
+{
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 50 `i 376  ]
+[e $U 377  ]
+[e :U 376 ]
+"156
+[; ;common.c: 156:   {
+{
+"157
+[; ;common.c: 157:     LATCbits.LC2 = 0;
+[e = . . _LATCbits 1 2 -> -> 0 `i `uc ]
+"158
+[; ;common.c: 158:     j = delay;
+[e = _j _delay ]
+"159
+[; ;common.c: 159:     while(j--);
+[e $U 379  ]
+[e :U 380 ]
+[e :U 379 ]
+[e $ != -- _j -> -> 1 `i `ui -> -> 0 `i `ui 380  ]
+[e :U 381 ]
+"160
+[; ;common.c: 160:     LATCbits.LC2 = 1;
+[e = . . _LATCbits 1 2 -> -> 1 `i `uc ]
+"161
+[; ;common.c: 161:     j = delay;
+[e = _j _delay ]
+"162
+[; ;common.c: 162:     while(j--);
+[e $U 382  ]
+[e :U 383 ]
+[e :U 382 ]
+[e $ != -- _j -> -> 1 `i `ui -> -> 0 `i `ui 383  ]
+[e :U 384 ]
+"163
+[; ;common.c: 163:   }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 50 `i 376  ]
+[e :U 377 ]
+}
+"164
+[; ;common.c: 164: }
+[e :UE 375 ]
+}
+"166
+[; ;common.c: 166: void ShutDown(void)
+[v _ShutDown `(v ~T0 @X0 1 ef ]
+"167
+[; ;common.c: 167: {
+{
+[e :U _ShutDown ]
+[f ]
+"168
+[; ;common.c: 168:   LCD_Erase();
+[e ( _LCD_Erase ..  ]
+"169
+[; ;common.c: 169:   PORTCbits.RC1 = 0;
+[e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
+"170
+[; ;common.c: 170:   LCD_printStr8x5("Low battery level!", 1, 10);
+[e ( _LCD_printStr8x5 (3 , , :s 1C -> -> 1 `i `uc -> -> 10 `i `uc ]
+"171
+[; ;common.c: 171:   LCD_printStr8x5("Device is", 3, 10);
+[e ( _LCD_printStr8x5 (3 , , :s 2C -> -> 3 `i `uc -> -> 10 `i `uc ]
+"172
+[; ;common.c: 172:   LCD_printStr8x5("shutting down!", 5, 10);
+[e ( _LCD_printStr8x5 (3 , , :s 3C -> -> 5 `i `uc -> -> 10 `i `uc ]
+"173
+[; ;common.c: 173:   while(1);
+[e :U 387 ]
+[e :U 386 ]
+[e $U 387  ]
+[e :U 388 ]
+"174
+[; ;common.c: 174: }
+[e :UE 385 ]
+}
+"176
+[; ;common.c: 176: void batcheck(void)
+[v _batcheck `(v ~T0 @X0 1 ef ]
+"177
+[; ;common.c: 177: {
+{
+[e :U _batcheck ]
+[f ]
+"178
+[; ;common.c: 178:   Ubat = adc_getval_an2();
+[e = _Ubat ( _adc_getval_an2 ..  ]
+"179
+[; ;common.c: 179:   batlvl = getbatlvl(Ubat);
+[e = _batlvl ( _getbatlvl (1 _Ubat ]
+"180
+[; ;common.c: 180:   if(batlvl == 100) ShutDown();
+[e $ ! == -> _batlvl `i -> 100 `i 390  ]
+[e ( _ShutDown ..  ]
+[e :U 390 ]
+"181
+[; ;common.c: 181: }
+[e :UE 389 ]
+}
+"183
+[; ;common.c: 183: void gettime(void)
+[v _gettime `(v ~T0 @X0 1 ef ]
+"184
+[; ;common.c: 184: {
+{
+[e :U _gettime ]
+[f ]
+"185
+[; ;common.c: 185:   rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
+[e = . . _rtcraw 0 0 -> / _timestamp -> -> 3600000 `l `ul `uc ]
+"186
+[; ;common.c: 186:   rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
+[e = . . _rtcraw 0 1 -> / % _timestamp -> -> 3600000 `l `ul -> -> 60000 `l `ul `uc ]
+"187
+[; ;common.c: 187:   rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
+[e = . . _rtcraw 0 2 -> / % _timestamp -> -> 60000 `l `ul -> -> -> 1000 `i `l `ul `uc ]
+"188
+[; ;common.c: 188: }
+[e :UE 391 ]
+}
+"190
+[; ;common.c: 190: void rtcrawtobcd(void)
 [v _rtcrawtobcd `(v ~T0 @X0 1 ef ]
-"310
-[; ;common.c: 310: {
+"191
+[; ;common.c: 191: {
 {
 [e :U _rtcrawtobcd ]
 [f ]
-"311
-[; ;common.c: 311:   rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
+"192
+[; ;common.c: 192:   rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
 [e = . . _rtcbcd 0 6 -> | << / -> . . _rtcraw 0 6 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 6 `i -> 10 `i `uc ]
-"312
-[; ;common.c: 312:   rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
+"193
+[; ;common.c: 193:   rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
 [e = . . _rtcbcd 0 5 -> | | -> 128 `i << / -> . . _rtcraw 0 5 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 5 `i -> 10 `i `uc ]
-"313
-[; ;common.c: 313:   rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
+"194
+[; ;common.c: 194:   rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
 [e = . . _rtcbcd 0 3 -> | << / -> . . _rtcraw 0 3 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 3 `i -> 10 `i `uc ]
-"314
-[; ;common.c: 314:   rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
+"195
+[; ;common.c: 195:   rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
 [e = . . _rtcbcd 0 4 . . _rtcraw 0 4 ]
-"315
-[; ;common.c: 315:   rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
+"196
+[; ;common.c: 196:   rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
 [e = . . _rtcbcd 0 2 -> | << / -> . . _rtcraw 0 2 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 2 `i -> 10 `i `uc ]
-"316
-[; ;common.c: 316:   rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
+"197
+[; ;common.c: 197:   rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
 [e = . . _rtcbcd 0 1 -> | << / -> . . _rtcraw 0 1 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 1 `i -> 10 `i `uc ]
-"317
-[; ;common.c: 317:   rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+"198
+[; ;common.c: 198:   rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
 [e = . . _rtcbcd 0 0 -> | << / -> . . _rtcraw 0 0 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 0 `i -> 10 `i `uc ]
-"318
-[; ;common.c: 318: }
-[e :UE 437 ]
+"199
+[; ;common.c: 199: }
+[e :UE 392 ]
 }
-"320
-[; ;common.c: 320: void rtcbcdtoraw(void)
+"201
+[; ;common.c: 201: void rtcbcdtoraw(void)
 [v _rtcbcdtoraw `(v ~T0 @X0 1 ef ]
-"321
-[; ;common.c: 321: {
+"202
+[; ;common.c: 202: {
 {
 [e :U _rtcbcdtoraw ]
 [f ]
-"322
-[; ;common.c: 322:   rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
+"203
+[; ;common.c: 203:   rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
 [e = . . _rtcraw 0 6 -> + * >> -> . . _rtcbcd 0 6 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 6 `i -> 15 `i `uc ]
-"323
-[; ;common.c: 323:   rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
+"204
+[; ;common.c: 204:   rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
 [e = . . _rtcraw 0 5 -> + * >> & -> . . _rtcbcd 0 5 `i -> 31 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 5 `i -> 15 `i `uc ]
-"324
-[; ;common.c: 324:   rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
+"205
+[; ;common.c: 205:   rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
 [e = . . _rtcraw 0 3 -> + * >> & -> . . _rtcbcd 0 3 `i -> 63 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 3 `i -> 15 `i `uc ]
-"325
-[; ;common.c: 325:   rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
+"206
+[; ;common.c: 206:   rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
 [e = . . _rtcraw 0 4 -> & -> . . _rtcbcd 0 4 `i -> 7 `i `uc ]
-"326
-[; ;common.c: 326:   rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
+"207
+[; ;common.c: 207:   rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
 [e = . . _rtcraw 0 2 -> + * >> & -> . . _rtcbcd 0 2 `i -> 63 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 2 `i -> 15 `i `uc ]
-"327
-[; ;common.c: 327:   rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
+"208
+[; ;common.c: 208:   rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
 [e = . . _rtcraw 0 1 -> + * >> & -> . . _rtcbcd 0 1 `i -> 127 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 1 `i -> 15 `i `uc ]
-"328
-[; ;common.c: 328:   rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
+"209
+[; ;common.c: 209:   rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
 [e = . . _rtcraw 0 0 -> + * >> & -> . . _rtcbcd 0 0 `i -> 127 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 0 `i -> 15 `i `uc ]
+"210
+[; ;common.c: 210: }
+[e :UE 393 ]
+}
+"217
+[; ;common.c: 217: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
+[v _CreateBtn `(S3 ~T0 @X0 1 ef6`*Vuc`*Vuc`*Vuc`Cuc`Cuc`*Cul ]
+"218
+[; ;common.c: 218: {
+{
+[e :U _CreateBtn ]
+"217
+[; ;common.c: 217: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
+[v _Tris `*Vuc ~T0 @X0 1 r1 ]
+[v _Port `*Vuc ~T0 @X0 1 r2 ]
+[v _Lat `*Vuc ~T0 @X0 1 r3 ]
+[v _inputbit `Cuc ~T0 @X0 1 r4 ]
+[v _outputbit `Cuc ~T0 @X0 1 r5 ]
+[v _timecounter `*Cul ~T0 @X0 1 r6 ]
+"218
+[; ;common.c: 218: {
+[f ]
+"219
+[; ;common.c: 219:   btn_t BTN;
+[v _BTN `S3 ~T0 @X0 1 a ]
+"220
+[; ;common.c: 220:   BTN.Port = Port;
+[e = . _BTN 0 _Port ]
+"221
+[; ;common.c: 221:   BTN.Lat = Lat;
+[e = . _BTN 1 _Lat ]
+"222
+[; ;common.c: 222:   switch (inputbit)
+[e $U 396  ]
+"223
+[; ;common.c: 223: {
+{
+"224
+[; ;common.c: 224:     case 0: BTN.inputmask = 0b00000001; break;
+[e :U 397 ]
+[e = . _BTN 2 -> -> 1 `i `uc ]
+[e $U 395  ]
+"225
+[; ;common.c: 225:     case 1: BTN.inputmask = 0b00000010; break;
+[e :U 398 ]
+[e = . _BTN 2 -> -> 2 `i `uc ]
+[e $U 395  ]
+"226
+[; ;common.c: 226:     case 2: BTN.inputmask = 0b00000100; break;
+[e :U 399 ]
+[e = . _BTN 2 -> -> 4 `i `uc ]
+[e $U 395  ]
+"227
+[; ;common.c: 227:     case 3: BTN.inputmask = 0b00001000; break;
+[e :U 400 ]
+[e = . _BTN 2 -> -> 8 `i `uc ]
+[e $U 395  ]
+"228
+[; ;common.c: 228:     case 4: BTN.inputmask = 0b00010000; break;
+[e :U 401 ]
+[e = . _BTN 2 -> -> 16 `i `uc ]
+[e $U 395  ]
+"229
+[; ;common.c: 229:     case 5: BTN.inputmask = 0b00100000; break;
+[e :U 402 ]
+[e = . _BTN 2 -> -> 32 `i `uc ]
+[e $U 395  ]
+"230
+[; ;common.c: 230:     case 6: BTN.inputmask = 0b01000000; break;
+[e :U 403 ]
+[e = . _BTN 2 -> -> 64 `i `uc ]
+[e $U 395  ]
+"231
+[; ;common.c: 231:     case 7: BTN.inputmask = 0b10000000; break;
+[e :U 404 ]
+[e = . _BTN 2 -> -> 128 `i `uc ]
+[e $U 395  ]
+"232
+[; ;common.c: 232:   }
+}
+[e $U 395  ]
+[e :U 396 ]
+[e [\ _inputbit , $ -> 0 `i 397
+ , $ -> 1 `i 398
+ , $ -> 2 `i 399
+ , $ -> 3 `i 400
+ , $ -> 4 `i 401
+ , $ -> 5 `i 402
+ , $ -> 6 `i 403
+ , $ -> 7 `i 404
+ 395 ]
+[e :U 395 ]
+"233
+[; ;common.c: 233:   switch (outputbit)
+[e $U 406  ]
+"234
+[; ;common.c: 234:   {
+{
+"235
+[; ;common.c: 235:     case 0: BTN.outputmask = 0b11111110; break;
+[e :U 407 ]
+[e = . _BTN 3 -> -> 254 `i `uc ]
+[e $U 405  ]
+"236
+[; ;common.c: 236:     case 1: BTN.outputmask = 0b11111101; break;
+[e :U 408 ]
+[e = . _BTN 3 -> -> 253 `i `uc ]
+[e $U 405  ]
+"237
+[; ;common.c: 237:     case 2: BTN.outputmask = 0b11111011; break;
+[e :U 409 ]
+[e = . _BTN 3 -> -> 251 `i `uc ]
+[e $U 405  ]
+"238
+[; ;common.c: 238:     case 3: BTN.outputmask = 0b11110111; break;
+[e :U 410 ]
+[e = . _BTN 3 -> -> 247 `i `uc ]
+[e $U 405  ]
+"239
+[; ;common.c: 239:     case 4: BTN.outputmask = 0b11101111; break;
+[e :U 411 ]
+[e = . _BTN 3 -> -> 239 `i `uc ]
+[e $U 405  ]
+"240
+[; ;common.c: 240:     case 5: BTN.outputmask = 0b11011111; break;
+[e :U 412 ]
+[e = . _BTN 3 -> -> 223 `i `uc ]
+[e $U 405  ]
+"241
+[; ;common.c: 241:     case 6: BTN.outputmask = 0b10111111; break;
+[e :U 413 ]
+[e = . _BTN 3 -> -> 191 `i `uc ]
+[e $U 405  ]
+"242
+[; ;common.c: 242:     case 7: BTN.outputmask = 0b01111111; break;
+[e :U 414 ]
+[e = . _BTN 3 -> -> 127 `i `uc ]
+[e $U 405  ]
+"243
+[; ;common.c: 243:   }
+}
+[e $U 405  ]
+[e :U 406 ]
+[e [\ _outputbit , $ -> 0 `i 407
+ , $ -> 1 `i 408
+ , $ -> 2 `i 409
+ , $ -> 3 `i 410
+ , $ -> 4 `i 411
+ , $ -> 5 `i 412
+ , $ -> 6 `i 413
+ , $ -> 7 `i 414
+ 405 ]
+[e :U 405 ]
+"244
+[; ;common.c: 244:   *(Tris) |= BTN.inputmask;
+[e =| *U _Tris -> . _BTN 2 `uc ]
+"245
+[; ;common.c: 245:   *(Tris) &= BTN.outputmask;
+[e =& *U _Tris -> . _BTN 3 `uc ]
+"246
+[; ;common.c: 246:   *(Lat) |= ~BTN.outputmask;
+[e =| *U _Lat -> ~ -> . _BTN 3 `i `uc ]
+"248
+[; ;common.c: 248:   BTN.timecounter = timecounter;
+[e = . _BTN 4 _timecounter ]
+"249
+[; ;common.c: 249:   BTN.BtnFl = 0;
+[e = . _BTN 6 -> -> 0 `i `uc ]
+"250
+[; ;common.c: 250:   BTN.BtnON = 0;
+[e = . _BTN 7 -> -> 0 `i `uc ]
+"251
+[; ;common.c: 251:   BTN.Toggle = 0;
+[e = . _BTN 8 -> -> 0 `i `uc ]
+"252
+[; ;common.c: 252:   BTN.HoldON = 0;
+[e = . _BTN 9 -> -> 0 `i `uc ]
+"253
+[; ;common.c: 253:   BTN.StuckON = 0;
+[e = . _BTN 10 -> -> 0 `i `uc ]
+"254
+[; ;common.c: 254:   BTN.btnTimer = 0;
+[e = . _BTN 5 -> -> -> 0 `i `l `ul ]
+"255
+[; ;common.c: 255:   return BTN;
+[e ) _BTN ]
+[e $UE 394  ]
+"256
+[; ;common.c: 256: }
+[e :UE 394 ]
+}
+"258
+[; ;common.c: 258: void TestBtn(btn_t* btn)
+[v _TestBtn `(v ~T0 @X0 1 ef1`*S3 ]
+"259
+[; ;common.c: 259: {
+{
+[e :U _TestBtn ]
+"258
+[; ;common.c: 258: void TestBtn(btn_t* btn)
+[v _btn `*S3 ~T0 @X0 1 r1 ]
+"259
+[; ;common.c: 259: {
+[f ]
+"260
+[; ;common.c: 260:   *(btn->Lat) &= btn->outputmask;
+[e =& *U . *U _btn 1 -> . *U _btn 3 `uc ]
+"262
+[; ;common.c: 262:   if (!(*(btn->Port) & btn->inputmask) && !btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
+[e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i ! != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 416  ]
+{
+"263
+[; ;common.c: 263:     if(btn->Toggle) btn->Toggle = 0;
+[e $ ! != -> . *U _btn 8 `i -> 0 `i 417  ]
+[e = . *U _btn 8 -> -> 0 `i `uc ]
+[e $U 418  ]
+"264
+[; ;common.c: 264:     else btn->Toggle = 1;
+[e :U 417 ]
+[e = . *U _btn 8 -> -> 1 `i `uc ]
+[e :U 418 ]
+"265
+[; ;common.c: 265:     btn->BtnFl = 1;
+[e = . *U _btn 6 -> -> 1 `i `uc ]
+"266
+[; ;common.c: 266:     btn->btnTimer = *(btn->timecounter);
+[e = . *U _btn 5 *U . *U _btn 4 ]
+"267
+[; ;common.c: 267:     btn->BtnON = 1;
+[e = . *U _btn 7 -> -> 1 `i `uc ]
+"268
+[; ;common.c: 268:   }
+}
+[e :U 416 ]
+"269
+[; ;common.c: 269:   if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
+[e $ ! && && != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 419  ]
+{
+"270
+[; ;common.c: 270:     btn->BtnFl = 0;
+[e = . *U _btn 6 -> -> 0 `i `uc ]
+"271
+[; ;common.c: 271:     btn->HoldON = 0;
+[e = . *U _btn 9 -> -> 0 `i `uc ]
+"272
+[; ;common.c: 272:     btn->StuckON = 0;
+[e = . *U _btn 10 -> -> 0 `i `uc ]
+"273
+[; ;common.c: 273:     btn->btnTimer = *(btn->timecounter);
+[e = . *U _btn 5 *U . *U _btn 4 ]
+"274
+[; ;common.c: 274:   }
+}
+[e :U 419 ]
+"275
+[; ;common.c: 275:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 300) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
+[e $ ! && && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 300 `i `l `ul <= - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 420  ]
+{
+"276
+[; ;common.c: 276:     btn->HoldON = 1;
+[e = . *U _btn 9 -> -> 1 `i `uc ]
+"277
+[; ;common.c: 277:     if(btn->Toggle) btn->Toggle = 0;
+[e $ ! != -> . *U _btn 8 `i -> 0 `i 421  ]
+[e = . *U _btn 8 -> -> 0 `i `uc ]
+[e $U 422  ]
+"278
+[; ;common.c: 278:     else btn->Toggle = 1;
+[e :U 421 ]
+[e = . *U _btn 8 -> -> 1 `i `uc ]
+[e :U 422 ]
+"279
+[; ;common.c: 279:   }
+}
+[e :U 420 ]
+"280
+[; ;common.c: 280:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 2000)) {
+[e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 423  ]
+{
+"281
+[; ;common.c: 281:     btn->HoldON = 0;
+[e = . *U _btn 9 -> -> 0 `i `uc ]
+"282
+[; ;common.c: 282:     btn->StuckON = 1;
+[e = . *U _btn 10 -> -> 1 `i `uc ]
+"283
+[; ;common.c: 283:     if(btn->Toggle) btn->Toggle = 0;
+[e $ ! != -> . *U _btn 8 `i -> 0 `i 424  ]
+[e = . *U _btn 8 -> -> 0 `i `uc ]
+[e $U 425  ]
+"284
+[; ;common.c: 284:     else btn->Toggle = 1;
+[e :U 424 ]
+[e = . *U _btn 8 -> -> 1 `i `uc ]
+[e :U 425 ]
+"285
+[; ;common.c: 285:   }
+}
+[e :U 423 ]
+"287
+[; ;common.c: 287:   *(btn->Lat) |= ~btn->outputmask;
+[e =| *U . *U _btn 1 -> ~ -> . *U _btn 3 `i `uc ]
+"288
+[; ;common.c: 288: }
+[e :UE 415 ]
+}
+"290
+[; ;common.c: 290: uint8 adc_getval_an0()
+[v _adc_getval_an0 `(uc ~T0 @X0 1 ef ]
+"291
+[; ;common.c: 291: {
+{
+[e :U _adc_getval_an0 ]
+[f ]
+"292
+[; ;common.c: 292:   TRISA |= 0b00000111;
+[e =| _TRISA -> -> 7 `i `Vuc ]
+"293
+[; ;common.c: 293:   ADCON1 = 0b00001100;
+[e = _ADCON1 -> -> 12 `i `uc ]
+"294
+[; ;common.c: 294:   ADCON2 = 0b00010010;
+[e = _ADCON2 -> -> 18 `i `uc ]
+"295
+[; ;common.c: 295:   ADCON0 = 0b00000001;
+[e = _ADCON0 -> -> 1 `i `uc ]
+"296
+[; ;common.c: 296:   ADCON0bits.ADON = 1;
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+"297
+[; ;common.c: 297:   ADCON0bits.GODONE = 1;
+[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
+"298
+[; ;common.c: 298:   while(ADCON0bits.GODONE);
+[e $U 427  ]
+[e :U 428 ]
+[e :U 427 ]
+[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 428  ]
+[e :U 429 ]
+"299
+[; ;common.c: 299:   return ADRESH;
+[e ) _ADRESH ]
+[e $UE 426  ]
+"300
+[; ;common.c: 300: }
+[e :UE 426 ]
+}
+"302
+[; ;common.c: 302: uint8 adc_getval_an1()
+[v _adc_getval_an1 `(uc ~T0 @X0 1 ef ]
+"303
+[; ;common.c: 303: {
+{
+[e :U _adc_getval_an1 ]
+[f ]
+"304
+[; ;common.c: 304:   TRISA |= 0b00000111;
+[e =| _TRISA -> -> 7 `i `Vuc ]
+"305
+[; ;common.c: 305:   ADCON1 = 0b00001100;
+[e = _ADCON1 -> -> 12 `i `uc ]
+"306
+[; ;common.c: 306:   ADCON2 = 0b00010010;
+[e = _ADCON2 -> -> 18 `i `uc ]
+"307
+[; ;common.c: 307:   ADCON0 = 0b00000101;
+[e = _ADCON0 -> -> 5 `i `uc ]
+"308
+[; ;common.c: 308:   ADCON0bits.ADON = 1;
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+"309
+[; ;common.c: 309:   ADCON0bits.GODONE = 1;
+[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
+"310
+[; ;common.c: 310:   while(ADCON0bits.GODONE);
+[e $U 431  ]
+[e :U 432 ]
+[e :U 431 ]
+[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 432  ]
+[e :U 433 ]
+"311
+[; ;common.c: 311:   return ADRESH;
+[e ) _ADRESH ]
+[e $UE 430  ]
+"312
+[; ;common.c: 312: }
+[e :UE 430 ]
+}
+"314
+[; ;common.c: 314: uint8 adc_getval_an2()
+[v _adc_getval_an2 `(uc ~T0 @X0 1 ef ]
+"315
+[; ;common.c: 315: {
+{
+[e :U _adc_getval_an2 ]
+[f ]
+"316
+[; ;common.c: 316:   TRISA |= 0b00000111;
+[e =| _TRISA -> -> 7 `i `Vuc ]
+"317
+[; ;common.c: 317:   ADCON1 = 0b00001100;
+[e = _ADCON1 -> -> 12 `i `uc ]
+"318
+[; ;common.c: 318:   ADCON2 = 0b00010010;
+[e = _ADCON2 -> -> 18 `i `uc ]
+"319
+[; ;common.c: 319:   ADCON0 = 0b00001001;
+[e = _ADCON0 -> -> 9 `i `uc ]
+"320
+[; ;common.c: 320:   ADCON0bits.ADON = 1;
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+"321
+[; ;common.c: 321:   ADCON0bits.GODONE = 1;
+[e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
+"322
+[; ;common.c: 322:   while(ADCON0bits.GODONE);
+[e $U 435  ]
+[e :U 436 ]
+[e :U 435 ]
+[e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 436  ]
+[e :U 437 ]
+"323
+[; ;common.c: 323:   return ADRESH;
+[e ) _ADRESH ]
+[e $UE 434  ]
+"324
+[; ;common.c: 324: }
+[e :UE 434 ]
+}
+"326
+[; ;common.c: 326: void testbuttons(void)
+[v _testbuttons `(v ~T0 @X0 1 ef ]
+"327
+[; ;common.c: 327: {
+{
+[e :U _testbuttons ]
+[f ]
+"328
+[; ;common.c: 328:   TestBtn(&B1);
+[e ( _TestBtn (1 &U _B1 ]
 "329
-[; ;common.c: 329: }
+[; ;common.c: 329:   TestBtn(&B2);
+[e ( _TestBtn (1 &U _B2 ]
+"330
+[; ;common.c: 330:   TestBtn(&B3);
+[e ( _TestBtn (1 &U _B3 ]
+"331
+[; ;common.c: 331:   TestBtn(&B4);
+[e ( _TestBtn (1 &U _B4 ]
+"332
+[; ;common.c: 332: }
 [e :UE 438 ]
 }
 [a 2C 68 101 118 105 99 101 32 105 115 0 ]
