@@ -26,7 +26,7 @@ void LCD_Set_PageColumn(uint8, uint8);
 void LCD_printSmb8x5(const uint8, uint8, uint8);
 void LCD_Erase(void);
 uint8 LCD_printStr8x5(uint8*, uint8, uint8);
-void LCD_PrintClock(systime_t);
+void LCD_PrintClockAndDate(void);
 void print_ufo(uint8, uint8);
 void print_piu(uint8, uint8);
 void print_cometa(uint8, uint8);

@@ -56,8 +56,8 @@ void ufobattle_init(void)
     if(B1.BtnON){B1.BtnON = 0; StartFl = 1; Sounds(400);}
 
     #if 1 // print clock
-    gettime(&Time);
-    LCD_PrintClock(Time);
+    gettime();
+    LCD_PrintClockAndDate();
     #endif
 
     batcheck();

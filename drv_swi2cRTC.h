@@ -15,6 +15,9 @@ uint8 swi2cwritebyte(uint8);
 uint8 swi2creadbyte(void);
 void RTCgetdata(uint8*);
 void RTCsenddata(uint8*);
+void rtcbcdtoraw(void);
+void rtcrawtobcd(void);
+
 #ifdef	__cplusplus
 }
 #endif

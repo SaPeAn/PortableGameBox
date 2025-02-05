@@ -19,15 +19,28 @@ typedef long             int32;
 
 /*-------------------------GLOBAL VARIABLES-----------------------------------*/
 typedef struct{
-  uint8   sec;
-  uint8   min;
-  uint8   hour;
-} systime_t;
+  uint8 sec;     // BCD  0...59            |x |SH|SH|SH|SL|SL|SL|SL|
+  uint8 min;     // BCD  0...59            |x |MH|MH|MH|ML|ML|ML|ML|
+  uint8 hour;    // BCD  0...23            |x |x |HH|HH|HL|HL|HL|HL|
+  uint8 day;     // BCD  0...              |x |x |Dh|DH|DL|DL|DL|DL|    
+  uint8 weekday; // BCD  from SUN to SAT   |x |x |x |x |x |W |W |W |
+  uint8 month;   // century bit & BCD      |C |x |x |MH|ML|ML|ML|ML|
+  uint8 year;    // BCD                    |YH|YH|YH|YH|YL|YL|YL|YL|
+} rtc_t;
+
+typedef union{
+  rtc_t rtcpar; 
+  uint8  rtcdata[7];
+} rtcun_t;
+
 
 uint32 timestamp = 0; //System timer (ms) from power on or last restart
-systime_t Time;
+
+rtcun_t rtcbcd; // clock/data in RTC module
+rtcun_t rtcraw; // system clock/data 
 uint8 Ubat;
 uint8 batlvl;
+uint8 brightlvl;
 /*----------------------------------------------------------------------------*/
 typedef struct{
   volatile uint8*  Port;
@@ -65,7 +78,7 @@ void initbuttons(void);
   
 /*-------------------------SYSTEM FUNCTIONS-----------------------------------*/
 void commoninit(void);
-void gettime(systime_t*);
+void gettime(void);
 uint8 getbatlvl(uint8);
 void delay_ms(uint32);
 uint8 getrand(uint8);

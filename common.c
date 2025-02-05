@@ -87,11 +87,11 @@ void batcheck(void)
 }
 /*----------------------------------------------------------------------------*/
 
-void gettime(systime_t* tm)
+void gettime(void)
 { 
-  tm->hour = (uint8)(timestamp/3600000);
-  tm->min = (uint8)((timestamp%3600000)/60000);
-  tm->sec = (uint8)((timestamp%60000)/1000);
+  rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
+  rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
+  rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
 }
 
 void randinit(void)

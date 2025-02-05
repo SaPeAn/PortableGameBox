@@ -11,6 +11,7 @@
 #include "drv_lcdST7565_SPI.h"
 #include <xc.h>
 #include "display_data.h"
+#include "drv_swi2cRTC.h"
 #include <stdlib.h>
 
 #define   RS      LATAbits.LA3    // 1-data/0-cmd
@@ -172,16 +173,14 @@ uint8 LCD_printStr8x5(uint8 *str, uint8 page, uint8 col)
   return i;
 }
 
-void LCD_PrintClock(systime_t tm)
+void LCD_PrintClockAndDate(void)
 {
-  uint8 secL = tm.sec%10;
-  uint8 minL = tm.min%10;
-  uint8 hourL = tm.hour%10;
-  tm.sec /= 10;
-  tm.min /= 10;
-  tm.hour /= 10;
-  uint8 cl_digits[9] = {dig_to_smb(tm.hour), dig_to_smb(hourL), ':', dig_to_smb(tm.min), dig_to_smb(minL), ':', dig_to_smb(tm.sec), dig_to_smb(secL), '\0'};
-  LCD_printStr8x5(cl_digits, 0, 41);
+  uint8 minL = rtcraw.rtcpar.min % 10;
+  uint8 hourL = rtcraw.rtcpar.hour % 10;
+  rtcraw.rtcpar.min /= 10;
+  rtcraw.rtcpar.hour /= 10;
+  uint8 cl_digits[9] = {dig_to_smb(rtcraw.rtcpar.hour), dig_to_smb(hourL), ':', dig_to_smb(rtcraw.rtcpar.min), dig_to_smb(minL), '\0'};
+  LCD_printStr8x5(cl_digits, 0, 25);
 }
 
 void LCD_Erase(void)
@@ -222,4 +221,10 @@ void LCD_WriteByte(uint8 byte)
   CS = 1;
 }
 
-
+void LCD_printbrightnes(uint8 brlvl, uint8 page, uint8 col) //  size 26 column
+{
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(bright_icon, 9);
+  LCD_Set_PageColumn(page, col+9);
+  LCD_SendData(bright_lvl[brlvl], 15);
+}

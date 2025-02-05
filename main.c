@@ -9,7 +9,7 @@
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------------INTERRAPTS---------------------------------*/
-void __interrupt() systemTime_int(void)
+void __interrupt() systemTick_int(void)
 {
   if (TMR1IE && TMR1IF)
   {
@@ -41,57 +41,53 @@ void main(void)
 /*----------------------------------------------------------------------------*/
   uint8 tempval = 0;
   uint8 stringtemp[6];
-  uint8 RTCdata[7] = {0, 0, 0, 0, 0, 0, 0};
-  uint8 RTCgetdat[7];
+  rtcraw.rtcpar.year = 25;
+  rtcraw.rtcpar.month = 2;
+  rtcraw.rtcpar.day = 4;
+  rtcraw.rtcpar.weekday = 3;
+  rtcraw.rtcpar.hour = 20;
+  rtcraw.rtcpar.min = 34;
+  rtcraw.rtcpar.sec = 0;
 /*-------------------------------MAIN CYCLE-----------------------------------*/
   while(1)
   { 
+    
+#if 1 
     testbuttons();
     
-    if(B1.BtnON) 
-    {
-      B1.BtnON = 0; 
-      
-      for(uint8 i = 0; i < 7; i++) {
-      u16_to_str(stringtemp, RTCdata[i], DISABLE);
-      LCD_printStr8x5(stringtemp, i, 2);
-      }
-      
-      static uint8 i = 0;
-      if(i < 10) for(uint8 j = 0; j < 7; j++) RTCdata[j]++;
-      else i = 0;
-      i++;
-      RTCsenddata(RTCgetdata);
-    } 
     
-    if(B2.BtnON) 
+    if(B2.BtnON)
     {
       B2.BtnON = 0;
-      RTCgetdata(RTCgetdat);
-      for(uint8 i = 0; i < 7; i++) {
-      u16_to_str(stringtemp, RTCgetdat[i], DISABLE);
-      LCD_printStr8x5(stringtemp, i, 37);
+      rtcraw.rtcpar.hour = 23;
+      rtcraw.rtcpar.min = 59;
+      rtcraw.rtcpar.sec = 58;
+      rtcrawtobcd();
+      RTCsenddata(rtcbcd.rtcdata);
+      for(uint8 i = 0; i < 7; i++)
+      {
+      tempval = rtcraw.rtcdata[i];
+      u16_to_str(stringtemp, tempval, DISABLE);
+      LCD_printStr8x5(stringtemp, i, 0);
       }
     }
     
-    if(B3.BtnON)
+    if(B1.BtnON)
     {
-      B3.BtnON = 0;
-      static uint8 k = 0;
-      if(k >= 7) k = 0;
-      swi2cstart();
-      swi2cwritebyte(0xA2);
-      swi2cwritebyte(0x02 + k);
-      swi2cstop();
-      swi2cstart();
-      swi2cwritebyte(0xA3);
-      tempval =  swi2creadbyte();
-      swi2cstop();
+      B1.BtnON = 0;
+      RTCgetdata(rtcbcd.rtcdata);
+      rtcbcdtoraw();
+      for(uint8 i = 0; i < 7; i++)
+      {
+      tempval = rtcraw.rtcdata[i];
       u16_to_str(stringtemp, tempval, DISABLE);
-      LCD_printStr8x5(stringtemp, k, 72);
-      k++;
+      LCD_printStr8x5(stringtemp, i, 35);
+      }
     }
     
+    
+    
+#endif
     
     //ufobattle_init();
     //ufobattle_start();
