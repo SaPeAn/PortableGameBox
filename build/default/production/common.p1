@@ -7,8 +7,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./common.h: 31: typedef union{
 [u S2 `S1 1 `uc -> 7 `i ]
 [n S2 . rtcpar rtcdata ]
-"45
-[; ;./common.h: 45: typedef struct{
+"65
+[; ;./common.h: 65: typedef struct{
 [s S3 `*Vuc 1 `*Vuc 1 `uc 1 `uc 1 `*Cul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
 [n S3 . Port Lat inputmask outputmask timecounter btnTimer BtnFl BtnON Toggle HoldON StuckON ]
 "3035 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
@@ -77,8 +77,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "28 ./drv_lcdST7565_SPI.h
 [; ;./drv_lcdST7565_SPI.h: 28: uint8 LCD_printStr8x5(uint8*, uint8, uint8);
 [v _LCD_printStr8x5 `(uc ~T0 @X0 0 ef3`*uc`uc`uc ]
-"75 ./common.h
-[; ;./common.h: 75: uint8 adc_getval_an2(void);
+"93 ./common.h
+[; ;./common.h: 93: uint8 adc_getval_an2(void);
 [v _adc_getval_an2 `(uc ~T0 @X0 0 ef ]
 "56 C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h
 [; ;C:\Program Files\Microchip\xc8\v2.50\pic\include\c99\stdlib.h: 56: void srand (unsigned);
@@ -305,49 +305,49 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2647
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 2647: extern volatile unsigned char LATB __attribute__((address(0xF8A)));
 [v _LATB `Vuc ~T0 @X0 0 e@3978 ]
-"37 ./common.h
-[; ;./common.h: 37: uint32 timestamp = 0;
+"36 ./common.h
+[; ;./common.h: 36: uint32 timestamp = 0;
 [v _timestamp `ul ~T0 @X0 1 e ]
 [i _timestamp
 -> -> -> 0 `i `l `ul
 ]
-"39
-[; ;./common.h: 39: rtcun_t rtcbcd;
+"37
+[; ;./common.h: 37: rtcun_t rtcbcd;
 [v _rtcbcd `S2 ~T0 @X0 1 e ]
-"40
-[; ;./common.h: 40: rtcun_t rtcraw;
+"38
+[; ;./common.h: 38: rtcun_t rtcraw;
 [v _rtcraw `S2 ~T0 @X0 1 e ]
-"41
-[; ;./common.h: 41: uint8 Ubat;
+"39
+[; ;./common.h: 39: uint8 Ubat;
 [v _Ubat `uc ~T0 @X0 1 e ]
-"42
-[; ;./common.h: 42: uint8 batlvl;
+"40
+[; ;./common.h: 40: uint8 batlvl;
 [v _batlvl `uc ~T0 @X0 1 e ]
-"43
-[; ;./common.h: 43: uint8 brightlvl;
+"41
+[; ;./common.h: 41: uint8 brightlvl;
 [v _brightlvl `uc ~T0 @X0 1 e ]
-"62
-[; ;./common.h: 62: btn_t B1;
-[v _B1 `S3 ~T0 @X0 1 e ]
-"63
-[; ;./common.h: 63: btn_t B2;
-[v _B2 `S3 ~T0 @X0 1 e ]
-"64
-[; ;./common.h: 64: btn_t B3;
-[v _B3 `S3 ~T0 @X0 1 e ]
-"65
-[; ;./common.h: 65: btn_t B4;
-[v _B4 `S3 ~T0 @X0 1 e ]
-"67
-[; ;./common.h: 67: uint8 ox, oy;
-[v _ox `uc ~T0 @X0 1 e ]
-[v _oy `uc ~T0 @X0 1 e ]
-"68
-[; ;./common.h: 68: uint8 bright = 200;
-[v _bright `uc ~T0 @X0 1 e ]
-[i _bright
+"42
+[; ;./common.h: 42: uint8 brightPWM = 200;
+[v _brightPWM `uc ~T0 @X0 1 e ]
+[i _brightPWM
 -> -> 200 `i `uc
 ]
+"79
+[; ;./common.h: 79: btn_t B1;
+[v _B1 `S3 ~T0 @X0 1 e ]
+"80
+[; ;./common.h: 80: btn_t B2;
+[v _B2 `S3 ~T0 @X0 1 e ]
+"81
+[; ;./common.h: 81: btn_t B3;
+[v _B3 `S3 ~T0 @X0 1 e ]
+"82
+[; ;./common.h: 82: btn_t B4;
+[v _B4 `S3 ~T0 @X0 1 e ]
+"83
+[; ;./common.h: 83: uint8 ox, oy;
+[v _ox `uc ~T0 @X0 1 e ]
+[v _oy `uc ~T0 @X0 1 e ]
 "54 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18Fxxxx_DFP/1.6.159/xc8\pic\include\proc\pic18f2550.h: 54: __asm("UFRM equ 0F66h");
 [; <" UFRM equ 0F66h ;# ">
@@ -926,20 +926,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _lvl -> / - -> 239 `i -> _Ubat `i -> 8 `i `uc ]
 "31
 [; ;common.c: 31:   static uint8 Umax = 240;
-[v F2985 `uc ~T0 @X0 1 s Umax ]
-[i F2985
+[v F2986 `uc ~T0 @X0 1 s Umax ]
+[i F2986
 -> -> 240 `i `uc
 ]
 "32
 [; ;common.c: 32:   static uint8 Umin = 228;
-[v F2986 `uc ~T0 @X0 1 s Umin ]
-[i F2986
+[v F2987 `uc ~T0 @X0 1 s Umin ]
+[i F2987
 -> -> 228 `i `uc
 ]
 "33
 [; ;common.c: 33:   static uint8 reslvl = 0;
-[v F2987 `uc ~T0 @X0 1 s reslvl ]
-[i F2987
+[v F2988 `uc ~T0 @X0 1 s reslvl ]
+[i F2988
 -> -> 0 `i `uc
 ]
 "34
@@ -953,8 +953,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _Ubat ( _clamp (3 , , _Ubat -> -> 192 `i `uc -> -> 240 `i `uc ]
 "36
 [; ;common.c: 36:   if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
-[e $ ! && <= -> _Ubat `i -> F2985 `i >= -> _Ubat `i -> F2986 `i 340  ]
-[e ) F2987 ]
+[e $ ! && <= -> _Ubat `i -> F2986 `i >= -> _Ubat `i -> F2987 `i 340  ]
+[e ) F2988 ]
 [e $UE 338  ]
 [e $U 341  ]
 "37
@@ -969,44 +969,44 @@ Version 4.0 HI-TECH Software Intermediate Code
 "40
 [; ;common.c: 40:       case 0: Umin = 228; Umax = 240; reslvl = 0; break;
 [e :U 344 ]
-[e = F2986 -> -> 228 `i `uc ]
-[e = F2985 -> -> 240 `i `uc ]
-[e = F2987 -> -> 0 `i `uc ]
+[e = F2987 -> -> 228 `i `uc ]
+[e = F2986 -> -> 240 `i `uc ]
+[e = F2988 -> -> 0 `i `uc ]
 [e $U 342  ]
 "41
 [; ;common.c: 41:       case 1: Umin = 220; Umax = 236; reslvl = 1; break;
 [e :U 345 ]
-[e = F2986 -> -> 220 `i `uc ]
-[e = F2985 -> -> 236 `i `uc ]
-[e = F2987 -> -> 1 `i `uc ]
+[e = F2987 -> -> 220 `i `uc ]
+[e = F2986 -> -> 236 `i `uc ]
+[e = F2988 -> -> 1 `i `uc ]
 [e $U 342  ]
 "42
 [; ;common.c: 42:       case 2: Umin = 212; Umax = 228; reslvl = 2; break;
 [e :U 346 ]
-[e = F2986 -> -> 212 `i `uc ]
-[e = F2985 -> -> 228 `i `uc ]
-[e = F2987 -> -> 2 `i `uc ]
+[e = F2987 -> -> 212 `i `uc ]
+[e = F2986 -> -> 228 `i `uc ]
+[e = F2988 -> -> 2 `i `uc ]
 [e $U 342  ]
 "43
 [; ;common.c: 43:       case 3: Umin = 204; Umax = 220; reslvl = 3; break;
 [e :U 347 ]
-[e = F2986 -> -> 204 `i `uc ]
-[e = F2985 -> -> 220 `i `uc ]
-[e = F2987 -> -> 3 `i `uc ]
+[e = F2987 -> -> 204 `i `uc ]
+[e = F2986 -> -> 220 `i `uc ]
+[e = F2988 -> -> 3 `i `uc ]
 [e $U 342  ]
 "44
 [; ;common.c: 44:       case 4: Umin = 196; Umax = 212; reslvl = 4; break;
 [e :U 348 ]
-[e = F2986 -> -> 196 `i `uc ]
-[e = F2985 -> -> 212 `i `uc ]
-[e = F2987 -> -> 4 `i `uc ]
+[e = F2987 -> -> 196 `i `uc ]
+[e = F2986 -> -> 212 `i `uc ]
+[e = F2988 -> -> 4 `i `uc ]
 [e $U 342  ]
 "45
 [; ;common.c: 45:       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
 [e :U 349 ]
-[e = F2986 -> -> 192 `i `uc ]
-[e = F2985 -> -> 204 `i `uc ]
-[e = F2987 -> -> 5 `i `uc ]
+[e = F2987 -> -> 192 `i `uc ]
+[e = F2986 -> -> 204 `i `uc ]
+[e = F2988 -> -> 5 `i `uc ]
 [e $U 342  ]
 "46
 [; ;common.c: 46:     }
@@ -1134,182 +1134,175 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;common.c: 73:   PORTCbits.RC1 = 0;
 [e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
 "74
-[; ;common.c: 74:   while(1)
-[e :U 363 ]
-"75
-[; ;common.c: 75:   {
-{
-"76
-[; ;common.c: 76:     LCD_printStr8x5("Low battery level!", 1, 10);
+[; ;common.c: 74:   LCD_printStr8x5("Low battery level!", 1, 10);
 [e ( _LCD_printStr8x5 (3 , , :s 1C -> -> 1 `i `uc -> -> 10 `i `uc ]
-"77
-[; ;common.c: 77:     LCD_printStr8x5("Device is", 3, 10);
+"75
+[; ;common.c: 75:   LCD_printStr8x5("Device is", 3, 10);
 [e ( _LCD_printStr8x5 (3 , , :s 2C -> -> 3 `i `uc -> -> 10 `i `uc ]
-"78
-[; ;common.c: 78:     LCD_printStr8x5("shutting down!", 5, 10);
+"76
+[; ;common.c: 76:   LCD_printStr8x5("shutting down!", 5, 10);
 [e ( _LCD_printStr8x5 (3 , , :s 3C -> -> 5 `i `uc -> -> 10 `i `uc ]
-"79
-[; ;common.c: 79:   }
-}
+"77
+[; ;common.c: 77:   while(1);
+[e :U 363 ]
 [e :U 362 ]
 [e $U 363  ]
 [e :U 364 ]
-"80
-[; ;common.c: 80: }
+"78
+[; ;common.c: 78: }
 [e :UE 361 ]
 }
-"82
-[; ;common.c: 82: void batcheck(void)
+"80
+[; ;common.c: 80: void batcheck(void)
 [v _batcheck `(v ~T0 @X0 1 ef ]
-"83
-[; ;common.c: 83: {
+"81
+[; ;common.c: 81: {
 {
 [e :U _batcheck ]
 [f ]
-"84
-[; ;common.c: 84:   Ubat = adc_getval_an2();
+"82
+[; ;common.c: 82:   Ubat = adc_getval_an2();
 [e = _Ubat ( _adc_getval_an2 ..  ]
-"85
-[; ;common.c: 85:   uint8 batlvl = getbatlvl(Ubat);
-[v _batlvl `uc ~T0 @X0 1 a ]
+"83
+[; ;common.c: 83:   batlvl = getbatlvl(Ubat);
 [e = _batlvl ( _getbatlvl (1 _Ubat ]
-"86
-[; ;common.c: 86:   if(batlvl == 100) ShutDown();
+"84
+[; ;common.c: 84:   if(batlvl == 100) ShutDown();
 [e $ ! == -> _batlvl `i -> 100 `i 366  ]
 [e ( _ShutDown ..  ]
 [e :U 366 ]
-"87
-[; ;common.c: 87: }
+"85
+[; ;common.c: 85: }
 [e :UE 365 ]
 }
-"90
-[; ;common.c: 90: void gettime(void)
+"88
+[; ;common.c: 88: void gettime(void)
 [v _gettime `(v ~T0 @X0 1 ef ]
-"91
-[; ;common.c: 91: {
+"89
+[; ;common.c: 89: {
 {
 [e :U _gettime ]
 [f ]
-"92
-[; ;common.c: 92:   rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
+"90
+[; ;common.c: 90:   rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
 [e = . . _rtcraw 0 0 -> / _timestamp -> -> 3600000 `l `ul `uc ]
-"93
-[; ;common.c: 93:   rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
+"91
+[; ;common.c: 91:   rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
 [e = . . _rtcraw 0 1 -> / % _timestamp -> -> 3600000 `l `ul -> -> 60000 `l `ul `uc ]
-"94
-[; ;common.c: 94:   rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
+"92
+[; ;common.c: 92:   rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
 [e = . . _rtcraw 0 2 -> / % _timestamp -> -> 60000 `l `ul -> -> -> 1000 `i `l `ul `uc ]
-"95
-[; ;common.c: 95: }
+"93
+[; ;common.c: 93: }
 [e :UE 367 ]
 }
-"97
-[; ;common.c: 97: void randinit(void)
+"95
+[; ;common.c: 95: void randinit(void)
 [v _randinit `(v ~T0 @X0 1 ef ]
-"98
-[; ;common.c: 98: {
+"96
+[; ;common.c: 96: {
 {
 [e :U _randinit ]
 [f ]
-"99
-[; ;common.c: 99:   srand((uint8)timestamp);
+"97
+[; ;common.c: 97:   srand((uint8)timestamp);
 [e ( _srand (1 -> -> _timestamp `uc `ui ]
-"100
-[; ;common.c: 100: }
+"98
+[; ;common.c: 98: }
 [e :UE 368 ]
 }
-"102
-[; ;common.c: 102: uint8 getrand(uint8 N)
+"100
+[; ;common.c: 100: uint8 getrand(uint8 N)
 [v _getrand `(uc ~T0 @X0 1 ef1`uc ]
-"103
-[; ;common.c: 103: {
+"101
+[; ;common.c: 101: {
 {
 [e :U _getrand ]
-"102
-[; ;common.c: 102: uint8 getrand(uint8 N)
+"100
+[; ;common.c: 100: uint8 getrand(uint8 N)
 [v _N `uc ~T0 @X0 1 r1 ]
-"103
-[; ;common.c: 103: {
+"101
+[; ;common.c: 101: {
 [f ]
-"104
-[; ;common.c: 104:   return (rand() % (N + 1));
+"102
+[; ;common.c: 102:   return (rand() % (N + 1));
 [e ) -> % ( _rand ..  + -> _N `i -> 1 `i `uc ]
 [e $UE 369  ]
-"105
-[; ;common.c: 105: }
+"103
+[; ;common.c: 103: }
 [e :UE 369 ]
 }
-"107
-[; ;common.c: 107: uint8 dig_to_smb(uint8 dig)
+"105
+[; ;common.c: 105: uint8 dig_to_smb(uint8 dig)
 [v _dig_to_smb `(uc ~T0 @X0 1 ef1`uc ]
-"108
-[; ;common.c: 108: {
+"106
+[; ;common.c: 106: {
 {
 [e :U _dig_to_smb ]
-"107
-[; ;common.c: 107: uint8 dig_to_smb(uint8 dig)
+"105
+[; ;common.c: 105: uint8 dig_to_smb(uint8 dig)
 [v _dig `uc ~T0 @X0 1 r1 ]
-"108
-[; ;common.c: 108: {
+"106
+[; ;common.c: 106: {
 [f ]
-"109
-[; ;common.c: 109:   switch (dig)
+"107
+[; ;common.c: 107:   switch (dig)
 [e $U 372  ]
-"110
-[; ;common.c: 110:   {
+"108
+[; ;common.c: 108:   {
 {
-"111
-[; ;common.c: 111:     case 0: return '0';
+"109
+[; ;common.c: 109:     case 0: return '0';
 [e :U 373 ]
 [e ) -> -> 48 `ui `uc ]
 [e $UE 370  ]
-"112
-[; ;common.c: 112:     case 1: return '1';
+"110
+[; ;common.c: 110:     case 1: return '1';
 [e :U 374 ]
 [e ) -> -> 49 `ui `uc ]
 [e $UE 370  ]
-"113
-[; ;common.c: 113:     case 2: return '2';
+"111
+[; ;common.c: 111:     case 2: return '2';
 [e :U 375 ]
 [e ) -> -> 50 `ui `uc ]
 [e $UE 370  ]
-"114
-[; ;common.c: 114:     case 3: return '3';
+"112
+[; ;common.c: 112:     case 3: return '3';
 [e :U 376 ]
 [e ) -> -> 51 `ui `uc ]
 [e $UE 370  ]
-"115
-[; ;common.c: 115:     case 4: return '4';
+"113
+[; ;common.c: 113:     case 4: return '4';
 [e :U 377 ]
 [e ) -> -> 52 `ui `uc ]
 [e $UE 370  ]
-"116
-[; ;common.c: 116:     case 5: return '5';
+"114
+[; ;common.c: 114:     case 5: return '5';
 [e :U 378 ]
 [e ) -> -> 53 `ui `uc ]
 [e $UE 370  ]
-"117
-[; ;common.c: 117:     case 6: return '6';
+"115
+[; ;common.c: 115:     case 6: return '6';
 [e :U 379 ]
 [e ) -> -> 54 `ui `uc ]
 [e $UE 370  ]
-"118
-[; ;common.c: 118:     case 7: return '7';
+"116
+[; ;common.c: 116:     case 7: return '7';
 [e :U 380 ]
 [e ) -> -> 55 `ui `uc ]
 [e $UE 370  ]
-"119
-[; ;common.c: 119:     case 8: return '8';
+"117
+[; ;common.c: 117:     case 8: return '8';
 [e :U 381 ]
 [e ) -> -> 56 `ui `uc ]
 [e $UE 370  ]
-"120
-[; ;common.c: 120:     case 9: return '9';
+"118
+[; ;common.c: 118:     case 9: return '9';
 [e :U 382 ]
 [e ) -> -> 57 `ui `uc ]
 [e $UE 370  ]
-"121
-[; ;common.c: 121:   }
+"119
+[; ;common.c: 119:   }
 }
 [e $U 371  ]
 [e :U 372 ]
@@ -1325,179 +1318,179 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 9 `i 382
  371 ]
 [e :U 371 ]
-"122
-[; ;common.c: 122:   return 0;
+"120
+[; ;common.c: 120:   return 0;
 [e ) -> -> 0 `i `uc ]
 [e $UE 370  ]
-"123
-[; ;common.c: 123: }
+"121
+[; ;common.c: 121: }
 [e :UE 370 ]
 }
-"125
-[; ;common.c: 125: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
+"123
+[; ;common.c: 123: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
 [v _u16_to_str `(v ~T0 @X0 1 ef3`*uc`ui`uc ]
-"126
-[; ;common.c: 126: {
+"124
+[; ;common.c: 124: {
 {
 [e :U _u16_to_str ]
-"125
-[; ;common.c: 125: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
+"123
+[; ;common.c: 123: void u16_to_str(uint8* str, uint16 num, uint8 ZF)
 [v _str `*uc ~T0 @X0 1 r1 ]
 [v _num `ui ~T0 @X0 1 r2 ]
 [v _ZF `uc ~T0 @X0 1 r3 ]
-"126
-[; ;common.c: 126: {
+"124
+[; ;common.c: 124: {
 [f ]
-"127
-[; ;common.c: 127:   str[0] = dig_to_smb(num/10000);
+"125
+[; ;common.c: 125:   str[0] = dig_to_smb(num/10000);
 [e = *U + _str * -> -> 0 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 10000 `i `ui `uc ]
-"128
-[; ;common.c: 128:   num %= 10000;
+"126
+[; ;common.c: 126:   num %= 10000;
 [e =% _num -> -> 10000 `i `ui ]
-"129
-[; ;common.c: 129:   str[1] = dig_to_smb(num/1000);
+"127
+[; ;common.c: 127:   str[1] = dig_to_smb(num/1000);
 [e = *U + _str * -> -> 1 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 1000 `i `ui `uc ]
-"130
-[; ;common.c: 130:   num %= 1000;
+"128
+[; ;common.c: 128:   num %= 1000;
 [e =% _num -> -> 1000 `i `ui ]
-"131
-[; ;common.c: 131:   str[2] = dig_to_smb(num/100);
+"129
+[; ;common.c: 129:   str[2] = dig_to_smb(num/100);
 [e = *U + _str * -> -> 2 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 100 `i `ui `uc ]
-"132
-[; ;common.c: 132:   num %= 100;
+"130
+[; ;common.c: 130:   num %= 100;
 [e =% _num -> -> 100 `i `ui ]
-"133
-[; ;common.c: 133:   str[3] = dig_to_smb(num/10);
+"131
+[; ;common.c: 131:   str[3] = dig_to_smb(num/10);
 [e = *U + _str * -> -> 3 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> / _num -> -> 10 `i `ui `uc ]
-"134
-[; ;common.c: 134:   str[4] = dig_to_smb(num%10);
+"132
+[; ;common.c: 132:   str[4] = dig_to_smb(num%10);
 [e = *U + _str * -> -> 4 `i `x -> -> # *U _str `i `x ( _dig_to_smb (1 -> % _num -> -> 10 `i `ui `uc ]
-"135
-[; ;common.c: 135:   str[5] = '\0';
+"133
+[; ;common.c: 133:   str[5] = '\0';
 [e = *U + _str * -> -> 5 `i `x -> -> # *U _str `i `x -> -> 0 `ui `uc ]
-"136
-[; ;common.c: 136:   if(ZF)
+"134
+[; ;common.c: 134:   if(ZF)
 [e $ ! != -> _ZF `i -> 0 `i 384  ]
-"137
-[; ;common.c: 137:   {
+"135
+[; ;common.c: 135:   {
 {
-"138
-[; ;common.c: 138:     int j = 0;
+"136
+[; ;common.c: 136:     int j = 0;
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
-"139
-[; ;common.c: 139:     for(int i = 0; i < 6; i++)
+"137
+[; ;common.c: 137:     for(int i = 0; i < 6; i++)
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $ < _i -> 6 `i 385  ]
 [e $U 386  ]
 [e :U 385 ]
-"140
-[; ;common.c: 140:     {
+"138
+[; ;common.c: 138:     {
 {
-"141
-[; ;common.c: 141:       if((str[i] == '0') && !j) continue;
+"139
+[; ;common.c: 139:       if((str[i] == '0') && !j) continue;
 [e $ ! && == -> *U + _str * -> _i `x -> -> # *U _str `i `x `ui -> 48 `ui ! != _j -> 0 `i 388  ]
 [e $U 387  ]
 [e :U 388 ]
-"142
-[; ;common.c: 142:       str[j] = str[i];
+"140
+[; ;common.c: 140:       str[j] = str[i];
 [e = *U + _str * -> _j `x -> -> # *U _str `i `x *U + _str * -> _i `x -> -> # *U _str `i `x ]
-"143
-[; ;common.c: 143:       j++;
+"141
+[; ;common.c: 141:       j++;
 [e ++ _j -> 1 `i ]
-"144
-[; ;common.c: 144:     }
+"142
+[; ;common.c: 142:     }
 }
 [e :U 387 ]
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 6 `i 385  ]
 [e :U 386 ]
 }
-"145
-[; ;common.c: 145:   }
+"143
+[; ;common.c: 143:   }
 }
 [e :U 384 ]
-"146
-[; ;common.c: 146: }
+"144
+[; ;common.c: 144: }
 [e :UE 383 ]
 }
-"152
-[; ;common.c: 152: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
+"150
+[; ;common.c: 150: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
 [v _CreateBtn `(S3 ~T0 @X0 1 ef6`*Vuc`*Vuc`*Vuc`Cuc`Cuc`*Cul ]
-"153
-[; ;common.c: 153: {
+"151
+[; ;common.c: 151: {
 {
 [e :U _CreateBtn ]
-"152
-[; ;common.c: 152: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
+"150
+[; ;common.c: 150: btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
 [v _Tris `*Vuc ~T0 @X0 1 r1 ]
 [v _Port `*Vuc ~T0 @X0 1 r2 ]
 [v _Lat `*Vuc ~T0 @X0 1 r3 ]
 [v _inputbit `Cuc ~T0 @X0 1 r4 ]
 [v _outputbit `Cuc ~T0 @X0 1 r5 ]
 [v _timecounter `*Cul ~T0 @X0 1 r6 ]
-"153
-[; ;common.c: 153: {
+"151
+[; ;common.c: 151: {
 [f ]
-"154
-[; ;common.c: 154:   btn_t BTN;
+"152
+[; ;common.c: 152:   btn_t BTN;
 [v _BTN `S3 ~T0 @X0 1 a ]
-"155
-[; ;common.c: 155:   BTN.Port = Port;
+"153
+[; ;common.c: 153:   BTN.Port = Port;
 [e = . _BTN 0 _Port ]
-"156
-[; ;common.c: 156:   BTN.Lat = Lat;
+"154
+[; ;common.c: 154:   BTN.Lat = Lat;
 [e = . _BTN 1 _Lat ]
-"157
-[; ;common.c: 157:   switch (inputbit)
+"155
+[; ;common.c: 155:   switch (inputbit)
 [e $U 391  ]
-"158
-[; ;common.c: 158: {
+"156
+[; ;common.c: 156: {
 {
-"159
-[; ;common.c: 159:     case 0: BTN.inputmask = 0b00000001; break;
+"157
+[; ;common.c: 157:     case 0: BTN.inputmask = 0b00000001; break;
 [e :U 392 ]
 [e = . _BTN 2 -> -> 1 `i `uc ]
 [e $U 390  ]
-"160
-[; ;common.c: 160:     case 1: BTN.inputmask = 0b00000010; break;
+"158
+[; ;common.c: 158:     case 1: BTN.inputmask = 0b00000010; break;
 [e :U 393 ]
 [e = . _BTN 2 -> -> 2 `i `uc ]
 [e $U 390  ]
-"161
-[; ;common.c: 161:     case 2: BTN.inputmask = 0b00000100; break;
+"159
+[; ;common.c: 159:     case 2: BTN.inputmask = 0b00000100; break;
 [e :U 394 ]
 [e = . _BTN 2 -> -> 4 `i `uc ]
 [e $U 390  ]
-"162
-[; ;common.c: 162:     case 3: BTN.inputmask = 0b00001000; break;
+"160
+[; ;common.c: 160:     case 3: BTN.inputmask = 0b00001000; break;
 [e :U 395 ]
 [e = . _BTN 2 -> -> 8 `i `uc ]
 [e $U 390  ]
-"163
-[; ;common.c: 163:     case 4: BTN.inputmask = 0b00010000; break;
+"161
+[; ;common.c: 161:     case 4: BTN.inputmask = 0b00010000; break;
 [e :U 396 ]
 [e = . _BTN 2 -> -> 16 `i `uc ]
 [e $U 390  ]
-"164
-[; ;common.c: 164:     case 5: BTN.inputmask = 0b00100000; break;
+"162
+[; ;common.c: 162:     case 5: BTN.inputmask = 0b00100000; break;
 [e :U 397 ]
 [e = . _BTN 2 -> -> 32 `i `uc ]
 [e $U 390  ]
-"165
-[; ;common.c: 165:     case 6: BTN.inputmask = 0b01000000; break;
+"163
+[; ;common.c: 163:     case 6: BTN.inputmask = 0b01000000; break;
 [e :U 398 ]
 [e = . _BTN 2 -> -> 64 `i `uc ]
 [e $U 390  ]
-"166
-[; ;common.c: 166:     case 7: BTN.inputmask = 0b10000000; break;
+"164
+[; ;common.c: 164:     case 7: BTN.inputmask = 0b10000000; break;
 [e :U 399 ]
 [e = . _BTN 2 -> -> 128 `i `uc ]
 [e $U 390  ]
-"167
-[; ;common.c: 167:   }
+"165
+[; ;common.c: 165:   }
 }
 [e $U 390  ]
 [e :U 391 ]
@@ -1511,54 +1504,54 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 7 `i 399
  390 ]
 [e :U 390 ]
-"168
-[; ;common.c: 168:   switch (outputbit)
+"166
+[; ;common.c: 166:   switch (outputbit)
 [e $U 401  ]
-"169
-[; ;common.c: 169:   {
+"167
+[; ;common.c: 167:   {
 {
-"170
-[; ;common.c: 170:     case 0: BTN.outputmask = 0b11111110; break;
+"168
+[; ;common.c: 168:     case 0: BTN.outputmask = 0b11111110; break;
 [e :U 402 ]
 [e = . _BTN 3 -> -> 254 `i `uc ]
 [e $U 400  ]
-"171
-[; ;common.c: 171:     case 1: BTN.outputmask = 0b11111101; break;
+"169
+[; ;common.c: 169:     case 1: BTN.outputmask = 0b11111101; break;
 [e :U 403 ]
 [e = . _BTN 3 -> -> 253 `i `uc ]
 [e $U 400  ]
-"172
-[; ;common.c: 172:     case 2: BTN.outputmask = 0b11111011; break;
+"170
+[; ;common.c: 170:     case 2: BTN.outputmask = 0b11111011; break;
 [e :U 404 ]
 [e = . _BTN 3 -> -> 251 `i `uc ]
 [e $U 400  ]
-"173
-[; ;common.c: 173:     case 3: BTN.outputmask = 0b11110111; break;
+"171
+[; ;common.c: 171:     case 3: BTN.outputmask = 0b11110111; break;
 [e :U 405 ]
 [e = . _BTN 3 -> -> 247 `i `uc ]
 [e $U 400  ]
-"174
-[; ;common.c: 174:     case 4: BTN.outputmask = 0b11101111; break;
+"172
+[; ;common.c: 172:     case 4: BTN.outputmask = 0b11101111; break;
 [e :U 406 ]
 [e = . _BTN 3 -> -> 239 `i `uc ]
 [e $U 400  ]
-"175
-[; ;common.c: 175:     case 5: BTN.outputmask = 0b11011111; break;
+"173
+[; ;common.c: 173:     case 5: BTN.outputmask = 0b11011111; break;
 [e :U 407 ]
 [e = . _BTN 3 -> -> 223 `i `uc ]
 [e $U 400  ]
-"176
-[; ;common.c: 176:     case 6: BTN.outputmask = 0b10111111; break;
+"174
+[; ;common.c: 174:     case 6: BTN.outputmask = 0b10111111; break;
 [e :U 408 ]
 [e = . _BTN 3 -> -> 191 `i `uc ]
 [e $U 400  ]
-"177
-[; ;common.c: 177:     case 7: BTN.outputmask = 0b01111111; break;
+"175
+[; ;common.c: 175:     case 7: BTN.outputmask = 0b01111111; break;
 [e :U 409 ]
 [e = . _BTN 3 -> -> 127 `i `uc ]
 [e $U 400  ]
-"178
-[; ;common.c: 178:   }
+"176
+[; ;common.c: 176:   }
 }
 [e $U 400  ]
 [e :U 401 ]
@@ -1572,190 +1565,190 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 7 `i 409
  400 ]
 [e :U 400 ]
-"179
-[; ;common.c: 179:   *(Tris) |= BTN.inputmask;
+"177
+[; ;common.c: 177:   *(Tris) |= BTN.inputmask;
 [e =| *U _Tris -> . _BTN 2 `uc ]
-"180
-[; ;common.c: 180:   *(Tris) &= BTN.outputmask;
+"178
+[; ;common.c: 178:   *(Tris) &= BTN.outputmask;
 [e =& *U _Tris -> . _BTN 3 `uc ]
-"181
-[; ;common.c: 181:   *(Lat) |= ~BTN.outputmask;
+"179
+[; ;common.c: 179:   *(Lat) |= ~BTN.outputmask;
 [e =| *U _Lat -> ~ -> . _BTN 3 `i `uc ]
-"183
-[; ;common.c: 183:   BTN.timecounter = timecounter;
+"181
+[; ;common.c: 181:   BTN.timecounter = timecounter;
 [e = . _BTN 4 _timecounter ]
-"184
-[; ;common.c: 184:   BTN.BtnFl = 0;
+"182
+[; ;common.c: 182:   BTN.BtnFl = 0;
 [e = . _BTN 6 -> -> 0 `i `uc ]
-"185
-[; ;common.c: 185:   BTN.BtnON = 0;
+"183
+[; ;common.c: 183:   BTN.BtnON = 0;
 [e = . _BTN 7 -> -> 0 `i `uc ]
-"186
-[; ;common.c: 186:   BTN.Toggle = 0;
+"184
+[; ;common.c: 184:   BTN.Toggle = 0;
 [e = . _BTN 8 -> -> 0 `i `uc ]
-"187
-[; ;common.c: 187:   BTN.HoldON = 0;
+"185
+[; ;common.c: 185:   BTN.HoldON = 0;
 [e = . _BTN 9 -> -> 0 `i `uc ]
-"188
-[; ;common.c: 188:   BTN.StuckON = 0;
+"186
+[; ;common.c: 186:   BTN.StuckON = 0;
 [e = . _BTN 10 -> -> 0 `i `uc ]
-"189
-[; ;common.c: 189:   BTN.btnTimer = 0;
+"187
+[; ;common.c: 187:   BTN.btnTimer = 0;
 [e = . _BTN 5 -> -> -> 0 `i `l `ul ]
-"190
-[; ;common.c: 190:   return BTN;
+"188
+[; ;common.c: 188:   return BTN;
 [e ) _BTN ]
 [e $UE 389  ]
-"191
-[; ;common.c: 191: }
+"189
+[; ;common.c: 189: }
 [e :UE 389 ]
 }
-"193
-[; ;common.c: 193: void TestBtn(btn_t* btn)
+"191
+[; ;common.c: 191: void TestBtn(btn_t* btn)
 [v _TestBtn `(v ~T0 @X0 1 ef1`*S3 ]
-"194
-[; ;common.c: 194: {
+"192
+[; ;common.c: 192: {
 {
 [e :U _TestBtn ]
-"193
-[; ;common.c: 193: void TestBtn(btn_t* btn)
+"191
+[; ;common.c: 191: void TestBtn(btn_t* btn)
 [v _btn `*S3 ~T0 @X0 1 r1 ]
-"194
-[; ;common.c: 194: {
+"192
+[; ;common.c: 192: {
 [f ]
-"195
-[; ;common.c: 195:   *(btn->Lat) &= btn->outputmask;
+"193
+[; ;common.c: 193:   *(btn->Lat) &= btn->outputmask;
 [e =& *U . *U _btn 1 -> . *U _btn 3 `uc ]
-"197
-[; ;common.c: 197:   if (!(*(btn->Port) & btn->inputmask) && !btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
+"195
+[; ;common.c: 195:   if (!(*(btn->Port) & btn->inputmask) && !btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
 [e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i ! != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 411  ]
 {
-"198
-[; ;common.c: 198:     if(btn->Toggle) btn->Toggle = 0;
+"196
+[; ;common.c: 196:     if(btn->Toggle) btn->Toggle = 0;
 [e $ ! != -> . *U _btn 8 `i -> 0 `i 412  ]
 [e = . *U _btn 8 -> -> 0 `i `uc ]
 [e $U 413  ]
-"199
-[; ;common.c: 199:     else btn->Toggle = 1;
+"197
+[; ;common.c: 197:     else btn->Toggle = 1;
 [e :U 412 ]
 [e = . *U _btn 8 -> -> 1 `i `uc ]
 [e :U 413 ]
-"200
-[; ;common.c: 200:     btn->BtnFl = 1;
+"198
+[; ;common.c: 198:     btn->BtnFl = 1;
 [e = . *U _btn 6 -> -> 1 `i `uc ]
-"201
-[; ;common.c: 201:     btn->btnTimer = *(btn->timecounter);
+"199
+[; ;common.c: 199:     btn->btnTimer = *(btn->timecounter);
 [e = . *U _btn 5 *U . *U _btn 4 ]
-"202
-[; ;common.c: 202:     btn->BtnON = 1;
+"200
+[; ;common.c: 200:     btn->BtnON = 1;
 [e = . *U _btn 7 -> -> 1 `i `uc ]
-"203
-[; ;common.c: 203:   }
+"201
+[; ;common.c: 201:   }
 }
 [e :U 411 ]
-"204
-[; ;common.c: 204:   if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
+"202
+[; ;common.c: 202:   if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
 [e $ ! && && != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 50 `i `l `ul 414  ]
 {
-"205
-[; ;common.c: 205:     btn->BtnFl = 0;
+"203
+[; ;common.c: 203:     btn->BtnFl = 0;
 [e = . *U _btn 6 -> -> 0 `i `uc ]
-"206
-[; ;common.c: 206:     btn->HoldON = 0;
+"204
+[; ;common.c: 204:     btn->HoldON = 0;
 [e = . *U _btn 9 -> -> 0 `i `uc ]
-"207
-[; ;common.c: 207:     btn->StuckON = 0;
+"205
+[; ;common.c: 205:     btn->StuckON = 0;
 [e = . *U _btn 10 -> -> 0 `i `uc ]
-"208
-[; ;common.c: 208:     btn->btnTimer = *(btn->timecounter);
+"206
+[; ;common.c: 206:     btn->btnTimer = *(btn->timecounter);
 [e = . *U _btn 5 *U . *U _btn 4 ]
-"209
-[; ;common.c: 209:   }
+"207
+[; ;common.c: 207:   }
 }
 [e :U 414 ]
-"210
-[; ;common.c: 210:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 300) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
+"208
+[; ;common.c: 208:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 300) && ((*(btn->timecounter) - btn->btnTimer) <= 2000)) {
 [e $ ! && && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 300 `i `l `ul <= - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 415  ]
 {
-"211
-[; ;common.c: 211:     btn->HoldON = 1;
+"209
+[; ;common.c: 209:     btn->HoldON = 1;
 [e = . *U _btn 9 -> -> 1 `i `uc ]
-"212
-[; ;common.c: 212:     if(btn->Toggle) btn->Toggle = 0;
+"210
+[; ;common.c: 210:     if(btn->Toggle) btn->Toggle = 0;
 [e $ ! != -> . *U _btn 8 `i -> 0 `i 416  ]
 [e = . *U _btn 8 -> -> 0 `i `uc ]
 [e $U 417  ]
-"213
-[; ;common.c: 213:     else btn->Toggle = 1;
+"211
+[; ;common.c: 211:     else btn->Toggle = 1;
 [e :U 416 ]
 [e = . *U _btn 8 -> -> 1 `i `uc ]
 [e :U 417 ]
-"214
-[; ;common.c: 214:   }
+"212
+[; ;common.c: 212:   }
 }
 [e :U 415 ]
-"215
-[; ;common.c: 215:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 2000)) {
+"213
+[; ;common.c: 213:   if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 2000)) {
 [e $ ! && && ! != & -> *U . *U _btn 0 `i -> . *U _btn 2 `i -> 0 `i != -> . *U _btn 6 `i -> 0 `i > - *U . *U _btn 4 . *U _btn 5 -> -> -> 2000 `i `l `ul 418  ]
 {
-"216
-[; ;common.c: 216:     btn->HoldON = 0;
+"214
+[; ;common.c: 214:     btn->HoldON = 0;
 [e = . *U _btn 9 -> -> 0 `i `uc ]
-"217
-[; ;common.c: 217:     btn->StuckON = 1;
+"215
+[; ;common.c: 215:     btn->StuckON = 1;
 [e = . *U _btn 10 -> -> 1 `i `uc ]
-"218
-[; ;common.c: 218:     if(btn->Toggle) btn->Toggle = 0;
+"216
+[; ;common.c: 216:     if(btn->Toggle) btn->Toggle = 0;
 [e $ ! != -> . *U _btn 8 `i -> 0 `i 419  ]
 [e = . *U _btn 8 -> -> 0 `i `uc ]
 [e $U 420  ]
-"219
-[; ;common.c: 219:     else btn->Toggle = 1;
+"217
+[; ;common.c: 217:     else btn->Toggle = 1;
 [e :U 419 ]
 [e = . *U _btn 8 -> -> 1 `i `uc ]
 [e :U 420 ]
-"220
-[; ;common.c: 220:   }
+"218
+[; ;common.c: 218:   }
 }
 [e :U 418 ]
-"222
-[; ;common.c: 222:   *(btn->Lat) |= ~btn->outputmask;
+"220
+[; ;common.c: 220:   *(btn->Lat) |= ~btn->outputmask;
 [e =| *U . *U _btn 1 -> ~ -> . *U _btn 3 `i `uc ]
-"223
-[; ;common.c: 223: }
+"221
+[; ;common.c: 221: }
 [e :UE 410 ]
 }
-"226
-[; ;common.c: 226: void Interrupt_init(void)
+"224
+[; ;common.c: 224: void Interrupt_init(void)
 [v _Interrupt_init `(v ~T0 @X0 1 ef ]
-"227
-[; ;common.c: 227: {
+"225
+[; ;common.c: 225: {
 {
 [e :U _Interrupt_init ]
 [f ]
-"229
-[; ;common.c: 229:   GIE_GIEH = 1; PEIE_GIEL = 1; TMR0IE = 0; INT0IE = 0; RBIE = 0;
+"227
+[; ;common.c: 227:   GIE_GIEH = 1; PEIE_GIEL = 1; TMR0IE = 0; INT0IE = 0; RBIE = 0;
 [e = _GIE_GIEH -> -> 1 `i `b ]
 [e = _PEIE_GIEL -> -> 1 `i `b ]
 [e = _TMR0IE -> -> 0 `i `b ]
 [e = _INT0IE -> -> 0 `i `b ]
 [e = _RBIE -> -> 0 `i `b ]
-"231
-[; ;common.c: 231:   RBPU = 0; INTEDG0 = 0; INTEDG1 = 0; INTEDG2 = 0; TMR0IP = 0; RBIP = 0;
+"229
+[; ;common.c: 229:   RBPU = 0; INTEDG0 = 0; INTEDG1 = 0; INTEDG2 = 0; TMR0IP = 0; RBIP = 0;
 [e = _RBPU -> -> 0 `i `b ]
 [e = _INTEDG0 -> -> 0 `i `b ]
 [e = _INTEDG1 -> -> 0 `i `b ]
 [e = _INTEDG2 -> -> 0 `i `b ]
 [e = _TMR0IP -> -> 0 `i `b ]
 [e = _RBIP -> -> 0 `i `b ]
-"233
-[; ;common.c: 233:   INT2IP = 0; INT1IP = 0; INT2IE = 0; INT1IE = 0;
+"231
+[; ;common.c: 231:   INT2IP = 0; INT1IP = 0; INT2IE = 0; INT1IE = 0;
 [e = _INT2IP -> -> 0 `i `b ]
 [e = _INT1IP -> -> 0 `i `b ]
 [e = _INT2IE -> -> 0 `i `b ]
 [e = _INT1IE -> -> 0 `i `b ]
-"235
-[; ;common.c: 235:   ADIE = 0; RCIE = 0; TXIE = 0; SSPIE = 0; CCP1IE = 0; TMR2IE = 0; TMR1IE = 1;
+"233
+[; ;common.c: 233:   ADIE = 0; RCIE = 0; TXIE = 0; SSPIE = 0; CCP1IE = 0; TMR2IE = 0; TMR1IE = 1;
 [e = _ADIE -> -> 0 `i `b ]
 [e = _RCIE -> -> 0 `i `b ]
 [e = _TXIE -> -> 0 `i `b ]
@@ -1763,8 +1756,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _CCP1IE -> -> 0 `i `b ]
 [e = _TMR2IE -> -> 0 `i `b ]
 [e = _TMR1IE -> -> 1 `i `b ]
-"237
-[; ;common.c: 237:   OSCFIE = 0; CMIE = 0; USBIE = 0; EEIE = 0; BCLIE = 0; HLVDIE = 0; TMR3IE = 0; CCP2IE = 0;
+"235
+[; ;common.c: 235:   OSCFIE = 0; CMIE = 0; USBIE = 0; EEIE = 0; BCLIE = 0; HLVDIE = 0; TMR3IE = 0; CCP2IE = 0;
 [e = _OSCFIE -> -> 0 `i `b ]
 [e = _CMIE -> -> 0 `i `b ]
 [e = _USBIE -> -> 0 `i `b ]
@@ -1773,8 +1766,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _HLVDIE -> -> 0 `i `b ]
 [e = _TMR3IE -> -> 0 `i `b ]
 [e = _CCP2IE -> -> 0 `i `b ]
-"239
-[; ;common.c: 239:   ADIP = 0; RCIP = 0; TXIP = 0; SSPIP = 0; CCP1IP = 0; TMR2IP = 0; TMR1IP = 1;
+"237
+[; ;common.c: 237:   ADIP = 0; RCIP = 0; TXIP = 0; SSPIP = 0; CCP1IP = 0; TMR2IP = 0; TMR1IP = 1;
 [e = _ADIP -> -> 0 `i `b ]
 [e = _RCIP -> -> 0 `i `b ]
 [e = _TXIP -> -> 0 `i `b ]
@@ -1782,8 +1775,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _CCP1IP -> -> 0 `i `b ]
 [e = _TMR2IP -> -> 0 `i `b ]
 [e = _TMR1IP -> -> 1 `i `b ]
-"241
-[; ;common.c: 241:   OSCFIP = 0; CMIP = 0; USBIP = 0; EEIP = 0; BCLIP = 0; HLVDIP = 0; TMR3IP = 0; CCP2IP = 0;
+"239
+[; ;common.c: 239:   OSCFIP = 0; CMIP = 0; USBIP = 0; EEIP = 0; BCLIP = 0; HLVDIP = 0; TMR3IP = 0; CCP2IP = 0;
 [e = _OSCFIP -> -> 0 `i `b ]
 [e = _CMIP -> -> 0 `i `b ]
 [e = _USBIP -> -> 0 `i `b ]
@@ -1792,214 +1785,280 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _HLVDIP -> -> 0 `i `b ]
 [e = _TMR3IP -> -> 0 `i `b ]
 [e = _CCP2IP -> -> 0 `i `b ]
-"243
-[; ;common.c: 243:   IPEN = 0; SBOREN = 0;
+"241
+[; ;common.c: 241:   IPEN = 0; SBOREN = 0;
 [e = _IPEN -> -> 0 `i `b ]
 [e = _SBOREN -> -> 0 `i `b ]
-"244
-[; ;common.c: 244: }
+"242
+[; ;common.c: 242: }
 [e :UE 421 ]
 }
-"246
-[; ;common.c: 246: void timersinit(void)
+"244
+[; ;common.c: 244: void timersinit(void)
 [v _timersinit `(v ~T0 @X0 1 ef ]
-"247
-[; ;common.c: 247: {
+"245
+[; ;common.c: 245: {
 {
 [e :U _timersinit ]
 [f ]
-"248
-[; ;common.c: 248:   T0CON = 0b11000111;
+"246
+[; ;common.c: 246:   T0CON = 0b11000111;
 [e = _T0CON -> -> 199 `i `uc ]
-"249
-[; ;common.c: 249:   TMR0L = 32;
+"247
+[; ;common.c: 247:   TMR0L = 32;
 [e = _TMR0L -> -> 32 `i `uc ]
-"250
-[; ;common.c: 250:   TMR0H = 209;
+"248
+[; ;common.c: 248:   TMR0H = 209;
 [e = _TMR0H -> -> 209 `i `uc ]
-"253
-[; ;common.c: 253:   T1CON = 0b00000101;
+"251
+[; ;common.c: 251:   T1CON = 0b00000101;
 [e = _T1CON -> -> 5 `i `uc ]
-"254
-[; ;common.c: 254:   TMR1L = 241;
+"252
+[; ;common.c: 252:   TMR1L = 241;
 [e = _TMR1L -> -> 241 `i `uc ]
-"255
-[; ;common.c: 255:   TMR1H = 217;
+"253
+[; ;common.c: 253:   TMR1H = 217;
 [e = _TMR1H -> -> 217 `i `uc ]
-"256
-[; ;common.c: 256: }
+"254
+[; ;common.c: 254: }
 [e :UE 422 ]
 }
-"259
-[; ;common.c: 259: uint8 adc_getval_an0()
+"257
+[; ;common.c: 257: uint8 adc_getval_an0()
 [v _adc_getval_an0 `(uc ~T0 @X0 1 ef ]
-"260
-[; ;common.c: 260: {
+"258
+[; ;common.c: 258: {
 {
 [e :U _adc_getval_an0 ]
 [f ]
-"261
-[; ;common.c: 261:   TRISA |= 0b00000111;
+"259
+[; ;common.c: 259:   TRISA |= 0b00000111;
 [e =| _TRISA -> -> 7 `i `Vuc ]
-"262
-[; ;common.c: 262:   ADCON1 = 0b00001100;
+"260
+[; ;common.c: 260:   ADCON1 = 0b00001100;
 [e = _ADCON1 -> -> 12 `i `uc ]
-"263
-[; ;common.c: 263:   ADCON2 = 0b00010010;
+"261
+[; ;common.c: 261:   ADCON2 = 0b00010010;
 [e = _ADCON2 -> -> 18 `i `uc ]
-"264
-[; ;common.c: 264:   ADCON0 = 0b00000001;
+"262
+[; ;common.c: 262:   ADCON0 = 0b00000001;
 [e = _ADCON0 -> -> 1 `i `uc ]
-"265
-[; ;common.c: 265:   ADCON0bits.ADON = 1;
+"263
+[; ;common.c: 263:   ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"266
-[; ;common.c: 266:   ADCON0bits.GODONE = 1;
+"264
+[; ;common.c: 264:   ADCON0bits.GODONE = 1;
 [e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"267
-[; ;common.c: 267:   while(ADCON0bits.GODONE);
+"265
+[; ;common.c: 265:   while(ADCON0bits.GODONE);
 [e $U 424  ]
 [e :U 425 ]
 [e :U 424 ]
 [e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 425  ]
 [e :U 426 ]
-"268
-[; ;common.c: 268:   return ADRESH;
+"266
+[; ;common.c: 266:   return ADRESH;
 [e ) _ADRESH ]
 [e $UE 423  ]
-"269
-[; ;common.c: 269: }
+"267
+[; ;common.c: 267: }
 [e :UE 423 ]
 }
-"271
-[; ;common.c: 271: uint8 adc_getval_an1()
+"269
+[; ;common.c: 269: uint8 adc_getval_an1()
 [v _adc_getval_an1 `(uc ~T0 @X0 1 ef ]
-"272
-[; ;common.c: 272: {
+"270
+[; ;common.c: 270: {
 {
 [e :U _adc_getval_an1 ]
 [f ]
-"273
-[; ;common.c: 273:   TRISA |= 0b00000111;
+"271
+[; ;common.c: 271:   TRISA |= 0b00000111;
 [e =| _TRISA -> -> 7 `i `Vuc ]
-"274
-[; ;common.c: 274:   ADCON1 = 0b00001100;
+"272
+[; ;common.c: 272:   ADCON1 = 0b00001100;
 [e = _ADCON1 -> -> 12 `i `uc ]
-"275
-[; ;common.c: 275:   ADCON2 = 0b00010010;
+"273
+[; ;common.c: 273:   ADCON2 = 0b00010010;
 [e = _ADCON2 -> -> 18 `i `uc ]
-"276
-[; ;common.c: 276:   ADCON0 = 0b00000101;
+"274
+[; ;common.c: 274:   ADCON0 = 0b00000101;
 [e = _ADCON0 -> -> 5 `i `uc ]
-"277
-[; ;common.c: 277:   ADCON0bits.ADON = 1;
+"275
+[; ;common.c: 275:   ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"278
-[; ;common.c: 278:   ADCON0bits.GODONE = 1;
+"276
+[; ;common.c: 276:   ADCON0bits.GODONE = 1;
 [e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"279
-[; ;common.c: 279:   while(ADCON0bits.GODONE);
+"277
+[; ;common.c: 277:   while(ADCON0bits.GODONE);
 [e $U 428  ]
 [e :U 429 ]
 [e :U 428 ]
 [e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 429  ]
 [e :U 430 ]
-"280
-[; ;common.c: 280:   return ADRESH;
+"278
+[; ;common.c: 278:   return ADRESH;
 [e ) _ADRESH ]
 [e $UE 427  ]
-"281
-[; ;common.c: 281: }
+"279
+[; ;common.c: 279: }
 [e :UE 427 ]
 }
-"283
-[; ;common.c: 283: uint8 adc_getval_an2()
+"281
+[; ;common.c: 281: uint8 adc_getval_an2()
 [v _adc_getval_an2 `(uc ~T0 @X0 1 ef ]
-"284
-[; ;common.c: 284: {
+"282
+[; ;common.c: 282: {
 {
 [e :U _adc_getval_an2 ]
 [f ]
-"285
-[; ;common.c: 285:   TRISA |= 0b00000111;
+"283
+[; ;common.c: 283:   TRISA |= 0b00000111;
 [e =| _TRISA -> -> 7 `i `Vuc ]
-"286
-[; ;common.c: 286:   ADCON1 = 0b00001100;
+"284
+[; ;common.c: 284:   ADCON1 = 0b00001100;
 [e = _ADCON1 -> -> 12 `i `uc ]
-"287
-[; ;common.c: 287:   ADCON2 = 0b00010010;
+"285
+[; ;common.c: 285:   ADCON2 = 0b00010010;
 [e = _ADCON2 -> -> 18 `i `uc ]
-"288
-[; ;common.c: 288:   ADCON0 = 0b00001001;
+"286
+[; ;common.c: 286:   ADCON0 = 0b00001001;
 [e = _ADCON0 -> -> 9 `i `uc ]
-"289
-[; ;common.c: 289:   ADCON0bits.ADON = 1;
+"287
+[; ;common.c: 287:   ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-"290
-[; ;common.c: 290:   ADCON0bits.GODONE = 1;
+"288
+[; ;common.c: 288:   ADCON0bits.GODONE = 1;
 [e = . . _ADCON0bits 7 1 -> -> 1 `i `uc ]
-"291
-[; ;common.c: 291:   while(ADCON0bits.GODONE);
+"289
+[; ;common.c: 289:   while(ADCON0bits.GODONE);
 [e $U 432  ]
 [e :U 433 ]
 [e :U 432 ]
 [e $ != -> . . _ADCON0bits 7 1 `i -> 0 `i 433  ]
 [e :U 434 ]
-"292
-[; ;common.c: 292:   return ADRESH;
+"290
+[; ;common.c: 290:   return ADRESH;
 [e ) _ADRESH ]
 [e $UE 431  ]
-"293
-[; ;common.c: 293: }
+"291
+[; ;common.c: 291: }
 [e :UE 431 ]
 }
-"295
-[; ;common.c: 295: void initbuttons(void)
+"293
+[; ;common.c: 293: void initbuttons(void)
 [v _initbuttons `(v ~T0 @X0 1 ef ]
-"296
-[; ;common.c: 296: {
+"294
+[; ;common.c: 294: {
 {
 [e :U _initbuttons ]
 [f ]
-"297
-[; ;common.c: 297:   B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
+"295
+[; ;common.c: 295:   B1 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 6, &timestamp);
 [e = _B1 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 4 `i `uc -> -> 6 `i `uc -> &U _timestamp `*Cul ]
-"298
-[; ;common.c: 298:   B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
+"296
+[; ;common.c: 296:   B2 = CreateBtn(&TRISB, &PORTB, &LATB, 4, 7, &timestamp);
 [e = _B2 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 4 `i `uc -> -> 7 `i `uc -> &U _timestamp `*Cul ]
-"299
-[; ;common.c: 299:   B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
+"297
+[; ;common.c: 297:   B3 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 6, &timestamp);
 [e = _B3 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 5 `i `uc -> -> 6 `i `uc -> &U _timestamp `*Cul ]
-"300
-[; ;common.c: 300:   B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
+"298
+[; ;common.c: 298:   B4 = CreateBtn(&TRISB, &PORTB, &LATB, 5, 7, &timestamp);
 [e = _B4 ( _CreateBtn (4 , , , , , &U _TRISB &U _PORTB &U _LATB -> -> 5 `i `uc -> -> 7 `i `uc -> &U _timestamp `*Cul ]
-"301
-[; ;common.c: 301: }
+"299
+[; ;common.c: 299: }
 [e :UE 435 ]
 }
-"303
-[; ;common.c: 303: void testbuttons(void)
+"301
+[; ;common.c: 301: void testbuttons(void)
 [v _testbuttons `(v ~T0 @X0 1 ef ]
-"304
-[; ;common.c: 304: {
+"302
+[; ;common.c: 302: {
 {
 [e :U _testbuttons ]
 [f ]
-"305
-[; ;common.c: 305:   TestBtn(&B1);
+"303
+[; ;common.c: 303:   TestBtn(&B1);
 [e ( _TestBtn (1 &U _B1 ]
-"306
-[; ;common.c: 306:   TestBtn(&B2);
+"304
+[; ;common.c: 304:   TestBtn(&B2);
 [e ( _TestBtn (1 &U _B2 ]
-"307
-[; ;common.c: 307:   TestBtn(&B3);
+"305
+[; ;common.c: 305:   TestBtn(&B3);
 [e ( _TestBtn (1 &U _B3 ]
-"308
-[; ;common.c: 308:   TestBtn(&B4);
+"306
+[; ;common.c: 306:   TestBtn(&B4);
 [e ( _TestBtn (1 &U _B4 ]
-"309
-[; ;common.c: 309: }
+"307
+[; ;common.c: 307: }
 [e :UE 436 ]
+}
+"309
+[; ;common.c: 309: void rtcrawtobcd(void)
+[v _rtcrawtobcd `(v ~T0 @X0 1 ef ]
+"310
+[; ;common.c: 310: {
+{
+[e :U _rtcrawtobcd ]
+[f ]
+"311
+[; ;common.c: 311:   rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
+[e = . . _rtcbcd 0 6 -> | << / -> . . _rtcraw 0 6 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 6 `i -> 10 `i `uc ]
+"312
+[; ;common.c: 312:   rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
+[e = . . _rtcbcd 0 5 -> | | -> 128 `i << / -> . . _rtcraw 0 5 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 5 `i -> 10 `i `uc ]
+"313
+[; ;common.c: 313:   rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
+[e = . . _rtcbcd 0 3 -> | << / -> . . _rtcraw 0 3 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 3 `i -> 10 `i `uc ]
+"314
+[; ;common.c: 314:   rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
+[e = . . _rtcbcd 0 4 . . _rtcraw 0 4 ]
+"315
+[; ;common.c: 315:   rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
+[e = . . _rtcbcd 0 2 -> | << / -> . . _rtcraw 0 2 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 2 `i -> 10 `i `uc ]
+"316
+[; ;common.c: 316:   rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
+[e = . . _rtcbcd 0 1 -> | << / -> . . _rtcraw 0 1 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 1 `i -> 10 `i `uc ]
+"317
+[; ;common.c: 317:   rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+[e = . . _rtcbcd 0 0 -> | << / -> . . _rtcraw 0 0 `i -> 10 `i -> 4 `i % -> . . _rtcraw 0 0 `i -> 10 `i `uc ]
+"318
+[; ;common.c: 318: }
+[e :UE 437 ]
+}
+"320
+[; ;common.c: 320: void rtcbcdtoraw(void)
+[v _rtcbcdtoraw `(v ~T0 @X0 1 ef ]
+"321
+[; ;common.c: 321: {
+{
+[e :U _rtcbcdtoraw ]
+[f ]
+"322
+[; ;common.c: 322:   rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
+[e = . . _rtcraw 0 6 -> + * >> -> . . _rtcbcd 0 6 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 6 `i -> 15 `i `uc ]
+"323
+[; ;common.c: 323:   rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
+[e = . . _rtcraw 0 5 -> + * >> & -> . . _rtcbcd 0 5 `i -> 31 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 5 `i -> 15 `i `uc ]
+"324
+[; ;common.c: 324:   rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
+[e = . . _rtcraw 0 3 -> + * >> & -> . . _rtcbcd 0 3 `i -> 63 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 3 `i -> 15 `i `uc ]
+"325
+[; ;common.c: 325:   rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
+[e = . . _rtcraw 0 4 -> & -> . . _rtcbcd 0 4 `i -> 7 `i `uc ]
+"326
+[; ;common.c: 326:   rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
+[e = . . _rtcraw 0 2 -> + * >> & -> . . _rtcbcd 0 2 `i -> 63 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 2 `i -> 15 `i `uc ]
+"327
+[; ;common.c: 327:   rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
+[e = . . _rtcraw 0 1 -> + * >> & -> . . _rtcbcd 0 1 `i -> 127 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 1 `i -> 15 `i `uc ]
+"328
+[; ;common.c: 328:   rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
+[e = . . _rtcraw 0 0 -> + * >> & -> . . _rtcbcd 0 0 `i -> 127 `i -> 4 `i -> 10 `i & -> . . _rtcbcd 0 0 `i -> 15 `i `uc ]
+"329
+[; ;common.c: 329: }
+[e :UE 438 ]
 }
 [a 2C 68 101 118 105 99 101 32 105 115 0 ]
 [a 3C 115 104 117 116 116 105 110 103 32 100 111 119 110 33 0 ]

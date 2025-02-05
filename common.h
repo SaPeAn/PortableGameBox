@@ -17,7 +17,7 @@ typedef int              int16;
 typedef unsigned long    uint32;
 typedef long             int32;  
 
-/*-------------------------GLOBAL VARIABLES-----------------------------------*/
+/*-------------------------SYSTEM VARIABLES-----------------------------------*/
 typedef struct{
   uint8 sec;     // BCD  0...59            |x |SH|SH|SH|SL|SL|SL|SL|
   uint8 min;     // BCD  0...59            |x |MH|MH|MH|ML|ML|ML|ML|
@@ -33,15 +33,35 @@ typedef union{
   uint8  rtcdata[7];
 } rtcun_t;
 
-
-uint32 timestamp = 0; //System timer (ms) from power on or last restart
-
-rtcun_t rtcbcd; // clock/data in RTC module
-rtcun_t rtcraw; // system clock/data 
-uint8 Ubat;
-uint8 batlvl;
-uint8 brightlvl;
+uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
+rtcun_t rtcbcd;          // structure variable for storaging clock/date from RTC module (BCD format))
+rtcun_t rtcraw;          // structure variable for storaging system clock/date (uint8)
+uint8 Ubat;              // ADC data from battery level measurement
+uint8 batlvl;            // battery level for display (0...5)
+uint8 brightlvl;         // brightness level for display (0...7)
+uint8 brightPWM = 200;   // PWM duty cycle value for regulate display brightness
 /*----------------------------------------------------------------------------*/
+
+/*-------------------------SYSTEM FUNCTIONS-----------------------------------*/
+void Interrupt_init(void);
+void timersinit(void);
+void commoninit(void);
+void gettime(void);
+uint8 getbatlvl(uint8);
+void delay_ms(uint32);
+uint8 getrand(uint8);
+void randinit(void);
+uint8 dig_to_smb(uint8);
+void  u16_to_str(uint8*, uint16, uint8);
+void BrightPWM(uint8);
+void Sounds(uint16);
+void ShutDown(void);
+void batcheck(void);
+void rtcbcdtoraw(void);
+void rtcrawtobcd(void);
+/*----------------------------------------------------------------------------*/
+
+/*---------------------BUTTONS & JOYSTICK VARIABLES---------------------------*/
 typedef struct{
   volatile uint8*  Port;
   volatile uint8*  Lat;
@@ -55,41 +75,22 @@ typedef struct{
   uint8            HoldON;
   uint8            StuckON;
 }btn_t;
-
-btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
-void TestBtn(btn_t*);
-
+//buttons
 btn_t B1;
 btn_t B2;
 btn_t B3;
 btn_t B4;
-
 uint8 ox, oy; //joystick coordinates
-uint8 bright = 200;
-    
-void initbuttons(void);    
-void Interrupt_init(void);
-void timersinit(void);
+/*----------------------------------------------------------------------------*/
+
+/*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
+btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
+void TestBtn(btn_t*);
+void testbuttons(void);
+void initbuttons(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);
 uint8 adc_getval_an2(void);
-void testbuttons(void);
-void initbuttons(void);
-  
-/*-------------------------SYSTEM FUNCTIONS-----------------------------------*/
-void commoninit(void);
-void gettime(void);
-uint8 getbatlvl(uint8);
-void delay_ms(uint32);
-uint8 getrand(uint8);
-void randinit(void);
-uint8 dig_to_smb(uint8);
-void  u16_to_str(uint8*, uint16, uint8);
-void BrightPWM(uint8);
-void Sounds(uint16);
-void ShutDown(void);
-void batcheck(void);
-
 /*----------------------------------------------------------------------------*/
 
 #ifdef	__cplusplus

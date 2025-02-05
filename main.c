@@ -32,12 +32,13 @@ void main(void)
   timersinit();
   Interrupt_init();
   randinit();
+  SPI_init();
   LCD_Init();
   LCD_Erase();
   initbuttons();
   CMCON = 0b11000111;
   swi2cinit();
-  BrightPWM(bright);
+  BrightPWM(brightPWM);
 /*----------------------------------------------------------------------------*/
   uint8 tempval = 0;
   uint8 stringtemp[6];

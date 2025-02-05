@@ -71,18 +71,16 @@ void ShutDown(void)
 {
   LCD_Erase();
   PORTCbits.RC1 = 0;
-  while(1)
-  {
-    LCD_printStr8x5("Low battery level!", 1, 10);
-    LCD_printStr8x5("Device is", 3, 10);  
-    LCD_printStr8x5("shutting down!", 5, 10);
-  }
+  LCD_printStr8x5("Low battery level!", 1, 10);
+  LCD_printStr8x5("Device is", 3, 10);  
+  LCD_printStr8x5("shutting down!", 5, 10);
+  while(1);
 }
 
 void batcheck(void)
 {
   Ubat = adc_getval_an2();
-  uint8 batlvl = getbatlvl(Ubat);
+  batlvl = getbatlvl(Ubat);
   if(batlvl == 100) ShutDown();
 }
 /*----------------------------------------------------------------------------*/
@@ -306,4 +304,26 @@ void testbuttons(void)
   TestBtn(&B2); 
   TestBtn(&B3); 
   TestBtn(&B4);
+}
+
+void rtcrawtobcd(void)
+{
+  rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
+  rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
+  rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
+  rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
+  rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
+  rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
+  rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+}
+
+void rtcbcdtoraw(void)
+{
+  rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
+  rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
+  rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
+  rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
+  rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
+  rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
+  rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
 }

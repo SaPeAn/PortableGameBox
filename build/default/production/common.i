@@ -33,14 +33,34 @@ typedef union{
   uint8 rtcdata[7];
 } rtcun_t;
 
-
 uint32 timestamp = 0;
-
 rtcun_t rtcbcd;
 rtcun_t rtcraw;
 uint8 Ubat;
 uint8 batlvl;
 uint8 brightlvl;
+uint8 brightPWM = 200;
+
+
+
+void Interrupt_init(void);
+void timersinit(void);
+void commoninit(void);
+void gettime(void);
+uint8 getbatlvl(uint8);
+void delay_ms(uint32);
+uint8 getrand(uint8);
+void randinit(void);
+uint8 dig_to_smb(uint8);
+void u16_to_str(uint8*, uint16, uint8);
+void BrightPWM(uint8);
+void Sounds(uint16);
+void ShutDown(void);
+void batcheck(void);
+void rtcbcdtoraw(void);
+void rtcrawtobcd(void);
+
+
 
 typedef struct{
   volatile uint8* Port;
@@ -56,39 +76,21 @@ typedef struct{
   uint8 StuckON;
 }btn_t;
 
-btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
-void TestBtn(btn_t*);
-
 btn_t B1;
 btn_t B2;
 btn_t B3;
 btn_t B4;
-
 uint8 ox, oy;
-uint8 bright = 200;
 
+
+
+btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
+void TestBtn(btn_t*);
+void testbuttons(void);
 void initbuttons(void);
-void Interrupt_init(void);
-void timersinit(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);
 uint8 adc_getval_an2(void);
-void testbuttons(void);
-void initbuttons(void);
-
-
-void commoninit(void);
-void gettime(void);
-uint8 getbatlvl(uint8);
-void delay_ms(uint32);
-uint8 getrand(uint8);
-void randinit(void);
-uint8 dig_to_smb(uint8);
-void u16_to_str(uint8*, uint16, uint8);
-void BrightPWM(uint8);
-void Sounds(uint16);
-void ShutDown(void);
-void batcheck(void);
 # 2 "common.c" 2
 
 # 1 "./drv_lcdST7565_SPI.h" 1
@@ -5292,18 +5294,16 @@ void ShutDown(void)
 {
   LCD_Erase();
   PORTCbits.RC1 = 0;
-  while(1)
-  {
-    LCD_printStr8x5("Low battery level!", 1, 10);
-    LCD_printStr8x5("Device is", 3, 10);
-    LCD_printStr8x5("shutting down!", 5, 10);
-  }
+  LCD_printStr8x5("Low battery level!", 1, 10);
+  LCD_printStr8x5("Device is", 3, 10);
+  LCD_printStr8x5("shutting down!", 5, 10);
+  while(1);
 }
 
 void batcheck(void)
 {
   Ubat = adc_getval_an2();
-  uint8 batlvl = getbatlvl(Ubat);
+  batlvl = getbatlvl(Ubat);
   if(batlvl == 100) ShutDown();
 }
 
@@ -5527,4 +5527,26 @@ void testbuttons(void)
   TestBtn(&B2);
   TestBtn(&B3);
   TestBtn(&B4);
+}
+
+void rtcrawtobcd(void)
+{
+  rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
+  rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
+  rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
+  rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
+  rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
+  rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
+  rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+}
+
+void rtcbcdtoraw(void)
+{
+  rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
+  rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
+  rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
+  rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
+  rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
+  rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
+  rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
 }

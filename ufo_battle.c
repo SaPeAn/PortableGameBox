@@ -44,8 +44,8 @@ void ufobattle_init(void)
   {      
     Tar.en = 1;
     testbuttons();
-    if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; bright +=10; if(bright >= 240) bright = 240; Sounds(400);}
-    if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; bright -=10; if(bright <= 10) bright = 10; Sounds(400);}
+    if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; brightPWM +=10; if(brightPWM >= 240) brightPWM = 240; Sounds(400);}
+    if(B3.BtnON  || B3.HoldON || B3.StuckON){B3.BtnON = 0; brightPWM -=10; if(brightPWM <= 10) brightPWM = 10; Sounds(400);}
 
 
     if(timestamp - counter > 500){
@@ -62,7 +62,7 @@ void ufobattle_init(void)
 
     batcheck();
     print_bat_level(batlvl, 0, 105); 
-    BrightPWM(bright);
+    BrightPWM(brightPWM);
     delay_ms(100);
   }
 }

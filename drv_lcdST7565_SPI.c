@@ -20,7 +20,7 @@
 
 #define  HW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
 
-//----------------------Software SPI-----------------------------------------
+/*-------------------------------SW SPI---------------------------------------*/
 #ifdef SW_SPI
 
 #define  SPI_TRANSMIT_FUNC      SPI_TX
@@ -43,9 +43,9 @@ void SPI_init(void)
   SCK = 1;
 }
 #endif
-//---------------------------------------------------------------------------
+/*----------------------------------------------------------------------------*/
 
-//----------------------Hardware SPI-----------------------------------------
+/*---------------------------------HW SPI-------------------------------------*/
 #ifdef   HW_SPI
 extern uint8 HW_SPI_TX(uint8);
 #define  SPI_TRANSMIT_FUNC      HW_SPI_TX
@@ -72,12 +72,11 @@ uint8 SPI_transmit(uint8 bt)
   }
 
 #endif
-//------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------*/
 
-//------------------------LCD FUNCTIONS-----------------------------------------
+/*------------------------LCD FUNCTIONS---------------------------------------*/
 void LCD_Init(void)
 {
-  SPI_init();
   TRISAbits.RA3 = 0; //RSE
   TRISAbits.RA4 = 0; //RS
   RSE = 1;
@@ -103,43 +102,6 @@ void LCD_Init(void)
   LCD_WriteByte(0xAE | 1);       // Display on(1) / Display off (0)
   LCD_WriteByte(0xA6 | 0);       // Display Normal(0) / Display Reverse(1)
   RS = 1;
-}
-
-void print_piu(uint8 page, uint8 col)
-{
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(tar_bullet, 8);
-}
-
-void print_ufo(uint8 page, uint8 col)
-{
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(tarelka[0], 27);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(tarelka[1], 27);
-}
-
-void print_cometa(uint8 page, uint8 col)
-{
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(cometa[0], 28);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(cometa[1], 28);
-}
-
-void print_distr_cometa(uint8 page, uint8 col)
-{
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(distr_cometa[0], 28);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(distr_cometa[1], 28);
-}
-
-void print_bat_level(uint8 lvl, uint8 page, uint8 col)
-{
-  if(lvl == 100) lvl = 5; // 100 -shutdown code
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(battary_2[lvl], 20);
 }
 
 void LCD_Set_PageColumn(uint8 page, uint8 col)
@@ -171,16 +133,6 @@ uint8 LCD_printStr8x5(uint8 *str, uint8 page, uint8 col)
     i++;
   }
   return i;
-}
-
-void LCD_PrintClockAndDate(void)
-{
-  uint8 minL = rtcraw.rtcpar.min % 10;
-  uint8 hourL = rtcraw.rtcpar.hour % 10;
-  rtcraw.rtcpar.min /= 10;
-  rtcraw.rtcpar.hour /= 10;
-  uint8 cl_digits[9] = {dig_to_smb(rtcraw.rtcpar.hour), dig_to_smb(hourL), ':', dig_to_smb(rtcraw.rtcpar.min), dig_to_smb(minL), '\0'};
-  LCD_printStr8x5(cl_digits, 0, 25);
 }
 
 void LCD_Erase(void)
@@ -220,6 +172,18 @@ void LCD_WriteByte(uint8 byte)
   SPI_TRANSMIT_FUNC(byte);
   CS = 1;
 }
+/*----------------------------------------------------------------------------*/
+
+/*-----------------------------SYSTEM MENU ELEMENTS---------------------------*/
+void LCD_PrintClockAndDate(void)
+{
+  uint8 minL = rtcraw.rtcpar.min % 10;
+  uint8 hourL = rtcraw.rtcpar.hour % 10;
+  rtcraw.rtcpar.min /= 10;
+  rtcraw.rtcpar.hour /= 10;
+  uint8 cl_digits[9] = {dig_to_smb(rtcraw.rtcpar.hour), dig_to_smb(hourL), ':', dig_to_smb(rtcraw.rtcpar.min), dig_to_smb(minL), '\0'};
+  LCD_printStr8x5(cl_digits, 0, 25);
+}
 
 void LCD_printbrightnes(uint8 brlvl, uint8 page, uint8 col) //  size 26 column
 {
@@ -228,3 +192,44 @@ void LCD_printbrightnes(uint8 brlvl, uint8 page, uint8 col) //  size 26 column
   LCD_Set_PageColumn(page, col+9);
   LCD_SendData(bright_lvl[brlvl], 15);
 }
+
+void print_bat_level(uint8 lvl, uint8 page, uint8 col)
+{
+  if(lvl == 100) lvl = 5; // 100 -shutdown code
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(battary_2[lvl], 20);
+}
+/*----------------------------------------------------------------------------*/
+
+/*------------------------------GAME OBJECTS----------------------------------*/
+void print_piu(uint8 page, uint8 col)
+{
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(tar_bullet, 8);
+}
+
+void print_ufo(uint8 page, uint8 col)
+{
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(tarelka[0], 27);
+  LCD_Set_PageColumn((page+1), col);
+  LCD_SendData(tarelka[1], 27);
+}
+
+void print_cometa(uint8 page, uint8 col)
+{
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(cometa[0], 28);
+  LCD_Set_PageColumn((page+1), col);
+  LCD_SendData(cometa[1], 28);
+}
+
+void print_distr_cometa(uint8 page, uint8 col)
+{
+  LCD_Set_PageColumn(page, col);
+  LCD_SendData(distr_cometa[0], 28);
+  LCD_Set_PageColumn((page+1), col);
+  LCD_SendData(distr_cometa[1], 28);
+}
+/*----------------------------------------------------------------------------*/
+

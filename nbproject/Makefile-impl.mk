@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=PIC18F2550_CommonProj.X
+PROJECTNAME=PortableGameBox
 
 # Active Configuration
 DEFAULTCONF=default
