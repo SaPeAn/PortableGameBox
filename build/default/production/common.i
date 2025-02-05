@@ -22,12 +22,25 @@ typedef struct{
   uint8 sec;
   uint8 min;
   uint8 hour;
-} systime_t;
+  uint8 day;
+  uint8 weekday;
+  uint8 month;
+  uint8 year;
+} rtc_t;
+
+typedef union{
+  rtc_t rtcpar;
+  uint8 rtcdata[7];
+} rtcun_t;
+
 
 uint32 timestamp = 0;
-systime_t Time;
+
+rtcun_t rtcbcd;
+rtcun_t rtcraw;
 uint8 Ubat;
 uint8 batlvl;
+uint8 brightlvl;
 
 typedef struct{
   volatile uint8* Port;
@@ -65,7 +78,7 @@ void initbuttons(void);
 
 
 void commoninit(void);
-void gettime(systime_t*);
+void gettime(void);
 uint8 getbatlvl(uint8);
 void delay_ms(uint32);
 uint8 getrand(uint8);
@@ -117,7 +130,7 @@ void LCD_Set_PageColumn(uint8, uint8);
 void LCD_printSmb8x5(const uint8, uint8, uint8);
 void LCD_Erase(void);
 uint8 LCD_printStr8x5(uint8*, uint8, uint8);
-void LCD_PrintClock(systime_t);
+void LCD_PrintClockAndDate(void);
 void print_ufo(uint8, uint8);
 void print_piu(uint8, uint8);
 void print_cometa(uint8, uint8);
@@ -5295,11 +5308,11 @@ void batcheck(void)
 }
 
 
-void gettime(systime_t* tm)
+void gettime(void)
 {
-  tm->hour = (uint8)(timestamp/3600000);
-  tm->min = (uint8)((timestamp%3600000)/60000);
-  tm->sec = (uint8)((timestamp%60000)/1000);
+  rtcraw.rtcpar.sec = (uint8)(timestamp/3600000);
+  rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
+  rtcraw.rtcpar.hour = (uint8)((timestamp%60000)/1000);
 }
 
 void randinit(void)
