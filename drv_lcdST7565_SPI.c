@@ -205,12 +205,16 @@ void LCD_PrintClockAndDate(uint8 pg, uint8 cl)
     case 10: month[0] = 'Í'; month[1] = 'Î'; month[2] = 'ß'; break;
     case 11: month[0] = 'Ä'; month[1] = 'Å'; month[2] = 'Ê'; break;
   }
-  uint8 cl_digits[9] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), ':', 
-                        dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
+  uint8 hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
+  uint8 colon[4] = {0x00,0x12,0x00}; // ':' colon
+  uint8 minutes[3] = {dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
   LCD_printStr8x5(day, pg, cl);
-  LCD_printStr8x5(month, pg, cl+14);
-  LCD_printStr8x5(wday, pg, cl+35);
-  LCD_printStr8x5(cl_digits, pg, cl+48);
+  LCD_printStr8x5(month, pg, cl + 14);
+  LCD_printStr8x5(wday, pg, cl + 35);
+  LCD_printStr8x5(hours, pg, cl + 49);
+  LCD_Set_PageColumn(pg, cl + 61);
+  LCD_SendData(colon, 3);
+  LCD_printStr8x5(minutes, pg, cl + 64);
 }
 
 

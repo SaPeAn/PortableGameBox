@@ -58,7 +58,7 @@ void ufobattle_init(void)
     #if 1 // print clock
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();
-    LCD_PrintClockAndDate(0, 25);
+    LCD_PrintClockAndDate(0, 26);
     #endif
 
     batcheck();
