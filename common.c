@@ -197,12 +197,12 @@ void batcheck(void)
   if(batlvl == 100) ShutDown();
 }
 
-void gettime(void)
+/*void gettime(void)
 { 
   rtcraw.rtcpar.hour = (uint8)(timestamp/3600000);
   rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
   rtcraw.rtcpar.sec = (uint8)((timestamp%60000)/1000);
-}
+}*/
 
 void rtcrawtobcd(void)
 {

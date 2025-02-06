@@ -12,13 +12,9 @@
 extern "C" {
 #endif
 #include "common.h"
-
-uint8 StartFl = 0;
-
-
+    
 void ufobattle_init(void);
 void ufobattle_start(void);
-
 
 #ifdef	__cplusplus
 }

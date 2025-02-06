@@ -33,6 +33,23 @@ typedef union{
   uint8  rtcdata[7];
 } rtcun_t;
 
+typedef union{
+  struct{
+    unsigned MenuFl             :1;
+    unsigned RunGameFl        :1;
+    unsigned Fl_1               :1;
+    unsigned Fl_2               :1;
+    unsigned Fl_3               :1;
+    unsigned Fl_4               :1;
+    unsigned Fl_5               :1;
+    unsigned Fl_6               :1;
+  };
+} flags_t;                               // System functions launch flags
+
+flags_t CFlags;
+
+
+
 uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
 rtcun_t rtcbcd;          // structure variable for storaging clock/date from RTC module (BCD format))
 rtcun_t rtcraw;          // structure variable for storaging system clock/date (uint8)

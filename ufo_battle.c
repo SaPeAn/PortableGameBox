@@ -40,7 +40,7 @@ uint32 counter = 0;
 
 void ufobattle_init(void)
 {
-  while(!StartFl)
+  while(!CFlags.RunGameFl)
   {      
     Tar.en = 1;
     testbuttons();
@@ -53,13 +53,13 @@ void ufobattle_init(void)
       print_cometa(getrand(6), getrand(100));
       counter = timestamp;
     }
-    if(B1.BtnON){B1.BtnON = 0; StartFl = 1; Sounds(400);}
+    if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 1; Sounds(400);}
 
-    #if 1 // print clock
+
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();
     LCD_PrintClockAndDate(0, 26);
-    #endif
+
 
     batcheck();
     print_bat_level(batlvl, 0, 105); 
@@ -68,13 +68,13 @@ void ufobattle_init(void)
     getbrightlvl();
     LCD_printbrightnes(0, 0);
     
-    delay_ms(100);
+    delay_ms(50);
   }
 }
 
 void ufobattle_start(void)
 {
-  while(StartFl)
+  while(CFlags.RunGameFl)
   {
     testbuttons();
     ox = adc_getval_an0();
@@ -124,7 +124,7 @@ void ufobattle_start(void)
       }
     }
 
-    if(!Tar.en) {Sounds(600); StartFl = 0;}
+    if(!Tar.en) {Sounds(600); CFlags.RunGameFl = 0;}
     //------------COLLISION--------------
     for(uint8 j = 0; j < Max_Piu; j++)
     {

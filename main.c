@@ -24,6 +24,28 @@ void __interrupt() systemTick_int(void)
 }
 /*----------------------------------------------------------------------------*/
 
+void MainMenu(void)
+{
+  while(CFlags.MenuFl)
+  {
+    
+    LCD_printStr8x5("»√–¿", 2, 25);
+    LCD_printStr8x5("Õ¿—“Œ… ¿", 4, 25);
+    LCD_printStr8x5("“≈—“", 6, 25);
+        
+    
+    RTCgetdata(rtcbcd.rtcdata);
+    rtcbcdtoraw();
+    LCD_PrintClockAndDate(0, 26);batcheck();
+    print_bat_level(batlvl, 0, 105); 
+    BrightPWM(brightPWM);
+    getbrightlvl();
+    LCD_printbrightnes(0, 0);
+    delay_ms(50); 
+  }
+}
+
+
 /*-----------------------------------MAIN-------------------------------------*/
 void main(void) 
 {
@@ -36,24 +58,18 @@ void main(void)
   LCD_Init();
   LCD_Erase();
   initbuttons();
-  CMCON = 0b11000111;
   swi2cinit();
   BrightPWM(brightPWM);
+  
+  CFlags.MenuFl = 1;
 /*----------------------------------------------------------------------------*/
-  uint8 tempval = 0;
-  uint8 stringtemp[6];
-  rtcraw.rtcpar.year = 25;
-  rtcraw.rtcpar.month = 1;
-  rtcraw.rtcpar.day = 5;
-  rtcraw.rtcpar.weekday = 3;
-  rtcraw.rtcpar.hour = 22;
-  rtcraw.rtcpar.min = 16;
-  rtcraw.rtcpar.sec = 0;
+  uint8 tmpval = 0;
+  uint8 tmpstr[6];
 /*-------------------------------MAIN CYCLE-----------------------------------*/
+#define CODE_BLOCK   2
   while(1)
   { 
-    
-#if 0 
+#if (CODE_BLOCK == 0) 
     testbuttons();
     
     
@@ -64,9 +80,9 @@ void main(void)
       RTCsenddata(rtcbcd.rtcdata);
       for(uint8 i = 0; i < 7; i++)
       {
-      tempval = rtcraw.rtcdata[i];
-      u16_to_str(stringtemp, tempval, DISABLE);
-      LCD_printStr8x5(stringtemp, i, 0);
+      tmpval = rtcraw.rtcdata[i];
+      u16_to_str(tmpstr, tmpval, DISABLE);
+      LCD_printStr8x5(tmpstr, i, 0);
       }
     }
     
@@ -77,19 +93,26 @@ void main(void)
       rtcbcdtoraw();
       for(uint8 i = 0; i < 7; i++)
       {
-      tempval = rtcraw.rtcdata[i];
-      u16_to_str(stringtemp, tempval, DISABLE);
-      LCD_printStr8x5(stringtemp, i, 35);
+      tmpval = rtcraw.rtcdata[i];
+      u16_to_str(tmpstr, tmpval, DISABLE);
+      LCD_printStr8x5(tmpstr, i, 35);
       }
     }
-    
-    
-    
 #endif
     
-    ufobattle_init();
-    ufobattle_start();
-
+#if (CODE_BLOCK == 1)    
+  ufobattle_init();
+  ufobattle_start();
+#endif
+    
+#if (CODE_BLOCK == 2)    
+  
+  MainMenu(); 
+  
+  
+  
+  
+#endif
  
   }
 /*----------------------------------------------------------------------------*/
