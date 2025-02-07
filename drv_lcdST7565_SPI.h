@@ -33,6 +33,7 @@ void print_cometa(uint8, uint8);
 void print_distr_cometa(uint8, uint8);
 void print_bat_level(uint8, uint8, uint8);
 void LCD_printbrightnes(uint8, uint8);
+void print_menu_pointer(uint8, uint8);
 
 #ifdef	__cplusplus
 }

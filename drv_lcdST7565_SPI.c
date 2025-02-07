@@ -226,11 +226,19 @@ void LCD_printbrightnes(uint8 page, uint8 col) //  size 26 column
   LCD_SendData(bright_lvl[brightlvl], 15);
 }
 
-void print_bat_level(uint8 lvl, uint8 page, uint8 col)
+void print_bat_level(uint8 lvl, uint8 pg, uint8 cl)
 {
   if(lvl == 100) lvl = 5; // 100 -shutdown code
-  LCD_Set_PageColumn(page, col);
+  LCD_Set_PageColumn(pg, cl);
   LCD_SendData(battary_2[lvl], 20);
+}
+
+void print_menu_pointer(uint8 pg, uint8 cl)
+{
+  LCD_Set_PageColumn(pg, cl);
+  LCD_SendData(menu_pointer[0], 11);
+  LCD_Set_PageColumn(pg + 1, cl);
+  LCD_SendData(menu_pointer[1], 11);
 }
 /*----------------------------------------------------------------------------*/
 

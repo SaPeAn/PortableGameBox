@@ -29,12 +29,12 @@ CND_CONF=default
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=elf
-DEBUGGABLE_SUFFIX=elf
+DEBUGGABLE_SUFFIX=null
 FINAL_IMAGE=${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
-DEBUGGABLE_SUFFIX=elf
+DEBUGGABLE_SUFFIX=null
 FINAL_IMAGE=${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
@@ -54,11 +54,11 @@ DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 SOURCEFILES_QUOTED_IF_SPACED=common.c drv_lcdST7565_SPI.c main.c AsmSPI_Tx_Rx.asm ufo_battle.c drv_swi2cRTC.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/ufo_battle.p1 ${OBJECTDIR}/drv_swi2cRTC.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/common.p1.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d ${OBJECTDIR}/main.p1.d ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d ${OBJECTDIR}/ufo_battle.p1.d ${OBJECTDIR}/drv_swi2cRTC.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/common.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}
+POSSIBLE_DEPFILES=${OBJECTDIR}/common.${OUTPUT_EXTENSION_C}.d ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C}.d ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C}.d ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM}.d ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C}.d ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/common.p1 ${OBJECTDIR}/drv_lcdST7565_SPI.p1 ${OBJECTDIR}/main.p1 ${OBJECTDIR}/AsmSPI_Tx_Rx.o ${OBJECTDIR}/ufo_battle.p1 ${OBJECTDIR}/drv_swi2cRTC.p1
+OBJECTFILES=${OBJECTDIR}/common.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}
 
 # Source Files
 SOURCEFILES=common.c drv_lcdST7565_SPI.c main.c AsmSPI_Tx_Rx.asm ufo_battle.c drv_swi2cRTC.c
@@ -84,135 +84,88 @@ ifneq ($(INFORMATION_MESSAGE), )
 endif
 	${MAKE}  -f nbproject/Makefile-default.mk ${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
-MP_PROCESSOR_OPTION=18F2550
+MP_PROCESSOR_OPTION=
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/common.p1: common.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/common.${OUTPUT_EXTENSION_C}: common.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/common.p1.d 
-	@${RM} ${OBJECTDIR}/common.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/common.p1 common.c 
-	@-${MV} ${OBJECTDIR}/common.d ${OBJECTDIR}/common.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/common.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/common.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/common.${OUTPUT_EXTENSION_C} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    common.c 
 	
-${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C}: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
-	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_lcdST7565_SPI.p1 drv_lcdST7565_SPI.c 
-	@-${MV} ${OBJECTDIR}/drv_lcdST7565_SPI.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    drv_lcdST7565_SPI.c 
 	
-${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/main.${OUTPUT_EXTENSION_C}: main.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.p1.d 
-	@${RM} ${OBJECTDIR}/main.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/main.p1 main.c 
-	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    main.c 
 	
-${OBJECTDIR}/ufo_battle.p1: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C}: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/ufo_battle.p1.d 
-	@${RM} ${OBJECTDIR}/ufo_battle.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/ufo_battle.p1 ufo_battle.c 
-	@-${MV} ${OBJECTDIR}/ufo_battle.d ${OBJECTDIR}/ufo_battle.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/ufo_battle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    ufo_battle.c 
 	
-${OBJECTDIR}/drv_swi2cRTC.p1: drv_swi2cRTC.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}: drv_swi2cRTC.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_swi2cRTC.p1.d 
-	@${RM} ${OBJECTDIR}/drv_swi2cRTC.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_swi2cRTC.p1 drv_swi2cRTC.c 
-	@-${MV} ${OBJECTDIR}/drv_swi2cRTC.d ${OBJECTDIR}/drv_swi2cRTC.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_swi2cRTC.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    drv_swi2cRTC.c 
 	
 else
-${OBJECTDIR}/common.p1: common.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/common.${OUTPUT_EXTENSION_C}: common.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/common.p1.d 
-	@${RM} ${OBJECTDIR}/common.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/common.p1 common.c 
-	@-${MV} ${OBJECTDIR}/common.d ${OBJECTDIR}/common.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/common.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/common.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/common.${OUTPUT_EXTENSION_C} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    common.c 
 	
-${OBJECTDIR}/drv_lcdST7565_SPI.p1: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C}: drv_lcdST7565_SPI.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
-	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_lcdST7565_SPI.p1 drv_lcdST7565_SPI.c 
-	@-${MV} ${OBJECTDIR}/drv_lcdST7565_SPI.d ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_lcdST7565_SPI.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/drv_lcdST7565_SPI.${OUTPUT_EXTENSION_C} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    drv_lcdST7565_SPI.c 
 	
-${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/main.${OUTPUT_EXTENSION_C}: main.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.p1.d 
-	@${RM} ${OBJECTDIR}/main.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/main.p1 main.c 
-	@-${MV} ${OBJECTDIR}/main.d ${OBJECTDIR}/main.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/main.${OUTPUT_EXTENSION_C} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    main.c 
 	
-${OBJECTDIR}/ufo_battle.p1: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C}: ufo_battle.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/ufo_battle.p1.d 
-	@${RM} ${OBJECTDIR}/ufo_battle.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/ufo_battle.p1 ufo_battle.c 
-	@-${MV} ${OBJECTDIR}/ufo_battle.d ${OBJECTDIR}/ufo_battle.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/ufo_battle.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/ufo_battle.${OUTPUT_EXTENSION_C} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    ufo_battle.c 
 	
-${OBJECTDIR}/drv_swi2cRTC.p1: drv_swi2cRTC.c  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}: drv_swi2cRTC.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/drv_swi2cRTC.p1.d 
-	@${RM} ${OBJECTDIR}/drv_swi2cRTC.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/drv_swi2cRTC.p1 drv_swi2cRTC.c 
-	@-${MV} ${OBJECTDIR}/drv_swi2cRTC.d ${OBJECTDIR}/drv_swi2cRTC.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/drv_swi2cRTC.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C}.d 
+	@${RM} ${OBJECTDIR}/drv_swi2cRTC.${OUTPUT_EXTENSION_C} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require -mchp-stack-usage ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib $(COMPARISON_BUILD)  --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled    drv_swi2cRTC.c 
 	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/AsmSPI_Tx_Rx.o: AsmSPI_Tx_Rx.asm  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM}: AsmSPI_Tx_Rx.asm  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d 
-	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.o 
-	${MP_CC} -c $(MP_EXTRA_AS_PRE) -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto   -o ${OBJECTDIR}/AsmSPI_Tx_Rx.o  AsmSPI_Tx_Rx.asm 
-	@-${MV} ${OBJECTDIR}/AsmSPI_Tx_Rx.d ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d 
-	@${FIXDEPS} ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM}.d 
+	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM} 
+	 -D__DEBUG=1    -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled   AsmSPI_Tx_Rx.asm 
 	
 else
-${OBJECTDIR}/AsmSPI_Tx_Rx.o: AsmSPI_Tx_Rx.asm  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM}: AsmSPI_Tx_Rx.asm  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d 
-	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.o 
-	${MP_CC} -c $(MP_EXTRA_AS_PRE) -mcpu=$(MP_PROCESSOR_OPTION)   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto   -o ${OBJECTDIR}/AsmSPI_Tx_Rx.o  AsmSPI_Tx_Rx.asm 
-	@-${MV} ${OBJECTDIR}/AsmSPI_Tx_Rx.d ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d 
-	@${FIXDEPS} ${OBJECTDIR}/AsmSPI_Tx_Rx.o.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-endif
-
-# ------------------------------------------------------------------------------------
-# Rules for buildStep: assembleWithPreprocess
-ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-else
-endif
-
-# ------------------------------------------------------------------------------------
-# Rules for buildStep: link
-ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
-	@${MKDIR} ${DISTDIR} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.map  -D__DEBUG=1  -mdebugger=pickit3  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -mrom=default,-7dc0-7fff -mram=default,-3f4-3ff,-f9c-f9c,-fd4-fd4,-fdb-fdf,-fe3-fe7,-feb-fef,-ffd-fff  $(COMPARISON_BUILD) -Wl,--memorysummary,${DISTDIR}/memoryfile.xml -o ${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
-	@${RM} ${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.hex 
-	
-	
-else
-${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
-	@${MKDIR} ${DISTDIR} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.map  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=require -mchp-stack-usage -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     $(COMPARISON_BUILD) -Wl,--memorysummary,${DISTDIR}/memoryfile.xml -o ${DISTDIR}/PortableGameBox-master.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
-	
+	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM}.d 
+	@${RM} ${OBJECTDIR}/AsmSPI_Tx_Rx.${OUTPUT_EXTENSION_ASM} 
+	   -fno-short-double -fno-short-float ${code-model-external.prefix}wordwrite ${optimization-options.prefix}${disable-optimizations.true} ${what-to-do.prefix}require ${preprocess-assembler.trueemission} -N255 ${warn-level.prefix}-3 ${asmlist.true} -D=$(CND_CONF)  ${linker-report-options.prefix}-psect${linker-report-options.separator}-class${linker-report-options.separator}+mem${linker-report-options.separator}-hex${linker-report-options.separator}-file ${ld-extra.prefix}${ld-extra.false} ${linker-runtime-options.prefix}+clear${linker-runtime-options.separator}${initialize-data.true}${linker-runtime-options.separator}${keep-generated-startup.as.false}${linker-runtime-options.separator}${opt-xc8-linker-link_startup.false}${linker-runtime-options.separator}${calibrate-oscillator.false}${linker-runtime-options.separator}${backup-reset-condition-flags.false}${linker-runtime-options.separator}${format-hex-file-for-download.false}${linker-runtime-options.separator}${managed-stack.false}${linker-runtime-options.separator}${program-the-device-with-default-config-words.false}${linker-runtime-options.separator}-plib --output=-mcof,+elf:multilocs ${stack-options.prefix}compiled   AsmSPI_Tx_Rx.asm 
 	
 endif
 

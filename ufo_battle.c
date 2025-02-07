@@ -64,7 +64,7 @@ void ufobattle_init(void)
     batcheck();
     print_bat_level(batlvl, 0, 105); 
     
-    BrightPWM(brightPWM);
+    BrightPWMgen(brightPWM);
     getbrightlvl();
     LCD_printbrightnes(0, 0);
     

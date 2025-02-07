@@ -36,15 +36,22 @@ typedef union{
 typedef union{
   struct{
     unsigned MenuFl             :1;
-    unsigned RunGameFl        :1;
-    unsigned Fl_1               :1;
-    unsigned Fl_2               :1;
-    unsigned Fl_3               :1;
-    unsigned Fl_4               :1;
+    unsigned RunGameFl          :1;
+    unsigned MMPartbit_0        :1;  //  000 - GAME; 001 - SETTINGS; 010 - SETTINGS DATE/TIME;
+    unsigned MMPartbit_1        :1;  //  011 - SETTINGS BRIGHTNESS; 100 - START GAME;
+    unsigned MMPartbit_2        :1;  //  101 - GAME_POUINT_1; 110 - GAME_POUINT_2; 111 - TEST;
     unsigned Fl_5               :1;
     unsigned Fl_6               :1;
+    unsigned Fl_7               :1;
   };
 } flags_t;                               // System functions launch flags
+
+#define MAIN_MENU         !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
+#define SET_BRIGHT        !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
+#define SET_DT            !CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
+#define START_GAME         CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
+#define GAME_POUINT_1      CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
+#define TEST               CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
 
 flags_t CFlags;
 
@@ -70,7 +77,7 @@ uint8 getrand(uint8);
 void randinit(void);
 uint8 dig_to_smb(uint8);
 void  u16_to_str(uint8*, uint16, uint8);
-void BrightPWM(uint8);
+void BrightPWMgen(uint8);
 void decbright(void);
 void incbright(void);
 void getbrightlvl(void);

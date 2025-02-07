@@ -158,7 +158,7 @@ void incbright(void)
   brightPWM +=30;
 }
 
-void BrightPWM(uint8 duty_cycle)
+void BrightPWMgen(uint8 duty_cycle)
 {
   PR2 = 0xFF;
   CCPR2L = duty_cycle;
