@@ -340,6 +340,20 @@ uint8 adc_getval_an2()
   return ADRESH;  
 }
 
+void getjoypos(void)
+{
+  ox = adc_getval_an0();
+  oy = adc_getval_an1();
+}
+
+void checkjoydir(void)
+{
+    getjoypos();
+    if(oy > 150) joystick.joyup = 1;
+    if(oy < 100) joystick.joydown = 1;
+    if(ox > 150) joystick.joyright = 1;
+    if(ox < 100) joystick.joyleft = 1;
+}
 void testbuttons(void)
 { 
   TestBtn(&B1); 

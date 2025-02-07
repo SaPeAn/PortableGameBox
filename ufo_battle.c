@@ -47,7 +47,6 @@ void ufobattle_init(void)
     if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; incbright(); Sounds(400);}
     if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; decbright();Sounds(400);}
 
-
     if(timestamp - counter > 500){
       LCD_Erase();
       print_cometa(getrand(6), getrand(100));
@@ -55,11 +54,9 @@ void ufobattle_init(void)
     }
     if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 1; Sounds(400);}
 
-
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();
     LCD_PrintClockAndDate(0, 26);
-
 
     batcheck();
     print_bat_level(batlvl, 0, 105); 

@@ -40,9 +40,7 @@ typedef union{
     unsigned MMPartbit_0        :1;  //  000 - GAME; 001 - SETTINGS; 010 - SETTINGS DATE/TIME;
     unsigned MMPartbit_1        :1;  //  011 - SETTINGS BRIGHTNESS; 100 - START GAME;
     unsigned MMPartbit_2        :1;  //  101 - GAME_POUINT_1; 110 - GAME_POUINT_2; 111 - TEST;
-    unsigned Fl_5               :1;
-    unsigned Fl_6               :1;
-    unsigned Fl_7               :1;
+    unsigned menupos            :3;
   };
 } flags_t;                               // System functions launch flags
 
@@ -103,11 +101,21 @@ typedef struct{
   uint8            StuckON;
 }btn_t;
 //buttons
+typedef union{
+  struct{
+    uint8 joyup      :1;
+    uint8 joydown    :1;
+    uint8 joyleft    :1;
+    uint8 joyright   :1; 
+  };
+}joy_t;
+
 btn_t B1;
 btn_t B2;
 btn_t B3;
 btn_t B4;
 uint8 ox, oy; //joystick coordinates
+joy_t joystick = {0};
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
@@ -118,6 +126,8 @@ void initbuttons(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);
 uint8 adc_getval_an2(void);
+void getjoypos(void);
+void checkjoydir(void);
 /*----------------------------------------------------------------------------*/
 
 #ifdef	__cplusplus

@@ -218,11 +218,11 @@ void LCD_PrintClockAndDate(uint8 pg, uint8 cl)
 }
 
 
-void LCD_printbrightnes(uint8 page, uint8 col) //  size 26 column
+void LCD_printbrightnes(uint8 pg, uint8 cl) //  size 26 column
 {
-  LCD_Set_PageColumn(page, col);
+  LCD_Set_PageColumn(pg, cl);
   LCD_SendData(bright_icon, 8);
-  LCD_Set_PageColumn(page, col+9);
+  LCD_Set_PageColumn(pg, cl+9);
   LCD_SendData(bright_lvl[brightlvl], 15);
 }
 
