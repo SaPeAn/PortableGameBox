@@ -32,68 +32,36 @@ void MainMenu(void)
     if(joystick.joydown == 1)
     {
         joystick.joydown = 0;
-        CFlags.menupos--;
+        CFlags.menupos++;
         if(CFlags.menupos == 4) CFlags.menupos = 1;
     }
     
     if(joystick.joyup == 1)
     {
-        joystick.joyup == 0;
-        CFlags.menupos++;
+        joystick.joyup = 0;
+        CFlags.menupos--;
         if(CFlags.menupos == 0) CFlags.menupos = 3;
     }
     
-    if(CFlags.menupos == 1)
-    {
-        print_menu_pointer(1, 10);
-        LCD_printStr8x5("ÈÃÐÀ", 2, 25);
-        LCD_printStr8x5("ÍÀÑÒÎÉÊÀ", 4, 25);
-        LCD_printStr8x5("ÒÅÑÒ", 6, 25);
-        RTCgetdata(rtcbcd.rtcdata);
-        rtcbcdtoraw();
-        LCD_PrintClockAndDate(0, 26);batcheck();
-        print_bat_level(batlvl, 0, 105); 
-        BrightPWMgen(brightPWM);
-        getbrightlvl();
-        LCD_printbrightnes(0, 0);
-        delay_ms(50);
-        LCD_Erase();
-    }
-    if(CFlags.menupos == 2)
-    {
-        print_menu_pointer(3, 10);
-        LCD_printStr8x5("ÈÃÐÀ", 2, 25);
-        LCD_printStr8x5("ÍÀÑÒÎÉÊÀ", 4, 25);
-        LCD_printStr8x5("ÒÅÑÒ", 6, 25);
-        RTCgetdata(rtcbcd.rtcdata);
-        rtcbcdtoraw();
-        LCD_PrintClockAndDate(0, 26);batcheck();
-        print_bat_level(batlvl, 0, 105); 
-        BrightPWMgen(brightPWM);
-        getbrightlvl();
-        LCD_printbrightnes(0, 0);
-        delay_ms(50);
-        LCD_Erase();
-    }
-    if(CFlags.menupos == 3)
-    {
-        print_menu_pointer(5, 10);
-        LCD_printStr8x5("ÈÃÐÀ", 2, 25);
-        LCD_printStr8x5("ÍÀÑÒÎÉÊÀ", 4, 25);
-        LCD_printStr8x5("ÒÅÑÒ", 6, 25);
-        RTCgetdata(rtcbcd.rtcdata);
-        rtcbcdtoraw();
-        LCD_PrintClockAndDate(0, 26);batcheck();
-        print_bat_level(batlvl, 0, 105); 
-        BrightPWMgen(brightPWM);
-        getbrightlvl();
-        LCD_printbrightnes(0, 0);
-        delay_ms(50);
-        LCD_Erase();
-    }
+    LCD_printStr8x5("ÈÃÐÀ", 2, 25);
+    LCD_printStr8x5("ÍÀÑÒÎÉÊÀ", 4, 25);
+    LCD_printStr8x5("ÒÅÑÒ", 6, 25);
+    LCD_PrintClockAndDate(0, 26);
+    if(CFlags.menupos == 1) print_menu_pointer(2, 10);
+    if(CFlags.menupos == 2) print_menu_pointer(4, 10);
+    if(CFlags.menupos == 3) print_menu_pointer(6, 10);
+    print_bat_level(batlvl, 0, 105);
+    LCD_printbrightnes(0, 0);
+    
+    batcheck();
+    BrightPWMgen(brightPWM);
+    getbrightlvl();
+    RTCgetdata(rtcbcd.rtcdata);
+    rtcbcdtoraw();
+    delay_ms(50);
+    LCD_Erase();
   }
 }
-
 /*-----------------------------------MAIN-------------------------------------*/
 void main(void) 
 {
@@ -115,7 +83,7 @@ void main(void)
   uint8 tmpval = 0;
   uint8 tmpstr[6];
 /*-------------------------------MAIN CYCLE-----------------------------------*/
-#define CODE_BLOCK   1
+#define CODE_BLOCK   2
   while(1)
   { 
 #if (CODE_BLOCK == 0) 

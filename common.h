@@ -106,7 +106,8 @@ typedef union{
     uint8 joyup      :1;
     uint8 joydown    :1;
     uint8 joyleft    :1;
-    uint8 joyright   :1; 
+    uint8 joyright   :1;
+    uint8 joyFl      :1;
   };
 }joy_t;
 
