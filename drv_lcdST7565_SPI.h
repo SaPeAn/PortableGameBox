@@ -16,24 +16,27 @@ extern "C" {
 #include <stdarg.h>   
 
 uint8 SPI_transmit(uint8);    
-void SPI_WriteByte(uint8);
+void SPI_writebyte(uint8);
 void SPI_init(void);
-void LCD_Init(void);
-void LCD_WriteByte(uint8);
-void LCD_SendData(const uint8*, uint8);
-void LCD_SendCommands(uint8, ...);
-void LCD_Set_PageColumn(uint8, uint8);
-void LCD_printSmb8x5(const uint8, uint8, uint8);
-void LCD_Erase(void);
-uint8 LCD_printStr8x5(uint8*, uint8, uint8);
-void LCD_PrintClockAndDate(uint8, uint8);
-void print_ufo(uint8, uint8);
-void print_piu(uint8, uint8);
-void print_cometa(uint8, uint8);
-void print_distr_cometa(uint8, uint8);
-void print_bat_level(uint8, uint8, uint8);
+void LCD_init(void);
+void LCD_writebyte(uint8);
+void LCD_senddata(const uint8*, uint8);
+void LCD_sendcommands(uint8, ...);
+void LCD_setpagecolumn(uint8, uint8);
+void LCD_printsmb8x5(const uint8, uint8, uint8);
+void LCD_erase(void);
+uint8 LCD_printstr8x5(uint8*, uint8, uint8);
+void LCD_printclockanddate(uint8, uint8);
+void LCD_printufo(uint8, uint8);
+void LCD_printpiu(uint8, uint8);
+void LCD_printcometa(uint8, uint8);
+void LCD_printdistrcometa(uint8, uint8);
+void LCD_printbatlevel(uint8, uint8, uint8);
 void LCD_printbrightnes(uint8, uint8);
-void print_menu_pointer(uint8, uint8);
+void LCD_printmenupointer(uint8, uint8);
+void LCD_printbutselhint(uint8, uint8, uint8);
+void LCD_printvertline(uint8, uint8, uint8);
+void LCD_printhortline(uint8, uint8, uint8);
 
 #ifdef	__cplusplus
 }

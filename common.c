@@ -182,11 +182,11 @@ void Sounds(uint16 delay)
         
 void ShutDown(void)
 {
-  LCD_Erase();
+  LCD_erase();
   PORTCbits.RC1 = 0;
-  LCD_printStr8x5("Low battery level!", 1, 10);
-  LCD_printStr8x5("Device is", 3, 10);  
-  LCD_printStr8x5("shutting down!", 5, 10);
+  LCD_printstr8x5("Low battery level!", 1, 10);
+  LCD_printstr8x5("Device is", 3, 10);  
+  LCD_printstr8x5("shutting down!", 5, 10);
   while(1);
 }
 
@@ -355,7 +355,7 @@ void checkjoydir(void)
     if(ox < 100 && joystick.joyFl == 0) {joystick.joyleft = 1; joystick.joyFl = 1;}
     if(oy < 150 && oy > 100 && ox < 150 && ox > 100) joystick.joyFl = 0;
 }
-void testbuttons(void)
+void checkbuttons(void)
 { 
   TestBtn(&B1); 
   TestBtn(&B2); 

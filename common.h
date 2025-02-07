@@ -122,7 +122,7 @@ joy_t joystick = {0};
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
 btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
 void TestBtn(btn_t*);
-void testbuttons(void);
+void checkbuttons(void);
 void initbuttons(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);

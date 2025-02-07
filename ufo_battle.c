@@ -43,23 +43,23 @@ void ufobattle_init(void)
   while(!CFlags.RunGameFl)
   {      
     Tar.en = 1;
-    testbuttons();
+    checkbuttons();
     if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; incbright(); Sounds(400);}
     if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; decbright();Sounds(400);}
 
     if(timestamp - counter > 500){
-      LCD_Erase();
-      print_cometa(getrand(6), getrand(100));
+      LCD_erase();
+      LCD_printcometa(getrand(6), getrand(100));
       counter = timestamp;
     }
     if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 1; Sounds(400);}
 
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();
-    LCD_PrintClockAndDate(0, 26);
+    LCD_printclockanddate(0, 26);
 
     batcheck();
-    print_bat_level(batlvl, 0, 105); 
+    LCD_printbatlevel(batlvl, 0, 105); 
     
     BrightPWMgen(brightPWM);
     getbrightlvl();
@@ -73,7 +73,7 @@ void ufobattle_start(void)
 {
   while(CFlags.RunGameFl)
   {
-    testbuttons();
+    checkbuttons();
     ox = adc_getval_an0();
     oy = adc_getval_an1();
 
@@ -145,7 +145,7 @@ void ufobattle_start(void)
         Tar.en = 0;
       }
     }
-    LCD_Erase();
+    LCD_erase();
 
     switch(KillCounter)
     {
@@ -156,18 +156,18 @@ void ufobattle_start(void)
     //----------COMET PRINT-------------------------------
     for(uint8 i = 0; i < Max_Comet; i++) 
     {
-      if(Comet[i].stat == 1) print_cometa(Comet[i].pg, Comet[i].cl);
+      if(Comet[i].stat == 1) LCD_printcometa(Comet[i].pg, Comet[i].cl);
       if(Comet[i].stat == 2) {
-        print_distr_cometa(Comet[i].pg, Comet[i].cl);
+        LCD_printdistrcometa(Comet[i].pg, Comet[i].cl);
         delay_ms(10);
       }
     }
-    if(Tar.en) print_ufo(Tar.pg, Tar.cl);
+    if(Tar.en) LCD_printufo(Tar.pg, Tar.cl);
     //--------PRINT BULLET---------------
     for(uint8 i = 0; i < Max_Piu; i++)
     {
       if(Piu[i].en){
-        print_piu(Piu[i].pg, Piu[i].cl);
+        LCD_printpiu(Piu[i].pg, Piu[i].cl);
         Piu[i].cl += 8;
         if(Piu[i].cl > 120) {
           Piu[i].en = 0;
@@ -177,8 +177,8 @@ void ufobattle_start(void)
     }
     //-----------------------------------------
     u16_to_str(Score, KillCounter, DISABLE);
-    LCD_printStr8x5(ScoreLb, 0, 37);
-    LCD_printStr8x5(Score, 0, 73);
+    LCD_printstr8x5(ScoreLb, 0, 37);
+    LCD_printstr8x5(Score, 0, 73);
     batcheck();
     delay_ms(50);
   }

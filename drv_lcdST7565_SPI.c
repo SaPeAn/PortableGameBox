@@ -75,7 +75,7 @@ uint8 SPI_transmit(uint8 bt)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------LCD FUNCTIONS---------------------------------------*/
-void LCD_Init(void)
+void LCD_init(void)
 {
   TRISAbits.RA3 = 0; //RSE
   TRISAbits.RA4 = 0; //RS
@@ -87,72 +87,72 @@ void LCD_Init(void)
   delay_ms(2);
   RSE = 1;
   RS = 0;
-  LCD_WriteByte(0xA2 | 0);       // LCD Bias Set -- x=0 : 1/9 (default); x=1 :  1/7
-  LCD_WriteByte(0xA0 | 0);       // Segment Driver Direction Select 0->131(0);  Segment Driver Direction Select 131->0(1))
-  LCD_WriteByte(0xC0 | 8);       // Common Output Mode Select 0->63(0)); Common Output Mode Select 63->0(8)  
-  LCD_WriteByte(0x20 | 0x6);     // V5 Voltage Regulator Internal Resistor Ratio Set 0:3.0; 1:3.5; 2:4; 3:4.5; 4:5.0(default); 5:5.5; 6:6; 7:6.4;
-  LCD_WriteByte(0x28 | 0b111);   // Power Controller Set a=1 :  Booster circuit on; b=1 :  Voltage regulator circuit on; c=1 :  
+  LCD_writebyte(0xA2 | 0);       // LCD Bias Set -- x=0 : 1/9 (default); x=1 :  1/7
+  LCD_writebyte(0xA0 | 0);       // Segment Driver Direction Select 0->131(0);  Segment Driver Direction Select 131->0(1))
+  LCD_writebyte(0xC0 | 8);       // Common Output Mode Select 0->63(0)); Common Output Mode Select 63->0(8)  
+  LCD_writebyte(0x20 | 0x6);     // V5 Voltage Regulator Internal Resistor Ratio Set 0:3.0; 1:3.5; 2:4; 3:4.5; 4:5.0(default); 5:5.5; 6:6; 7:6.4;
+  LCD_writebyte(0x28 | 0b111);   // Power Controller Set a=1 :  Booster circuit on; b=1 :  Voltage regulator circuit on; c=1 :  
                                  // Voltage follower circuit on; default: 000, must be 111
-  LCD_WriteByte(0x81);           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - first byte (command id)
-  LCD_WriteByte(0x20);           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - second byte (value)
-  LCD_WriteByte(0x40 | 0);       // Display Start Line Set (0-63)
-  LCD_WriteByte(0xB0 | 0);       // Page Address Set (0-7))
-  LCD_WriteByte(0x10 | 0);       // Column Address Set - first byte (0-15)
-  LCD_WriteByte(0x00 | 0);       // Column Address Set - second byte (0-15)
-  LCD_WriteByte(0xAE | 1);       // Display on(1) / Display off (0)
-  LCD_WriteByte(0xA6 | 0);       // Display Normal(0) / Display Reverse(1)
+  LCD_writebyte(0x81);           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - first byte (command id)
+  LCD_writebyte(0x20);           // The Electronic Volume Mode Set (contrast) (default 0010 0000) - second byte (value)
+  LCD_writebyte(0x40 | 0);       // Display Start Line Set (0-63)
+  LCD_writebyte(0xB0 | 0);       // Page Address Set (0-7))
+  LCD_writebyte(0x10 | 0);       // Column Address Set - first byte (0-15)
+  LCD_writebyte(0x00 | 0);       // Column Address Set - second byte (0-15)
+  LCD_writebyte(0xAE | 1);       // Display on(1) / Display off (0)
+  LCD_writebyte(0xA6 | 0);       // Display Normal(0) / Display Reverse(1)
   RS = 1;
 }
 
-void LCD_Set_PageColumn(uint8 page, uint8 col)
+void LCD_setpagecolumn(uint8 pg, uint8 cl)
 {
-  uint8 colL = col & 0x0F;
-  uint8 colH = col >> 4;
-  LCD_SendCommands(3, (0xB0 | page), (0x10 | colH), (0x00 | colL));  
+  uint8 clL = cl & 0x0F;
+  uint8 clH = cl >> 4;
+  LCD_sendcommands(3, (0xB0 | pg), (0x10 | clH), (0x00 | clL));  
 }
 
-void LCD_printSmb8x5(const uint8 ch, uint8 page, uint8 col)
+void LCD_printsmb8x5(const uint8 ch, uint8 pg, uint8 cl)
 {
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(char_8x5[ch], 5);
-  LCD_Set_PageColumn(page, col+5);
-  LCD_WriteByte(0x00);
+  LCD_setpagecolumn(pg, cl);
+  LCD_senddata(char_8x5[ch], 5);
+  LCD_setpagecolumn(pg, cl+5);
+  LCD_writebyte(0x00);
 }
 
-uint8 LCD_printStr8x5(uint8 *str, uint8 page, uint8 col)
+uint8 LCD_printstr8x5(uint8 *str, uint8 pg, uint8 cl)
 {
   static const uint8 str1[] = "NULL";
   if(str == NULL) str = str1;
   uint8 i = 0;
   while(str[i])
   {
-    LCD_printSmb8x5(str[i], page, col);
-    col += 6;
-    if(col > 122) {page++; col = 0;}
-    if(page > 7) return 0;
+    LCD_printsmb8x5(str[i], pg, cl);
+    cl += 6;
+    if(cl > 122) {pg++; cl = 0;}
+    if(pg > 7) return 0;
     i++;
   }
   return i;
 }
 
-void LCD_Erase(void)
+void LCD_erase(void)
 {
   for(uint8 j = 0; j < 8; j++){ 
-    LCD_SendCommands(3, (0xB0 + j), 0x10, 0x00); 
+    LCD_sendcommands(3, (0xB0 + j), 0x10, 0x00); 
     if(j > 7) j = 0; 
-    for(uint8 i = 0; i<128; i++) LCD_WriteByte(0);
+    for(uint8 i = 0; i<128; i++) LCD_writebyte(0);
   }
-  LCD_SendCommands(3, 0xB0, 0x10, 0x00);
+  LCD_sendcommands(3, 0xB0, 0x10, 0x00);
 }
 
-void LCD_SendData(const uint8* byte, uint8 N)
+void LCD_senddata(const uint8* byte, uint8 N)
 {
   CS = 0;
   for(uint8 i = 0; i < N; i++) SPI_TRANSMIT_FUNC(byte[i]);
   CS = 1;
 }
 
-void LCD_SendCommands(uint8 N, ...)
+void LCD_sendcommands(uint8 N, ...)
 {
   RS = 0;
   CS = 0;
@@ -166,7 +166,7 @@ void LCD_SendCommands(uint8 N, ...)
   CS = 1;
 }
 
-void LCD_WriteByte(uint8 byte)
+void LCD_writebyte(uint8 byte)
 {
   CS = 0;
   SPI_TRANSMIT_FUNC(byte);
@@ -175,7 +175,7 @@ void LCD_WriteByte(uint8 byte)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------SYSTEM MENU ELEMENTS---------------------------*/
-void LCD_PrintClockAndDate(uint8 pg, uint8 cl)
+void LCD_printclockanddate(uint8 pg, uint8 cl)
 {
   uint8 wday[3] = {0};
   uint8 month[4] = {0};
@@ -208,69 +208,115 @@ void LCD_PrintClockAndDate(uint8 pg, uint8 cl)
   uint8 hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
   uint8 colon[4] = {0x00,0x12,0x00}; // ':' colon
   uint8 minutes[3] = {dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
-  LCD_printStr8x5(day, pg, cl);
-  LCD_printStr8x5(month, pg, cl + 14);
-  LCD_printStr8x5(wday, pg, cl + 35);
-  LCD_printStr8x5(hours, pg, cl + 49);
-  LCD_Set_PageColumn(pg, cl + 61);
-  LCD_SendData(colon, 3);
-  LCD_printStr8x5(minutes, pg, cl + 64);
+  LCD_printstr8x5(day, pg, cl);
+  LCD_printstr8x5(month, pg, cl + 14);
+  LCD_printstr8x5(wday, pg, cl + 35);
+  LCD_printstr8x5(hours, pg, cl + 49);
+  LCD_setpagecolumn(pg, cl + 61);
+  LCD_senddata(colon, 3);
+  LCD_printstr8x5(minutes, pg, cl + 64);
 }
 
 
 void LCD_printbrightnes(uint8 pg, uint8 cl) //  size 26 column
 {
-  LCD_Set_PageColumn(pg, cl);
-  LCD_SendData(bright_icon, 8);
-  LCD_Set_PageColumn(pg, cl+9);
-  LCD_SendData(bright_lvl[brightlvl], 15);
+  LCD_setpagecolumn(pg, cl);
+  LCD_senddata(bright_icon, 8);
+  LCD_setpagecolumn(pg, cl+9);
+  LCD_senddata(bright_lvl[brightlvl], 15);
 }
 
-void print_bat_level(uint8 lvl, uint8 pg, uint8 cl)
+void LCD_printbatlevel(uint8 lvl, uint8 pg, uint8 cl)
 {
   if(lvl == 100) lvl = 5; // 100 -shutdown code
-  LCD_Set_PageColumn(pg, cl);
-  LCD_SendData(battary_2[lvl], 20);
+  LCD_setpagecolumn(pg, cl);
+  LCD_senddata(battary_2[lvl], 20);
 }
 
-void print_menu_pointer(uint8 pg, uint8 cl)
+void LCD_printmenupointer(uint8 pg, uint8 cl)
 {
-  LCD_Set_PageColumn(pg, cl);
-  LCD_SendData(menu_pointer[0], 11);
-  LCD_Set_PageColumn(pg + 1, cl);
-  LCD_SendData(menu_pointer[1], 11);
+  LCD_setpagecolumn(pg, cl);
+  LCD_senddata(menu_pointer[0], 11);
+  LCD_setpagecolumn(pg + 1, cl);
+  LCD_senddata(menu_pointer[1], 11);
+}
+
+void LCD_printbutselhint(uint8 hintnum, uint8 pg, uint8 cl)
+{
+  for(uint8 j = 0; j< 4; j++)
+  {
+    LCD_setpagecolumn(pg + j, cl);
+    CS = 0;
+    for(uint8 i = 0; i < 32; i++) SPI_TRANSMIT_FUNC(but_sel_hint[hintnum][(i * 4 + j)]);
+    CS = 1;
+  }
+}
+
+void LCD_printvertline(uint8 linelength, uint8 startstring, uint8 cl)
+{
+  if((linelength - startstring) > 63) return;
+  uint8 startpg = startstring / 8;
+  uint8 bitshifting = (startstring % 8);
+  uint8 lengthinpages = (linelength - (8 - bitshifting)) / 8;  
+  uint8 temp = 0xFF << bitshifting;
+  LCD_setpagecolumn(startpg, cl);
+  LCD_senddata(&temp, 1);
+  temp = 0xFF;
+  for(uint8 i = 0; i < lengthinpages; i++)
+  {
+    LCD_setpagecolumn(startpg + 1 + i, cl);
+    LCD_senddata(&temp, 1);
+  } 
+  temp = 0xFF >> (8 - (linelength - (8 - bitshifting)) % 8);
+  LCD_setpagecolumn(startpg + 1 + lengthinpages, cl);
+  LCD_senddata(&temp, 1);
+}
+
+void LCD_printhortline(uint8 linelength, uint8 startstring, uint8 cl)
+{
+  if((linelength - cl) > 127) return;
+  uint8 startpg = startstring / 8;
+  uint8 bitshifting = (startstring % 8); 
+  uint8 temp = 0x1 << bitshifting;
+  LCD_setpagecolumn(startpg, cl);
+  for(uint8 i = 0; i < linelength; i++)
+  {
+    LCD_setpagecolumn(startpg, cl + i);
+    LCD_senddata(&temp, 1);
+  }
 }
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void print_piu(uint8 page, uint8 col)
+void LCD_print_piu(uint8 page, uint8 col)
 {
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(tar_bullet, 8);
+  LCD_setpagecolumn(page, col);
+  LCD_senddata(tar_bullet, 8);
 }
 
-void print_ufo(uint8 page, uint8 col)
+void LCD_print_ufo(uint8 page, uint8 col)
 {
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(tarelka[0], 27);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(tarelka[1], 27);
+  LCD_setpagecolumn(page, col);
+  LCD_senddata(tarelka[0], 27);
+  LCD_setpagecolumn((page+1), col);
+  LCD_senddata(tarelka[1], 27);
 }
 
-void print_cometa(uint8 page, uint8 col)
+void LCD_print_cometa(uint8 page, uint8 col)
 {
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(cometa[0], 28);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(cometa[1], 28);
+  LCD_setpagecolumn(page, col);
+  LCD_senddata(cometa[0], 28);
+  LCD_setpagecolumn((page+1), col);
+  LCD_senddata(cometa[1], 28);
 }
 
-void print_distr_cometa(uint8 page, uint8 col)
+void LCD_print_distr_cometa(uint8 page, uint8 col)
 {
-  LCD_Set_PageColumn(page, col);
-  LCD_SendData(distr_cometa[0], 28);
-  LCD_Set_PageColumn((page+1), col);
-  LCD_SendData(distr_cometa[1], 28);
+  LCD_setpagecolumn(page, col);
+  LCD_senddata(distr_cometa[0], 28);
+  LCD_setpagecolumn((page+1), col);
+  LCD_senddata(distr_cometa[1], 28);
 }
+
 /*----------------------------------------------------------------------------*/
 
