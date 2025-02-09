@@ -349,10 +349,10 @@ void getjoypos(void)
 void checkjoydir(void)
 {
     getjoypos();
-    if(oy > 150 && joystick.joyFl == 0) {joystick.joyup = 1; joystick.joyFl = 1;}
-    if(oy < 100 && joystick.joyFl == 0) {joystick.joydown = 1; joystick.joyFl = 1;}
-    if(ox > 150 && joystick.joyFl == 0) {joystick.joyright = 1; joystick.joyFl = 1;}
-    if(ox < 100 && joystick.joyFl == 0) {joystick.joyleft = 1; joystick.joyFl = 1;}
+    if(oy > 150 && joystick.joyFl == 0) {joystick.up = 1; joystick.joyFl = 1;}
+    if(oy < 100 && joystick.joyFl == 0) {joystick.down = 1; joystick.joyFl = 1;}
+    if(ox > 150 && joystick.joyFl == 0) {joystick.right = 1; joystick.joyFl = 1;}
+    if(ox < 100 && joystick.joyFl == 0) {joystick.left = 1; joystick.joyFl = 1;}
     if(oy < 150 && oy > 100 && ox < 150 && ox > 100) joystick.joyFl = 0;
 }
 

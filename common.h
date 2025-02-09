@@ -101,11 +101,11 @@ typedef struct{
 //buttons
 typedef union{
   struct{
-    uint8 joyup      :1;
-    uint8 joydown    :1;
-    uint8 joyleft    :1;
-    uint8 joyright   :1;
-    uint8 joyFl      :1;
+    uint8 up      :1;
+    uint8 down    :1;
+    uint8 left    :1;
+    uint8 right   :1;
+    uint8 joyFl   :1;
   };
 }joy_t;
 

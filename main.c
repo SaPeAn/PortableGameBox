@@ -25,13 +25,113 @@ void __interrupt() systemTick_int(void)
 /*----------------------------------------------------------------------------*/
 void setdatetime(void)
 {
+  uint8 selectpos = 0;
+  uint8 san[3] = "ÂÑ";
+  uint8 mon[3] = "ÏÍ";
+  uint8 tue[3] = "ÂÒ";
+  uint8 wen[3] = "ÑÐ";
+  uint8 thu[3] = "×Ò";
+  uint8 fri[3] = "ÏÒ";
+  uint8 sat[3] = "ÑÁ";
+  
   while(1)
-  {
-    LCD_printstr8x5("íàæìèòå", 1, 5);
-    LCD_printbutselhint(1, 2, 5);
-    LCD_printstr8x5("äëÿ âûõîäà", 6, 5);
-    TestBtn(&B1);
+  {  
+    checkjoydir();
+    TestBtn(&B1); TestBtn(&B3); TestBtn(&B4);
     if(B1.BtnON){B1.BtnON = 0; return;}
+    
+    RTCgetdata(rtcbcd.rtcdata);
+    rtcbcdtoraw();    
+    uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
+    uint8 temp[6];    
+    u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
+    uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
+    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
+    LCD_printstr8x5(day, 0, 2);
+    LCD_printstr8x5(month, 0, 18);
+    LCD_printstr8x5(year, 0, 34);
+    uint8 hour[4] = {dig_to_smb((rtcbcd.rtcpar.hour & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.hour & 0x0F), ':', '\0'};
+    uint8 min[4] = {dig_to_smb((rtcbcd.rtcpar.min & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.min & 0x0F), ':', '\0'};
+    uint8 sec[3] = {dig_to_smb((rtcbcd.rtcpar.sec & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.sec & 0x0F), '\0'};
+    LCD_printstr8x5(hour, 0, 62);
+    LCD_printstr8x5(min, 0, 80);
+    LCD_printstr8x5(sec, 0, 98);
+    switch(rtcbcd.rtcpar.weekday & 0x07)
+    {
+      case 0: LCD_printstr8x5(san, 0, 115); break;
+      case 1: LCD_printstr8x5(mon, 0, 115); break;
+      case 2: LCD_printstr8x5(tue, 0, 115); break;
+      case 3: LCD_printstr8x5(wen, 0, 115); break;
+      case 4: LCD_printstr8x5(thu, 0, 115); break;
+      case 5: LCD_printstr8x5(fri, 0, 115); break;
+      case 6: LCD_printstr8x5(sat, 0, 115); break;
+    } 
+    
+    
+    switch(selectpos)
+    {
+      case 0: 
+        LCD_erasestring(128, 1, 0); 
+        LCD_printhorline(12, 8, 2); 
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.day--; if(rtcraw.rtcpar.day > 31) rtcraw.rtcpar.day = 31;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.day++; if(rtcraw.rtcpar.day > 31) rtcraw.rtcpar.day = 0;}
+      break;
+      case 1: 
+        LCD_erasestring(128, 1, 0); 
+        LCD_printhorline(12, 8, 18);
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.month--; if(rtcraw.rtcpar.month > 12) rtcraw.rtcpar.month = 12;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.month++; if(rtcraw.rtcpar.month > 12) rtcraw.rtcpar.month = 0;}
+      break;
+      case 2: 
+        LCD_erasestring(128, 1, 0); 
+        LCD_printhorline(24, 8, 34); 
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.year--; if(rtcraw.rtcpar.year > 99) rtcraw.rtcpar.year = 99;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.year++; if(rtcraw.rtcpar.year > 99) rtcraw.rtcpar.year = 0;}
+      break;
+      case 3: 
+        LCD_erasestring(128, 1, 0); 
+        LCD_printhorline(12, 8, 62);
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.hour--; if(rtcraw.rtcpar.hour > 23) rtcraw.rtcpar.hour = 23;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.hour++; if(rtcraw.rtcpar.hour > 23) rtcraw.rtcpar.hour = 0;}
+      break;
+      case 4: 
+        LCD_erasestring(128, 1, 0); 
+        LCD_printhorline(12, 8, 80); 
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.min--; if(rtcraw.rtcpar.min > 59) rtcraw.rtcpar.min = 59;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.min++; if(rtcraw.rtcpar.min > 59) rtcraw.rtcpar.min = 0;}
+      break;
+      case 5: 
+        LCD_erasestring(128, 1, 0);
+        LCD_printhorline(12, 8, 98);
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.sec--; if(rtcraw.rtcpar.sec > 59) rtcraw.rtcpar.sec = 59;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.sec++; if(rtcraw.rtcpar.sec > 59) rtcraw.rtcpar.sec = 0;}
+      break;
+      case 6: 
+        LCD_erasestring(128, 1, 0);
+        LCD_printhorline(12, 8, 115);
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.weekday--; if(rtcraw.rtcpar.weekday > 6) rtcraw.rtcpar.weekday = 6;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.weekday++; if(rtcraw.rtcpar.weekday > 6) rtcraw.rtcpar.weekday = 0;}
+      break;
+    }
+    
+    rtcrawtobcd();
+    RTCsenddata(rtcbcd.rtcdata);
+    if(joystick.right == 1)
+    {
+      joystick.right = 0;
+      selectpos++;
+      if(selectpos == 7) selectpos = 0;
+    }
+    if(joystick.left == 1)
+    {
+      joystick.left = 0;
+      selectpos--;
+      if(selectpos == 255) selectpos = 5;
+    }
+    
+    LCD_printbutselhint(4, 2, 89);
+    LCD_printstr8x5("âûõ.", 6, 86);
+    LCD_printstr8x5("-  +", 1, 93);  
   }
 }
 
@@ -42,8 +142,8 @@ void testscreen(void)
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();    
     uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
-    uint8 temp[6];
-    u16_to_str(temp, (rtcraw.rtcpar.month +1), DISABLE);
+    uint8 temp[6];    
+    u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
     uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
     uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
@@ -94,15 +194,15 @@ void MainMenu(void)
         case 3: testscreen(); break;
       }
     }
-    if(joystick.joydown == 1)
+    if(joystick.down == 1)
     {
-      joystick.joydown = 0;
+      joystick.down = 0;
       CFlags.coursorpos++;
       if(CFlags.coursorpos == 4) CFlags.coursorpos = 1;
     }
-    if(joystick.joyup == 1)
+    if(joystick.up == 1)
     {
-      joystick.joyup = 0;
+      joystick.up = 0;
       CFlags.coursorpos--;
       if(CFlags.coursorpos == 0) CFlags.coursorpos = 3;
     }
@@ -141,15 +241,15 @@ void MainMenu(void)
       CFlags.MenuFl = 1;
       CFlags.coursorpos = 2;
     }
-    if(joystick.joydown == 1)
+    if(joystick.down == 1)
     {
-      joystick.joydown = 0;
+      joystick.down = 0;
       CFlags.coursorpos++;
       if(CFlags.coursorpos == 4) CFlags.coursorpos = 1;
     }
-    if(joystick.joyup == 1)
+    if(joystick.up == 1)
     {
-      joystick.joyup = 0;
+      joystick.up = 0;
       CFlags.coursorpos--;
       if(CFlags.coursorpos == 0) CFlags.coursorpos = 3;
     }
@@ -228,7 +328,7 @@ void main(void)
 #define CODE_BLOCK   2
   while(1)
   { 
-    TestBtn(&B1); TestBtn(&B2); TestBtn(&B3); TestBtn(&B4);
+    
 #if (CODE_BLOCK == 0) 
     checkbuttons();
     

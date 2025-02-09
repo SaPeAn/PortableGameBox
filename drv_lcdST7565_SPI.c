@@ -135,6 +135,12 @@ uint8 LCD_printstr8x5(uint8 *str, uint8 pg, uint8 cl)
   return i;
 }
 
+void LCD_erasestring(uint8 length, uint8 pg, uint8 cl)
+{
+  LCD_setpagecolumn(pg, cl);
+  for(uint8 i = 0; i < length; i++) LCD_writebyte(0x00);
+}
+
 void LCD_erase(void)
 {
   for(uint8 j = 0; j < 8; j++){ 
@@ -192,18 +198,18 @@ void LCD_printclockanddate(uint8 pg, uint8 cl)
   }
   switch(rtcraw.rtcpar.month)
   {
-    case 0:  month[0] = 'ß'; month[1] = 'Í'; month[2] = 'Â'; break;
-    case 1:  month[0] = 'Ô'; month[1] = 'Å'; month[2] = 'Â'; break;
-    case 2:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'Ð'; break;
-    case 3:  month[0] = 'À'; month[1] = 'Ï'; month[2] = 'Ð'; break;
-    case 4:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'É'; break;
-    case 5:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Í'; break;
-    case 6:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Ë'; break;
-    case 7:  month[0] = 'À'; month[1] = 'Â'; month[2] = 'Ã'; break;
-    case 8:  month[0] = 'Ñ'; month[1] = 'Å'; month[2] = 'Í'; break;
-    case 9:  month[0] = 'Î'; month[1] = 'Ê'; month[2] = 'Ò'; break;
-    case 10: month[0] = 'Í'; month[1] = 'Î'; month[2] = 'ß'; break;
-    case 11: month[0] = 'Ä'; month[1] = 'Å'; month[2] = 'Ê'; break;
+    case 1:  month[0] = 'ß'; month[1] = 'Í'; month[2] = 'Â'; break;
+    case 2:  month[0] = 'Ô'; month[1] = 'Å'; month[2] = 'Â'; break;
+    case 3:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'Ð'; break;
+    case 4:  month[0] = 'À'; month[1] = 'Ï'; month[2] = 'Ð'; break;
+    case 5:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'É'; break;
+    case 6:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Í'; break;
+    case 7:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Ë'; break;
+    case 8:  month[0] = 'À'; month[1] = 'Â'; month[2] = 'Ã'; break;
+    case 9:  month[0] = 'Ñ'; month[1] = 'Å'; month[2] = 'Í'; break;
+    case 10:  month[0] = 'Î'; month[1] = 'Ê'; month[2] = 'Ò'; break;
+    case 11: month[0] = 'Í'; month[1] = 'Î'; month[2] = 'ß'; break;
+    case 12: month[0] = 'Ä'; month[1] = 'Å'; month[2] = 'Ê'; break;
   }
   uint8 hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
   uint8 colon[4] = {0x00,0x12,0x00}; // ':' colon
