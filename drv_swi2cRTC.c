@@ -21,7 +21,7 @@
 #define      OUT          0
 
 #define      DELAY       swi2cdelay(DEL_CYCLE)
-#define      DEL_CYCLE   25
+#define      DEL_CYCLE   5
 
 
 uint8 swi2cdelay(uint8 del)

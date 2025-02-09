@@ -33,10 +33,10 @@ void LCD_printcometa(uint8, uint8);
 void LCD_printdistrcometa(uint8, uint8);
 void LCD_printbatlevel(uint8, uint8, uint8);
 void LCD_printbrightnes(uint8, uint8);
-void LCD_printmenupointer(uint8, uint8);
+void LCD_printmenucoursor(uint8, uint8);
 void LCD_printbutselhint(uint8, uint8, uint8);
 void LCD_printvertline(uint8, uint8, uint8);
-void LCD_printhortline(uint8, uint8, uint8);
+void LCD_printhorline(uint8, uint8, uint8);
 
 #ifdef	__cplusplus
 }

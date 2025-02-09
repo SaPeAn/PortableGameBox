@@ -23,6 +23,7 @@ typedef struct{
   uint8  N;
 }comet_t;
 
+ 
 //---------------------------------------------------------  
 //------------------------------Game vars-----------------------
 ufo_t Tar = {1, 3, 0};
@@ -38,42 +39,30 @@ uint8 ScoreLb[] = "SCORE: ";
 uint8 Score[6];
 uint32 counter = 0; 
 
-void ufobattle_init(void)
+uint8 StartFl = 0;
+//----------------------------------------------------------------
+
+void ufobattle(void)
 {
-  while(!CFlags.RunGameFl)
+  while(!StartFl && CFlags.RunGameFl)
   {      
     Tar.en = 1;
-    checkbuttons();
-    if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; incbright(); Sounds(400);}
-    if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; decbright();Sounds(400);}
+    TestBtn(&B1); TestBtn(&B2);
+    if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
+    if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1;}
 
     if(timestamp - counter > 500){
       LCD_erase();
       LCD_printcometa(getrand(6), getrand(100));
       counter = timestamp;
     }
-    if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 1; Sounds(400);}
 
-    RTCgetdata(rtcbcd.rtcdata);
-    rtcbcdtoraw();
-    LCD_printclockanddate(0, 26);
-
-    batcheck();
-    LCD_printbatlevel(batlvl, 0, 105); 
-    
-    BrightPWMgen(brightPWM);
-    getbrightlvl();
-    LCD_printbrightnes(0, 0);
-    
     delay_ms(50);
   }
-}
 
-void ufobattle_start(void)
-{
-  while(CFlags.RunGameFl)
+  while(StartFl && CFlags.RunGameFl)
   {
-    checkbuttons();
+    TestBtn(&B2);
     ox = adc_getval_an0();
     oy = adc_getval_an1();
 
@@ -83,8 +72,8 @@ void ufobattle_start(void)
     if(ox < 100){Tar.cl -= 8; if(Tar.cl > 100) Tar.cl = 0;}
 
 
-    if(B1.BtnON || B1.HoldON || B1.StuckON){ 
-      B1.BtnON = 0; 
+    if(B2.BtnON || B2.HoldON || B2.StuckON){ 
+      B2.BtnON = 0; 
       for(uint8 i = 0; i < Max_Piu; i++) {
         if(!Piu[i].en && Tar.en) 
         {
@@ -121,7 +110,7 @@ void ufobattle_start(void)
       }
     }
 
-    if(!Tar.en) {Sounds(600); CFlags.RunGameFl = 0;}
+    if(!Tar.en) {Sounds(600); StartFl = 0;}
     //------------COLLISION--------------
     for(uint8 j = 0; j < Max_Piu; j++)
     {

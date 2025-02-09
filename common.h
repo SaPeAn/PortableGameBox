@@ -37,23 +37,21 @@ typedef union{
   struct{
     unsigned MenuFl             :1;
     unsigned RunGameFl          :1;
-    unsigned MMPartbit_0        :1;  //  000 - GAME; 001 - SETTINGS; 010 - SETTINGS DATE/TIME;
-    unsigned MMPartbit_1        :1;  //  011 - SETTINGS BRIGHTNESS; 100 - START GAME;
-    unsigned MMPartbit_2        :1;  //  101 - GAME_POUINT_1; 110 - GAME_POUINT_2; 111 - TEST;
-    unsigned menupos            :3;
+    unsigned MenuSettingsFl     :1;  
+    unsigned TestScreen         :1;  
+    unsigned MMPartbit_2        :1;  
+    unsigned coursorpos         :3;
   };
 } flags_t;                               // System functions launch flags
-
+/*
 #define MAIN_MENU         !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
 #define SET_BRIGHT        !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
 #define SET_DT            !CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
 #define START_GAME         CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
 #define GAME_POUINT_1      CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
 #define TEST               CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
-
-flags_t CFlags;
-
-
+*/
+flags_t CFlags = {1, 0, 0, 0, 0, 1};
 
 uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
 rtcun_t rtcbcd;          // structure variable for storaging clock/date from RTC module (BCD format))
@@ -122,7 +120,6 @@ joy_t joystick = {0};
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
 btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
 void TestBtn(btn_t*);
-void checkbuttons(void);
 void initbuttons(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);

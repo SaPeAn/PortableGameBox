@@ -1,9 +1,3 @@
-/* 
- * File:   ufo_battle.h
- * Author: SaPA
- *
- * Created on 2 февраля 2025 г., 11:10
- */
 
 #ifndef UFO_BATTLE_H
 #define	UFO_BATTLE_H
@@ -13,8 +7,7 @@ extern "C" {
 #endif
 #include "common.h"
     
-void ufobattle_init(void);
-void ufobattle_start(void);
+void ufobattle(void);
 
 #ifdef	__cplusplus
 }

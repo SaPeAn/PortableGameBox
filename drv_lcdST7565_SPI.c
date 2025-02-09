@@ -233,12 +233,10 @@ void LCD_printbatlevel(uint8 lvl, uint8 pg, uint8 cl)
   LCD_senddata(battary_2[lvl], 20);
 }
 
-void LCD_printmenupointer(uint8 pg, uint8 cl)
+void LCD_printmenucoursor(uint8 pg, uint8 cl)
 {
   LCD_setpagecolumn(pg, cl);
-  LCD_senddata(menu_pointer[0], 11);
-  LCD_setpagecolumn(pg + 1, cl);
-  LCD_senddata(menu_pointer[1], 11);
+  LCD_senddata(menu_pointer, 8);
 }
 
 void LCD_printbutselhint(uint8 hintnum, uint8 pg, uint8 cl)
@@ -272,7 +270,7 @@ void LCD_printvertline(uint8 linelength, uint8 startstring, uint8 cl)
   LCD_senddata(&temp, 1);
 }
 
-void LCD_printhortline(uint8 linelength, uint8 startstring, uint8 cl)
+void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 {
   if((linelength - cl) > 127) return;
   uint8 startpg = startstring / 8;
@@ -288,13 +286,13 @@ void LCD_printhortline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_print_piu(uint8 page, uint8 col)
+void LCD_printpiu(uint8 page, uint8 col)
 {
   LCD_setpagecolumn(page, col);
   LCD_senddata(tar_bullet, 8);
 }
 
-void LCD_print_ufo(uint8 page, uint8 col)
+void LCD_printufo(uint8 page, uint8 col)
 {
   LCD_setpagecolumn(page, col);
   LCD_senddata(tarelka[0], 27);
@@ -302,7 +300,7 @@ void LCD_print_ufo(uint8 page, uint8 col)
   LCD_senddata(tarelka[1], 27);
 }
 
-void LCD_print_cometa(uint8 page, uint8 col)
+void LCD_printcometa(uint8 page, uint8 col)
 {
   LCD_setpagecolumn(page, col);
   LCD_senddata(cometa[0], 28);
@@ -310,7 +308,7 @@ void LCD_print_cometa(uint8 page, uint8 col)
   LCD_senddata(cometa[1], 28);
 }
 
-void LCD_print_distr_cometa(uint8 page, uint8 col)
+void LCD_printdistrcometa(uint8 page, uint8 col)
 {
   LCD_setpagecolumn(page, col);
   LCD_senddata(distr_cometa[0], 28);
