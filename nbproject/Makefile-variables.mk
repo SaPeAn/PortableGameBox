@@ -6,5 +6,5 @@
 CND_BASEDIR=`pwd`
 # default configuration
 CND_ARTIFACT_DIR_default=dist/default/production
-CND_ARTIFACT_NAME_default=PortGame.production.hex
-CND_ARTIFACT_PATH_default=dist/default/production/PortGame.production.hex
+CND_ARTIFACT_NAME_default=PortableGameBox-master.production.hex
+CND_ARTIFACT_PATH_default=dist/default/production/PortableGameBox-master.production.hex

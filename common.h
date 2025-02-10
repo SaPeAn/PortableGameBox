@@ -60,6 +60,8 @@ uint8 Ubat;              // ADC data from battery level measurement
 uint8 batlvl;            // battery level for display (0...5)
 uint8 brightlvl;         // brightness level for display (0...7)
 uint8 brightPWM = 220;   // PWM duty cycle value for regulate display brightness
+
+const uint8 str_null[] = "NULL"; //for show zero pointer
 /*----------------------------------------------------------------------------*/
 
 /*-------------------------SYSTEM FUNCTIONS-----------------------------------*/

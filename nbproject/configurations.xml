@@ -10,6 +10,7 @@
       <itemPath>drv_lcdST7565_SPI.h</itemPath>
       <itemPath>ufo_battle.h</itemPath>
       <itemPath>drv_swi2cRTC.h</itemPath>
+      <itemPath>mainmenu.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -43,7 +44,7 @@
         <targetDevice>PIC18F2550</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
@@ -109,7 +110,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="verbose" value="false"/>
-        <property key="warning-level" value="9"/>
+        <property key="warning-level" value="-3"/>
         <property key="what-to-do" value="require"/>
       </HI-TECH-COMP>
       <HI-TECH-LINK>

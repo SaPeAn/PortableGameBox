@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=PortGame
+PROJECTNAME=PortableGameBox-master
 
 # Active Configuration
 DEFAULTCONF=default

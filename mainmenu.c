@@ -51,7 +51,7 @@ void setdatetime(void)
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
-    LCD_printweekday(rtcbcd.rtcpar.weekday, 0, 115);
+    LCD_printweekday(rtcraw.rtcpar.weekday, 0, 115);
     
     switch(selectpos)
     {
@@ -100,12 +100,13 @@ void setdatetime(void)
     }
     
     LCD_printbutselhint(7, 3, 40);
-    LCD_printbutselhint(6, 2, 89);
-    LCD_printstr8x5("вых.|", 6, 86);
-    LCD_printstr8x5("сохр.", 7, 95);
-    LCD_printstr8x5("-  +", 1, 93); 
+    LCD_printbutselhint(6, 3, 89);
+    LCD_printstr8x5("вых", 7, 85);
+    LCD_printstr8x5("ок", 7, 110);
+    LCD_printstr8x5("-  +", 2, 93); 
     
     rtcrawtobcd();
+    LCD_erase();
   }
 }
 
@@ -129,6 +130,7 @@ void testscreen(void)
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
+    LCD_printweekday(rtcraw.rtcpar.weekday, 0, 115);
     
     batcheck();
     getjoypos();
@@ -149,6 +151,7 @@ void testscreen(void)
     LCD_printstr8x5("выход", 6, 86);
     TestBtn(&B1);
     if(B1.BtnON) {B1.BtnON = 0; return;}
+    LCD_erase();
   }
 }
   
@@ -277,7 +280,7 @@ void MainMenu(void)
   getbrightlvl();
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
-  delay_ms(50);
   LCD_erase();
+  delay_ms(50);
 }
 
