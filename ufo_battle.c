@@ -56,7 +56,9 @@ void ufobattle(void)
       LCD_printcometa(getrand(6), getrand(100));
       counter = timestamp;
     }
-
+    
+    LCD_printbutselhint(5, 2, 89);
+    LCD_printstr8x5("вых.вх", 6, 86);
     delay_ms(50);
   }
 

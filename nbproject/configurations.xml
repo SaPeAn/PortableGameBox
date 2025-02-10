@@ -10,6 +10,7 @@
       <itemPath>drv_lcdST7565_SPI.h</itemPath>
       <itemPath>ufo_battle.h</itemPath>
       <itemPath>drv_swi2cRTC.h</itemPath>
+      <itemPath>mainmenu.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -29,6 +30,7 @@
       <itemPath>AsmSPI_Tx_Rx.asm</itemPath>
       <itemPath>ufo_battle.c</itemPath>
       <itemPath>drv_swi2cRTC.c</itemPath>
+      <itemPath>mainmenu.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
