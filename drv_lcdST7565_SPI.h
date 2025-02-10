@@ -38,6 +38,8 @@ void LCD_printmenucoursor(uint8, uint8);
 void LCD_printbutselhint(uint8, uint8, uint8);
 void LCD_printvertline(uint8, uint8, uint8);
 void LCD_printhorline(uint8, uint8, uint8);
+void LCD_printweekday(uint8, uint8, uint8);
+void LCD_printmonth(uint8, uint8, uint8);
 
 #ifdef	__cplusplus
 }

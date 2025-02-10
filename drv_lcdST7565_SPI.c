@@ -20,6 +20,8 @@
 
 #define  HW_SPI  // SPI type software(SW_SPI)/hardware(HW_SPI) 
 
+uint8 dispdata[8][128] = {0};
+
 /*-------------------------------SW SPI---------------------------------------*/
 #ifdef SW_SPI
 
@@ -181,42 +183,28 @@ void LCD_writebyte(uint8 byte)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------SYSTEM MENU ELEMENTS---------------------------*/
+
+void LCD_printweekday(uint8 wdaynum, uint8 pg, uint8 cl)
+{
+  LCD_printstr8x5(weekday[wdaynum], pg, cl);
+}
+
+void LCD_printmonth(uint8 mon, uint8 pg, uint8 cl)
+{
+  LCD_printstr8x5(month[mon - 1], pg, cl);
+}
+
 void LCD_printclockanddate(uint8 pg, uint8 cl)
 {
   uint8 wday[3] = {0};
   uint8 month[4] = {0};
   uint8 day[3] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '\0'};
-  switch(rtcraw.rtcpar.weekday)
-  {
-    case 0: wday[0] = 'Â'; wday[1] = 'Ñ'; break;
-    case 1: wday[0] = 'Ï'; wday[1] = 'Í'; break;
-    case 2: wday[0] = 'Â'; wday[1] = 'Ò'; break;
-    case 3: wday[0] = 'Ñ'; wday[1] = 'Ð'; break;
-    case 4: wday[0] = '×'; wday[1] = 'Ò'; break;
-    case 5: wday[0] = 'Ï'; wday[1] = 'Ò'; break;
-    case 6: wday[0] = 'Ñ'; wday[1] = 'Á'; break;
-  }
-  switch(rtcraw.rtcpar.month)
-  {
-    case 1:  month[0] = 'ß'; month[1] = 'Í'; month[2] = 'Â'; break;
-    case 2:  month[0] = 'Ô'; month[1] = 'Å'; month[2] = 'Â'; break;
-    case 3:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'Ð'; break;
-    case 4:  month[0] = 'À'; month[1] = 'Ï'; month[2] = 'Ð'; break;
-    case 5:  month[0] = 'Ì'; month[1] = 'À'; month[2] = 'É'; break;
-    case 6:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Í'; break;
-    case 7:  month[0] = 'È'; month[1] = 'Þ'; month[2] = 'Ë'; break;
-    case 8:  month[0] = 'À'; month[1] = 'Â'; month[2] = 'Ã'; break;
-    case 9:  month[0] = 'Ñ'; month[1] = 'Å'; month[2] = 'Í'; break;
-    case 10:  month[0] = 'Î'; month[1] = 'Ê'; month[2] = 'Ò'; break;
-    case 11: month[0] = 'Í'; month[1] = 'Î'; month[2] = 'ß'; break;
-    case 12: month[0] = 'Ä'; month[1] = 'Å'; month[2] = 'Ê'; break;
-  }
   uint8 hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
   uint8 colon[4] = {0x00,0x12,0x00}; // ':' colon
   uint8 minutes[3] = {dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
   LCD_printstr8x5(day, pg, cl);
-  LCD_printstr8x5(month, pg, cl + 14);
-  LCD_printstr8x5(wday, pg, cl + 35);
+  LCD_printmonth(rtcraw.rtcpar.month, pg, cl + 14);
+  LCD_printweekday(rtcraw.rtcpar.weekday, pg, cl + 35);
   LCD_printstr8x5(hours, pg, cl + 49);
   LCD_setpagecolumn(pg, cl + 61);
   LCD_senddata(colon, 3);
@@ -292,33 +280,33 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_printpiu(uint8 page, uint8 col)
+void LCD_printpiu(uint8 pg, uint8 cl)
 {
-  LCD_setpagecolumn(page, col);
+  LCD_setpagecolumn(pg, cl);
   LCD_senddata(tar_bullet, 8);
 }
 
-void LCD_printufo(uint8 page, uint8 col)
+void LCD_printufo(uint8 pg, uint8 cl)
 {
-  LCD_setpagecolumn(page, col);
+  LCD_setpagecolumn(pg, cl);
   LCD_senddata(tarelka[0], 27);
-  LCD_setpagecolumn((page+1), col);
+  LCD_setpagecolumn((pg+1), cl);
   LCD_senddata(tarelka[1], 27);
 }
 
-void LCD_printcometa(uint8 page, uint8 col)
+void LCD_printcometa(uint8 pg, uint8 cl)
 {
-  LCD_setpagecolumn(page, col);
+  LCD_setpagecolumn(pg, cl);
   LCD_senddata(cometa[0], 28);
-  LCD_setpagecolumn((page+1), col);
+  LCD_setpagecolumn((pg+1), cl);
   LCD_senddata(cometa[1], 28);
 }
 
-void LCD_printdistrcometa(uint8 page, uint8 col)
+void LCD_printdistrcometa(uint8 pg, uint8 cl)
 {
-  LCD_setpagecolumn(page, col);
+  LCD_setpagecolumn(pg, cl);
   LCD_senddata(distr_cometa[0], 28);
-  LCD_setpagecolumn((page+1), col);
+  LCD_setpagecolumn((pg+1), cl);
   LCD_senddata(distr_cometa[1], 28);
 }
 

@@ -7,13 +7,6 @@
 void setdatetime(void)
 {
   uint8 selectpos = 0;
-  uint8 san[3] = "бя";
-  uint8 mon[3] = "ом";
-  uint8 tue[3] = "бр";
-  uint8 wen[3] = "яп";
-  uint8 thu[3] = "вр";
-  uint8 fri[3] = "ор";
-  uint8 sat[3] = "яа";
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
   while(1)
@@ -58,16 +51,7 @@ void setdatetime(void)
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
-    switch(rtcbcd.rtcpar.weekday & 0x07)
-    {
-      case 0: LCD_printstr8x5(san, 0, 115); break;
-      case 1: LCD_printstr8x5(mon, 0, 115); break;
-      case 2: LCD_printstr8x5(tue, 0, 115); break;
-      case 3: LCD_printstr8x5(wen, 0, 115); break;
-      case 4: LCD_printstr8x5(thu, 0, 115); break;
-      case 5: LCD_printstr8x5(fri, 0, 115); break;
-      case 6: LCD_printstr8x5(sat, 0, 115); break;
-    } 
+    LCD_printweekday(rtcbcd.rtcpar.weekday, 0, 115);
     
     switch(selectpos)
     {
