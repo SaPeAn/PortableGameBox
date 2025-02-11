@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>PIC18F2550_Common</name>
+            <name>GameBox</name>
             <creation-uuid>17ffc791-4b31-4102-936e-109def7308cf</creation-uuid>
             <make-project-type>0</make-project-type>
             <sourceEncoding>windows-1251</sourceEncoding>

@@ -51,7 +51,7 @@ void ufobattle(void)
     if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
     if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1;}
 
-    if(timestamp - counter > 500){
+    if(timestamp - counter > 150){
       LCD_erase();
       LCD_printcometa(getrand(6), getrand(100));
       counter = timestamp;
