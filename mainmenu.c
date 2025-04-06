@@ -9,6 +9,9 @@ void setdatetime(void)
   uint8 selectpos = 0;
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
+  uint8 temp1 = 0;
+  uint8 temp2 = 0;
+  uint32 tim = 0;
   while(1)
   {  
     checkjoydir();
@@ -17,6 +20,7 @@ void setdatetime(void)
     if(B2.BtnON){
       B2.BtnON = 0;
       RTCsenddata(rtcbcd.rtcdata);
+      temp1 = 1;
     }
     
     if(B1.BtnON){
@@ -104,6 +108,19 @@ void setdatetime(void)
     LCD_printstr8x5("âûõ", 7, 85);
     LCD_printstr8x5("îê", 7, 110);
     LCD_printstr8x5("-  +", 2, 93); 
+    
+    if(temp1) {
+      tim = timestamp;
+      temp1 = 0;
+      temp2 = 1;
+    }
+    
+    if(temp2) LCD_printstr8x5("ÑÎÕÐÀÍÅÍÎ", 7, 2);
+    
+    if(((timestamp - tim) > 2000) && temp2) {
+      LCD_erasestring(128, 7, 0);
+      temp2 = 0;
+    }
     
     rtcrawtobcd();
     LCD_erase();
@@ -266,15 +283,15 @@ void MainMenu(void)
   LCD_printclockanddate(0, 26);
   LCD_printbatlevel(batlvl, 0, 105);
   LCD_printbrightnes(0, 0);
-  
-  /*
-  LCD_printhorline(125, 10, 1);
-  LCD_printhorline(125, 60, 1);
-  LCD_printvertline(51, 10, 80);
-  LCD_printvertline(51, 10, 0);
-  LCD_printvertline(51, 10, 126);
-  */
+ 
 
+  //LCD_printhorline(125, 8, 1);
+  //LCD_printhorline(125, 62, 1);
+  LCD_printvertline(55, 8, 80);
+  LCD_printvertline(55, 8, 0);
+  LCD_printvertline(55, 8, 126);
+
+  
   batcheck();
   BrightPWMgen(brightPWM);
   getbrightlvl();

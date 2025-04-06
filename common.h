@@ -43,19 +43,12 @@ typedef union{
     unsigned coursorpos         :3;
   };
 } flags_t;                               // System functions launch flags
-/*
-#define MAIN_MENU         !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
-#define SET_BRIGHT        !CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
-#define SET_DT            !CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
-#define START_GAME         CFlags.MMPartbit_0 & !CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
-#define GAME_POUINT_1      CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 & !CFlags.MMPartbit_2
-#define TEST               CFlags.MMPartbit_0 &  CFlags.MMPartbit_1 &  CFlags.MMPartbit_2
-*/
+
 flags_t CFlags = {1, 0, 0, 0, 0, 1};
 
 uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
-rtcun_t rtcbcd;          // structure variable for storaging clock/date from RTC module (BCD format))
-rtcun_t rtcraw;          // structure variable for storaging system clock/date (uint8)
+rtcun_t rtcbcd;          // structure for storaging clock/date from RTC module (BCD format))
+rtcun_t rtcraw;          // structure for storaging system clock/date (uint8)
 uint8 Ubat;              // ADC data from battery level measurement
 uint8 batlvl;            // battery level for display (0...5)
 uint8 brightlvl;         // brightness level for display (0...7)

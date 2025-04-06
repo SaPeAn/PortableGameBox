@@ -183,10 +183,11 @@ void Sounds(uint16 delay)
 void ShutDown(void)
 {
   LCD_erase();
-  PORTCbits.RC1 = 0;
+  LATCbits.LC1 = 0;
   LCD_printstr8x5("Низкий заряд батареи!", 1, 10);
   LCD_printstr8x5("Устройство", 3, 10);  
   LCD_printstr8x5("сейчас выключится!", 5, 10);
+  LCD_erase();
   while(1);
 }
 
@@ -196,13 +197,6 @@ void batcheck(void)
   batlvl = getbatlvl(Ubat);
   if(batlvl == 100) ShutDown();
 }
-
-/*void gettime(void)
-{ 
-  rtcraw.rtcpar.hour = (uint8)(timestamp/3600000);
-  rtcraw.rtcpar.min= (uint8)((timestamp%3600000)/60000);
-  rtcraw.rtcpar.sec = (uint8)((timestamp%60000)/1000);
-}*/
 
 void rtcrawtobcd(void)
 {

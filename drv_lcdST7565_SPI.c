@@ -174,7 +174,7 @@ void LCD_senddata(const uint8* byte, uint8 N)
 #ifdef BUF_EN
   for(uint8 i = 0; i < N; i++) 
   {
-    dispbuffer[bufpg][bufcl + i] = byte[i];
+    dispbuffer[bufpg][bufcl + i] |= byte[i];
     if(bufcl > 127) bufpg++;
     if(bufpg > 7) return;
   }
@@ -202,7 +202,7 @@ void LCD_sendcommands(uint8 N, ...)
 void LCD_writebyte(uint8 byte)
 {
 #ifdef BUF_EN
-  dispbuffer[bufpg][bufcl] = byte;
+  dispbuffer[bufpg][bufcl] |= byte;
   bufcl++;
 #else
   CS = 0;
