@@ -185,7 +185,7 @@ void MainMenu(void)
       switch(CFlags.coursorpos) { 
         case 1: CFlags.MenuFl = 0; CFlags.RunGameFl = 1; CFlags.coursorpos = 1; break;
         case 2: CFlags.MenuFl = 0; CFlags.MenuSettingsFl = 1; CFlags.coursorpos = 1; break;
-        case 3: testscreen(); break;
+        case 3: ShutDown(); break;
       }
     }
     if(joystick.down == 1)
@@ -207,7 +207,7 @@ void MainMenu(void)
     
     LCD_printstr8x5("»√–¿", 2, 19);
     LCD_printstr8x5("Õ¿—“–Œ… ¿", 4, 19);
-    LCD_printstr8x5("“≈—“", 6, 19);
+    LCD_printstr8x5("¬€ Àﬁ◊»“‹", 6, 19);
     
     LCD_printbutselhint(0, 2, 89);
     LCD_printstr8x5("‚ıÓ‰", 6, 93);

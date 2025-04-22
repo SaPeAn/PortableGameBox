@@ -126,10 +126,11 @@ uint8 getbatlvl(uint8 Ubat)
   static uint8 Umax = 240;
   static uint8 Umin = 228;
   static uint8 reslvl = 0;
-  if(Ubat <= 180) return 100; // bat to low, immediately shotdown code - 100
+  if(Ubat <= 185) return 100; // bat to low, immediately shotdown code - 100
   Ubat = clamp(Ubat, 192, 240);
   if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
   else 
+  {
     switch(lvl)
     {
       case 0: Umin = 228; Umax = 240; reslvl = 0; break;
@@ -139,6 +140,8 @@ uint8 getbatlvl(uint8 Ubat)
       case 4: Umin = 196; Umax = 212; reslvl = 4; break;
       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
     }
+    return reslvl;
+  }
 }
 
 void getbrightlvl(void)
@@ -180,13 +183,22 @@ void Sounds(uint16 delay)
   }
 }
         
+void ShutDownLB(void)
+{
+  LCD_erase();
+  LATCbits.LC1 = 0;
+  LCD_printstr8x5("Низкий заряд батареи!", 1, 0);
+  LCD_printstr8x5("Устройство", 3, 0);  
+  LCD_printstr8x5("сейчас выключится!", 5, 0);
+  LCD_erase();
+  while(1);
+}
+
 void ShutDown(void)
 {
   LCD_erase();
   LATCbits.LC1 = 0;
-  LCD_printstr8x5("Низкий заряд батареи!", 1, 10);
-  LCD_printstr8x5("Устройство", 3, 10);  
-  LCD_printstr8x5("сейчас выключится!", 5, 10);
+  LCD_printstr8x5("Выключение...", 3, 0);
   LCD_erase();
   while(1);
 }
@@ -195,7 +207,7 @@ void batcheck(void)
 {
   Ubat = adc_getval_an2();
   batlvl = getbatlvl(Ubat);
-  if(batlvl == 100) ShutDown();
+  if(batlvl == 100) ShutDownLB();
 }
 
 void rtcrawtobcd(void)

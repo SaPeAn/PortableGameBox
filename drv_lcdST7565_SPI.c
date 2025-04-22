@@ -337,9 +337,9 @@ void LCD_printpiu(uint8 pg, uint8 cl)
 void LCD_printufo(uint8 pg, uint8 cl)
 {
   LCD_setpagecolumn(pg, cl);
-  LCD_senddata(tarelka[0], 27);
+  LCD_senddata(tarelka[0], 37);
   LCD_setpagecolumn((pg+1), cl);
-  LCD_senddata(tarelka[1], 27);
+  LCD_senddata(tarelka[1], 37);
 }
 
 void LCD_printcometa(uint8 pg, uint8 cl)
