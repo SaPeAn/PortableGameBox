@@ -70,14 +70,6 @@ void SPI_init(void)
   SSPSTATbits.SMP = 1;
   SSPSTATbits.CKE = 0;
 }
-
-uint8 SPI_transmit(uint8 bt)
-  {
-    SSPBUF = bt;
-    while(!SSPSTATbits.BF);
-    return SSPBUF;
-  }
-
 #endif
 /*----------------------------------------------------------------------------*/
 
@@ -125,7 +117,7 @@ void LCD_setpagecolumn(uint8 pg, uint8 cl)
 #endif
 }
 
-void LCD_printsmb8x5(const uint8 ch, uint8 pg, uint8 cl)
+void LCD_printsmb8x5(const char ch, uint8 pg, uint8 cl)
 {
   LCD_setpagecolumn(pg, cl);
   LCD_senddata(char_8x5[ch], 5);
@@ -133,7 +125,7 @@ void LCD_printsmb8x5(const uint8 ch, uint8 pg, uint8 cl)
   LCD_writebyte(0x00);
 }
 
-uint8 LCD_printstr8x5(uint8 *str, uint8 pg, uint8 cl)
+uint8 LCD_printstr8x5(char *str, uint8 pg, uint8 cl)
 {
   if(str == NULL) str = str_null;
   uint8 i = 0;
@@ -169,7 +161,7 @@ void LCD_erase(void)
 #endif
 }
 
-void LCD_senddata(const uint8* byte, uint8 N)
+void LCD_senddata(const char* byte, uint8 N)
 {
 #ifdef BUF_EN
   for(uint8 i = 0; i < N; i++) 
@@ -246,12 +238,12 @@ void LCD_printmonth(uint8 mon, uint8 pg, uint8 cl)
 
 void LCD_printclockanddate(uint8 pg, uint8 cl)
 {
-  uint8 wday[3] = {0};
-  uint8 month[4] = {0};
-  uint8 day[3] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '\0'};
-  uint8 hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
-  uint8 colon[4] = {0x00,0x12,0x00}; // ':' colon
-  uint8 minutes[3] = {dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
+  char wday[3] = {0};
+  char month[4] = {0};
+  char day[3] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '\0'};
+  char hours[3] = {dig_to_smb(rtcraw.rtcpar.hour / 10), dig_to_smb(rtcraw.rtcpar.hour % 10), '\0'}; 
+  char colon[4] = {0x00,0x12,0x00}; // ':' colon
+  char minutes[3] = {dig_to_smb(rtcraw.rtcpar.min / 10), dig_to_smb(rtcraw.rtcpar.min % 10), '\0'};
   LCD_printstr8x5(day, pg, cl);
   LCD_printmonth(rtcraw.rtcpar.month, pg, cl + 14);
   LCD_printweekday(rtcraw.rtcpar.weekday, pg, cl + 35);
@@ -298,7 +290,7 @@ void LCD_printvertline(uint8 linelength, uint8 startstring, uint8 cl)
   uint8 startpg = startstring / 8;
   uint8 bitshifting = (startstring % 8);
   uint8 lengthinpages = (linelength - (8 - bitshifting)) / 8;  
-  uint8 temp = 0xFF << bitshifting;
+  uint8 temp = (uint8)(0xFF << bitshifting);
   LCD_setpagecolumn(startpg, cl);
   LCD_senddata(&temp, 1);
   temp = 0xFF;
@@ -317,7 +309,7 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
   if((linelength - cl) > 127) return;
   uint8 startpg = startstring / 8;
   uint8 bitshifting = (startstring % 8); 
-  uint8 temp = 0x1 << bitshifting;
+  uint8 temp = (uint8)(0x1 << bitshifting);
   LCD_setpagecolumn(startpg, cl);
   for(uint8 i = 0; i < linelength; i++)
   {
@@ -331,15 +323,31 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 void LCD_printpiu(uint8 pg, uint8 cl)
 {
   LCD_setpagecolumn(pg, cl);
-  LCD_senddata(tar_bullet, 8);
+  LCD_senddata(tar_bullet, 4);
 }
 
-void LCD_printufo(uint8 pg, uint8 cl)
+void LCD_printgamer(uint8 pg, uint8 cl, uint8 gas_fl)
 {
-  LCD_setpagecolumn(pg, cl);
-  LCD_senddata(tarelka[0], 37);
-  LCD_setpagecolumn((pg+1), cl);
-  LCD_senddata(tarelka[1], 37);
+  bufpg = pg;
+  bufcl = cl;
+  for(uint8 i = 0; i < 66; i++) 
+  {
+    if(!(i % 2)) dispbuffer[bufpg][bufcl + i/2] |= gamer[gas_fl][i];
+    else dispbuffer[bufpg+1][bufcl + i/2] |= gamer[gas_fl][i];
+  }
+}
+
+void LCD_printmagaz(uint8 pg, uint8 cl, uint8 sel_pos)
+{
+  bufpg = pg;
+  bufcl = cl;
+  for(uint8 i = 0; i < 6; i++) 
+  {
+    for(uint8 j = 0; j < 37; j++)
+    {
+      dispbuffer[bufpg+i][bufcl + j] |= Magazin[i];
+    }
+  }
 }
 
 void LCD_printcometa(uint8 pg, uint8 cl)

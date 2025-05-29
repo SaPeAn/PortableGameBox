@@ -28,7 +28,7 @@ uint8 getrand(uint8 N)
   return (rand() % (N + 1));
 }
 
-uint8 dig_to_smb(uint8 dig)
+char dig_to_smb(uint8 dig)
 {
   switch (dig)
   {
@@ -46,15 +46,15 @@ uint8 dig_to_smb(uint8 dig)
   return 0;
 }
 
-void u16_to_str(uint8* str, uint16 num, uint8 ZF)
+void u16_to_str(char* str, uint16 num, uint8 ZF)
 { 
   str[0] = dig_to_smb(num/10000);
   num %= 10000;
   str[1] = dig_to_smb(num/1000);
   num %= 1000;
-  str[2] = dig_to_smb(num/100);
+  str[2] = dig_to_smb((uint8)num/100);
   num %= 100;
-  str[3] = dig_to_smb(num/10);
+  str[3] = dig_to_smb((uint8)num/10);
   str[4] = dig_to_smb(num%10);
   str[5] = '\0';  
   if(ZF)
@@ -120,15 +120,15 @@ void initbuttons(void)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------SYSTEM FUNCTIONS------------------------------*/
-uint8 getbatlvl(uint8 Ubat)
+uint8 getbatlvl(uint8 Ub)
 {
-  uint8 lvl = (239 - Ubat) / 8;
+  uint8 lvl = (239 - Ub) / 8;
   static uint8 Umax = 240;
   static uint8 Umin = 228;
   static uint8 reslvl = 0;
-  if(Ubat <= 185) return 100; // bat to low, immediately shotdown code - 100
-  Ubat = clamp(Ubat, 192, 240);
-  if((Ubat <= Umax) && (Ubat >= Umin)) return reslvl;
+  if(Ub <= 185) return 100; // bat to low, immediately shotdown code - 100
+  Ub = clamp(Ub, 192, 240);
+  if((Ub <= Umax) && (Ub >= Umin)) return reslvl;
   else 
   {
     switch(lvl)
@@ -140,8 +140,34 @@ uint8 getbatlvl(uint8 Ubat)
       case 4: Umin = 196; Umax = 212; reslvl = 4; break;
       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
     }
-    return reslvl;
   }
+}
+
+void batcheck(void)
+{
+  Ubat = adc_getval_an2();
+  batlvl = getbatlvl(Ubat);
+  if(batlvl == 100) ShutDownLB();
+}
+        
+void ShutDownLB(void)
+{
+  LCD_erase();
+  LATCbits.LC1 = 0;
+  LCD_printstr8x5("Низкий заряд батареи!", 1, 0);
+  LCD_printstr8x5("Устройство", 3, 0);  
+  LCD_printstr8x5("сейчас выключится!", 5, 0);
+  LCD_erase();
+  while(1);
+}
+
+void ShutDown(void)
+{
+  LCD_erase();
+  LATCbits.LC1 = 0;
+  LCD_printstr8x5("Выключение...", 3, 0);
+  LCD_erase();
+  while(1);
 }
 
 void getbrightlvl(void)
@@ -182,43 +208,16 @@ void Sounds(uint16 delay)
     while(j--);
   }
 }
-        
-void ShutDownLB(void)
-{
-  LCD_erase();
-  LATCbits.LC1 = 0;
-  LCD_printstr8x5("Низкий заряд батареи!", 1, 0);
-  LCD_printstr8x5("Устройство", 3, 0);  
-  LCD_printstr8x5("сейчас выключится!", 5, 0);
-  LCD_erase();
-  while(1);
-}
-
-void ShutDown(void)
-{
-  LCD_erase();
-  LATCbits.LC1 = 0;
-  LCD_printstr8x5("Выключение...", 3, 0);
-  LCD_erase();
-  while(1);
-}
-
-void batcheck(void)
-{
-  Ubat = adc_getval_an2();
-  batlvl = getbatlvl(Ubat);
-  if(batlvl == 100) ShutDownLB();
-}
 
 void rtcrawtobcd(void)
 {
-  rtcbcd.rtcpar.year = ((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
-  rtcbcd.rtcpar.month = (0x80 | ((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
-  rtcbcd.rtcpar.day = ((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
+  rtcbcd.rtcpar.year = (uint8)((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
+  rtcbcd.rtcpar.month = (0x80 | (uint8)((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
+  rtcbcd.rtcpar.day = (uint8)((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
   rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
-  rtcbcd.rtcpar.hour = ((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
-  rtcbcd.rtcpar.min = ((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
-  rtcbcd.rtcpar.sec = ((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+  rtcbcd.rtcpar.hour = (uint8)((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
+  rtcbcd.rtcpar.min = (uint8)((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
+  rtcbcd.rtcpar.sec = (uint8)((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
 }
 
 void rtcbcdtoraw(void)
@@ -289,7 +288,7 @@ void TestBtn(btn_t* btn)
     btn->btnTimer = *(btn->timecounter); 
     btn->BtnON = 1;
   }
-  if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 50)) {
+  if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 100)) {
     btn->BtnFl = 0;
     btn->HoldON = 0;
     btn->StuckON = 0;

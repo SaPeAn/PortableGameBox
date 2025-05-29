@@ -80,7 +80,7 @@ void ufobattle(void)
         if(!Piu[i].en && Tar.en) 
         {
           Piu[i].en = 1; 
-          Piu[i].pg = Tar.pg + 1; 
+          Piu[i].pg = Tar.pg; 
           Piu[i].cl = Tar.cl + 28;
           Sounds(400);
           break;
@@ -153,7 +153,7 @@ void ufobattle(void)
         delay_ms(10);
       }
     }
-    if(Tar.en) LCD_printufo(Tar.pg, Tar.cl);
+    if(Tar.en) LCD_printgamer(Tar.pg, Tar.cl, 0);
     //--------PRINT BULLET---------------
     for(uint8 i = 0; i < Max_Piu; i++)
     {
