@@ -124,6 +124,33 @@ void getjoypos(void);
 void checkjoydir(void);
 /*----------------------------------------------------------------------------*/
 
+/*-------------------------------GAME VARIABLES-------------------------------*/
+typedef struct
+{
+  int    health;
+  int    energy;
+  uint8  gasmask_fl;
+  uint8  bombs;
+  uint8  money;
+  uint8  pg;
+  uint8  cl;
+}Gamer_t;
+
+Gamer_t Gamer;
+
+typedef struct 
+{
+  uint8 bombs;
+  uint8 bullets;
+  uint8 evilstars;
+  uint8 chemists;
+  uint8 gasclouds;
+  uint8 coins;
+}objquantity_t;
+
+objquantity_t Dispobjects;
+/*----------------------------------------------------------------------------*/
+
 #ifdef	__cplusplus
 }
 #endif

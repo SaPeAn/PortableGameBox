@@ -34,9 +34,6 @@ comet_t Comet[COMET_MAX] = {0};
 uint8 Max_Piu = 1;
 uint8 Max_Comet = 4;
 uint32 TimeComet = 100;
-uint16 KillCounter = 0;
-uint8 ScoreLb[] = "SCORE: ";
-uint8 Score[6];
 uint32 counter = 0; 
 
 uint8 StartFl = 0;
@@ -44,6 +41,14 @@ uint8 StartFl = 0;
 
 void ufobattle(void)
 {
+  Gamer.health = 24;
+  Gamer.energy = 24;
+  Gamer.gasmask_fl = 1;
+  Gamer.bombs = 3;
+  Gamer.money = 156;
+  LCD_printgamestatbar(&Gamer);
+  randinit();
+  
   while(!StartFl && CFlags.RunGameFl)
   {      
     Tar.en = 1;
@@ -53,9 +58,12 @@ void ufobattle(void)
 
     if(timestamp - counter > 150){
       LCD_erase();
-      LCD_printcometa(getrand(6), getrand(100));
+      //LCD_printcometa(getrand(6), getrand(100));
       counter = timestamp;
     }
+    
+    LCD_printgamestatbar(&Gamer);
+    LCD_printmagaz(1, 0);
     
     LCD_printbutselhint(5, 2, 89);
     LCD_printstr8x5("вых.вх", 6, 86);
@@ -122,7 +130,6 @@ void ufobattle(void)
         {
           Comet[i].stat = 2;
           Piu[j].en = 0;
-          KillCounter++;
           Sounds(500);
         }
       }
@@ -137,13 +144,7 @@ void ufobattle(void)
       }
     }
     LCD_erase();
-
-    switch(KillCounter)
-    {
-      case 20: Max_Piu = 2; break;
-      case 50: Max_Piu = 4; break;
-      case 100: Max_Piu = 8; Max_Comet = 6; break;
-    }
+    
     //----------COMET PRINT-------------------------------
     for(uint8 i = 0; i < Max_Comet; i++) 
     {
@@ -167,9 +168,7 @@ void ufobattle(void)
       }
     }
     //-----------------------------------------
-    u16_to_str(Score, KillCounter, DISABLE);
-    LCD_printstr8x5(ScoreLb, 0, 37);
-    LCD_printstr8x5(Score, 0, 73);
+
     batcheck();
     delay_ms(50);
   }

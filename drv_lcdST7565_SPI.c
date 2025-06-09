@@ -284,11 +284,11 @@ void LCD_printbutselhint(uint8 hintnum, uint8 pg, uint8 cl)
   }
 }
 
-void LCD_printvertline(uint8 linelength, uint8 startstring, uint8 cl)
+void LCD_printvertline(uint8 linelength, uint8 startline, uint8 cl)
 {
-  if((linelength - startstring) > 63) return;
-  uint8 startpg = startstring / 8;
-  uint8 bitshifting = (startstring % 8);
+  if((linelength - startline) > 63) return;
+  uint8 startpg = startline / 8;
+  uint8 bitshifting = (startline % 8);
   uint8 lengthinpages = (linelength - (8 - bitshifting)) / 8;  
   uint8 temp = (uint8)(0xFF << bitshifting);
   LCD_setpagecolumn(startpg, cl);
@@ -337,17 +337,37 @@ void LCD_printgamer(uint8 pg, uint8 cl, uint8 gas_fl)
   }
 }
 
-void LCD_printmagaz(uint8 pg, uint8 cl, uint8 sel_pos)
+void LCD_printsprite(uint8 startline, uint8 startcolumn, uint8 lines, uint8 columns)
+{
+  
+}
+
+void LCD_printmagaz(uint8 pg, uint8 cl)
 {
   bufpg = pg;
   bufcl = cl;
-  for(uint8 i = 0; i < 6; i++) 
+  uint16 k = 0;
+  for(uint8 j = 0; j < 64; j++) 
   {
-    for(uint8 j = 0; j < 37; j++)
+    for(uint8 i = 0; i < 7; i++)
     {
-      dispbuffer[bufpg+i][bufcl + j] |= Magazin[i];
+      dispbuffer[bufpg + i][bufcl + j] |= Magazin[k];
+      k++;
     }
   }
+}
+
+void LCD_printgamestatbar(Gamer_t* gamer)
+{
+  for(uint8 i = 0 ; i < 128; i++) dispbuffer[0][i] |= GameStatusBar[i];
+  for(uint8 i = 9; i < (9 + gamer->health); i++) dispbuffer[0][i] |= 0b00111100; // helth bar
+  for(uint8 i = 102; i < (102 + gamer->energy); i++) dispbuffer[0][i] |= 0b00111100;; // energy bar
+  uint8 money[5];
+  u16_to_str(money, gamer->money, ENABLE);
+  uint8 bombs[2];
+  u16_to_str(bombs, gamer->bombs, ENABLE);
+  LCD_printstr8x5(money, 0, 50);
+  LCD_printstr8x5(bombs, 0, 80);
 }
 
 void LCD_printcometa(uint8 pg, uint8 cl)

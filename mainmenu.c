@@ -157,12 +157,12 @@ void testscreen(void)
     LCD_printstr8x5("Ярк. = ", 3, 2);
     u16_to_str(temp, brightPWM, DISABLE);
     LCD_printstr8x5(temp, 3, 44);
-    LCD_printstr8x5("Дж. X = ", 5, 2);
+    LCD_printstr8x5("Дж.X = ", 5, 2);
     u16_to_str(temp, ox, DISABLE);
-    LCD_printstr8x5(temp, 5, 50);
-    LCD_printstr8x5("Дж. Y = ", 6, 2);
+    LCD_printstr8x5(temp, 5, 44);
+    LCD_printstr8x5("Дж.Y = ", 6, 2);
     u16_to_str(temp, oy, DISABLE);
-    LCD_printstr8x5(temp, 6, 50);
+    LCD_printstr8x5(temp, 6, 44);
   
     LCD_printbutselhint(1, 2, 89);
     LCD_printstr8x5("выход", 6, 86);

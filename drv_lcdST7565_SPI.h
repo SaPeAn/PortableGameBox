@@ -28,10 +28,14 @@ void LCD_erase(void);
 void LCD_erasestring(uint8, uint8, uint8);
 uint8 LCD_printstr8x5(char*, uint8, uint8);
 void LCD_printclockanddate(uint8, uint8);
+
 void LCD_printgamer(uint8, uint8, uint8);
 void LCD_printpiu(uint8, uint8);
 void LCD_printcometa(uint8, uint8);
 void LCD_printdistrcometa(uint8, uint8);
+void LCD_printmagaz(uint8, uint8);
+void LCD_printgamestatbar(Gamer_t*);
+
 void LCD_printbatlevel(uint8, uint8, uint8);
 void LCD_printbrightnes(uint8, uint8);
 void LCD_printmenucoursor(uint8, uint8);
