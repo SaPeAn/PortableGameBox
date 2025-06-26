@@ -67,7 +67,7 @@ void delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
 char dig_to_smb(uint8);
-void  u16_to_str(char*, uint16, uint8);
+void u16_to_str(char*, uint16, uint8);
 void BrightPWMgen(uint8);
 void decbright(void);
 void incbright(void);
@@ -150,6 +150,18 @@ typedef struct
 
 objquantity_t Dispobjects;
 /*----------------------------------------------------------------------------*/
+
+typedef enum {
+  lines_first,
+  columns_first
+}tDirect;
+
+typedef struct{
+  uint8 pages;
+  uint8 columns;
+  uint8* sprite;
+  tDirect direct;
+}tSprite;
 
 #ifdef	__cplusplus
 }

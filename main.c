@@ -7,6 +7,7 @@
 #include "ufo_battle.h"
 #include "drv_swi2cRTC.h"
 #include "mainmenu.h"
+#include "scheduler.h"
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------------INTERRAPTS---------------------------------*/
@@ -20,6 +21,7 @@ void __interrupt() systemTick_int(void)
     TMR1IF = 0;
     timestamp++;
     Nop();
+    SchedPeriodIncr();
     return;
   }
 }

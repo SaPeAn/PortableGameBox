@@ -1,23 +1,24 @@
 #include "ufo_battle.h"
 #include "drv_lcdST7565_SPI.h"
 #include "drv_swi2cRTC.h"
+#include "display_data.h"
 
 //------------------------------Game stucts-----------------------
 typedef struct {
   uint8 en;
-  uint8 pg;
+  uint8 ln;
   uint8 cl;
 } ufo_t;
 
 typedef struct {
   uint8 en;
-  uint8 pg;
+  uint8 ln;
   uint8 cl;
 } bullet_t;
 
 typedef struct{
   uint8  stat;  // 0 - enemy disable; 1 - enemy enable; 2 - enemy distroed
-  uint8  pg;
+  uint8  ln;
   uint8  cl;
   uint32 timer;
   uint8  N;
@@ -26,13 +27,13 @@ typedef struct{
  
 //---------------------------------------------------------  
 //------------------------------Game vars-----------------------
-ufo_t Tar = {1, 3, 0};
+ufo_t Tar = {1, 0, 0};
 #define PIU_MAX   16
 #define COMET_MAX 8
 bullet_t Piu[PIU_MAX] = {0};
 comet_t Comet[COMET_MAX] = {0};
-uint8 Max_Piu = 1;
-uint8 Max_Comet = 4;
+uint8 Max_Piu = 3;
+uint8 Max_Comet = 5;
 uint32 TimeComet = 100;
 uint32 counter = 0; 
 
@@ -73,13 +74,14 @@ void ufobattle(void)
   while(StartFl && CFlags.RunGameFl)
   {
     TestBtn(&B2);
+    TestBtn(&B4);
     ox = adc_getval_an0();
     oy = adc_getval_an1();
 
-    if(oy > 150){Tar.pg--; if(Tar.pg == 255) Tar.pg = 0;}
-    if(oy < 100){Tar.pg++; if(Tar.pg == 7) Tar.pg = 6;}
-    if(ox > 150){Tar.cl += 8; if(Tar.cl > 100) Tar.cl = 100;}
-    if(ox < 100){Tar.cl -= 8; if(Tar.cl > 100) Tar.cl = 0;}
+    if(oy > 150){Tar.ln-=2; if(Tar.ln > 245) Tar.ln = 0;}
+    if(oy < 100){Tar.ln+=2; if(Tar.ln > 48) Tar.ln = 48;}
+    if(ox > 150){Tar.cl += 4; if(Tar.cl > 94) Tar.cl = 94;}
+    if(ox < 100){Tar.cl -= 4; if(Tar.cl > 100) Tar.cl = 0;}
 
 
     if(B2.BtnON || B2.HoldON || B2.StuckON){ 
@@ -88,16 +90,19 @@ void ufobattle(void)
         if(!Piu[i].en && Tar.en) 
         {
           Piu[i].en = 1; 
-          Piu[i].pg = Tar.pg; 
+          Piu[i].ln = Tar.ln; 
           Piu[i].cl = Tar.cl + 28;
           Sounds(400);
           break;
         }
       }
     }
+    if(B4.BtnON || B4.HoldON || B4.StuckON){ 
+      B4.BtnON = 0; 
+      StartFl = 0;
+    }
 
     //--------COMET GENERATOR-------------------------
-
     for(uint8 i = 0; i < Max_Comet; i++)
     {
       if(Comet[i].stat == 0 && ((timestamp - TimeComet) > 1000))
@@ -105,7 +110,7 @@ void ufobattle(void)
         TimeComet = timestamp;
         Comet[i].stat = 1;
         Comet[i].cl = 100;
-        Comet[i].pg = getrand(6);
+        Comet[i].ln = getrand(48);
       }
     }
     //--------------------------------------------------
@@ -126,7 +131,7 @@ void ufobattle(void)
     {
       for(uint8 i = 0; i < Max_Comet; i++)
       {
-        if((Comet[i].cl <= Piu[j].cl && (Comet[i].pg == Piu[j].pg || (Comet[i].pg + 1) == Piu[j].pg)) && Comet[i].stat == 1 && Comet[i].stat == 1 && Piu[j].en)
+        if((Comet[i].cl <= Piu[j].cl) && (Comet[i].ln < (Piu[j].ln + 1)) && ((Comet[i].ln + 1) > Piu[j].ln) && Comet[i].stat == 1 && Comet[i].stat == 1 && Piu[j].en)
         {
           Comet[i].stat = 2;
           Piu[j].en = 0;
@@ -137,7 +142,7 @@ void ufobattle(void)
 
     for(uint8 i = 0; i < Max_Comet; i++)
     {
-      if(Comet[i].cl <= (Tar.cl+26) && (Comet[i].pg == Tar.pg || (Comet[i].pg + 1) == Tar.pg || Comet[i].pg == (Tar.pg + 1)) && Comet[i].stat == 1 && Tar.en)
+      if(Comet[i].cl <= (Tar.cl+26) && (Comet[i].ln == Tar.ln || (Comet[i].ln + 1) == Tar.ln || Comet[i].ln == (Tar.ln + 1)) && Comet[i].stat == 1 && Tar.en)
       {
         Comet[i].stat = 2;
         Tar.en = 0;
@@ -148,18 +153,26 @@ void ufobattle(void)
     //----------COMET PRINT-------------------------------
     for(uint8 i = 0; i < Max_Comet; i++) 
     {
-      if(Comet[i].stat == 1) LCD_printcometa(Comet[i].pg, Comet[i].cl);
+      if(Comet[i].stat == 1) {
+        LCD_printsprite(Comet[i].ln, Comet[i].cl, cometa_sprite);
+        //LCD_printcometa(Comet[i].pg, Comet[i].cl);
+      }
       if(Comet[i].stat == 2) {
-        LCD_printdistrcometa(Comet[i].pg, Comet[i].cl);
+        LCD_printsprite(Comet[i].ln, Comet[i].cl, distr_cometa_sprite);
+        //LCD_printdistrcometa(Comet[i].pg, Comet[i].cl);
         delay_ms(10);
       }
     }
-    if(Tar.en) LCD_printgamer(Tar.pg, Tar.cl, 0);
+    if(Tar.en) {
+      LCD_printsprite(Tar.ln, Tar.cl, gamer_sprite);
+    //LCD_printgamer(Tar.pg, Tar.cl, 0);
+    }
     //--------PRINT BULLET---------------
     for(uint8 i = 0; i < Max_Piu; i++)
     {
       if(Piu[i].en){
-        LCD_printpiu(Piu[i].pg, Piu[i].cl);
+        LCD_printsprite(Piu[i].ln, Piu[i].cl, bullet_sprite);
+        //LCD_printpiu(Piu[i].pg, Piu[i].cl);
         Piu[i].cl += 8;
         if(Piu[i].cl > 120) {
           Piu[i].en = 0;
@@ -170,6 +183,6 @@ void ufobattle(void)
     //-----------------------------------------
 
     batcheck();
-    delay_ms(50);
+    delay_ms(25);
   }
 }
