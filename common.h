@@ -132,7 +132,7 @@ typedef struct
   uint8  gasmask_fl;
   uint8  bombs;
   uint8  money;
-  uint8  pg;
+  uint8  ln;
   uint8  cl;
 }Gamer_t;
 

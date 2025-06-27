@@ -27,7 +27,7 @@ typedef struct{
  
 //---------------------------------------------------------  
 //------------------------------Game vars-----------------------
-ufo_t Tar = {1, 0, 0};
+ufo_t Tar = {1, 32, 0};
 #define PIU_MAX   16
 #define COMET_MAX 8
 bullet_t Piu[PIU_MAX] = {0};
@@ -45,8 +45,8 @@ void ufobattle(void)
   Gamer.health = 24;
   Gamer.energy = 24;
   Gamer.gasmask_fl = 1;
-  Gamer.bombs = 3;
-  Gamer.money = 156;
+  Gamer.bombs = 0;
+  Gamer.money = 0;
   LCD_printgamestatbar(&Gamer);
   randinit();
   
@@ -64,7 +64,7 @@ void ufobattle(void)
     }
     
     LCD_printgamestatbar(&Gamer);
-    LCD_printmagaz(1, 0);
+    LCD_printsprite(8, 0, magazin_sprite);
     
     LCD_printbutselhint(5, 2, 89);
     LCD_printstr8x5("вых.вх", 6, 86);
@@ -78,10 +78,19 @@ void ufobattle(void)
     ox = adc_getval_an0();
     oy = adc_getval_an1();
 
-    if(oy > 150){Tar.ln-=2; if(Tar.ln > 245) Tar.ln = 0;}
-    if(oy < 100){Tar.ln+=2; if(Tar.ln > 48) Tar.ln = 48;}
-    if(ox > 150){Tar.cl += 4; if(Tar.cl > 94) Tar.cl = 94;}
-    if(ox < 100){Tar.cl -= 4; if(Tar.cl > 100) Tar.cl = 0;}
+    if(oy > 150 && oy <= 180){Tar.ln-=1; if(Tar.ln < 8) Tar.ln = 8;}
+    if(oy > 180 && oy <= 210){Tar.ln-=2; if(Tar.ln < 8) Tar.ln = 8;}
+    if(oy > 210){Tar.ln-=4; if(Tar.ln < 8) Tar.ln = 8;}
+    if(oy < 100 && oy >= 70){Tar.ln+=1; if(Tar.ln > 48) Tar.ln = 48;}
+    if(oy < 70 && oy >= 30){Tar.ln+=2; if(Tar.ln > 48) Tar.ln = 48;}
+    if(oy < 30){Tar.ln+=4; if(Tar.ln > 48) Tar.ln = 48;}
+    if(ox > 150 && ox <= 180){Tar.cl += 1; if(Tar.cl > 94) Tar.cl = 94;}
+    if(ox > 180 && ox <= 210){Tar.cl += 2; if(Tar.cl > 94) Tar.cl = 94;}
+    if(ox > 210){Tar.cl += 4; if(Tar.cl > 94) Tar.cl = 94;}
+    if(ox < 100 && ox >= 70){Tar.cl -= 1; if(Tar.cl > 100) Tar.cl = 0;}
+    if(ox < 70 && ox >= 30){Tar.cl -= 2; if(Tar.cl > 100) Tar.cl = 0;}
+    if(ox < 30){Tar.cl -= 4; if(Tar.cl > 100) Tar.cl = 0;}
+    
 
 
     if(B2.BtnON || B2.HoldON || B2.StuckON){ 
@@ -110,7 +119,7 @@ void ufobattle(void)
         TimeComet = timestamp;
         Comet[i].stat = 1;
         Comet[i].cl = 100;
-        Comet[i].ln = getrand(48);
+        Comet[i].ln = getrand(40) + 8;
       }
     }
     //--------------------------------------------------
@@ -131,7 +140,9 @@ void ufobattle(void)
     {
       for(uint8 i = 0; i < Max_Comet; i++)
       {
-        if((Comet[i].cl <= Piu[j].cl) && (Comet[i].ln < (Piu[j].ln + 1)) && ((Comet[i].ln + 1) > Piu[j].ln) && Comet[i].stat == 1 && Comet[i].stat == 1 && Piu[j].en)
+        if(     (Comet[i].cl <= Piu[j].cl) && (Comet[i].ln < (Piu[j].ln + 6)) && 
+                ((Comet[i].ln + 10) > Piu[j].ln) && Comet[i].stat == 1 && 
+                Piu[j].en)
         {
           Comet[i].stat = 2;
           Piu[j].en = 0;
@@ -142,7 +153,9 @@ void ufobattle(void)
 
     for(uint8 i = 0; i < Max_Comet; i++)
     {
-      if(Comet[i].cl <= (Tar.cl+26) && (Comet[i].ln == Tar.ln || (Comet[i].ln + 1) == Tar.ln || Comet[i].ln == (Tar.ln + 1)) && Comet[i].stat == 1 && Tar.en)
+      if(     (Comet[i].cl <= (Tar.cl+25)) && ((Comet[i].cl + 23) >= Tar.cl) && 
+              ((Comet[i].ln + 15) > Tar.ln) && (Comet[i].ln < (Tar.ln + 15)) && 
+              (Comet[i].stat == 1) && Tar.en)
       {
         Comet[i].stat = 2;
         Tar.en = 0;
@@ -155,24 +168,20 @@ void ufobattle(void)
     {
       if(Comet[i].stat == 1) {
         LCD_printsprite(Comet[i].ln, Comet[i].cl, cometa_sprite);
-        //LCD_printcometa(Comet[i].pg, Comet[i].cl);
       }
       if(Comet[i].stat == 2) {
         LCD_printsprite(Comet[i].ln, Comet[i].cl, distr_cometa_sprite);
-        //LCD_printdistrcometa(Comet[i].pg, Comet[i].cl);
         delay_ms(10);
       }
     }
     if(Tar.en) {
       LCD_printsprite(Tar.ln, Tar.cl, gamer_sprite);
-    //LCD_printgamer(Tar.pg, Tar.cl, 0);
     }
     //--------PRINT BULLET---------------
     for(uint8 i = 0; i < Max_Piu; i++)
     {
       if(Piu[i].en){
         LCD_printsprite(Piu[i].ln, Piu[i].cl, bullet_sprite);
-        //LCD_printpiu(Piu[i].pg, Piu[i].cl);
         Piu[i].cl += 8;
         if(Piu[i].cl > 120) {
           Piu[i].en = 0;

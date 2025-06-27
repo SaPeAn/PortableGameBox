@@ -320,22 +320,6 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_printpiu(uint8 pg, uint8 cl)
-{
-  LCD_setpagecolumn(pg, cl);
-  LCD_senddata(tar_bullet, 4);
-}
-/*
-void LCD_printgamer(uint8 pg, uint8 cl, uint8 gas_fl)
-{
-  bufpg = pg;
-  bufcl = cl;
-  for(uint8 i = 0; i < 66; i++) 
-  {
-    if(!(i % 2)) dispbuffer[bufpg][bufcl + i/2] |= gamer[gas_fl][i];
-    else dispbuffer[bufpg+1][bufcl + i/2] |= gamer[gas_fl][i];
-  }
-}*/
 
 void LCD_printsprite(uint8 startline, uint8 startcolumn, const tSprite Sprite)
 {
@@ -386,47 +370,6 @@ void LCD_printsprite(uint8 startline, uint8 startcolumn, const tSprite Sprite)
       }
       break;
   }
-  /*
-    uint8 shift = startline % 8;
-    for(uint8 j = 0; j < Sprite.columns; j++) 
-    {
-      for(uint8 i = 0; i <= Sprite.pages; i++)
-      {
-        if(Sprite.direct == columns_first){ 
-        }
-        if(i == 0) {
-          dispbuffer[bufpg + i][bufcl + j] = Sprite.sprite[m] << shift;
-          
-        }
-        if((i > 0) && (i < Sprite.pages)){
-          dispbuffer[bufpg + i][bufcl + j] = (Sprite.sprite[mprev] >> (8 - shift)) | (Sprite.sprite[m] << shift);
-          
-        }
-        if(i == Sprite.pages) {
-          dispbuffer[bufpg + i][bufcl + j] = Sprite.sprite[m] >> (8 - shift);
-        }
-        if(Sprite.direct == lines_first){ 
-          m++;
-          if(m == Sprite.columns) {m = 0;}
-        }
-      }
-    }
-  */
-}
-
-void LCD_printmagaz(uint8 pg, uint8 cl)
-{
-  bufpg = pg;
-  bufcl = cl;
-  uint16 k = 0;
-  for(uint8 j = 0; j < 64; j++) 
-  {
-    for(uint8 i = 0; i < 7; i++)
-    {
-      dispbuffer[bufpg + i][bufcl + j] |= Magazin[k];
-      k++;
-    }
-  }
 }
 
 void LCD_printgamestatbar(Gamer_t* gamer)
@@ -441,22 +384,5 @@ void LCD_printgamestatbar(Gamer_t* gamer)
   LCD_printstr8x5(money, 0, 50);
   LCD_printstr8x5(bombs, 0, 80);
 }
-
-void LCD_printcometa(uint8 pg, uint8 cl)
-{
-  LCD_setpagecolumn(pg, cl);
-  LCD_senddata(cometa[0], 28);
-  LCD_setpagecolumn((pg+1), cl);
-  LCD_senddata(cometa[1], 28);
-}
-
-void LCD_printdistrcometa(uint8 pg, uint8 cl)
-{
-  LCD_setpagecolumn(pg, cl);
-  LCD_senddata(distr_cometa[0], 28);
-  LCD_setpagecolumn((pg+1), cl);
-  LCD_senddata(distr_cometa[1], 28);
-}
-
 /*----------------------------------------------------------------------------*/
 
