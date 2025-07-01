@@ -95,14 +95,13 @@ typedef struct{
   uint8            StuckON;
 }btn_t;
 //buttons
-typedef union{
-  struct{
-    uint8 up      :1;
-    uint8 down    :1;
-    uint8 left    :1;
-    uint8 right   :1;
-    uint8 joyFl   :1;
-  };
+
+typedef struct{
+  uint8 up      :1;
+  uint8 down    :1;
+  uint8 left    :1;
+  uint8 right   :1;
+  uint8 joyFl   :1;
 }joy_t;
 
 btn_t B1;
@@ -129,9 +128,11 @@ typedef struct
 {
   int    health;
   int    energy;
+  int    energymax;
+  uint32 energy_regenperiod;
   uint8  gasmask_fl;
   uint8  bombs;
-  uint8  money;
+  uint16 money;
   uint8  ln;
   uint8  cl;
 }Gamer_t;

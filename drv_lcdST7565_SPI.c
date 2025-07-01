@@ -376,13 +376,14 @@ void LCD_printgamestatbar(Gamer_t* gamer)
 {
   for(uint8 i = 0 ; i < 128; i++) dispbuffer[0][i] |= GameStatusBar[i];
   for(uint8 i = 9; i < (9 + gamer->health); i++) dispbuffer[0][i] |= 0b00111100; // helth bar
-  for(uint8 i = 102; i < (102 + gamer->energy); i++) dispbuffer[0][i] |= 0b00111100;; // energy bar
+  for(uint8 i = 102; i < (102 + gamer->energy); i++) dispbuffer[0][i] |= 0b00111100; // energy bar
+  dispbuffer[0][102 + gamer->energymax] |= 0b01111110;
   uint8 money[5];
-  u16_to_str(money, gamer->money, ENABLE);
+  u16_to_str(money, gamer->money, 10);
   uint8 bombs[2];
-  u16_to_str(bombs, gamer->bombs, ENABLE);
+  u16_to_str(bombs, gamer->bombs, 10);
   LCD_printstr8x5(money, 0, 50);
-  LCD_printstr8x5(bombs, 0, 80);
+  LCD_printstr8x5(bombs, 0, 81);
 }
 /*----------------------------------------------------------------------------*/
 

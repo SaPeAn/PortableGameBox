@@ -2,6 +2,7 @@
 #include "common.h"
 #include "drv_lcdST7565_SPI.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <xc.h>
 
 /*----------------------------------UTILITIES-------------------------------*/
@@ -46,26 +47,38 @@ char dig_to_smb(uint8 dig)
   return 0;
 }
 
-void u16_to_str(char* str, uint16 num, uint8 ZF)
+void u16_to_str(char* str, uint16 num, uint8 N)
 { 
-  str[0] = dig_to_smb(num/10000);
+  str[0] = dig_to_smb((uint8)(num/10000));
   num %= 10000;
-  str[1] = dig_to_smb(num/1000);
+  str[1] = dig_to_smb((uint8)(num/1000));
   num %= 1000;
-  str[2] = dig_to_smb((uint8)num/100);
+  str[2] = dig_to_smb((uint8)(num/100));
   num %= 100;
-  str[3] = dig_to_smb((uint8)num/10);
-  str[4] = dig_to_smb(num%10);
-  str[5] = '\0';  
-  if(ZF)
+  str[3] = dig_to_smb((uint8)(num/10));
+  str[4] = dig_to_smb((uint8)(num%10));
+  str[5] = '\0';
+  
+  if(N == 10)
   {
-    int j = 0;
+    uint8 chars = 0;
     for(int i = 0; i < 6; i++)
     {
-      if((str[i] == '0') && !j) continue;
-      str[j] = str[i];
-      j++;
+      if((str[i] == '0') && !chars) continue;
+      str[chars] = str[i];
+      chars++;
     }
+    if(chars == 1) 
+    {
+      str[0] = '0';
+      str[1] = '\0';
+    }
+  }
+      
+  if((N < 5) && (N > 0))
+  {
+    for(uint8 i = 0; i <= N; i++) 
+      str[i] = str[5 - N + i];
   }
 }
 /*----------------------------------------------------------------------------*/
