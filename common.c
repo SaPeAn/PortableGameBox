@@ -165,21 +165,21 @@ void batcheck(void)
         
 void ShutDownLB(void)
 {
-  LCD_erase();
+  LCD_erase_bufuploud();
   LATCbits.LC1 = 0;
   LCD_printstr8x5("Низкий заряд батареи!", 1, 0);
   LCD_printstr8x5("Устройство", 3, 0);  
   LCD_printstr8x5("сейчас выключится!", 5, 0);
-  LCD_erase();
+  LCD_erase_bufuploud();
   while(1);
 }
 
 void ShutDown(void)
 {
-  LCD_erase();
+  LCD_erase_bufuploud();
   LATCbits.LC1 = 0;
   LCD_printstr8x5("Выключение...", 3, 0);
-  LCD_erase();
+  LCD_erase_bufuploud();
   while(1);
 }
 

@@ -24,7 +24,7 @@ void LCD_senddata(const char*, uint8);
 void LCD_sendcommands(uint8, ...);
 void LCD_setpagecolumn(uint8, uint8);
 void LCD_printsmb8x5(const char, uint8, uint8);
-void LCD_erase(void);
+void LCD_erase_bufuploud(void);
 void LCD_erasestring(uint8, uint8, uint8);
 uint8 LCD_printstr8x5(char*, uint8, uint8);
 void LCD_printclockanddate(uint8, uint8);

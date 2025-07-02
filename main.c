@@ -15,14 +15,11 @@ void __interrupt() systemTick_int(void)
 {
   if (TMR1IE && TMR1IF)
   {
-    Nop();
     TMR1H = 217;
     TMR1L -= 3;
     TMR1IF = 0;
     timestamp++;
-    Nop();
     SchedPeriodIncr();
-    return;
   }
 }
 /*----------------------------------------------------------------------------*/
@@ -37,7 +34,7 @@ void main(void)
   randinit();
   SPI_init();
   LCD_init();
-  LCD_erase();
+  LCD_erase_bufuploud();
   initbuttons();
   swi2cinit();
   BrightPWMgen(brightPWM);

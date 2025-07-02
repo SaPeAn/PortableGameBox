@@ -4,14 +4,12 @@
 
 #include "common.h"
 
-#define      MAX_CALLBACK    10
+#define      MAX_CALLBACK    20
 
 static uint8 registredcalls = 0;
 
-extern uint32 timestamp;
-
 typedef struct {
-  void (*callfunc)();
+  void (*callfunc)(void);
   uint32   period;
   uint32   startstamp;
   uint32   eventcounter;
@@ -20,7 +18,7 @@ typedef struct {
 callback_t callback[MAX_CALLBACK];
 
 void SchedPeriodIncr(void);
-uint8 AddEvent(void*, uint32);
+uint8 AddEvent(void (*)(void), uint32);
 void ProcessTimerEvent(void);
 
 

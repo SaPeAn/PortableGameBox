@@ -1,7 +1,7 @@
 #include "scheduler.h"
 
 
-uint8 AddEvent(void (*func), uint32 period)
+uint8 AddEvent(void (*func)(void), uint32 period)
 {
   callback[registredcalls].callfunc = func;
   callback[registredcalls].period = period;

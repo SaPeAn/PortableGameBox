@@ -146,7 +146,7 @@ void LCD_erasestring(uint8 length, uint8 pg, uint8 cl)
   for(uint8 i = 0; i < length; i++) LCD_writebyte(0x00);
 }
 
-void LCD_erase(void)
+void LCD_erase_bufuploud(void)
 {
 #ifdef BUF_EN
    LCDbuf_upload();
