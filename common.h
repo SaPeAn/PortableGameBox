@@ -122,48 +122,6 @@ uint8 adc_getval_an2(void);
 void getjoypos(void);
 void checkjoydir(void);
 /*----------------------------------------------------------------------------*/
-
-/*-------------------------------GAME VARIABLES-------------------------------*/
-typedef struct
-{
-  int    health;
-  int    energy;
-  int    energymax;
-  uint32 energy_regenperiod;
-  uint8  gasmask_fl;
-  uint8  bombs;
-  uint16 money;
-  uint8  ln;
-  uint8  cl;
-}Gamer_t;
-
-Gamer_t Gamer;
-
-typedef struct 
-{
-  uint8 bombs;
-  uint8 bullets;
-  uint8 evilstars;
-  uint8 chemists;
-  uint8 gasclouds;
-  uint8 coins;
-}objquantity_t;
-
-objquantity_t Dispobjects;
-/*----------------------------------------------------------------------------*/
-
-typedef enum {
-  lines_first,
-  columns_first
-}tDirect;
-
-typedef struct{
-  uint8 pages;
-  uint8 columns;
-  uint8* sprite;
-  tDirect direct;
-}tSprite;
-
 #ifdef	__cplusplus
 }
 #endif

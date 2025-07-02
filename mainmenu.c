@@ -123,7 +123,7 @@ void setdatetime(void)
     }
     
     rtcrawtobcd();
-    LCD_erase_bufuploud();
+    LCD_bufupload_buferase();
   }
 }
 
@@ -168,7 +168,7 @@ void testscreen(void)
     LCD_printstr8x5("выход", 6, 86);
     TestBtn(&B1);
     if(B1.BtnON) {B1.BtnON = 0; return;}
-    LCD_erase_bufuploud();
+    LCD_bufupload_buferase();
   }
 }
   
@@ -297,7 +297,7 @@ void MainMenu(void)
   getbrightlvl();
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
-  LCD_erase_bufuploud();
+  LCD_bufupload_buferase();
   delay_ms(50);
 }
 

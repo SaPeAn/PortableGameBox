@@ -146,7 +146,7 @@ void LCD_erasestring(uint8 length, uint8 pg, uint8 cl)
   for(uint8 i = 0; i < length; i++) LCD_writebyte(0x00);
 }
 
-void LCD_erase_bufuploud(void)
+void LCD_bufupload_buferase(void)
 {
 #ifdef BUF_EN
    LCDbuf_upload();
@@ -221,7 +221,6 @@ void LCDbuf_erase(void)
   for(uint8 j = 0; j < 8; j++)
     for(uint8 i = 0; i < 128; i++) dispbuffer[j][i] = 0;
 }
-
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------SYSTEM MENU ELEMENTS---------------------------*/
@@ -252,7 +251,6 @@ void LCD_printclockanddate(uint8 pg, uint8 cl)
   LCD_senddata(colon, 3);
   LCD_printstr8x5(minutes, pg, cl + 64);
 }
-
 
 void LCD_printbrightnes(uint8 pg, uint8 cl) //  size 26 column
 {
@@ -320,7 +318,6 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-
 void LCD_printsprite(uint8 startline, uint8 startcolumn, const tSprite Sprite)
 {
   bufcl = startcolumn;
@@ -372,7 +369,7 @@ void LCD_printsprite(uint8 startline, uint8 startcolumn, const tSprite Sprite)
   }
 }
 
-void LCD_printgamestatbar(Gamer_t* gamer)
+void LCD_printgamestatbar(tGamer* gamer)
 {
   for(uint8 i = 0 ; i < 128; i++) dispbuffer[0][i] |= GameStatusBar[i];
   for(uint8 i = 9; i < (9 + gamer->health); i++) dispbuffer[0][i] |= 0b00111100; // helth bar

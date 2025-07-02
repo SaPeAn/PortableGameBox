@@ -34,7 +34,7 @@ void main(void)
   randinit();
   SPI_init();
   LCD_init();
-  LCD_erase_bufuploud();
+  LCD_bufupload_buferase();
   initbuttons();
   swi2cinit();
   BrightPWMgen(brightPWM);

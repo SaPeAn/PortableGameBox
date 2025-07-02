@@ -3,28 +3,34 @@
 
 uint8 AddEvent(void (*func)(void), uint32 period)
 {
-  callback[registredcalls].callfunc = func;
-  callback[registredcalls].period = period;
-  return registredcalls++;
+  event[registredevents].callfunc = func;
+  event[registredevents].period = period;
+  return registredevents++;
 }
 
-void ProcessTimerEvent(void)
+
+void RemoveAllEvents(void)
 {
-  for(uint8 i = 0; i < registredcalls; i++)
+  registredevents = 0;
+}
+
+void EventProcess(void)
+{
+  for(uint8 i = 0; i < registredevents; i++)
   {
-    if(callback[i].eventcounter >= callback[i].period)
+    if(event[i].eventcounter >= event[i].period)
     {
-      callback[i].eventcounter = 0;
-      callback[i].callfunc();
+      event[i].eventcounter = 0;
+      event[i].callfunc();
     }
   }
 }
 
 void SchedPeriodIncr(void)
 {
-  for(uint8 i = 0; i < registredcalls; i++)
+  for(uint8 i = 0; i < registredevents; i++)
   {
-    callback[i].eventcounter++;
+    event[i].eventcounter++;
   }
 }
 
