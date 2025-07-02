@@ -2,6 +2,7 @@
 #include "drv_lcdST7565_SPI.h"
 #include "drv_swi2cRTC.h"
 #include "display_data.h"
+#include "scheduler.h"
 
 //------------------------------Game stucts-----------------------
 
@@ -34,7 +35,27 @@ uint32 counter = 0;
 
 uint8 StartFl = 0;
 //----------------------------------------------------------------
+/*******************************************************************************
+ *                            EVENTS DESCRIPTION
+ *******************************************************************************
+ */
+void testbtnjstk(void)  //Test buttons and joystick
+{
+  TestBtn(&B1);
+  TestBtn(&B2);
+  TestBtn(&B3);
+  TestBtn(&B4);
+  ox = adc_getval_an0();
+  oy = adc_getval_an1();
+} 
 
+void gunenergyregen(void)  //Energy regen
+{
+  if(Gamer.energy <= Gamer.energymax) Gamer.energy++;  
+}
+
+
+/*                              MAIN ENTRY                                    */
 void ufobattle(void)
 {
   Gamer.health = 24;
@@ -46,6 +67,13 @@ void ufobattle(void)
   Gamer.money = 0;
   randinit();
   
+  AddEvent(gunenergyregen, Gamer.energy_regenperiod);
+  AddEvent(testbtnjstk, 50);
+  
+/*******************************************************************************
+ *                              STARTUP CYCLE                            
+ *******************************************************************************
+ */
   while(!StartFl && CFlags.RunGameFl)
   {
     TestBtn(&B1); TestBtn(&B2);
@@ -71,23 +99,14 @@ void ufobattle(void)
  */
   while(StartFl && CFlags.RunGameFl)
   { 
-    //Test buttons
-    TestBtn(&B2);
-    TestBtn(&B4);
-    ox = adc_getval_an0();
-    oy = adc_getval_an1();
-     
+    ProcessTimerEvent();
+    
     if(B4.BtnON || B4.HoldON || B4.StuckON){ 
       B4.BtnON = 0; 
       StartFl = 0;
     }
-    //Energi regen
     
-    if((Gamer.energy < Gamer.energymax) && (counter < timestamp))
-    {
-      counter = timestamp + Gamer.energy_regenperiod;
-      Gamer.energy++;
-    }
+    
     /*
      *                          GENERATE OBJECTS
      */
@@ -215,6 +234,5 @@ void ufobattle(void)
     
 
     batcheck();
-    delay_ms(25);
   }
 }
