@@ -16,22 +16,51 @@ typedef struct{
   uint8  state;  // 0 - enemy disable; 1 - enemy enable; 2 - enemy distroed
   uint8  ln;
   uint8  cl;
-  uint8  distr_ttl;
+  uint8  distr_ttl_count;
 }tComet;
+
+typedef struct{
+  uint8 en;
+  uint8 ln;
+  uint8 cl;
+  uint8 animation_count;
+}tCoin;
 //------------------------------------------------------------------------------  
 
 //------------------------------Game vars---------------------------------------
 
-#define BULLET_MAX   10
-#define COMET_MAX 10
-#define DISTRCOMET_TTL 2
+#define BULLET_MAX   20
+#define COMET_MAX 20
+#define COIN_MAX 20
+#define COMET_DISTR_TTL  2
+#define COIN_ANIMCOUNT  16
 tBullet Bullet[BULLET_MAX] = {0};
 tComet Comet[COMET_MAX] = {0};
+tCoin Coin[COIN_MAX] = {0};
 uint8 Max_Bullet = BULLET_MAX;
 uint8 Max_Comet = COMET_MAX;
+uint8 Max_Coin = COIN_MAX;
 uint32 counter = 0;
 
 uint8 StartFl = 0;
+
+/*******************************************************************************
+ *                              SECONDARY FUNCTIONS
+ * *****************************************************************************
+ */
+void createcoin(tComet Comet)
+{
+  static uint8 i = 0;
+    if(Coin[i].en == 0)
+    {
+      Coin[i].en = 1;
+      Coin[i].cl = Comet.cl;
+      Coin[i].ln = Comet.ln;
+      Coin[i].animation_count = COIN_ANIMCOUNT;
+    }
+  i++;
+  if(i >= Max_Coin) i = 0;
+}
 
 /*******************************************************************************
  *                              EVENT DESCRIPTIONS
@@ -45,7 +74,7 @@ void checkbnjk(void)  //Test buttons and joystick
   TestBtn(&B4);
   ox = adc_getval_an0();
   oy = adc_getval_an1();
-} 
+}
 
 void createcomet(void)
 {
@@ -93,7 +122,7 @@ void gunregen(void)  //Energy regen
   if(Gamer.energy <= Gamer.energymax) Gamer.energy++;  
 }
 
-void gamermove(void)
+void movgamer(void)
 {
   if(oy > 140 && oy <= 200){Gamer.ln-=1; if(Gamer.ln < 8) Gamer.ln = 8;}
   if(oy > 200 && oy <= 250){Gamer.ln-=2; if(Gamer.ln < 8) Gamer.ln = 8;}
@@ -109,7 +138,7 @@ void gamermove(void)
   if(ox < 10){Gamer.cl -= 4; if(Gamer.cl > 100) Gamer.cl = 0;}
 }
 
-void cometmove(void)
+void movcomet(void)
 {
   for(uint8 i = 0; i < Max_Comet; i++)
   {
@@ -120,7 +149,7 @@ void cometmove(void)
   }
 }
 
-void bulletmove(void)
+void movbullet(void)
 {
   for(uint8 i = 0; i < Max_Bullet; i++)
   {
@@ -173,19 +202,48 @@ void gamer_comet_collision(void)
   }
 }
 
+void gamer_coin_collision(void)
+{
+  for(uint8 i = 0; i < Max_Coin; i++)
+  {
+    if(     (Coin[i].cl <= (Gamer.cl+29)) && ((Coin[i].cl + 8) >= Gamer.cl) && 
+            ((Coin[i].ln + 8) > Gamer.ln) && (Coin[i].ln < (Gamer.ln + 15)) && 
+            (Coin[i].en == 1) && (Gamer.health > 0))
+    {
+      Coin[i].en = 0;
+      Gamer.money += 1;
+      Sounds(300);
+    }
+  }
+}
+
 void drawcomet(void)
 {
-    for(uint8 i = 0; i < Max_Comet; i++) 
+    for(uint8 i = 0; i < Max_Comet; i++)
     {
       if(Comet[i].state == 1) {
-        LCD_printsprite(Comet[i].ln, Comet[i].cl, cometa_sprite);
+        LCD_printsprite(Comet[i].ln, Comet[i].cl, comet_sprite);
       }
       if(Comet[i].state == 2) {
-        LCD_printsprite(Comet[i].ln, Comet[i].cl, distr_cometa_sprite);
-        if(Comet[i].distr_ttl++ >= DISTRCOMET_TTL)  {
-            Comet[i].distr_ttl = 0; 
+        LCD_printsprite(Comet[i].ln, Comet[i].cl, distr_comet_sprite);
+        if(Comet[i].distr_ttl_count++ >= COMET_DISTR_TTL){
+            Comet[i].distr_ttl_count = 0;
             Comet[i].state = 0;
+            createcoin(Comet[i]);
         }
+      }
+    }
+}
+
+void drawcoin(void)
+{
+    for(uint8 i = 0; i < Max_Coin; i++) 
+    {
+      if(Coin[i].en == 1) {
+        Coin[i].animation_count--;
+        if(Coin[i].animation_count >= (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln + 1, Coin[i].cl, coin_sprite);
+        if(Coin[i].animation_count < (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln - 1, Coin[i].cl, coin_sprite);
+        if(Coin[i].animation_count == 0) Coin[i].animation_count = COIN_ANIMCOUNT;
       }
     }
 }
@@ -239,17 +297,19 @@ void ufobattle(void)
   AddEvent(gunregen, Gamer.energy_regenperiod);
   AddEvent(checkbnjk, 50);
   
-  AddEvent(createcomet, 900);
+  AddEvent(createcomet, 1000);
   AddEvent(createbullet, 100);
   
-  AddEvent(gamermove, 30);
-  AddEvent(bulletmove, 5);
-  AddEvent(cometmove, 25);
+  AddEvent(movgamer, 40);
+  AddEvent(movbullet, 5);
+  AddEvent(movcomet, 30);
   
   AddEvent(bullet_comet_collision, 100);
   AddEvent(gamer_comet_collision, 100);
+  AddEvent(gamer_coin_collision, 100);
   
   AddEvent(drawcomet, 75);
+  AddEvent(drawcoin, 75);
   AddEvent(drawgamer, 75);
   AddEvent(drawbullet, 75);
   AddEvent(drawinfo, 75);

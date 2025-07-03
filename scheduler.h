@@ -4,14 +4,14 @@
 
 #include "common.h"
 
-#define      MAX_EVENT    20
+#define      MAX_EVENT    25
 
 static uint8 registredevents = 0;
 
 typedef struct {
   void (*callfunc)(void);
-  uint32   period;
-  uint32   eventcounter;
+  uint16   period;
+  uint16   eventcounter;
 } tEvent;
 
 tEvent event[MAX_EVENT];

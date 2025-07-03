@@ -6,5 +6,5 @@
 CND_BASEDIR=`pwd`
 # default configuration
 CND_ARTIFACT_DIR_default=dist/default/production
-CND_ARTIFACT_NAME_default=GameBox-master.production.hex
-CND_ARTIFACT_PATH_default=dist/default/production/GameBox-master.production.hex
+CND_ARTIFACT_NAME_default=GameBox.production.hex
+CND_ARTIFACT_PATH_default=dist/default/production/GameBox.production.hex

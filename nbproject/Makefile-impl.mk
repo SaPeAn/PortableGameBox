@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=GameBox-master
+PROJECTNAME=GameBox
 
 # Active Configuration
 DEFAULTCONF=default
