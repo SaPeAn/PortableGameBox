@@ -1,6 +1,8 @@
 #ifndef __DISP_DAT_H__
 #define __DISP_DAT_H__
+
 #include "common.h"
+
 // ASCII с кирилицей 5х8 пикселей
 #define CHAR_W	5
 #define CHAR_NUM	256

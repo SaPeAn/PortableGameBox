@@ -83,8 +83,7 @@ void systemtasks(void)
 {
   if(B4.BtnON || B4.HoldON || B4.StuckON){ // Exit button pressed
     B4.BtnON = 0; 
-    StartFl = 0;
-    
+    StartFl = 0;  
   }
   batcheck();
 }
@@ -114,10 +113,10 @@ void cometmove(void)
 {
   for(uint8 i = 0; i < Max_Comet; i++)
   {
-      if(Comet[i].state == 1){
-          Comet[i].cl -= 1;
-          if(Comet[i].cl > 100) Comet[i].state = 0;
-      }
+    if(Comet[i].state == 1){
+        Comet[i].cl -= 1;
+        if(Comet[i].cl > 100) Comet[i].state = 0;
+    }
   }
 }
 
@@ -240,10 +239,10 @@ void ufobattle(void)
   AddEvent(gunregen, Gamer.energy_regenperiod);
   AddEvent(checkbnjk, 50);
   
-  AddEvent(createcomet, 1000);
+  AddEvent(createcomet, 900);
   AddEvent(createbullet, 100);
   
-  AddEvent(gamermove, 25);
+  AddEvent(gamermove, 30);
   AddEvent(bulletmove, 5);
   AddEvent(cometmove, 25);
   

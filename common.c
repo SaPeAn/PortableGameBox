@@ -246,7 +246,7 @@ void rtcbcdtoraw(void)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------BUTTONS FUNCTIONS------------------------------*/
-#define  HOLD_ON_DEL    300
+#define  HOLD_ON_DEL    200
 #define  STUCK_ON_DEL   2000
  
 btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)

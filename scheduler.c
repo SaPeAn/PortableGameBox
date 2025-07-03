@@ -8,7 +8,6 @@ uint8 AddEvent(void (*func)(void), uint32 period)
   return registredevents++;
 }
 
-
 void RemoveAllEvents(void)
 {
   registredevents = 0;
