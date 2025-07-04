@@ -19,6 +19,7 @@ typedef struct
 
 tGamer Gamer;
 
+void ufobattle_init(void);
 void ufobattle(void);
 
 #endif	/* UFO_BATTLE_H */

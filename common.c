@@ -210,7 +210,7 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  /*uint16 j;
+  uint16 j;
   for(uint8 i = 0; i < 50; i++)
   {  
     LATCbits.LC2 = 0;
@@ -219,7 +219,7 @@ void Sounds(uint16 delay)
     LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }*/
+  }
 }
 
 void rtcrawtobcd(void)
@@ -246,7 +246,7 @@ void rtcbcdtoraw(void)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------BUTTONS FUNCTIONS------------------------------*/
-#define  HOLD_ON_DEL    200
+#define  HOLD_ON_DEL    100
 #define  STUCK_ON_DEL   2000
  
 btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)

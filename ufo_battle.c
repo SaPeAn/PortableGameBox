@@ -13,7 +13,7 @@ typedef struct {
 }tBullet;
 
 typedef struct{
-  uint8  state;  // 0 - enemy disable; 1 - enemy enable; 2 - enemy distroed
+  uint8  state;  // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
   uint8  ln;
   uint8  cl;
   uint8  distr_ttl_count;
@@ -27,7 +27,7 @@ typedef struct{
 }tCoin;
 //------------------------------------------------------------------------------  
 
-//------------------------------Game vars---------------------------------------
+//------------------------------Game vars & init--------------------------------
 
 #define BULLET_MAX   20
 #define COMET_MAX 20
@@ -44,6 +44,18 @@ uint32 counter = 0;
 
 uint8 StartFl = 0;
 
+void ufobattle_init(void)
+{
+  Gamer.health = 24;
+  Gamer.energy = 4;
+  Gamer.energymax = 24;
+  Gamer.energy_regenperiod = 150;
+  Gamer.gasmask_fl = 0;
+  Gamer.bombs = 0;
+  Gamer.money = 0;
+  Gamer.ln = 16;
+  Gamer.cl = 0;
+}
 /*******************************************************************************
  *                              SECONDARY FUNCTIONS
  * *****************************************************************************
@@ -51,13 +63,14 @@ uint8 StartFl = 0;
 void createcoin(tComet Comet)
 {
   static uint8 i = 0;
-    if(Coin[i].en == 0)
-    {
-      Coin[i].en = 1;
-      Coin[i].cl = Comet.cl;
-      Coin[i].ln = Comet.ln;
-      Coin[i].animation_count = COIN_ANIMCOUNT;
-    }
+  if(getrand(2) < 2) return;
+  if(Coin[i].en == 0)
+  {
+    Coin[i].en = 1;
+    Coin[i].cl = Comet.cl;
+    Coin[i].ln = Comet.ln;
+    Coin[i].animation_count = COIN_ANIMCOUNT;
+  }
   i++;
   if(i >= Max_Coin) i = 0;
 }
@@ -159,6 +172,17 @@ void movbullet(void)
         Bullet[i].en = 0;
         Bullet[i].cl = 0;
       }
+    }
+  }
+}
+
+void movcoin(void)
+{
+  for(uint8 i = 0; i < Max_Coin; i++)
+  {
+    if(Coin[i].en == 1){
+        Coin[i].cl -= 1;
+        if(Coin[i].cl > 100) Coin[i].en = 0;
     }
   }
 }
@@ -282,15 +306,6 @@ void updatescreen(void){
  */
 void ufobattle(void)
 {
-  Gamer.health = 24;
-  Gamer.energy = 4;
-  Gamer.energymax = 24;
-  Gamer.energy_regenperiod = 150;
-  Gamer.gasmask_fl = 0;
-  Gamer.bombs = 0;
-  Gamer.money = 0;
-  Gamer.ln = 16;
-  Gamer.cl = 0;
   randinit();
   
   AddEvent(systemtasks, 500);
@@ -302,7 +317,8 @@ void ufobattle(void)
   
   AddEvent(movgamer, 40);
   AddEvent(movbullet, 5);
-  AddEvent(movcomet, 30);
+  AddEvent(movcomet, 20);
+  AddEvent(movcoin, 20);
   
   AddEvent(bullet_comet_collision, 100);
   AddEvent(gamer_comet_collision, 100);
