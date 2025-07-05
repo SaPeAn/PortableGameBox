@@ -318,50 +318,51 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_printsprite(uint8 startline, uint8 startcolumn, const tSprite Sprite)
+void LCD_printsprite(uint8 startline, uint8 startcolumn, tSprite* const Sprite)
 {
   bufcl = startcolumn;
   bufpg = startline / 8;
   uint8 shift = startline % 8;
   uint16 m = 0, mprev= 0;
+  uint8 columns_max = 0;
+  columns_max = ((startcolumn + Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
   
-  switch(Sprite.direct)
+  switch(Sprite->direct)
   {
     case columns_first:
-      for(uint8 j = 0; j < Sprite.columns; j++) 
+      for(uint8 j = 0; j < columns_max; j++) 
       {
-        for(uint8 i = 0; i < (shift ? (Sprite.pages + 1) : Sprite.pages); i++)
+        for(uint8 i = 0; i < (shift ? (Sprite->pages + 1) : Sprite->pages); i++)
         {
           if(i == 0) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite.sprite[m] << shift;
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[m] << shift;
             mprev = m;
             m++;
           }
-          if((i > 0) && (i < Sprite.pages)){
-            dispbuffer[bufpg + i][bufcl + j] |= (Sprite.sprite[mprev] >> (8 - shift)) | (Sprite.sprite[m] << shift);
+          if((i > 0) && (i < Sprite->pages)){
+            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev] >> (8 - shift)) | (Sprite->sprite[m] << shift);
             mprev = m;
             m++;
           }
-          if(i == Sprite.pages) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite.sprite[mprev] >> (8 - shift);
+          if(i == Sprite->pages) {
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[mprev] >> (8 - shift);
           }
-          
         }
       }
       break;
     case lines_first:
-      for(uint8 i = 0; i < (shift ? (Sprite.pages + 1) : Sprite.pages); i++) 
+      for(uint8 i = 0; i < (shift ? (Sprite->pages + 1) : Sprite->pages); i++) 
       {
-        for(uint8 j = 0; j < Sprite.columns; j++)
+        for(uint8 j = 0; j < columns_max; j++)
         {
           if(i == 0) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite.sprite[j] << shift;
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[j] << shift;
           }
-          if((i > 0) && (i < Sprite.pages)){
-            dispbuffer[bufpg + i][bufcl + j] |= (Sprite.sprite[(i-1)*Sprite.columns + j] >> (8 - shift)) | (Sprite.sprite[i*Sprite.columns + j] << shift);
+          if((i > 0) && (i < Sprite->pages)){
+            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[(i-1)*Sprite->columns + j] >> (8 - shift)) | (Sprite->sprite[i*Sprite->columns + j] << shift);
           }
-          if(i == Sprite.pages) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite.sprite[(i-1)*Sprite.columns + j] >> (8 - shift);
+          if(i == Sprite->pages) {
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[(i-1)*Sprite->columns + j] >> (8 - shift);
           }
         }
       }

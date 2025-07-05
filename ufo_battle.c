@@ -35,7 +35,7 @@ typedef struct{
 #define COMET_DISTR_TTL  2
 #define COIN_ANIMCOUNT  16
 tBullet Bullet[BULLET_MAX] = {0};
-tComet Comet[COMET_MAX] = {0};
+tComet Evil_Star[COMET_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 uint8 Max_Bullet = BULLET_MAX;
 uint8 Max_Comet = COMET_MAX;
@@ -60,15 +60,15 @@ void ufobattle_init(void)
  *                              SECONDARY FUNCTIONS
  * *****************************************************************************
  */
-void createcoin(tComet Comet)
+void createcoin(tComet Evil_Star)
 {
   static uint8 i = 0;
   if(getrand(2) < 2) return;
   if(Coin[i].en == 0)
   {
     Coin[i].en = 1;
-    Coin[i].cl = Comet.cl;
-    Coin[i].ln = Comet.ln;
+    Coin[i].cl = Evil_Star.cl;
+    Coin[i].ln = Evil_Star.ln;
     Coin[i].animation_count = COIN_ANIMCOUNT;
   }
   i++;
@@ -79,7 +79,7 @@ void createcoin(tComet Comet)
  *                              EVENT DESCRIPTIONS
  * *****************************************************************************
  */
-void checkbnjk(void)  //Test buttons and joystick
+void check_btn_jstk(void)  //Test buttons and joystick
 {
   TestBtn(&B1);
   TestBtn(&B2);
@@ -89,14 +89,14 @@ void checkbnjk(void)  //Test buttons and joystick
   oy = adc_getval_an1();
 }
 
-void createcomet(void)
+void createevilstar(void)
 {
   static uint8 i = 0;
-    if(Comet[i].state == 0)
+    if(Evil_Star[i].state == 0)
     {
-      Comet[i].state = 1;
-      Comet[i].cl = 100;
-      Comet[i].ln = getrand(40) + 8;
+      Evil_Star[i].state = 1;
+      Evil_Star[i].cl = 127;
+      Evil_Star[i].ln = getrand(40) + 8;
     }
   i++;
   if(i >= Max_Comet) i = 0;
@@ -151,13 +151,13 @@ void movgamer(void)
   if(ox < 10){Gamer.cl -= 4; if(Gamer.cl > 100) Gamer.cl = 0;}
 }
 
-void movcomet(void)
+void movevilstar(void)
 {
   for(uint8 i = 0; i < Max_Comet; i++)
   {
-    if(Comet[i].state == 1){
-        Comet[i].cl -= 1;
-        if(Comet[i].cl > 100) Comet[i].state = 0;
+    if(Evil_Star[i].state == 1){
+        Evil_Star[i].cl -= 1;
+        if(Evil_Star[i].cl > 200) Evil_Star[i].state = 0;
     }
   }
 }
@@ -168,7 +168,7 @@ void movbullet(void)
   {
     if(Bullet[i].en){
       Bullet[i].cl += 1;
-      if(Bullet[i].cl > 120) {
+      if(Bullet[i].cl > 127) {
         Bullet[i].en = 0;
         Bullet[i].cl = 0;
       }
@@ -182,22 +182,22 @@ void movcoin(void)
   {
     if(Coin[i].en == 1){
         Coin[i].cl -= 1;
-        if(Coin[i].cl > 100) Coin[i].en = 0;
+        if(Coin[i].cl > 127) Coin[i].en = 0;
     }
   }
 }
 
-void bullet_comet_collision(void)
+void bullet_evilstar_collision(void)
 {
   for(uint8 j = 0; j < Max_Bullet; j++)
   {
     for(uint8 i = 0; i < Max_Comet; i++)
     {
-      if(     (Comet[i].cl <= Bullet[j].cl) && (Comet[i].ln < (Bullet[j].ln + 6)) && 
-              ((Comet[i].ln + 10) > Bullet[j].ln) && Comet[i].state == 1 && 
+      if(     (Evil_Star[i].cl <= Bullet[j].cl) && (Evil_Star[i].ln < (Bullet[j].ln + 6)) && 
+              ((Evil_Star[i].ln + 10) > Bullet[j].ln) && Evil_Star[i].state == 1 && 
               Bullet[j].en)
       {
-        Comet[i].state = 2;
+        Evil_Star[i].state = 2;
         Bullet[j].en = 0;
         Sounds(500);
       }
@@ -205,15 +205,15 @@ void bullet_comet_collision(void)
   }
 }
 
-void gamer_comet_collision(void)
+void gamer_evilstar_collision(void)
 {
   for(uint8 i = 0; i < Max_Comet; i++)
   {
-    if(     (Comet[i].cl <= (Gamer.cl+29)) && ((Comet[i].cl + 25) >= Gamer.cl) && 
-            ((Comet[i].ln + 15) > Gamer.ln) && (Comet[i].ln < (Gamer.ln + 15)) && 
-            (Comet[i].state == 1) && (Gamer.health > 0))
+    if(     (Evil_Star[i].cl <= (Gamer.cl+29)) && ((Evil_Star[i].cl + 25) >= Gamer.cl) && 
+            ((Evil_Star[i].ln + 15) > Gamer.ln) && (Evil_Star[i].ln < (Gamer.ln + 15)) && 
+            (Evil_Star[i].state == 1) && (Gamer.health > 0))
     {
-      Comet[i].state = 2;
+      Evil_Star[i].state = 2;
       Gamer.health -= 2;
       Sounds(600);
     }
@@ -241,19 +241,19 @@ void gamer_coin_collision(void)
   }
 }
 
-void drawcomet(void)
+void drawevilstar(void)
 {
     for(uint8 i = 0; i < Max_Comet; i++)
     {
-      if(Comet[i].state == 1) {
-        LCD_printsprite(Comet[i].ln, Comet[i].cl, comet_sprite);
+      if(Evil_Star[i].state == 1) {
+        LCD_printsprite(Evil_Star[i].ln, Evil_Star[i].cl, &evilstar_sprite);
       }
-      if(Comet[i].state == 2) {
-        LCD_printsprite(Comet[i].ln, Comet[i].cl, distr_comet_sprite);
-        if(Comet[i].distr_ttl_count++ >= COMET_DISTR_TTL){
-            Comet[i].distr_ttl_count = 0;
-            Comet[i].state = 0;
-            createcoin(Comet[i]);
+      if(Evil_Star[i].state == 2) {
+        LCD_printsprite(Evil_Star[i].ln, Evil_Star[i].cl, &distr_evilstar_sprite);
+        if(Evil_Star[i].distr_ttl_count++ >= COMET_DISTR_TTL){
+            Evil_Star[i].distr_ttl_count = 0;
+            Evil_Star[i].state = 0;
+            createcoin(Evil_Star[i]);
         }
       }
     }
@@ -265,8 +265,8 @@ void drawcoin(void)
     {
       if(Coin[i].en == 1) {
         Coin[i].animation_count--;
-        if(Coin[i].animation_count >= (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln + 1, Coin[i].cl, coin_sprite);
-        if(Coin[i].animation_count < (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln - 1, Coin[i].cl, coin_sprite);
+        if(Coin[i].animation_count >= (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln + 1, Coin[i].cl, &coin_sprite);
+        if(Coin[i].animation_count < (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln - 1, Coin[i].cl, &coin_sprite);
         if(Coin[i].animation_count == 0) Coin[i].animation_count = COIN_ANIMCOUNT;
       }
     }
@@ -275,8 +275,8 @@ void drawcoin(void)
 void drawgamer(void)
 {
     if((Gamer.health > 0)) {
-      if(Gamer.gasmask_fl) LCD_printsprite(Gamer.ln, Gamer.cl, gamer_gas_sprite);
-      else LCD_printsprite(Gamer.ln, Gamer.cl, gamer_sprite);
+      if(Gamer.gasmask_fl) LCD_printsprite(Gamer.ln, Gamer.cl, &gamer_gas_sprite);
+      else LCD_printsprite(Gamer.ln, Gamer.cl, &gamer_sprite);
     }
 }
 
@@ -285,7 +285,7 @@ void drawbullet(void)
     for(uint8 i = 0; i < Max_Bullet; i++)
     {
       if(Bullet[i].en){
-        LCD_printsprite(Bullet[i].ln, Bullet[i].cl, bullet_sprite);
+        LCD_printsprite(Bullet[i].ln, Bullet[i].cl, &bullet_sprite);
       }
     }
 }
@@ -296,41 +296,55 @@ void drawinfo(void)
     LCD_printgamestatbar(&Gamer);
 }
 
-void updatescreen(void){
+void screenupdate(void){
   LCD_bufupload_buferase();
 }
 
+void check_collision(void)
+{
+  bullet_evilstar_collision();
+  gamer_evilstar_collision();
+  gamer_coin_collision();
+}
+
+void draw_and_screenupdate(void)
+{
+  drawevilstar();
+  drawcoin();
+  drawgamer();
+  drawbullet();
+  drawinfo();  
+  screenupdate();
+}
+
+void move_enemy_objects(void)
+{
+  movevilstar();
+  movcoin();
+}
 /*******************************************************************************
  *                              MAIN ENTRY                            
  *******************************************************************************
  */
 void ufobattle(void)
 {
+  ufobattle_init();
   randinit();
   
   AddEvent(systemtasks, 500);
   AddEvent(gunregen, Gamer.energy_regenperiod);
-  AddEvent(checkbnjk, 50);
+  AddEvent(check_btn_jstk, 50);
   
-  AddEvent(createcomet, 1000);
+  AddEvent(createevilstar, 800);
   AddEvent(createbullet, 100);
   
   AddEvent(movgamer, 40);
   AddEvent(movbullet, 5);
-  AddEvent(movcomet, 20);
-  AddEvent(movcoin, 20);
+  AddEvent(move_enemy_objects, 18);
   
-  AddEvent(bullet_comet_collision, 100);
-  AddEvent(gamer_comet_collision, 100);
-  AddEvent(gamer_coin_collision, 100);
+  AddEvent(check_collision, 100);
   
-  AddEvent(drawcomet, 75);
-  AddEvent(drawcoin, 75);
-  AddEvent(drawgamer, 75);
-  AddEvent(drawbullet, 75);
-  AddEvent(drawinfo, 75);
-  
-  AddEvent(updatescreen, 75);
+  AddEvent(draw_and_screenupdate, 100);
 
 /*******************************************************************************
  *                              STARTUP CYCLE                            

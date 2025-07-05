@@ -48,7 +48,7 @@ void LCD_printcometa(uint8, uint8);
 void LCD_printdistrcometa(uint8, uint8);
 void LCD_printmagaz(uint8, uint8);
 void LCD_printgamestatbar(tGamer*);
-void LCD_printsprite(uint8, uint8, const tSprite);
+void LCD_printsprite(uint8, uint8, tSprite* const);
 
 void LCD_printbatlevel(uint8, uint8, uint8);
 void LCD_printbrightnes(uint8, uint8);

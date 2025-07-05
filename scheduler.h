@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-#define      MAX_EVENT    25
+#define      MAX_EVENT    10
 
 static uint8 registredevents = 0;
 
