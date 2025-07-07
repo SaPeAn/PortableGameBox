@@ -73,6 +73,10 @@ void ShutDownLB(void);
 void batcheck(void);
 void rtcbcdtoraw(void);
 void rtcrawtobcd(void);
+
+#define    PWM_MEMADR    0
+uint8 EEPROM_writebyte(uint8, uint8);
+uint8 EEPROM_readbyte(uint8);
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK VARIABLES---------------------------*/

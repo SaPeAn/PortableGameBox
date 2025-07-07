@@ -126,6 +126,7 @@ void commoninit(void)
   TRISC &= 0b11111001; // RC2 - for Sounds, RC1 - Shut Down output
   LATCbits.LC2 = 0;
   LATCbits.LC1 = 1;
+  brightPWM = EEPROM_readbyte(PWM_MEMADR);
 }
 
 void initbuttons(void)
@@ -197,12 +198,14 @@ void decbright(void)
 {
   if(brightPWM <= 40) brightPWM = 70; 
   brightPWM -=30;
+  EEPROM_writebyte(PWM_MEMADR, brightPWM);
 }
 
 void incbright(void)
 {
   if(brightPWM >= 250) brightPWM = 220; 
   brightPWM +=30;
+  EEPROM_writebyte(PWM_MEMADR, brightPWM);
 }
 
 void BrightPWMgen(uint8 duty_cycle)
