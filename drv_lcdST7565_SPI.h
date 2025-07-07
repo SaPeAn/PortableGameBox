@@ -9,9 +9,6 @@
 #ifndef DRV_LCDST7565_H
 #define	DRV_LCDST7565_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
 #include "common.h"
 #include <stdarg.h>
 #include "ufo_battle.h"
@@ -62,10 +59,6 @@ void LCD_printmonth(uint8, uint8, uint8);
 void LCDbuf_upload(void);
 void LCDbuf_erase(void);
 uint8 LCDbuf_writestring(uint8*, uint8, uint8);
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* DRV_LCDST7565_H */
 

@@ -219,7 +219,7 @@ void BrightPWMgen(uint8 duty_cycle)
 void Sounds(uint16 delay)
 {
   uint16 j;
-  for(uint8 i = 0; i < 30; i++)
+  for(uint8 i = 0; i < (delay/10); i++)
   {  
     LATCbits.LC2 = 0;
     j = delay;
@@ -415,7 +415,7 @@ uint8 EEPROM_readbyte(uint8 adr)
 typedef struct {
   uint8 level;
   uint8 level_progress;
-  
+  uint8 difficulty;
 }tGameProc;
 
 void savegame(tGameProc* Game, tGamer Gamer)

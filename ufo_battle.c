@@ -15,8 +15,9 @@ typedef struct {
 typedef struct{
   uint8  state;  // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
   uint8  ln;
-  int8    cl;
+  int8   cl;
   uint8  distr_ttl_count;
+  uint8  damage;
 }tEvilStar;
 
 typedef struct{
@@ -59,25 +60,6 @@ void ufobattle_init(void)
   Gamer.cl = 0;
 }
 /*******************************************************************************
- *                              SECONDARY FUNCTIONS
- * *****************************************************************************
- */
-void createcoin(tEvilStar Evil_Star)
-{
-  static uint8 i = 0;
-  if(getrand(2) < 2) return;
-  if(Coin[i].en == 0)
-  {
-    Coin[i].en = 1;
-    Coin[i].cl = Evil_Star.cl;
-    Coin[i].ln = Evil_Star.ln;
-    Coin[i].animation_count = COIN_ANIMCOUNT;
-  }
-  i++;
-  if(i >= Max_Coin) i = 0;
-}
-
-/*******************************************************************************
  *                              EVENT DESCRIPTIONS
  * *****************************************************************************
  */
@@ -102,6 +84,21 @@ void createevilstar(void)
     }
   i++;
   if(i >= Max_Comet) i = 0;
+}
+
+void createcoin(tEvilStar Evil_Star)
+{
+  static uint8 i = 0;
+  if(getrand(2) < 2) return;
+  if(Coin[i].en == 0)
+  {
+    Coin[i].en = 1;
+    Coin[i].cl = Evil_Star.cl;
+    Coin[i].ln = Evil_Star.ln;
+    Coin[i].animation_count = COIN_ANIMCOUNT;
+  }
+  i++;
+  if(i >= Max_Coin) i = 0;
 }
 
 void createbullet(void)

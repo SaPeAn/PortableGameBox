@@ -8,9 +8,9 @@
 typedef unsigned char    uint8;
 typedef signed char      int8; 
 typedef unsigned int     uint16;
-typedef int              int16;
+typedef signed int       int16;
 typedef unsigned long    uint32;
-typedef long             int32;  
+typedef signed long      int32;  
 
 /*-------------------------SYSTEM VARIABLES-----------------------------------*/
 typedef struct{
