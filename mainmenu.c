@@ -9,8 +9,8 @@ void setdatetime(void)
   uint8 selectpos = 0;
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
-  uint8 temp1 = 0;
-  uint8 temp2 = 0;
+  uint8 displaingSaveFlag = 0;
+  uint8 displaingSaveLatch = 0;
   uint32 tim = 0;
   while(1)
   {  
@@ -20,7 +20,7 @@ void setdatetime(void)
     if(B2.BtnON){
       B2.BtnON = 0;
       RTCsenddata(rtcbcd.rtcdata);
-      temp1 = 1;
+      displaingSaveFlag = 1;
     }
     
     if(B1.BtnON){
@@ -38,13 +38,14 @@ void setdatetime(void)
     {
       joystick.left = 0;
       selectpos--;
-      if(selectpos == 255) selectpos = 5;
+      if(selectpos == 255) selectpos = 6;
     }
         
     uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
-    uint8 temp[6];    
-    u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
-    uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
+    //uint8 temp[6];    
+    //u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
+    //uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
+    uint8 month[4] = {dig_to_smb(((rtcbcd.rtcpar.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.rtcpar.month & 0x0F), '.', '\0'};
     uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
@@ -109,17 +110,15 @@ void setdatetime(void)
     LCD_printstr8x5("НЙ", 7, 110);
     LCD_printstr8x5("-  +", 2, 93); 
     
-    if(temp1) {
+    if(displaingSaveFlag) {
       tim = timestamp;
-      temp1 = 0;
-      temp2 = 1;
+      displaingSaveFlag = 0;
+      displaingSaveLatch = 1;
     }
-    
-    if(temp2) LCD_printstr8x5("янупюмемн", 7, 2);
-    
-    if(((timestamp - tim) > 2000) && temp2) {
+    if(displaingSaveLatch) LCD_printstr8x5("янупюмемн", 7, 2);
+    if(((timestamp - tim) > 2000) && displaingSaveLatch) {
       LCD_erasestring(128, 7, 0);
-      temp2 = 0;
+      displaingSaveLatch = 0;
     }
     
     rtcrawtobcd();
@@ -135,8 +134,9 @@ void testscreen(void)
     rtcbcdtoraw();    
     uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
     uint8 temp[6];    
-    u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
-    uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
+    //u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
+    //uint8 month[4] = {temp[3], temp[4], '.', '\0'};
+    uint8 month[4] = {dig_to_smb(((rtcbcd.rtcpar.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.rtcpar.month & 0x0F), '.', '\0'};
     uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
@@ -273,12 +273,6 @@ void MainMenu(void)
   }
   //-------------------------------------------------
 
-  //----------------------GAME-----------------------
-  if(CFlags.RunGameFl)
-  {
-    ufobattle();
-  }
-  //-------------------------------------------------
   
   LCD_printclockanddate(0, 26);
   LCD_printbatlevel(batlvl, 0, 105);
@@ -299,5 +293,13 @@ void MainMenu(void)
   rtcbcdtoraw();
   LCD_bufupload_buferase();
   delay_ms(50);
+  
+  //----------------------GAME-----------------------
+  if(CFlags.RunGameFl)
+  {
+    ufobattle();
+  }
+  //-------------------------------------------------
+  
 }
 

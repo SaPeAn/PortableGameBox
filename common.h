@@ -1,17 +1,12 @@
-
 #ifndef COMMON_H
 #define	COMMON_H
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
 
 #define     ENABLE     1
 #define     DISABLE    0    
 
     
 typedef unsigned char    uint8;
-typedef char             int8; 
+typedef signed char      int8; 
 typedef unsigned int     uint16;
 typedef int              int16;
 typedef unsigned long    uint32;
@@ -122,9 +117,6 @@ uint8 adc_getval_an2(void);
 void getjoypos(void);
 void checkjoydir(void);
 /*----------------------------------------------------------------------------*/
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* COMMON_H */
 

@@ -1,6 +1,7 @@
 
 /*------------------------------INCLUDES--------------------------------------*/
 #include <xc.h>
+#include <xc8debug.h>
 #include "config.h"
 #include "common.h"
 #include "drv_lcdST7565_SPI.h"

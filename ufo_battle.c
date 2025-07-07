@@ -15,14 +15,14 @@ typedef struct {
 typedef struct{
   uint8  state;  // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
   uint8  ln;
-  uint8  cl;
+  int8    cl;
   uint8  distr_ttl_count;
-}tComet;
+}tEvilStar;
 
 typedef struct{
   uint8 en;
   uint8 ln;
-  uint8 cl;
+  int8   cl;
   uint8 animation_count;
 }tCoin;
 //------------------------------------------------------------------------------  
@@ -35,7 +35,7 @@ typedef struct{
 #define COMET_DISTR_TTL  2
 #define COIN_ANIMCOUNT  16
 tBullet Bullet[BULLET_MAX] = {0};
-tComet Evil_Star[COMET_MAX] = {0};
+tEvilStar Evil_Star[COMET_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 uint8 Max_Bullet = BULLET_MAX;
 uint8 Max_Comet = COMET_MAX;
@@ -60,7 +60,7 @@ void ufobattle_init(void)
  *                              SECONDARY FUNCTIONS
  * *****************************************************************************
  */
-void createcoin(tComet Evil_Star)
+void createcoin(tEvilStar Evil_Star)
 {
   static uint8 i = 0;
   if(getrand(2) < 2) return;
@@ -95,7 +95,7 @@ void createevilstar(void)
     if(Evil_Star[i].state == 0)
     {
       Evil_Star[i].state = 1;
-      Evil_Star[i].cl = 127;
+      Evil_Star[i].cl = 126;
       Evil_Star[i].ln = getrand(40) + 8;
     }
   i++;
@@ -123,6 +123,7 @@ void createbullet(void)
 
 void systemtasks(void)
 {
+  check_btn_jstk();
   if(B4.BtnON || B4.HoldON || B4.StuckON){ // Exit button pressed
     B4.BtnON = 0; 
     StartFl = 0;  
@@ -146,9 +147,9 @@ void movgamer(void)
   if(ox > 140 && ox <= 200){Gamer.cl += 1; if(Gamer.cl > 94) Gamer.cl = 94;}
   if(ox > 200 && ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94) Gamer.cl = 94;}
   if(ox > 250){Gamer.cl += 4; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(ox < 120 && ox >= 60){Gamer.cl -= 1; if(Gamer.cl > 100) Gamer.cl = 0;}
-  if(ox < 60 && ox >= 10){Gamer.cl -= 2; if(Gamer.cl > 100) Gamer.cl = 0;}
-  if(ox < 10){Gamer.cl -= 4; if(Gamer.cl > 100) Gamer.cl = 0;}
+  if(ox < 120 && ox >= 60){Gamer.cl -= 1; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(ox < 60 && ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(ox < 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
 }
 
 void movevilstar(void)
@@ -156,8 +157,8 @@ void movevilstar(void)
   for(uint8 i = 0; i < Max_Comet; i++)
   {
     if(Evil_Star[i].state == 1){
-        Evil_Star[i].cl -= 1;
-        if(Evil_Star[i].cl > 200) Evil_Star[i].state = 0;
+        Evil_Star[i].cl --;
+        if((Evil_Star[i].cl < -29) ) Evil_Star[i].state = 0;
     }
   }
 }
@@ -182,7 +183,7 @@ void movcoin(void)
   {
     if(Coin[i].en == 1){
         Coin[i].cl -= 1;
-        if(Coin[i].cl > 127) Coin[i].en = 0;
+        if(Coin[i].cl < -9) Coin[i].en = 0;
     }
   }
 }
@@ -214,7 +215,7 @@ void gamer_evilstar_collision(void)
             (Evil_Star[i].state == 1) && (Gamer.health > 0))
     {
       Evil_Star[i].state = 2;
-      Gamer.health -= 2;
+      Gamer.health -= 4;
       Sounds(600);
     }
   }
@@ -331,9 +332,8 @@ void ufobattle(void)
   ufobattle_init();
   randinit();
   
-  AddEvent(systemtasks, 500);
+  AddEvent(systemtasks, 50);
   AddEvent(gunregen, Gamer.energy_regenperiod);
-  AddEvent(check_btn_jstk, 50);
   
   AddEvent(createevilstar, 800);
   AddEvent(createbullet, 100);

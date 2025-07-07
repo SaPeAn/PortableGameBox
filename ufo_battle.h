@@ -14,7 +14,7 @@ typedef struct
   uint8  bombs;
   uint16 money;
   uint8  ln;
-  uint8  cl;
+  int8  cl;
 }tGamer;
 
 tGamer Gamer;

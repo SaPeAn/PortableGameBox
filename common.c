@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <xc.h>
+#include <pic18f2550.h>
+#include <builtins.h>
+#include <xc8debug.h>
 
 /*----------------------------------UTILITIES-------------------------------*/
 uint8 clamp(uint8 val, uint8 min, uint8 max)
@@ -49,6 +52,8 @@ char dig_to_smb(uint8 dig)
 
 void u16_to_str(char* str, uint16 num, uint8 N)
 { 
+  sprintf(str, "%u", num);
+  /*
   str[0] = dig_to_smb((uint8)(num/10000));
   num %= 10000;
   str[1] = dig_to_smb((uint8)(num/1000));
@@ -79,7 +84,7 @@ void u16_to_str(char* str, uint16 num, uint8 N)
   {
     for(uint8 i = 0; i <= N; i++) 
       str[i] = str[5 - N + i];
-  }
+  }*/
 }
 /*----------------------------------------------------------------------------*/
 
@@ -375,3 +380,42 @@ void checkjoydir(void)
 }
 
 /*----------------------------------------------------------------------------*/
+
+
+/*---------------------------SAVE/LOAD FUNCTIONS------------------------------*/
+
+uint8 EEPROM_writebyte(uint8 adr, uint8 byte)
+{
+  EEADR = adr;
+  EEDATA = byte;
+  EECON1bits.EEPGD = 0;
+  EECON1bits.CFGS = 0;
+  EECON1bits.WREN = 1;
+  INTCONbits.GIE = 0;
+  EECON2 = 0x55;
+  EECON2 = 0xAA;
+  EECON1bits.WR = 1;
+  INTCONbits.GIE = 1;
+  EECON1bits.WREN = 0;
+  return EECON1bits.WRERR;
+}
+
+uint8 EEPROM_readbyte(uint8 adr)
+{
+  EEADR = adr;
+  EECON1bits.EEPGD = 0;
+  EECON1bits.CFGS = 0;
+  EECON1bits.RD = 1;
+  return EEDATA;
+}
+
+typedef struct {
+  uint8 level;
+  uint8 level_progress;
+  
+}tGameProc;
+
+void savegame(tGameProc* Game, tGamer Gamer)
+{
+  Nop();
+}

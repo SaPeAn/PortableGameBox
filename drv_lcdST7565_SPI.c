@@ -13,6 +13,7 @@
 #include "display_data.h"
 #include "drv_swi2cRTC.h"
 #include <stdlib.h>
+#include <xc8debug.h>
 
 #define    BUF_EN   // BUF_EN - working through the buffer, BUF_DIS - direct 
 
@@ -318,14 +319,25 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl)
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_printsprite(uint8 startline, uint8 startcolumn, tSprite* const Sprite)
+void LCD_printsprite(uint8 startline, int8 startcolumn, tSprite* const Sprite)
 {
-  bufcl = startcolumn;
+  int8 columns_max = 0;
+  uint16 m = 0, mprev= 0;
+  uint8 column_shift = 0;
+  if(startcolumn < 0) {
+    bufcl = 0;
+    columns_max = Sprite->columns + startcolumn;
+    if(columns_max < 0) columns_max = 0;
+    m = (-startcolumn) * Sprite->pages;
+    column_shift = -startcolumn;
+  }
+  else {
+    bufcl = startcolumn;
+    columns_max = ((startcolumn + Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
+  }
   bufpg = startline / 8;
   uint8 shift = startline % 8;
-  uint16 m = 0, mprev= 0;
-  uint8 columns_max = 0;
-  columns_max = ((startcolumn + Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
+  
   
   switch(Sprite->direct)
   {
@@ -356,13 +368,13 @@ void LCD_printsprite(uint8 startline, uint8 startcolumn, tSprite* const Sprite)
         for(uint8 j = 0; j < columns_max; j++)
         {
           if(i == 0) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[j] << shift;
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[j + column_shift] << shift;
           }
           if((i > 0) && (i < Sprite->pages)){
-            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[(i-1)*Sprite->columns + j] >> (8 - shift)) | (Sprite->sprite[i*Sprite->columns + j] << shift);
+            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[(i-1)*Sprite->columns + j + column_shift] >> (8 - shift)) | (Sprite->sprite[i*Sprite->columns + j + column_shift] << shift);
           }
           if(i == Sprite->pages) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[(i-1)*Sprite->columns + j] >> (8 - shift);
+            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[(i-1)*Sprite->columns + j + column_shift] >> (8 - shift);
           }
         }
       }
