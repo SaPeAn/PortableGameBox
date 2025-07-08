@@ -41,66 +41,66 @@ void setdatetime(void)
       if(selectpos == 255) selectpos = 6;
     }
         
-    uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
+    uint8 day[4] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '.', '\0'};
     //uint8 temp[6];    
-    //u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
+    //u16_to_str(temp, ((((rtcbcd.month & 0x10) >> 4) * 10) + (rtcbcd.month & 0x0F)), DISABLE);
     //uint8 month[4] = {temp[3], temp[4], '.', '\0'}; 
-    uint8 month[4] = {dig_to_smb(((rtcbcd.rtcpar.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.rtcpar.month & 0x0F), '.', '\0'};
-    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
+    uint8 month[4] = {dig_to_smb(((rtcbcd.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
+    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.year & 0xF0) >> 4), dig_to_smb(rtcbcd.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
     LCD_printstr8x5(year, 0, 34);
-    uint8 hour[4] = {dig_to_smb((rtcbcd.rtcpar.hour & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.hour & 0x0F), ':', '\0'};
-    uint8 min[4] = {dig_to_smb((rtcbcd.rtcpar.min & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.min & 0x0F), ':', '\0'};
-    uint8 sec[3] = {dig_to_smb((rtcbcd.rtcpar.sec & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.sec & 0x0F), '\0'};
+    uint8 hour[4] = {dig_to_smb((rtcbcd.hour & 0x30) >> 4), dig_to_smb(rtcbcd.hour & 0x0F), ':', '\0'};
+    uint8 min[4] = {dig_to_smb((rtcbcd.min & 0x70) >> 4), dig_to_smb(rtcbcd.min & 0x0F), ':', '\0'};
+    uint8 sec[3] = {dig_to_smb((rtcbcd.sec & 0x70) >> 4), dig_to_smb(rtcbcd.sec & 0x0F), '\0'};
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
-    LCD_printweekday(rtcraw.rtcpar.weekday, 0, 115);
+    LCD_printweekday(rtcraw.weekday, 0, 115);
     
     switch(selectpos)
     {
       case 0: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 2); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.day--; if(rtcraw.rtcpar.day > 31) rtcraw.rtcpar.day = 31;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.day++; if(rtcraw.rtcpar.day > 31) rtcraw.rtcpar.day = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.day--; if(rtcraw.day > 31) rtcraw.day = 31;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.day++; if(rtcraw.day > 31) rtcraw.day = 0;}
       break;
       case 1: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 18);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.month--; if(rtcraw.rtcpar.month > 12) rtcraw.rtcpar.month = 12;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.month++; if(rtcraw.rtcpar.month > 12) rtcraw.rtcpar.month = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.month--; if(rtcraw.month > 12) rtcraw.month = 12;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.month++; if(rtcraw.month > 12) rtcraw.month = 0;}
       break;
       case 2: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(24, 8, 34); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.year--; if(rtcraw.rtcpar.year > 99) rtcraw.rtcpar.year = 99;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.year++; if(rtcraw.rtcpar.year > 99) rtcraw.rtcpar.year = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.year--; if(rtcraw.year > 99) rtcraw.year = 99;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.year++; if(rtcraw.year > 99) rtcraw.year = 0;}
       break;
       case 3: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 62);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.hour--; if(rtcraw.rtcpar.hour > 23) rtcraw.rtcpar.hour = 23;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.hour++; if(rtcraw.rtcpar.hour > 23) rtcraw.rtcpar.hour = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.hour--; if(rtcraw.hour > 23) rtcraw.hour = 23;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.hour++; if(rtcraw.hour > 23) rtcraw.hour = 0;}
       break;
       case 4: 
         LCD_erasestring(128, 1, 0); 
         LCD_printhorline(12, 8, 80); 
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.min--; if(rtcraw.rtcpar.min > 59) rtcraw.rtcpar.min = 59;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.min++; if(rtcraw.rtcpar.min > 59) rtcraw.rtcpar.min = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.min--; if(rtcraw.min > 59) rtcraw.min = 59;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.min++; if(rtcraw.min > 59) rtcraw.min = 0;}
       break;
       case 5: 
         LCD_erasestring(128, 1, 0);
         LCD_printhorline(12, 8, 98);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.sec--; if(rtcraw.rtcpar.sec > 59) rtcraw.rtcpar.sec = 59;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.sec++; if(rtcraw.rtcpar.sec > 59) rtcraw.rtcpar.sec = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.sec--; if(rtcraw.sec > 59) rtcraw.sec = 59;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.sec++; if(rtcraw.sec > 59) rtcraw.sec = 0;}
       break;
       case 6: 
         LCD_erasestring(128, 1, 0);
         LCD_printhorline(12, 8, 115);
-        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.rtcpar.weekday--; if(rtcraw.rtcpar.weekday > 6) rtcraw.rtcpar.weekday = 6;}
-        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.rtcpar.weekday++; if(rtcraw.rtcpar.weekday > 6) rtcraw.rtcpar.weekday = 0;}
+        if(B3.BtnON || B3.HoldON || B3.StuckON){B3.BtnON = 0; rtcraw.weekday--; if(rtcraw.weekday > 6) rtcraw.weekday = 6;}
+        if(B4.BtnON || B4.HoldON || B4.StuckON){B4.BtnON = 0; rtcraw.weekday++; if(rtcraw.weekday > 6) rtcraw.weekday = 0;}
       break;
     }
     
@@ -132,22 +132,22 @@ void testscreen(void)
   {
     RTCgetdata(rtcbcd.rtcdata);
     rtcbcdtoraw();    
-    uint8 day[4] = {dig_to_smb((rtcbcd.rtcpar.day & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.day & 0x0F), '.', '\0'};
+    uint8 day[4] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '.', '\0'};
     uint8 temp[6];    
-    //u16_to_str(temp, ((((rtcbcd.rtcpar.month & 0x10) >> 4) * 10) + (rtcbcd.rtcpar.month & 0x0F)), DISABLE);
+    //u16_to_str(temp, ((((rtcbcd.month & 0x10) >> 4) * 10) + (rtcbcd.month & 0x0F)), DISABLE);
     //uint8 month[4] = {temp[3], temp[4], '.', '\0'};
-    uint8 month[4] = {dig_to_smb(((rtcbcd.rtcpar.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.rtcpar.month & 0x0F), '.', '\0'};
-    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.rtcpar.year & 0xF0) >> 4), dig_to_smb(rtcbcd.rtcpar.year & 0x0F), '\0'};
+    uint8 month[4] = {dig_to_smb(((rtcbcd.month & 0x10) >> 4) * 10), dig_to_smb(rtcbcd.month & 0x0F), '.', '\0'};
+    uint8 year[5] = {'2', '0', dig_to_smb((rtcbcd.year & 0xF0) >> 4), dig_to_smb(rtcbcd.year & 0x0F), '\0'};
     LCD_printstr8x5(day, 0, 2);
     LCD_printstr8x5(month, 0, 18);
     LCD_printstr8x5(year, 0, 34);
-    uint8 hour[4] = {dig_to_smb((rtcbcd.rtcpar.hour & 0x30) >> 4), dig_to_smb(rtcbcd.rtcpar.hour & 0x0F), ':', '\0'};
-    uint8 min[4] = {dig_to_smb((rtcbcd.rtcpar.min & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.min & 0x0F), ':', '\0'};
-    uint8 sec[3] = {dig_to_smb((rtcbcd.rtcpar.sec & 0x70) >> 4), dig_to_smb(rtcbcd.rtcpar.sec & 0x0F), '\0'};
+    uint8 hour[4] = {dig_to_smb((rtcbcd.hour & 0x30) >> 4), dig_to_smb(rtcbcd.hour & 0x0F), ':', '\0'};
+    uint8 min[4] = {dig_to_smb((rtcbcd.min & 0x70) >> 4), dig_to_smb(rtcbcd.min & 0x0F), ':', '\0'};
+    uint8 sec[3] = {dig_to_smb((rtcbcd.sec & 0x70) >> 4), dig_to_smb(rtcbcd.sec & 0x0F), '\0'};
     LCD_printstr8x5(hour, 0, 62);
     LCD_printstr8x5(min, 0, 80);
     LCD_printstr8x5(sec, 0, 98);
-    LCD_printweekday(rtcraw.rtcpar.weekday, 0, 115);
+    LCD_printweekday(rtcraw.weekday, 0, 115);
     
     batcheck();
     getjoypos();

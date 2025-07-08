@@ -232,24 +232,24 @@ void Sounds(uint16 delay)
 
 void rtcrawtobcd(void)
 {
-  rtcbcd.rtcpar.year = (uint8)((rtcraw.rtcpar.year / 10) << 4) | (rtcraw.rtcpar.year % 10);
-  rtcbcd.rtcpar.month = (0x80 | (uint8)((rtcraw.rtcpar.month / 10) << 4)) | rtcraw.rtcpar.month % 10;
-  rtcbcd.rtcpar.day = (uint8)((rtcraw.rtcpar.day / 10) << 4) | (rtcraw.rtcpar.day % 10);
-  rtcbcd.rtcpar.weekday = rtcraw.rtcpar.weekday;
-  rtcbcd.rtcpar.hour = (uint8)((rtcraw.rtcpar.hour / 10) << 4) | (rtcraw.rtcpar.hour % 10);
-  rtcbcd.rtcpar.min = (uint8)((rtcraw.rtcpar.min / 10) << 4) | (rtcraw.rtcpar.min % 10);
-  rtcbcd.rtcpar.sec = (uint8)((rtcraw.rtcpar.sec / 10) << 4) | (rtcraw.rtcpar.sec % 10);
+  rtcbcd.year = (uint8)((rtcraw.year / 10) << 4) | (rtcraw.year % 10);
+  rtcbcd.month = (0x80 | (uint8)((rtcraw.month / 10) << 4)) | rtcraw.month % 10;
+  rtcbcd.day = (uint8)((rtcraw.day / 10) << 4) | (rtcraw.day % 10);
+  rtcbcd.weekday = rtcraw.weekday;
+  rtcbcd.hour = (uint8)((rtcraw.hour / 10) << 4) | (rtcraw.hour % 10);
+  rtcbcd.min = (uint8)((rtcraw.min / 10) << 4) | (rtcraw.min % 10);
+  rtcbcd.sec = (uint8)((rtcraw.sec / 10) << 4) | (rtcraw.sec % 10);
 }
 
 void rtcbcdtoraw(void)
 {
-  rtcraw.rtcpar.year = (rtcbcd.rtcpar.year >> 4) * 10 + (rtcbcd.rtcpar.year & 0x0F);
-  rtcraw.rtcpar.month = ((rtcbcd.rtcpar.month & 0x1F) >> 4) * 10 + (rtcbcd.rtcpar.month & 0x0F);
-  rtcraw.rtcpar.day = ((rtcbcd.rtcpar.day & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.day & 0x0F);
-  rtcraw.rtcpar.weekday = rtcbcd.rtcpar.weekday & 0x07;
-  rtcraw.rtcpar.hour = ((rtcbcd.rtcpar.hour & 0x3F) >> 4) * 10 + (rtcbcd.rtcpar.hour & 0x0F);
-  rtcraw.rtcpar.min = ((rtcbcd.rtcpar.min & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.min & 0x0F);
-  rtcraw.rtcpar.sec = ((rtcbcd.rtcpar.sec & 0x7F) >> 4) * 10 + (rtcbcd.rtcpar.sec & 0x0F);
+  rtcraw.year = (rtcbcd.year >> 4) * 10 + (rtcbcd.year & 0x0F);
+  rtcraw.month = ((rtcbcd.month & 0x1F) >> 4) * 10 + (rtcbcd.month & 0x0F);
+  rtcraw.day = ((rtcbcd.day & 0x3F) >> 4) * 10 + (rtcbcd.day & 0x0F);
+  rtcraw.weekday = rtcbcd.weekday & 0x07;
+  rtcraw.hour = ((rtcbcd.hour & 0x3F) >> 4) * 10 + (rtcbcd.hour & 0x0F);
+  rtcraw.min = ((rtcbcd.min & 0x7F) >> 4) * 10 + (rtcbcd.min & 0x0F);
+  rtcraw.sec = ((rtcbcd.sec & 0x7F) >> 4) * 10 + (rtcbcd.sec & 0x0F);
 }
 /*----------------------------------------------------------------------------*/
 
@@ -329,6 +329,9 @@ void TestBtn(btn_t* btn)
   
   *(btn->Lat) |= ~btn->outputmask;
 }
+
+
+//void PushButtonProces(void);
 
 uint8 adc_getval_an0()
 {

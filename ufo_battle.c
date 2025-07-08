@@ -71,6 +71,7 @@ void check_btn_jstk(void)  //Test buttons and joystick
   TestBtn(&B4);
   ox = adc_getval_an0();
   oy = adc_getval_an1();
+  checkjoydir();
 }
 
 void createevilstar(void)
@@ -351,7 +352,8 @@ void ufobattle(void)
  */
   while(!StartFl && CFlags.RunGameFl)
   {
-    TestBtn(&B1); TestBtn(&B2);
+    check_btn_jstk();
+    
     if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
     if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1;}
 

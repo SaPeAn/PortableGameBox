@@ -13,20 +13,18 @@ typedef unsigned long    uint32;
 typedef signed long      int32;  
 
 /*-------------------------SYSTEM VARIABLES-----------------------------------*/
-typedef struct{
-  uint8 sec;     // BCD  0...59            |x |SH|SH|SH|SL|SL|SL|SL|
-  uint8 min;     // BCD  0...59            |x |MH|MH|MH|ML|ML|ML|ML|
-  uint8 hour;    // BCD  0...23            |x |x |HH|HH|HL|HL|HL|HL|
-  uint8 day;     // BCD  0...              |x |x |Dh|DH|DL|DL|DL|DL|    
-  uint8 weekday; // BCD  from SUN to SAT   |x |x |x |x |x |W |W |W |
-  uint8 month;   // century bit & BCD      |C |x |x |MH|ML|ML|ML|ML|
-  uint8 year;    // BCD                    |YH|YH|YH|YH|YL|YL|YL|YL|
-} rtc_t;
-
 typedef union{
-  rtc_t rtcpar; 
-  uint8  rtcdata[7];
-} rtcun_t;
+  struct{
+    uint8 sec;     // BCD  0...59            |x |SH|SH|SH|SL|SL|SL|SL|
+    uint8 min;     // BCD  0...59            |x |MH|MH|MH|ML|ML|ML|ML|
+    uint8 hour;    // BCD  0...23            |x |x |HH|HH|HL|HL|HL|HL|
+    uint8 day;     // BCD  0...              |x |x |Dh|DH|DL|DL|DL|DL|    
+    uint8 weekday; // BCD  from SUN to SAT   |x |x |x |x |x |W |W |W |
+    uint8 month;   // century bit & BCD      |C |x |x |MH|ML|ML|ML|ML|
+    uint8 year;    // BCD                    |YH|YH|YH|YH|YL|YL|YL|YL|
+  };
+  uint8 rtcdata[7];
+}tRTC;
 
 typedef union{
   struct{
@@ -37,18 +35,17 @@ typedef union{
     unsigned MMPartbit_2        :1;  
     unsigned coursorpos         :3;
   };
-} flags_t;                               // System functions launch flags
+} tFlags;                               // System functions launch flags
 
-flags_t CFlags = {1, 0, 0, 0, 0, 1};
+tFlags CFlags = {1, 0, 0, 0, 0, 1};
 
 uint32 timestamp = 0;    // System timer (ms), starts counting from power on or last restart
-rtcun_t rtcbcd;          // structure for storaging clock/date from RTC module (BCD format))
-rtcun_t rtcraw;          // structure for storaging system clock/date (uint8)
+tRTC rtcbcd;          // structure for storaging clock/date from RTC module (BCD format))
+tRTC rtcraw;          // structure for storaging system clock/date (uint8)
 uint8 Ubat;              // ADC data from battery level measurement
 uint8 batlvl;            // battery level for display (0...5)
 uint8 brightlvl;         // brightness level for display (0...7)
 uint8 brightPWM = 220;   // PWM duty cycle value for regulate display brightness
-
 const uint8 str_null[] = "NULL"; //for show zero pointer
 /*----------------------------------------------------------------------------*/
 
