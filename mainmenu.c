@@ -272,25 +272,20 @@ void MainMenu(void)
     LCD_printstr8x5("реяр", 6, 19); 
   }
   //-------------------------------------------------
-
-  
-  LCD_printclockanddate(0, 26);
-  LCD_printbatlevel(batlvl, 0, 105);
-  LCD_printbrightnes(0, 0);
- 
-
-  //LCD_printhorline(125, 8, 1);
-  //LCD_printhorline(125, 62, 1);
-  LCD_printvertline(55, 8, 80);
-  LCD_printvertline(55, 8, 0);
-  LCD_printvertline(55, 8, 126);
-
   
   batcheck();
   BrightPWMgen(brightPWM);
   getbrightlvl();
   RTCgetdata(rtcbcd.rtcdata);
   rtcbcdtoraw();
+  
+  LCD_printclockanddate(0, 26);
+  LCD_printbatlevel(batlvl, 0, 105);
+  LCD_printbrightnes(0, 0);
+  LCD_printvertline(55, 8, 80);
+  LCD_printvertline(55, 8, 0);
+  LCD_printvertline(55, 8, 126);
+
   LCD_bufupload_buferase();
   delay_ms(50);
   

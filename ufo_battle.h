@@ -21,6 +21,8 @@ tGamer Gamer;
 
 void ufobattle_init(void);
 void ufobattle(void);
+void gamemainmenu(void);
+void gamepausemenu(void);
 
 #endif	/* UFO_BATTLE_H */
 

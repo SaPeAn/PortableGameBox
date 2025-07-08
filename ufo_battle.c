@@ -5,6 +5,16 @@
 #include "scheduler.h"
 
 //------------------------------Game objects------------------------------------
+enum gMenuPTR{
+  GAME_MENU_START,
+  GAME_MENU_SAVE,
+  GAME_MENU_LOAD,
+  GAME_MENU_GAME1,
+  GAME_MENU_GAME2,
+  GAME_MENU_EXIT
+};
+enum gMenuPTR GameMenuPTR;
+
 
 typedef struct {
   uint8 en;
@@ -121,13 +131,15 @@ void createbullet(void)
     }
 }
 
+void ClrStartFl(void)
+{
+  StartFl = 0;
+}
+
 void systemtasks(void)
 {
   check_btn_jstk();
-  if(B4.BtnON || B4.HoldON || B4.StuckON){ // Exit button pressed
-    B4.BtnON = 0; 
-    StartFl = 0;  
-  }
+  ClickBtnFunc(&B4,ClrStartFl);
   batcheck();
 }
 
@@ -138,17 +150,17 @@ void gunregen(void)  //Energy regen
 
 void movgamer(void)
 {
-  if(joystick.oy > 140 && joystick.oy <= 200){Gamer.ln-=1; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if(joystick.oy > 200 && joystick.oy <= 250){Gamer.ln-=2; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if(joystick.oy > 140 && joystick.oy <= 210){Gamer.ln-=1; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if(joystick.oy > 210 && joystick.oy <= 250){Gamer.ln-=2; if(Gamer.ln < 8) Gamer.ln = 8;}
   if(joystick.oy > 250){Gamer.ln-=4; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if(joystick.oy < 120 && joystick.oy >= 60){Gamer.ln+=1; if(Gamer.ln > 48) Gamer.ln = 48;}
-  if(joystick.oy < 60 && joystick.oy >= 10){Gamer.ln+=2; if(Gamer.ln > 48) Gamer.ln = 48;}
+  if(joystick.oy < 120 && joystick.oy >= 50){Gamer.ln+=1; if(Gamer.ln > 48) Gamer.ln = 48;}
+  if(joystick.oy < 50 && joystick.oy >= 10){Gamer.ln+=2; if(Gamer.ln > 48) Gamer.ln = 48;}
   if(joystick.oy < 10){Gamer.ln+=4; if(Gamer.ln > 48) Gamer.ln = 48;}
-  if(joystick.ox > 140 && joystick.ox <= 200){Gamer.cl += 1; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(joystick.ox > 200 && joystick.ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94) Gamer.cl = 94;}
+  if(joystick.ox > 140 && joystick.ox <= 210){Gamer.cl += 1; if(Gamer.cl > 94) Gamer.cl = 94;}
+  if(joystick.ox > 210 && joystick.ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94) Gamer.cl = 94;}
   if(joystick.ox > 250){Gamer.cl += 4; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(joystick.ox < 120 && joystick.ox >= 60){Gamer.cl -= 1; if(Gamer.cl < -8) Gamer.cl = -8;}
-  if(joystick.ox < 60 && joystick.ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(joystick.ox < 120 && joystick.ox >= 50){Gamer.cl -= 1; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(joystick.ox < 50 && joystick.ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
   if(joystick.ox < 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
 }
 
@@ -329,7 +341,15 @@ void move_enemy_objects(void)
  */
 void gamemainmenu(void)
 {
-    
+  switch(GameMenuPTR)
+  {
+    case GAME_MENU_START:
+      break;
+    case GAME_MENU_LOAD:
+      break;
+    case GAME_MENU_EXIT:
+      break;      
+  } 
 }
 /*******************************************************************************
  *                              GAME PAUSE MENU                            
@@ -337,7 +357,31 @@ void gamemainmenu(void)
  */
 void gamepausemenu(void)
 {
-    
+  switch(GameMenuPTR)
+  {
+    case GAME_MENU_START:
+      break;
+    case GAME_MENU_SAVE:
+      break;
+    case GAME_MENU_EXIT:
+      break;
+  }
+}
+/*******************************************************************************
+ *                              GAME SAVE/LOAD MENU                            
+ *******************************************************************************
+ */
+void gamesaveloadmenu(void)
+{
+  switch(GameMenuPTR)
+  {
+    case GAME_MENU_GAME1:
+      break;
+    case GAME_MENU_GAME2:
+      break;
+    case GAME_MENU_EXIT:
+      break; 
+  }
 }
 /*******************************************************************************
  *                              MAIN ENTRY                            
@@ -362,33 +406,37 @@ void ufobattle(void)
   
   AddEvent(draw_and_screenupdate, 100);
 
+  
+  
+  while(CFlags.RunGameFl)
+  {
 /*******************************************************************************
  *                              STARTUP CYCLE                            
  *******************************************************************************
  */
-  while(!StartFl && CFlags.RunGameFl)
-  {
-    check_btn_jstk();
-    
-    if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
-    if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1;}
+    while(!StartFl)
+    {
+      check_btn_jstk();
 
-    if(timestamp - counter > 150){
-      LCD_bufupload_buferase();
-      counter = timestamp;
+      if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
+      if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1; RemoveAllEvents(); return; }
+
+      if(timestamp - counter > 150){
+        LCD_bufupload_buferase();
+        counter = timestamp;
+      }
+      LCD_printbutselhint(5, 2, 89);
+      LCD_printstr8x5("вых.вх", 6, 86);
+      delay_ms(50);
     }
-    LCD_printbutselhint(5, 2, 89);
-    LCD_printstr8x5("вых.вх", 6, 86);
-    delay_ms(50);
-  }
-  
-/*******************************************************************************
- *                              MAIN LEVEL CYCLE                            
- *******************************************************************************
- */
-  while(StartFl && CFlags.RunGameFl)
-  { 
-    EventProcess();
+  /*******************************************************************************
+   *                              MAIN LEVEL CYCLE                            
+   *******************************************************************************
+   */
+    while(StartFl)
+    { 
+      EventProcess();
+    }
   }
   RemoveAllEvents();
 }

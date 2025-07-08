@@ -77,7 +77,7 @@ uint8 EEPROM_readbyte(uint8);
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK VARIABLES---------------------------*/
-typedef struct{
+struct buttonstruct{
   volatile uint8*  Port;
   volatile uint8*  Lat;
   uint8            inputmask;
@@ -89,7 +89,14 @@ typedef struct{
   uint8            Toggle;
   uint8            HoldON;
   uint8            StuckON;
-}tButton;
+  void             (*TestButton)(struct buttonstruct*);
+  void             (*ClickBtnFunc)(void (*function)(void));
+  void             (*HoldBtnFunc)(void (*function)(void));
+  void             (*StuckBtnFunc)(void (*function)(void));
+  
+};
+
+typedef struct buttonstruct tButton;
 //buttons
 
 typedef struct{
@@ -118,6 +125,9 @@ uint8 adc_getval_an1(void);
 uint8 adc_getval_an2(void);
 void getjoypos(void);
 void checkjoydir(void);
+void ClickBtnFunc(tButton* BTN, void (*function(void)));
+void HoldBtnFunc(tButton* BTN, void (*function(void)));
+void StuckBtnFunc(tButton* BTN, void (*function(void)));
 /*----------------------------------------------------------------------------*/
 
 #endif	/* COMMON_H */

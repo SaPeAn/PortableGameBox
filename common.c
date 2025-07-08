@@ -298,6 +298,30 @@ tButton CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* La
   return BTN;
 }
 
+void ClickBtnFunc(tButton* BTN, void (*function(void)))
+{
+  if(BTN->BtnON){
+    BTN->BtnON = 0;
+    function();
+  }
+}
+  
+void HoldBtnFunc(tButton* BTN, void (*function(void)))
+{
+  if(BTN->BtnON || BTN->HoldON){
+    BTN->BtnON = 0;
+    function();
+  }
+}
+  
+void StuckBtnFunc(tButton* BTN, void (*function(void)))
+{
+  if(BTN->BtnON || BTN->HoldON || BTN->StuckON){
+    BTN->BtnON = 0;
+    function();
+  }
+}
+
 void TestBtn(tButton* btn)
 {
   *(btn->Lat) &= btn->outputmask;
@@ -329,9 +353,6 @@ void TestBtn(tButton* btn)
   
   *(btn->Lat) |= ~btn->outputmask;
 }
-
-
-//void PushButtonProces(void);
 
 uint8 adc_getval_an0()
 {
