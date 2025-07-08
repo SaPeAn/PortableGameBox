@@ -4,9 +4,9 @@
 #include <xc8debug.h>
 #include "config.h"
 #include "common.h"
-#include "drv_lcdST7565_SPI.h"
+#include "drv_LCD_ST7565_SPI.h"
 #include "ufo_battle.h"
-#include "drv_swi2cRTC.h"
+#include "drv_RTC_I2C.h"
 #include "mainmenu.h"
 #include "scheduler.h"
 /*----------------------------------------------------------------------------*/

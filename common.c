@@ -1,6 +1,6 @@
 
 #include "common.h"
-#include "drv_lcdST7565_SPI.h"
+#include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <xc.h>
@@ -257,9 +257,9 @@ void rtcbcdtoraw(void)
 #define  HOLD_ON_DEL    100
 #define  STUCK_ON_DEL   2000
  
-btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
+tButton CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
 {
-  btn_t BTN;
+  tButton BTN;
   BTN.Port = Port;
   BTN.Lat = Lat;
   switch (inputbit)
@@ -298,7 +298,7 @@ btn_t CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat,
   return BTN;
 }
 
-void TestBtn(btn_t* btn)
+void TestBtn(tButton* btn)
 {
   *(btn->Lat) &= btn->outputmask;
   
@@ -371,18 +371,18 @@ uint8 adc_getval_an2()
 
 void getjoypos(void)
 {
-  ox = adc_getval_an0();
-  oy = adc_getval_an1();
+  joystick.ox = adc_getval_an0();
+  joystick.oy = adc_getval_an1();
 }
 
 void checkjoydir(void)
 {
     getjoypos();
-    if(oy > 150 && joystick.joyFl == 0) {joystick.up = 1; joystick.joyFl = 1;}
-    if(oy < 100 && joystick.joyFl == 0) {joystick.down = 1; joystick.joyFl = 1;}
-    if(ox > 150 && joystick.joyFl == 0) {joystick.right = 1; joystick.joyFl = 1;}
-    if(ox < 100 && joystick.joyFl == 0) {joystick.left = 1; joystick.joyFl = 1;}
-    if(oy < 150 && oy > 100 && ox < 150 && ox > 100) joystick.joyFl = 0;
+    if(joystick.oy > 150 && joystick.joyFl == 0) {joystick.up = 1; joystick.joyFl = 1;}
+    if(joystick.oy < 100 && joystick.joyFl == 0) {joystick.down = 1; joystick.joyFl = 1;}
+    if(joystick.ox > 150 && joystick.joyFl == 0) {joystick.right = 1; joystick.joyFl = 1;}
+    if(joystick.ox < 100 && joystick.joyFl == 0) {joystick.left = 1; joystick.joyFl = 1;}
+    if(joystick.oy < 150 && joystick.oy > 100 && joystick.ox < 150 && joystick.ox > 100) joystick.joyFl = 0;
 }
 
 /*----------------------------------------------------------------------------*/

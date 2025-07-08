@@ -7,11 +7,11 @@
       <itemPath>common.h</itemPath>
       <itemPath>config.h</itemPath>
       <itemPath>display_data.h</itemPath>
-      <itemPath>drv_lcdST7565_SPI.h</itemPath>
       <itemPath>ufo_battle.h</itemPath>
-      <itemPath>drv_swi2cRTC.h</itemPath>
       <itemPath>mainmenu.h</itemPath>
       <itemPath>scheduler.h</itemPath>
+      <itemPath>drv_LCD_ST7565_SPI.h</itemPath>
+      <itemPath>drv_RTC_I2C.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -26,13 +26,13 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>common.c</itemPath>
-      <itemPath>drv_lcdST7565_SPI.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>AsmSPI_Tx_Rx.asm</itemPath>
       <itemPath>ufo_battle.c</itemPath>
-      <itemPath>drv_swi2cRTC.c</itemPath>
       <itemPath>mainmenu.c</itemPath>
       <itemPath>scheduler.c</itemPath>
+      <itemPath>drv_LCD_ST7565_SPI.c</itemPath>
+      <itemPath>drv_RTC_I2C.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -46,7 +46,7 @@
         <targetDevice>PIC18F2550</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>

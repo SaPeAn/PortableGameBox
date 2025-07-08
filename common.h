@@ -89,7 +89,7 @@ typedef struct{
   uint8            Toggle;
   uint8            HoldON;
   uint8            StuckON;
-}btn_t;
+}tButton;
 //buttons
 
 typedef struct{
@@ -98,19 +98,20 @@ typedef struct{
   uint8 left    :1;
   uint8 right   :1;
   uint8 joyFl   :1;
-}joy_t;
+  uint8 ox;          //joystick x-axis position(0...255, center - ~130)
+  uint8 oy;          //joystick y-axis position(0...255, center - ~130)
+}tJoystick;
 
-btn_t B1;
-btn_t B2;
-btn_t B3;
-btn_t B4;
-uint8 ox, oy; //joystick coordinates
-joy_t joystick = {0};
+tButton B1;
+tButton B2;
+tButton B3;
+tButton B4;
+tJoystick joystick = {0};
 /*----------------------------------------------------------------------------*/
 
 /*---------------------BUTTONS & JOYSTICK FUNCTIONS---------------------------*/
-btn_t CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
-void TestBtn(btn_t*);
+tButton CreateBtn(volatile uint8*, volatile uint8*, volatile uint8*, const uint8, const uint8, const uint32*);
+void TestBtn(tButton*);
 void initbuttons(void);
 uint8 adc_getval_an0(void);
 uint8 adc_getval_an1(void);

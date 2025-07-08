@@ -1,6 +1,6 @@
 #include "ufo_battle.h"
-#include "drv_lcdST7565_SPI.h"
-#include "drv_swi2cRTC.h"
+#include "drv_LCD_ST7565_SPI.h"
+#include "drv_RTC_I2C.h"
 #include "display_data.h"
 #include "scheduler.h"
 
@@ -69,8 +69,8 @@ void check_btn_jstk(void)  //Test buttons and joystick
   TestBtn(&B2);
   TestBtn(&B3);
   TestBtn(&B4);
-  ox = adc_getval_an0();
-  oy = adc_getval_an1();
+  joystick.ox = adc_getval_an0();
+  joystick.oy= adc_getval_an1();
   checkjoydir();
 }
 
@@ -138,18 +138,18 @@ void gunregen(void)  //Energy regen
 
 void movgamer(void)
 {
-  if(oy > 140 && oy <= 200){Gamer.ln-=1; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if(oy > 200 && oy <= 250){Gamer.ln-=2; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if(oy > 250){Gamer.ln-=4; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if(oy < 120 && oy >= 60){Gamer.ln+=1; if(Gamer.ln > 48) Gamer.ln = 48;}
-  if(oy < 60 && oy >= 10){Gamer.ln+=2; if(Gamer.ln > 48) Gamer.ln = 48;}
-  if(oy < 10){Gamer.ln+=4; if(Gamer.ln > 48) Gamer.ln = 48;}
-  if(ox > 140 && ox <= 200){Gamer.cl += 1; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(ox > 200 && ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(ox > 250){Gamer.cl += 4; if(Gamer.cl > 94) Gamer.cl = 94;}
-  if(ox < 120 && ox >= 60){Gamer.cl -= 1; if(Gamer.cl < -8) Gamer.cl = -8;}
-  if(ox < 60 && ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
-  if(ox < 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(joystick.oy > 140 && joystick.oy <= 200){Gamer.ln-=1; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if(joystick.oy > 200 && joystick.oy <= 250){Gamer.ln-=2; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if(joystick.oy > 250){Gamer.ln-=4; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if(joystick.oy < 120 && joystick.oy >= 60){Gamer.ln+=1; if(Gamer.ln > 48) Gamer.ln = 48;}
+  if(joystick.oy < 60 && joystick.oy >= 10){Gamer.ln+=2; if(Gamer.ln > 48) Gamer.ln = 48;}
+  if(joystick.oy < 10){Gamer.ln+=4; if(Gamer.ln > 48) Gamer.ln = 48;}
+  if(joystick.ox > 140 && joystick.ox <= 200){Gamer.cl += 1; if(Gamer.cl > 94) Gamer.cl = 94;}
+  if(joystick.ox > 200 && joystick.ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94) Gamer.cl = 94;}
+  if(joystick.ox > 250){Gamer.cl += 4; if(Gamer.cl > 94) Gamer.cl = 94;}
+  if(joystick.ox < 120 && joystick.ox >= 60){Gamer.cl -= 1; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(joystick.ox < 60 && joystick.ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if(joystick.ox < 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
 }
 
 void movevilstar(void)
@@ -322,6 +322,22 @@ void move_enemy_objects(void)
 {
   movevilstar();
   movcoin();
+}
+/*******************************************************************************
+ *                              GAME MAIN MENU                            
+ *******************************************************************************
+ */
+void gamemainmenu(void)
+{
+    
+}
+/*******************************************************************************
+ *                              GAME PAUSE MENU                            
+ *******************************************************************************
+ */
+void gamepausemenu(void)
+{
+    
 }
 /*******************************************************************************
  *                              MAIN ENTRY                            

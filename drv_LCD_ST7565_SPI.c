@@ -7,11 +7,10 @@
 //    
 /******************************************************************************/
 
-
-#include "drv_lcdST7565_SPI.h"
+#include "drv_LCD_ST7565_SPI.h"
 #include <xc.h>
 #include "display_data.h"
-#include "drv_swi2cRTC.h"
+#include "drv_RTC_I2C.h"
 #include <stdlib.h>
 #include <xc8debug.h>
 
@@ -311,8 +310,6 @@ void LCD_printsprite(uint8 startline, int8 startcolumn, tSprite * const Sprite) 
   }
   bufpg = startline / 8;
   uint8 shift = startline % 8;
-
-
   switch (Sprite->direct) {
     case columns_first:
       for (uint8 j = 0; j < columns_max; j++) {

@@ -1,5 +1,5 @@
-#include "drv_swi2cRTC.h"
-#include "drv_lcdST7565_SPI.h"
+#include "drv_RTC_I2C.h"
+#include "drv_LCD_ST7565_SPI.h"
 #include "common.h"
 #include "ufo_battle.h"
 
@@ -158,10 +158,10 @@ void testscreen(void)
     u16_to_str(temp, brightPWM, DISABLE);
     LCD_printstr8x5(temp, 3, 44);
     LCD_printstr8x5("Дж.X = ", 5, 2);
-    u16_to_str(temp, ox, DISABLE);
+    u16_to_str(temp, joystick.ox, DISABLE);
     LCD_printstr8x5(temp, 5, 44);
     LCD_printstr8x5("Дж.Y = ", 6, 2);
-    u16_to_str(temp, oy, DISABLE);
+    u16_to_str(temp, joystick.oy, DISABLE);
     LCD_printstr8x5(temp, 6, 44);
   
     LCD_printbutselhint(1, 2, 89);

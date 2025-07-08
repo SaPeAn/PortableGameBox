@@ -1,15 +1,13 @@
 /******************************************************************************/
 //      
 //    RTC/calendar - PCF8563
-//    
-//    
-//    sofrware I2C
+//    Software I2C
 //    
 /******************************************************************************/
 
 
 #include <xc.h>
-#include "drv_swi2cRTC.h"
+#include "drv_RTC_I2C.h"
 
 #define      SCLO        LATAbits.LA5
 #define      SDAO        LATCbits.LC0
