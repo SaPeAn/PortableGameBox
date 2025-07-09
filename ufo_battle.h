@@ -23,6 +23,7 @@ void ufobattle_init(void);
 void ufobattle(void);
 void gamemainmenu(void);
 void gamepausemenu(void);
+void gamesaveloadmenu(uint8);
 
 #endif	/* UFO_BATTLE_H */
 

@@ -6,15 +6,27 @@
 
 //------------------------------Game objects------------------------------------
 enum gMenuPTR{
-  GAME_MENU_START,
-  GAME_MENU_SAVE,
-  GAME_MENU_LOAD,
-  GAME_MENU_GAME1,
-  GAME_MENU_GAME2,
-  GAME_MENU_EXIT
+  GAME_MENU_START = 1,
+  GAME_MENU_LOAD = 2,
+  GAME_MENU_EXIT = 3
 };
-enum gMenuPTR GameMenuPTR;
+enum gMenuPTR GameMenuPTR = 1;
 
+enum gPausePTR{
+  GAME_PAUSE_SAVE = 1,
+  GAME_PAUSE_RETURN = 2,
+  GAME_PAUSE_EXIT = 3
+};
+enum gPausePTR GamePausePTR = 1;
+
+enum gSaveLoadPTR{
+  GAME_SAVELOAD_GAME1 = 1,
+  GAME_SAVELOAD_GAME2 = 2,
+  GAME_SAVELOAD_EXIT = 3
+};
+enum gSaveLoadPTR GameSaveLoadPTR = 1;
+#define   SAVE     0
+#define   LOAD     1
 
 typedef struct {
   uint8 en;
@@ -139,7 +151,7 @@ void ClrStartFl(void)
 void systemtasks(void)
 {
   check_btn_jstk();
-  ClickBtnFunc(&B4,ClrStartFl);
+  ClickBtnFunc(&B4,gamepausemenu);
   batcheck();
 }
 
@@ -341,6 +353,10 @@ void move_enemy_objects(void)
  */
 void gamemainmenu(void)
 {
+  check_btn_jstk();
+  if(joystick.down){joystick.down = 0; GameMenuPTR--;}
+  if(joystick.up){joystick.up = 0; GameMenuPTR++;}
+  
   switch(GameMenuPTR)
   {
     case GAME_MENU_START:
@@ -357,31 +373,64 @@ void gamemainmenu(void)
  */
 void gamepausemenu(void)
 {
-  switch(GameMenuPTR)
+  while(1)
   {
-    case GAME_MENU_START:
-      break;
-    case GAME_MENU_SAVE:
-      break;
-    case GAME_MENU_EXIT:
-      break;
+    check_btn_jstk();
+    if(joystick.down){joystick.down = 0; GamePausePTR++; if(GamePausePTR > 3) GamePausePTR = 3;}
+    if(joystick.up){joystick.up = 0; GamePausePTR--; if(GamePausePTR < 1) GamePausePTR = 1;}
+
+    switch(GamePausePTR)
+    {
+      case GAME_PAUSE_SAVE:
+        LCD_printmenucoursor(2, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          gamesaveloadmenu(SAVE);
+        }
+        break;
+      case GAME_PAUSE_RETURN:
+        LCD_printmenucoursor(4, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          return;
+        }
+        break;
+      case GAME_PAUSE_EXIT:
+        LCD_printmenucoursor(6, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          ClrStartFl();
+          return;
+        }
+        break;
+    }  
+    LCD_printstr8x5("ÑÎÕÐÀÍÈÒÜ", 2, 19);
+    LCD_printstr8x5("ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
+    LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
+    LCD_bufupload_buferase();
+    delay_ms(50);
   }
 }
 /*******************************************************************************
  *                              GAME SAVE/LOAD MENU                            
  *******************************************************************************
  */
-void gamesaveloadmenu(void)
+void gamesaveloadmenu(uint8 safe_load)
 {
-  switch(GameMenuPTR)
+  check_btn_jstk();
+  if(joystick.down){joystick.down = 0; GameSaveLoadPTR--;}
+  if(joystick.up){joystick.up = 0; GameSaveLoadPTR++;}
+  
+  switch(GameSaveLoadPTR)
   {
-    case GAME_MENU_GAME1:
+    case GAME_SAVELOAD_GAME1:
       break;
-    case GAME_MENU_GAME2:
+    case GAME_SAVELOAD_GAME2:
       break;
-    case GAME_MENU_EXIT:
+    case GAME_SAVELOAD_EXIT:
       break; 
   }
+  delay_ms(100);
 }
 /*******************************************************************************
  *                              MAIN ENTRY                            
