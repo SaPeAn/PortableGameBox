@@ -67,7 +67,14 @@ uint8 Max_Comet = COMET_MAX;
 uint8 Max_Coin = COIN_MAX;
 uint32 counter = 0;
 
-uint8 StartFl = 0;
+enum gamestate{
+    game_running = 1,
+    game_paused = 2,
+    game_stopped = 3,
+    game_exiting = 4    
+};
+
+enum gamestate gamestate = game_stopped;
 
 void ufobattle_init(void)
 {
@@ -141,11 +148,6 @@ void createbullet(void)
         i++;
         if(i >= Max_Bullet) i = 0;
     }
-}
-
-void ClrStartFl(void)
-{
-  StartFl = 0;
 }
 
 void systemtasks(void)
@@ -247,7 +249,7 @@ void gamer_evilstar_collision(void)
   //Gamer's death hendler
   if(Gamer.health <= 0) {
     Sounds(600); 
-    StartFl = 0;
+    gamestate = game_stopped;
   }
 }
 
@@ -353,19 +355,44 @@ void move_enemy_objects(void)
  */
 void gamemainmenu(void)
 {
-  check_btn_jstk();
-  if(joystick.down){joystick.down = 0; GameMenuPTR--;}
-  if(joystick.up){joystick.up = 0; GameMenuPTR++;}
-  
-  switch(GameMenuPTR)
+  while(gamestate == game_stopped)
   {
-    case GAME_MENU_START:
-      break;
-    case GAME_MENU_LOAD:
-      break;
-    case GAME_MENU_EXIT:
-      break;      
-  } 
+    check_btn_jstk();
+    if(joystick.down){joystick.down = 0; GameMenuPTR++; if(GameMenuPTR > 3) GameMenuPTR = 3;}
+    if(joystick.up){joystick.up = 0; GameMenuPTR--; if(GameMenuPTR < 1) GameMenuPTR = 1;}
+
+    switch(GameMenuPTR)
+    {
+      case GAME_MENU_START:
+        LCD_printmenucoursor(2, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          gamestate = game_running;
+        }
+        break;
+      case GAME_MENU_LOAD:
+        LCD_printmenucoursor(4, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          gamesaveloadmenu(LOAD);
+        }
+        break;
+      case GAME_MENU_EXIT:
+        LCD_printmenucoursor(6, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          CFlags.RunGameFl = 0; CFlags.MenuFl = 1; RemoveAllEvents(); return;
+        }
+        break;      
+    }
+    
+    LCD_printstr8x5("√¿À¿ “»◊≈— »… «¬≈«ƒ≈÷", 0, 0);
+    LCD_printstr8x5("ÕŒ¬¿ﬂ »√–¿", 2, 19);
+    LCD_printstr8x5("«¿√–”«»“‹ »√–”", 4, 19);
+    LCD_printstr8x5("¬€…“»", 6, 19);
+    LCD_bufupload_buferase();
+    delay_ms(50);
+  }
 }
 /*******************************************************************************
  *                              GAME PAUSE MENU                            
@@ -373,6 +400,7 @@ void gamemainmenu(void)
  */
 void gamepausemenu(void)
 {
+  SaveEventCounter();
   while(1)
   {
     check_btn_jstk();
@@ -399,17 +427,19 @@ void gamepausemenu(void)
         LCD_printmenucoursor(6, 4);
         if(B2.BtnON){
           B2.BtnON = 0;
-          ClrStartFl();
+          gamestate = game_stopped;
           return;
         }
         break;
-    }  
+    }
+    LCD_printstr8x5("œ¿”«¿", 0, 5);
     LCD_printstr8x5("—Œ’–¿Õ»“‹", 2, 19);
     LCD_printstr8x5("¬≈–Õ”“‹—ﬂ   »√–≈", 4, 19);
     LCD_printstr8x5("¬€…“»", 6, 19);
     LCD_bufupload_buferase();
     delay_ms(50);
   }
+  LoadEventCounter();
 }
 /*******************************************************************************
  *                              GAME SAVE/LOAD MENU                            
@@ -417,20 +447,42 @@ void gamepausemenu(void)
  */
 void gamesaveloadmenu(uint8 safe_load)
 {
-  check_btn_jstk();
-  if(joystick.down){joystick.down = 0; GameSaveLoadPTR--;}
-  if(joystick.up){joystick.up = 0; GameSaveLoadPTR++;}
-  
-  switch(GameSaveLoadPTR)
+  while(1)
   {
-    case GAME_SAVELOAD_GAME1:
-      break;
-    case GAME_SAVELOAD_GAME2:
-      break;
-    case GAME_SAVELOAD_EXIT:
-      break; 
+    check_btn_jstk();
+    if(joystick.down){joystick.down = 0; GameSaveLoadPTR++; if(GameSaveLoadPTR > 3) GameSaveLoadPTR = 3;}
+    if(joystick.up){joystick.up = 0; GameSaveLoadPTR--; if(GameSaveLoadPTR < 1) GameSaveLoadPTR = 1;}
+
+    switch(GameSaveLoadPTR)
+    {
+      case GAME_SAVELOAD_GAME1:
+        LCD_printmenucoursor(2, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+        }
+        break;
+      case GAME_SAVELOAD_GAME2:
+        LCD_printmenucoursor(4, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+        }
+        break;
+      case GAME_SAVELOAD_EXIT:
+        LCD_printmenucoursor(6, 4);
+        if(B2.BtnON){
+          B2.BtnON = 0;
+          return;
+        }
+        break; 
+    }
+    if(safe_load == SAVE) LCD_printstr8x5("—Œ’–¿Õ≈Õ»≈ »√–€", 0, 5);
+    else LCD_printstr8x5("«¿√–”« ¿ »√–€", 0, 5);
+    LCD_printstr8x5("—Œ’–.»√–¿ 1", 2, 19);
+    LCD_printstr8x5("—Œ’–.»√–¿ 2", 4, 19);
+    LCD_printstr8x5("Õ¿«¿ƒ", 6, 19);
+    LCD_bufupload_buferase();
+    delay_ms(50);
   }
-  delay_ms(100);
 }
 /*******************************************************************************
  *                              MAIN ENTRY                            
@@ -463,26 +515,12 @@ void ufobattle(void)
  *                              STARTUP CYCLE                            
  *******************************************************************************
  */
-    while(!StartFl)
-    {
-      check_btn_jstk();
-
-      if(B2.BtnON){B2.BtnON = 0; StartFl = 1;}
-      if(B1.BtnON){B1.BtnON = 0; CFlags.RunGameFl = 0; CFlags.MenuFl = 1; RemoveAllEvents(); return; }
-
-      if(timestamp - counter > 150){
-        LCD_bufupload_buferase();
-        counter = timestamp;
-      }
-      LCD_printbutselhint(5, 2, 89);
-      LCD_printstr8x5("‚˚ı.‚ı", 6, 86);
-      delay_ms(50);
-    }
+   gamemainmenu();
   /*******************************************************************************
    *                              MAIN LEVEL CYCLE                            
    *******************************************************************************
    */
-    while(StartFl)
+    while(gamestate == game_running)
     { 
       EventProcess();
     }

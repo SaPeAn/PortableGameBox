@@ -33,6 +33,19 @@ void SchedPeriodIncr(void)
   }
 }
 
+void SaveEventCounter(void)
+{
+  for(uint8 i = 0; i < registredevents; i++)
+  {
+    eventcount_temp[i] = event[i].eventcounter;   
+  }
+}
 
-
+void LoadEventCounter(void)
+{
+  for(uint8 i = 0; i < registredevents; i++)
+  {
+    event[i].eventcounter = eventcount_temp[i];   
+  }
+}
 

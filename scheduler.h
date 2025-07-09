@@ -8,6 +8,8 @@
 
 static uint8 registredevents = 0;
 
+uint16 eventcount_temp[MAX_EVENT];
+
 typedef struct {
   void (*callfunc)(void);
   uint16   period;
@@ -20,7 +22,8 @@ void SchedPeriodIncr(void);
 uint8 AddEvent(void (*)(void), uint32);
 void RemoveAllEvents(void);
 void EventProcess(void);
-
+void SaveEventCounter(void);
+void LoadEventCounter(void);
 
 
 #endif	
