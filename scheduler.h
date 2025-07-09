@@ -8,7 +8,7 @@
 
 static uint8 registredevents = 0;
 
-uint16 eventcount_temp[MAX_EVENT];
+uint16 eventcounter_temp[MAX_EVENT];
 
 typedef struct {
   void (*callfunc)(void);

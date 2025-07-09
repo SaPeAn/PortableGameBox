@@ -153,7 +153,7 @@ void createbullet(void)
 void systemtasks(void)
 {
   check_btn_jstk();
-  ClickBtnFunc(&B4,gamepausemenu);
+  if(B4.BtnON){B4.BtnON = 0; gamestate = game_paused;}
   batcheck();
 }
 
@@ -401,7 +401,7 @@ void gamemainmenu(void)
 void gamepausemenu(void)
 {
   SaveEventCounter();
-  while(1)
+  while(gamestate == game_paused)
   {
     check_btn_jstk();
     if(joystick.down){joystick.down = 0; GamePausePTR++; if(GamePausePTR > 3) GamePausePTR = 3;}
@@ -420,6 +420,7 @@ void gamepausemenu(void)
         LCD_printmenucoursor(4, 4);
         if(B2.BtnON){
           B2.BtnON = 0;
+          gamestate == game_running;
           return;
         }
         break;
@@ -506,8 +507,6 @@ void ufobattle(void)
   AddEvent(check_collision, 100);
   
   AddEvent(draw_and_screenupdate, 100);
-
-  
   
   while(CFlags.RunGameFl)
   {
@@ -516,6 +515,7 @@ void ufobattle(void)
  *******************************************************************************
  */
    gamemainmenu();
+   gamepausemenu();
   /*******************************************************************************
    *                              MAIN LEVEL CYCLE                            
    *******************************************************************************
@@ -526,4 +526,5 @@ void ufobattle(void)
     }
   }
   RemoveAllEvents();
+  
 }
