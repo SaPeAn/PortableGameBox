@@ -39,7 +39,6 @@ void main(void)
   initbuttons();
   swi2cinit();
   BrightPWMgen(brightPWM);
-  ufobattle_init();
 /*----------------------------------------------------------------------------*/
   uint8 adr = 0;
   uint8 byte = 0;

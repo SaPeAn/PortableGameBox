@@ -445,14 +445,3 @@ uint8 EEPROM_readbyte(uint8 adr)
   EECON1bits.RD = 1;
   return EEDATA;
 }
-
-typedef struct {
-  uint8 level;
-  uint8 level_progress;
-  uint8 difficulty;
-}tGameProc;
-
-void savegame(tGameProc* Game, tGamer Gamer)
-{
-  Nop();
-}

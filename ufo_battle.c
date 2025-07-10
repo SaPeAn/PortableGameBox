@@ -3,12 +3,12 @@
 #include "drv_RTC_I2C.h"
 #include "display_data.h"
 #include "scheduler.h"
-
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
  *******************************************************************************
  */
-void gamemainmenu(void)                       // MAIN MENU
+//--------------------------MAIN MENU--------------------------
+void gamemainmenu(void)
 {
   while (1) {
     check_btn_jstk();
@@ -22,7 +22,6 @@ void gamemainmenu(void)                       // MAIN MENU
       GameMainMenuPTR--;
       if (GameMainMenuPTR < 1) GameMainMenuPTR = 1;
     }
-
     switch (GameMainMenuPTR) {
       case GAME_MENU_START:
         LCD_printmenucoursor(2, 4);
@@ -52,7 +51,6 @@ void gamemainmenu(void)                       // MAIN MENU
         }
         break;
     }
-
     LCD_printstr8x5("ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
     LCD_printstr8x5("ÍÎÂÀß ÈÃÐÀ", 2, 19);
     LCD_printstr8x5("ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
@@ -61,8 +59,8 @@ void gamemainmenu(void)                       // MAIN MENU
     delay_ms(50);
   }
 }
-
-void gamepausemenu(void) {                  // PAUSE MENU
+//--------------------------PAUSE MENU-----------------------------
+void gamepausemenu(void) {
   SchedulerCounter = OFF;
   while (1) {
     check_btn_jstk();
@@ -110,8 +108,8 @@ void gamepausemenu(void) {                  // PAUSE MENU
     delay_ms(50);
   }
 }
-
-void gamesaveloadmenu(uint8 safe_load) {      //         SAVE/LOAD MENU
+//-----------------------SAVE/LOAD MENU--------------------------
+void gamesaveloadmenu(uint8 safe_load) {
   while (1) {
     check_btn_jstk();
     if (joystick.down) {
@@ -162,9 +160,9 @@ void gamesaveloadmenu(uint8 safe_load) {      //         SAVE/LOAD MENU
  */
 void ufobattle_init_newgame(void) {
   Gamer.health = 24;
-  Gamer.energy = 4;
-  Gamer.energymax = 24;
-  Gamer.energy_regenperiod = 150;
+  Gamer.energy = 6;
+  Gamer.energymax = 6;
+  Gamer.energy_regenperiod = 180;
   Gamer.gasmask_fl = 0;
   Gamer.bombs = 0;
   Gamer.money = 0;
@@ -177,6 +175,12 @@ void ufobattle_init_newgame(void) {
  *                              EVENT DESCRIPTIONS
  * *****************************************************************************
  */
+
+void gameprogress(uint8 period)
+{
+    
+}
+
 void createevilstar(void) {
   static uint8 i = 0;
   if (Evil_Star[i].state == 0) {

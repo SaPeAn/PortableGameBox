@@ -4,6 +4,13 @@
 
 #include "common.h"
 
+
+typedef struct {
+  uint8 level;
+  uint8 level_progress;
+  uint8 difficulty;
+}tGameProc;
+
 //------------------------------Game objects------------------------------------
 typedef struct
 {
@@ -46,6 +53,7 @@ typedef struct{
 #define EVILSTAR_DISTR_TTL  2
 #define COIN_ANIMCOUNT  16
 
+tGameProc Game;
 tGamer Gamer;
 tBullet Bullet[BULLET_MAX] = {0};
 tEvilStar Evil_Star[EVILSTAR_MAX] = {0};
@@ -94,7 +102,7 @@ void ufobattle(void);
 void gamemainmenu(void);
 void gamepausemenu(void);
 void gamesaveloadmenu(uint8);
-
+void gameprogress(uint8);
 
 #endif	/* UFO_BATTLE_H */
 
