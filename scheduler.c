@@ -27,25 +27,10 @@ void EventProcess(void)
 
 void SchedPeriodIncr(void)
 {
-  for(uint8 i = 0; i < registredevents; i++)
-  {
-    event[i].eventcounter++;
+  if(SchedulerCounter){
+    for(uint8 i = 0; i < registredevents; i++)
+    {
+      event[i].eventcounter++;
+    }
   }
 }
-
-void SaveEventCounter(void)
-{
-  for(uint8 i = 0; i < registredevents; i++)
-  {
-    eventcounter_temp[i] = event[i].eventcounter;   
-  }
-}
-
-void LoadEventCounter(void)
-{
-  for(uint8 i = 0; i < registredevents; i++)
-  {
-    event[i].eventcounter = eventcounter_temp[i];   
-  }
-}
-

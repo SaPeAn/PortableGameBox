@@ -128,6 +128,7 @@ void checkjoydir(void);
 void ClickBtnFunc(tButton* BTN, void (*function(void)));
 void HoldBtnFunc(tButton* BTN, void (*function(void)));
 void StuckBtnFunc(tButton* BTN, void (*function(void)));
+void check_btn_jstk(void);
 /*----------------------------------------------------------------------------*/
 
 #endif	/* COMMON_H */

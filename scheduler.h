@@ -5,10 +5,11 @@
 #include "common.h"
 
 #define      MAX_EVENT    10
+#define      ON           1
+#define      OFF          0
 
 static uint8 registredevents = 0;
-
-uint16 eventcounter_temp[MAX_EVENT];
+uint8 SchedulerCounter = OFF;
 
 typedef struct {
   void (*callfunc)(void);

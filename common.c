@@ -219,7 +219,7 @@ void BrightPWMgen(uint8 duty_cycle)
 void Sounds(uint16 delay)
 {
   uint16 j;
-  /*for(uint8 i = 0; i < (delay/10); i++)
+  for(uint8 i = 0; i < (delay/10); i++)
   {  
     LATCbits.LC2 = 0;
     j = delay;
@@ -227,7 +227,7 @@ void Sounds(uint16 delay)
     LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }*/
+  }
 }
 
 void rtcrawtobcd(void)
@@ -298,6 +298,16 @@ tButton CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* La
   return BTN;
 }
 
+void check_btn_jstk(void) //Test buttons and joystick
+{
+  TestBtn(&B1);
+  TestBtn(&B2);
+  TestBtn(&B3);
+  TestBtn(&B4);
+  joystick.ox = adc_getval_an0();
+  joystick.oy = adc_getval_an1();
+  checkjoydir();
+}
 void ClickBtnFunc(tButton* BTN, void (*function(void)))
 {
   if(BTN->BtnON){
