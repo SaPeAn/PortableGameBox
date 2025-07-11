@@ -8,19 +8,18 @@
  *                              EVENT DESCRIPTIONS
  * *****************************************************************************
  */
-
 void gameprogress(uint8 period)
 {
   static uint8 counter = 0;
-  if(counter != 0)
+  if(counter == period)
   {
     Game.level_progress++;
     if(Game.level_progress > Game.Const1){}
     if(Game.level_progress > Game.Const2){}
     if(Game.level_progress > Game.Const3){}
   }
-  else{counter = period;}
-  counter--;
+  else{counter = 0;}
+  counter++;
 }
 
 void createevilstar(void) {
@@ -61,15 +60,6 @@ void createbullet(void) {
     i++;
     if (i >= Max_Bullet) i = 0;
   }
-}
-
-void systemtasks(void) {
-  check_btn_jstk();
-  if (B4.BtnON) {
-    B4.BtnON = 0;
-    gamepausemenu();
-  }
-  batcheck();
 }
 
 void gunregen(void) //Energy regen
@@ -150,7 +140,7 @@ void gamer_evilstar_collision(void) {
   //Gamer's death hendler
   if (Gamer.health <= 0) {
     Sounds(600);
-    gamestate = game_mainmenu;
+    stopgamehandler();
   }
 }
 
@@ -215,12 +205,18 @@ void drawinfo(void) {
 void screenupdate(void) {
   LCD_bufupload_buferase();
 }
-
+//--------------------------COMBINED FUNCTIONS---------------------------
 void check_collision(void) {
   bullet_evilstar_collision();
   gamer_evilstar_collision();
   gamer_coin_collision();
 }
+
+void move_enemy_objects(void) {
+  movevilstar();
+  movcoin();
+}
+
 
 void draw_and_screenupdate(void) {
   drawevilstar();
@@ -231,177 +227,24 @@ void draw_and_screenupdate(void) {
   screenupdate();
 }
 
-void move_enemy_objects(void) {
-  movevilstar();
-  movcoin();
+void systemtasks(void) {
+  check_btn_jstk();
+  if (B4.BtnON) {
+    B4.BtnON = 0;
+   //gameevent = EVENT_PAUSE_GAME;
+    gamestate = STATE_PAUSEMENU;
+    
+  }
+    
+  batcheck();
+  gameprogress(50);
 }
-
-void cleargameobjects(void)
-{
-  for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
-  for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
-  for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
-}
-
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
  *******************************************************************************
  */
-//--------------------------MAIN MENU--------------------------
-void gamemainmenu(void)
+void newgameinit(void)
 {
-  SchedulerCounterToggle = OFF;
-  while (1) {
-    check_btn_jstk();
-    if (joystick.down) {
-      joystick.down = 0;
-      GameMainMenuPTR++;
-      if (GameMainMenuPTR > 3) GameMainMenuPTR = 3;
-    }
-    if (joystick.up) {
-      joystick.up = 0;
-      GameMainMenuPTR--;
-      if (GameMainMenuPTR < 1) GameMainMenuPTR = 1;
-    }
-    switch (GameMainMenuPTR) {
-      case GAME_MENU_START:
-        LCD_printmenucoursor(2, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          ufobattle_startnewgame();
-          return;
-        }
-        break;
-      case GAME_MENU_LOAD:
-        LCD_printmenucoursor(4, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          gamesaveloadmenu(LOAD);
-        }
-        break;
-      case GAME_MENU_EXIT:
-        LCD_printmenucoursor(6, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          CFlags.RunGameFl = 0;
-          CFlags.MenuFl = 1;
-          gamestate = game_exiting;
-          return;
-        }
-        break;
-    }
-    LCD_printstr8x5("ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
-    LCD_printstr8x5("ÍÎÂÀß ÈÃÐÀ", 2, 19);
-    LCD_printstr8x5("ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
-    LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
-    LCD_bufupload_buferase();
-    delay_ms(50);
-  }
-}
-//--------------------------PAUSE MENU-----------------------------
-void gamepausemenu(void) {
-  SchedulerCounterToggle = OFF;
-  while (1) {
-    check_btn_jstk();
-    if (joystick.down) {
-      joystick.down = 0;
-      GamePauseMenuPTR++;
-      if (GamePauseMenuPTR > 3) GamePauseMenuPTR = 3;
-    }
-    if (joystick.up) {
-      joystick.up = 0;
-      GamePauseMenuPTR--;
-      if (GamePauseMenuPTR < 1) GamePauseMenuPTR = 1;
-    }
-
-    switch (GamePauseMenuPTR) {
-      case GAME_PAUSE_SAVE:
-        LCD_printmenucoursor(2, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          gamesaveloadmenu(SAVE);
-        }
-        break;
-      case GAME_PAUSE_RETURN:
-        LCD_printmenucoursor(4, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          SchedulerCounterToggle = ON;
-          return;
-        }
-        break;
-      case GAME_PAUSE_EXIT:
-        LCD_printmenucoursor(6, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          gamestate = game_mainmenu;
-          return;
-        }
-        break;
-    }
-    LCD_printstr8x5("ÏÀÓÇÀ", 0, 5);
-    LCD_printstr8x5("ÑÎÕÐÀÍÈÒÜ", 2, 19);
-    LCD_printstr8x5("ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
-    LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
-    LCD_bufupload_buferase();
-    delay_ms(50);
-  }
-}
-//-----------------------SAVE/LOAD MENU--------------------------
-void gamesaveloadmenu(uint8 safe_load) {
-  while (1) {
-    check_btn_jstk();
-    if (joystick.down) {
-      joystick.down = 0;
-      GameSaveLoadMenuPTR++;
-      if (GameSaveLoadMenuPTR > 3) GameSaveLoadMenuPTR = 3;
-    }
-    if (joystick.up) {
-      joystick.up = 0;
-      GameSaveLoadMenuPTR--;
-      if (GameSaveLoadMenuPTR < 1) GameSaveLoadMenuPTR = 1;
-    }
-
-    switch (GameSaveLoadMenuPTR) {
-      case GAME_SAVELOAD_GAME1:
-        LCD_printmenucoursor(2, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-        }
-        break;
-      case GAME_SAVELOAD_GAME2:
-        LCD_printmenucoursor(4, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-        }
-        break;
-      case GAME_SAVELOAD_EXIT:
-        LCD_printmenucoursor(6, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          return;
-        }
-        break;
-    }
-    if (safe_load == SAVE) LCD_printstr8x5("ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
-    else LCD_printstr8x5("ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
-    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 1", 2, 19);
-    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 2", 4, 19);
-    LCD_printstr8x5("ÍÀÇÀÄ", 6, 19);
-    LCD_bufupload_buferase();
-    delay_ms(50);
-  }
-}
-
-/*******************************************************************************
- *                              LOAD/SAVE/STARTNEW GAME 
- * *****************************************************************************
- */
-void ufobattle_startnewgame(void) 
-{
-  cleargameobjects();
-  randinit();
-  
   Gamer.health = 24;
   Gamer.energy = 6;
   Gamer.energymax = 6;
@@ -422,9 +265,203 @@ void ufobattle_startnewgame(void)
   AddEvent(move_enemy_objects, 18);
   AddEvent(check_collision, 100);
   AddEvent(draw_and_screenupdate, 100);
+}
 
-  SchedulerCounterToggle = ON;
-  gamestate = game_running;
+void savegame(uint8 slot) 
+{
+  RemoveAllEvents();
+  AddEvent(systemtasks, 50);
+  AddEvent(gunregen, Gamer.energy_regenperiod);
+  AddEvent(createevilstar, 800);
+  AddEvent(createbullet, 100);
+  AddEvent(movgamer, 40);
+  AddEvent(movbullet, 5);
+  AddEvent(move_enemy_objects, 18);
+  AddEvent(check_collision, 100);
+  AddEvent(draw_and_screenupdate, 100);
+}
+
+void loadgame(uint8 slot)
+{
+  RemoveAllEvents();
+  AddEvent(systemtasks, 50);
+  AddEvent(gunregen, Gamer.energy_regenperiod);
+  AddEvent(createevilstar, 800);
+  AddEvent(createbullet, 100);
+  AddEvent(movgamer, 40);
+  AddEvent(movbullet, 5);
+  AddEvent(move_enemy_objects, 18);
+  AddEvent(check_collision, 100);
+  AddEvent(draw_and_screenupdate, 100);
+}
+
+void stopgamehandler(void)
+{
+  RemoveAllEvents();
+  for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
+  for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
+  for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
+  SchedulerCounterToggle = OFF;
+  gamestate = STATE_MAINMENU;
+}
+
+void exitgame(void)
+{
+  CFlags.RunGameFl = 0;
+  CFlags.MenuFl = 1;
+}
+
+void rungame(void)
+{
+  EventProcess();
+}
+//--------------------------MAIN MENU--------------------------
+void mainmenu(void)
+{
+  check_btn_jstk();
+  if (joystick.down) {
+    joystick.down = 0;
+    GameMainMenuPTR++;
+    if (GameMainMenuPTR > 3) GameMainMenuPTR = 3;
+  }
+  if (joystick.up) {
+    joystick.up = 0;
+    GameMainMenuPTR--;
+    if (GameMainMenuPTR < 1) GameMainMenuPTR = 1;
+  }
+
+  switch (GameMainMenuPTR) {
+    case GAME_MENU_START:
+      LCD_printmenucoursor(2, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        newgameinit();
+        gamestate = STATE_RUNNING;
+        SchedulerCounterToggle = ON;
+      }
+      break;
+    case GAME_MENU_LOAD:
+      LCD_printmenucoursor(4, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        saveloadmenu(LOAD);
+        gamestate = STATE_RUNNING;
+        SchedulerCounterToggle = ON;
+      }
+      break;
+    case GAME_MENU_EXIT:
+      LCD_printmenucoursor(6, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        exitgame();
+      }
+      break;
+  }
+  LCD_printstr8x5("ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
+  LCD_printstr8x5("ÍÎÂÀß ÈÃÐÀ", 2, 19);
+  LCD_printstr8x5("ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
+  LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
+  LCD_bufupload_buferase();
+  delay_ms(50);
+}
+//--------------------------PAUSE MENU-----------------------------
+void pausemenu(void)
+{
+  SchedulerCounterToggle = OFF;
+  check_btn_jstk();
+  if (joystick.down) {
+    joystick.down = 0;
+    GamePauseMenuPTR++;
+    if (GamePauseMenuPTR > 3) GamePauseMenuPTR = 3;
+  }
+  if (joystick.up) {
+    joystick.up = 0;
+    GamePauseMenuPTR--;
+    if (GamePauseMenuPTR < 1) GamePauseMenuPTR = 1;
+  }
+
+  switch (GamePauseMenuPTR) {
+    case GAME_PAUSE_SAVE:
+      LCD_printmenucoursor(2, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        saveloadmenu(SAVE);
+      }
+      break;
+    case GAME_PAUSE_RETURN:
+      LCD_printmenucoursor(4, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        gamestate = STATE_RUNNING;
+        SchedulerCounterToggle = ON;
+      }
+      break;
+    case GAME_PAUSE_EXIT:
+      LCD_printmenucoursor(6, 4);
+      if (B2.BtnON) {
+        B2.BtnON = 0;
+        gamestate = STATE_MAINMENU;
+        stopgamehandler();
+      }
+      break;
+  }
+  LCD_printstr8x5("ÏÀÓÇÀ", 0, 5);
+  LCD_printstr8x5("ÑÎÕÐÀÍÈÒÜ", 2, 19);
+  LCD_printstr8x5("ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
+  LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
+  LCD_bufupload_buferase();
+  delay_ms(50);
+}
+//-----------------------SAVE/LOAD MENU--------------------------
+void saveloadmenu(uint8 save_load)
+{
+  while(1)
+  {
+    check_btn_jstk();
+    if (joystick.down) {
+      joystick.down = 0;
+      GameSaveLoadMenuPTR++;
+      if (GameSaveLoadMenuPTR > 3) GameSaveLoadMenuPTR = 3;
+    }
+    if (joystick.up) {
+      joystick.up = 0;
+      GameSaveLoadMenuPTR--;
+      if (GameSaveLoadMenuPTR < 1) GameSaveLoadMenuPTR = 1;
+    }
+
+    switch (GameSaveLoadMenuPTR) {
+      case GAME_SAVELOAD_GAME1:
+        LCD_printmenucoursor(2, 4);
+        if (B2.BtnON) {
+          B2.BtnON = 0;
+          if(save_load == SAVE){savegame(SLOT2);}
+          if(save_load == LOAD){loadgame(SLOT2); return;}
+        }
+        break;
+      case GAME_SAVELOAD_GAME2:
+        LCD_printmenucoursor(4, 4);
+        if (B2.BtnON) {
+          B2.BtnON = 0;
+          if(save_load == SAVE){savegame(SLOT2);}
+          if(save_load == LOAD){loadgame(SLOT2); return;}
+        }
+        break;
+      case GAME_SAVELOAD_EXIT:
+        LCD_printmenucoursor(6, 4);
+        if (B2.BtnON) {
+          B2.BtnON = 0;
+          return;
+        }
+        break;
+    }
+    if (save_load == SAVE) LCD_printstr8x5("ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
+    else LCD_printstr8x5("ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
+    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 1", 2, 19);
+    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 2", 4, 19);
+    LCD_printstr8x5("ÍÀÇÀÄ", 6, 19);
+    LCD_bufupload_buferase();
+    delay_ms(50);
+  }
 }
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
@@ -432,23 +469,12 @@ void ufobattle_startnewgame(void)
  */
 void ufobattle(void)
 {
-  
+  stopgamehandler();
+  randinit();
+  gamestate = STATE_MAINMENU;
+    
   while (CFlags.RunGameFl)
   {
-    switch (gamestate) {
-      case game_mainmenu:
-        gamemainmenu();
-        break;
-      case game_running:
-        EventProcess();
-        break;
-      case game_exiting:
-        CFlags.RunGameFl = 0;
-        CFlags.MenuFl = 1;
-        break;
-    }
+      transition_table[gamestate]();
   }
-  RemoveAllEvents();
-  gamestate = game_mainmenu;
-  
 }

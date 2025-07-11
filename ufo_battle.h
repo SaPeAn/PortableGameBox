@@ -67,39 +67,27 @@ uint8 Max_Evilstar = EVILSTAR_MAX;
 uint8 Max_Coin = COIN_MAX;
 uint32 counter = 0;
 
-enum states
-{
-    initial = 0,
-    state_1,
-    state_final
-};
+typedef enum {
+    STATE_MAINMENU,
+    STATE_RUNNING,
+    STATE_PAUSEMENU,
+    STATE_MAX,
+} tGAME_STATE;
 
-enum signals
-{
-    sign0,
-    sign1,
-    sign_N
-};
+tGAME_STATE gamestate = STATE_MAINMENU;
 
-enum states FSM_table[3][3] = {
-    [initial][sign0] = state_1,
-    [initial][sign1] = initial,
-    [initial][sign_N] = state_1,
-    [state_1][sign0] = initial,
-    [state_1][sign1] = state_1,
-    [state_1][sign_N] = state_final,
-    [state_final][sign0] = initial,
-    [state_final][sign1] = initial,
-    [state_final][sign_N] = initial
-};
+void mainmenu(void);
+void rungame(void);
+void exitgame(void);
+void rungame(void);
+void pausemenu(void);
+void stopgamehandler(void);
 
-enum gamestate {
-  game_mainmenu = 1,
-  game_running = 2,
-  game_paused = 3,
-  game_exiting = 4
+void (*const transition_table[STATE_MAX])(void) = {
+    [STATE_MAINMENU]   = mainmenu,
+    [STATE_RUNNING]    = rungame,
+    [STATE_PAUSEMENU]  = pausemenu,
 };
-enum gamestate gamestate = game_mainmenu;
 
 enum MainMenuPTR{
   GAME_MENU_START = 1,
@@ -123,13 +111,15 @@ enum SaveLoadMenuPTR{
 enum SaveLoadMenuPTR GameSaveLoadMenuPTR = 1;
 #define   SAVE     0
 #define   LOAD     1
+#define   SLOT1    0
+#define   SLOT2    1
 
 
 void ufobattle_startnewgame(void);
 void ufobattle(void);
-void gamemainmenu(void);
-void gamepausemenu(void);
-void gamesaveloadmenu(uint8);
+void mainmenu(void);
+void pausemenu(void);
+void saveloadmenu(uint8);
 void gameprogress(uint8);
 
 #endif	/* UFO_BATTLE_H */
