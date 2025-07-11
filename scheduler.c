@@ -27,7 +27,7 @@ void EventProcess(void)
 
 void SchedPeriodIncr(void)
 {
-  if(SchedulerCounter){
+  if(SchedulerCounterToggle){
     for(uint8 i = 0; i < registredevents; i++)
     {
       event[i].eventcounter++;

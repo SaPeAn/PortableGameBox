@@ -9,6 +9,9 @@ typedef struct {
   uint8 level;
   uint8 level_progress;
   uint8 difficulty;
+  uint8 Const1;
+  uint8 Const2;
+  uint8 Const3;
 }tGameProc;
 
 //------------------------------Game objects------------------------------------
@@ -26,7 +29,7 @@ typedef struct
 }tGamer;
 
 typedef struct {
-  uint8 en;
+  uint8 state;
   uint8 ln;
   uint8 cl;
 }tBullet;
@@ -40,7 +43,7 @@ typedef struct{
 }tEvilStar;
 
 typedef struct{
-  uint8 en;
+  uint8 state;
   uint8 ln;
   int8   cl;
   uint8 animation_count;
@@ -56,7 +59,7 @@ typedef struct{
 tGameProc Game;
 tGamer Gamer;
 tBullet Bullet[BULLET_MAX] = {0};
-tEvilStar Evil_Star[EVILSTAR_MAX] = {0};
+tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 
 uint8 Max_Bullet = BULLET_MAX;
@@ -64,6 +67,31 @@ uint8 Max_Evilstar = EVILSTAR_MAX;
 uint8 Max_Coin = COIN_MAX;
 uint32 counter = 0;
 
+enum states
+{
+    initial = 0,
+    state_1,
+    state_final
+};
+
+enum signals
+{
+    sign0,
+    sign1,
+    sign_N
+};
+
+enum states FSM_table[3][3] = {
+    [initial][sign0] = state_1,
+    [initial][sign1] = initial,
+    [initial][sign_N] = state_1,
+    [state_1][sign0] = initial,
+    [state_1][sign1] = state_1,
+    [state_1][sign_N] = state_final,
+    [state_final][sign0] = initial,
+    [state_final][sign1] = initial,
+    [state_final][sign_N] = initial
+};
 
 enum gamestate {
   game_mainmenu = 1,
@@ -97,7 +125,7 @@ enum SaveLoadMenuPTR GameSaveLoadMenuPTR = 1;
 #define   LOAD     1
 
 
-void ufobattle_init_newgame(void);
+void ufobattle_startnewgame(void);
 void ufobattle(void);
 void gamemainmenu(void);
 void gamepausemenu(void);

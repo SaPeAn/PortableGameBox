@@ -9,7 +9,7 @@
 #define      OFF          0
 
 static uint8 registredevents = 0;
-uint8 SchedulerCounter = OFF;
+uint8 SchedulerCounterToggle = OFF;
 
 typedef struct {
   void (*callfunc)(void);
