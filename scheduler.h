@@ -8,7 +8,7 @@
 #define      ON           1
 #define      OFF          0
 
-static uint8 registredevents = 0;
+static uint8 SchedulerRegistredEvents = 0;
 uint8 SchedulerCounterToggle = OFF;
 
 typedef struct {
@@ -17,14 +17,12 @@ typedef struct {
   uint16   eventcounter;
 } tEvent;
 
-tEvent event[MAX_EVENT];
+tEvent SchedulerEvent[MAX_EVENT];
 
-void SchedPeriodIncr(void);
-uint8 AddEvent(void (*)(void), uint32);
-void RemoveAllEvents(void);
-void EventProcess(void);
-void SaveEventCounter(void);
-void LoadEventCounter(void);
+void  SchedPeriodIncr(void);
+uint8 SchedulerAddEvent(void (*)(void), uint32);
+void  SchedulerRemoveAllEvents(void);
+void  SchedulerEventProcess(void);
 
 
 #endif	

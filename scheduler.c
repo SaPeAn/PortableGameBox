@@ -1,26 +1,26 @@
 #include "scheduler.h"
 
 
-uint8 AddEvent(void (*func)(void), uint32 period)
+uint8 SchedulerAddEvent(void (*func)(void), uint32 period)
 {
-  event[registredevents].callfunc = func;
-  event[registredevents].period = period;
-  return registredevents++;
+  SchedulerEvent[SchedulerRegistredEvents].callfunc = func;
+  SchedulerEvent[SchedulerRegistredEvents].period = period;
+  return SchedulerRegistredEvents++;
 }
 
-void RemoveAllEvents(void)
+void SchedulerRemoveAllEvents(void)
 {
-  registredevents = 0;
+  SchedulerRegistredEvents = 0;
 }
 
-void EventProcess(void)
+void SchedulerEventProcess(void)
 {
-  for(uint8 i = 0; i < registredevents; i++)
+  for(uint8 i = 0; i < SchedulerRegistredEvents; i++)
   {
-    if(event[i].eventcounter >= event[i].period)
+    if(SchedulerEvent[i].eventcounter >= SchedulerEvent[i].period)
     {
-      event[i].eventcounter = 0;
-      event[i].callfunc();
+      SchedulerEvent[i].eventcounter = 0;
+      SchedulerEvent[i].callfunc();
     }
   }
 }
@@ -28,9 +28,9 @@ void EventProcess(void)
 void SchedPeriodIncr(void)
 {
   if(SchedulerCounterToggle){
-    for(uint8 i = 0; i < registredevents; i++)
+    for(uint8 i = 0; i < SchedulerRegistredEvents; i++)
     {
-      event[i].eventcounter++;
+      SchedulerEvent[i].eventcounter++;
     }
   }
 }

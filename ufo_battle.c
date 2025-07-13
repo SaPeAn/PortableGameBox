@@ -5,7 +5,7 @@
 #include "scheduler.h"
 
 /*******************************************************************************
- *                              EVENT DESCRIPTIONS
+ *                        SCHEDULER EVENT DESCRIPTIONS
  * *****************************************************************************
  */
 void gameprogress(uint8 period)
@@ -205,7 +205,7 @@ void drawinfo(void) {
 void screenupdate(void) {
   LCD_bufupload_buferase();
 }
-//--------------------------COMBINED FUNCTIONS---------------------------
+//--------------------------COMBINED SCHEDULER EVENTS---------------------------
 void check_collision(void) {
   bullet_evilstar_collision();
   gamer_evilstar_collision();
@@ -228,14 +228,6 @@ void draw_and_screenupdate(void) {
 }
 
 void systemtasks(void) {
-  check_btn_jstk();
-  if (B4.BtnON) {
-    B4.BtnON = 0;
-   //gameevent = EVENT_PAUSE_GAME;
-    gamestate = STATE_PAUSEMENU;
-    
-  }
-    
   batcheck();
   gameprogress(50);
 }
@@ -243,7 +235,7 @@ void systemtasks(void) {
  *                              GAME MENU HANDLERS                            
  *******************************************************************************
  */
-void newgameinit(void)
+void startnewgame(void)
 {
   Gamer.health = 24;
   Gamer.energy = 6;
@@ -255,54 +247,53 @@ void newgameinit(void)
   Gamer.ln = 16;
   Gamer.cl = 0;
   
-  RemoveAllEvents();
-  AddEvent(systemtasks, 50);
-  AddEvent(gunregen, Gamer.energy_regenperiod);
-  AddEvent(createevilstar, 800);
-  AddEvent(createbullet, 100);
-  AddEvent(movgamer, 40);
-  AddEvent(movbullet, 5);
-  AddEvent(move_enemy_objects, 18);
-  AddEvent(check_collision, 100);
-  AddEvent(draw_and_screenupdate, 100);
+  SchedulerRemoveAllEvents();
+  SchedulerAddEvent(systemtasks, 50);
+  SchedulerAddEvent(gunregen, Gamer.energy_regenperiod);
+  SchedulerAddEvent(createevilstar, 800);
+  SchedulerAddEvent(createbullet, 100);
+  SchedulerAddEvent(movgamer, 40);
+  SchedulerAddEvent(movbullet, 5);
+  SchedulerAddEvent(move_enemy_objects, 18);
+  SchedulerAddEvent(check_collision, 100);
+  SchedulerAddEvent(draw_and_screenupdate, 100);
+  
+  gamestate = STATE_GAMERUN;
 }
 
 void savegame(uint8 slot) 
 {
-  RemoveAllEvents();
-  AddEvent(systemtasks, 50);
-  AddEvent(gunregen, Gamer.energy_regenperiod);
-  AddEvent(createevilstar, 800);
-  AddEvent(createbullet, 100);
-  AddEvent(movgamer, 40);
-  AddEvent(movbullet, 5);
-  AddEvent(move_enemy_objects, 18);
-  AddEvent(check_collision, 100);
-  AddEvent(draw_and_screenupdate, 100);
 }
 
 void loadgame(uint8 slot)
 {
-  RemoveAllEvents();
-  AddEvent(systemtasks, 50);
-  AddEvent(gunregen, Gamer.energy_regenperiod);
-  AddEvent(createevilstar, 800);
-  AddEvent(createbullet, 100);
-  AddEvent(movgamer, 40);
-  AddEvent(movbullet, 5);
-  AddEvent(move_enemy_objects, 18);
-  AddEvent(check_collision, 100);
-  AddEvent(draw_and_screenupdate, 100);
+  SchedulerRemoveAllEvents();
+  SchedulerAddEvent(systemtasks, 50);
+  SchedulerAddEvent(gunregen, Gamer.energy_regenperiod);
+  SchedulerAddEvent(createevilstar, 800);
+  SchedulerAddEvent(createbullet, 100);
+  SchedulerAddEvent(movgamer, 40);
+  SchedulerAddEvent(movbullet, 5);
+  SchedulerAddEvent(move_enemy_objects, 18);
+  SchedulerAddEvent(check_collision, 100);
+  SchedulerAddEvent(draw_and_screenupdate, 100);
+}
+
+void rungame(void)
+{
+  SchedulerCounterToggle = ON;
+  gamestate = STATE_GAMERUN;
+  SchedulerEventProcess();
 }
 
 void stopgamehandler(void)
 {
-  RemoveAllEvents();
+  SchedulerRemoveAllEvents();
   for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   SchedulerCounterToggle = OFF;
-  gamestate = STATE_MAINMENU;
+  gamestate = STATE_MMSTARTNEWGAME;
 }
 
 void exitgame(void)
@@ -311,100 +302,33 @@ void exitgame(void)
   CFlags.MenuFl = 1;
 }
 
-void rungame(void)
-{
-  EventProcess();
+void loadslot1(void){
+  loadgame(SLOT1);
+  gamestate = STATE_GAMERUN;
 }
-//--------------------------MAIN MENU--------------------------
-void mainmenu(void)
-{
-  check_btn_jstk();
-  if (joystick.down) {
-    joystick.down = 0;
-    GameMainMenuPTR++;
-    if (GameMainMenuPTR > 3) GameMainMenuPTR = 3;
-  }
-  if (joystick.up) {
-    joystick.up = 0;
-    GameMainMenuPTR--;
-    if (GameMainMenuPTR < 1) GameMainMenuPTR = 1;
-  }
+void loadslot2(void){
+  loadgame(SLOT2);    
+  gamestate = STATE_GAMERUN;
+}
+void saveslot1(void){
+  savegame(SLOT1);
+}
+void saveslot2(void){
+  savegame(SLOT2);
+}
 
-  switch (GameMainMenuPTR) {
-    case GAME_MENU_START:
-      LCD_printmenucoursor(2, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        newgameinit();
-        gamestate = STATE_RUNNING;
-        SchedulerCounterToggle = ON;
-      }
-      break;
-    case GAME_MENU_LOAD:
-      LCD_printmenucoursor(4, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        saveloadmenu(LOAD);
-        gamestate = STATE_RUNNING;
-        SchedulerCounterToggle = ON;
-      }
-      break;
-    case GAME_MENU_EXIT:
-      LCD_printmenucoursor(6, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        exitgame();
-      }
-      break;
-  }
+void displaymainmenu(void)
+{
   LCD_printstr8x5("ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
   LCD_printstr8x5("ÍÎÂÀß ÈÃÐÀ", 2, 19);
   LCD_printstr8x5("ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
   LCD_printstr8x5("ÂÛÉÒÈ", 6, 19);
   LCD_bufupload_buferase();
   delay_ms(50);
+  
 }
-//--------------------------PAUSE MENU-----------------------------
-void pausemenu(void)
+void displaypausemenu(void)
 {
-  SchedulerCounterToggle = OFF;
-  check_btn_jstk();
-  if (joystick.down) {
-    joystick.down = 0;
-    GamePauseMenuPTR++;
-    if (GamePauseMenuPTR > 3) GamePauseMenuPTR = 3;
-  }
-  if (joystick.up) {
-    joystick.up = 0;
-    GamePauseMenuPTR--;
-    if (GamePauseMenuPTR < 1) GamePauseMenuPTR = 1;
-  }
-
-  switch (GamePauseMenuPTR) {
-    case GAME_PAUSE_SAVE:
-      LCD_printmenucoursor(2, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        saveloadmenu(SAVE);
-      }
-      break;
-    case GAME_PAUSE_RETURN:
-      LCD_printmenucoursor(4, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        gamestate = STATE_RUNNING;
-        SchedulerCounterToggle = ON;
-      }
-      break;
-    case GAME_PAUSE_EXIT:
-      LCD_printmenucoursor(6, 4);
-      if (B2.BtnON) {
-        B2.BtnON = 0;
-        gamestate = STATE_MAINMENU;
-        stopgamehandler();
-      }
-      break;
-  }
   LCD_printstr8x5("ÏÀÓÇÀ", 0, 5);
   LCD_printstr8x5("ÑÎÕÐÀÍÈÒÜ", 2, 19);
   LCD_printstr8x5("ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
@@ -412,57 +336,115 @@ void pausemenu(void)
   LCD_bufupload_buferase();
   delay_ms(50);
 }
-//-----------------------SAVE/LOAD MENU--------------------------
-void saveloadmenu(uint8 save_load)
+void displayloadmenu(void)
 {
-  while(1)
-  {
-    check_btn_jstk();
-    if (joystick.down) {
-      joystick.down = 0;
-      GameSaveLoadMenuPTR++;
-      if (GameSaveLoadMenuPTR > 3) GameSaveLoadMenuPTR = 3;
-    }
-    if (joystick.up) {
-      joystick.up = 0;
-      GameSaveLoadMenuPTR--;
-      if (GameSaveLoadMenuPTR < 1) GameSaveLoadMenuPTR = 1;
-    }
-
-    switch (GameSaveLoadMenuPTR) {
-      case GAME_SAVELOAD_GAME1:
-        LCD_printmenucoursor(2, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          if(save_load == SAVE){savegame(SLOT2);}
-          if(save_load == LOAD){loadgame(SLOT2); return;}
-        }
-        break;
-      case GAME_SAVELOAD_GAME2:
-        LCD_printmenucoursor(4, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          if(save_load == SAVE){savegame(SLOT2);}
-          if(save_load == LOAD){loadgame(SLOT2); return;}
-        }
-        break;
-      case GAME_SAVELOAD_EXIT:
-        LCD_printmenucoursor(6, 4);
-        if (B2.BtnON) {
-          B2.BtnON = 0;
-          return;
-        }
-        break;
-    }
-    if (save_load == SAVE) LCD_printstr8x5("ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
-    else LCD_printstr8x5("ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
-    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 1", 2, 19);
-    LCD_printstr8x5("ÑÎÕÐ.ÈÃÐÀ 2", 4, 19);
-    LCD_printstr8x5("ÍÀÇÀÄ", 6, 19);
-    LCD_bufupload_buferase();
-    delay_ms(50);
-  }
+  LCD_printstr8x5("ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
+  LCD_printstr8x5(gameslot1, 2, 19);
+  LCD_printstr8x5(gameslot2, 4, 19);
+  LCD_printstr8x5("ÍÀÇÀÄ", 6, 19);
+  LCD_bufupload_buferase();
+  delay_ms(50);
 }
+void displaysavemenu(void)
+{
+  LCD_printstr8x5("ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
+  LCD_printstr8x5(gameslot1, 2, 19);
+  LCD_printstr8x5(gameslot2, 4, 19);
+  LCD_printstr8x5("ÍÀÇÀÄ", 6, 19);
+  LCD_bufupload_buferase();
+  delay_ms(50);
+}
+//--------------------------GAME MENU STATES-------------------------------                           
+void mmstartnewgame(void) {
+  gamestate = STATE_MMSTARTNEWGAME;
+  LCD_printmenucoursor(2, 4);
+  displaymainmenu();
+}
+void mmloadgame(void){
+  gamestate = STATE_MMLOADGAME;
+  LCD_printmenucoursor(4, 4);
+  displaymainmenu();
+}
+void mmexitgame(void){
+  gamestate = STATE_MMEXIT;
+  LCD_printmenucoursor(6, 4);
+  displaymainmenu();
+}
+void lmslot1(void){
+  gamestate = STATE_LMSLOT1;
+  LCD_printmenucoursor(2, 4);
+  displayloadmenu();
+}
+void lmslot2(void){
+  gamestate = STATE_LMSLOT2;
+  LCD_printmenucoursor(4, 4);
+  displayloadmenu();
+}
+void lmreturn(void){
+  gamestate = STATE_LMRETURN;
+  LCD_printmenucoursor(6, 4);
+  displayloadmenu();
+}
+void pmsave(void){
+  SchedulerCounterToggle = OFF;
+  gamestate = STATE_PMSAVE;
+  LCD_printmenucoursor(2, 4);
+  displaypausemenu();
+}
+void pmreturn(void){
+  gamestate = STATE_PMRETURN;
+  LCD_printmenucoursor(4, 4);
+  displaypausemenu();
+}
+void pmexit(void){
+  gamestate = STATE_PMEXIT;
+  LCD_printmenucoursor(6, 4);
+  displaypausemenu();
+}
+void smslot1(void){
+  gamestate = STATE_SMSLOT1;
+  LCD_printmenucoursor(2, 4);
+  displaysavemenu();
+}
+void smslot2(void){
+  gamestate = STATE_SMSLOT2;
+  LCD_printmenucoursor(4, 4);
+  displaysavemenu();
+}
+void smreturn(void){
+  gamestate = STATE_SMRETURN;
+  LCD_printmenucoursor(6, 4);
+  displaysavemenu();
+}
+//-------------------EVENT CHECKER------------------------
+void getevent(void)
+{
+  check_btn_jstk();
+  static uint8 somethinghappened = 0;
+  if (joystick.down && (gamestate != STATE_GAMERUN)) {
+    joystick.down = 0;
+    gameevent = EVENT_JOYDOWN;
+    somethinghappened = 1;    
+  }
+  if (joystick.up && (gamestate != STATE_GAMERUN)) {
+    joystick.up = 0;
+    gameevent = EVENT_JOYUP;
+    somethinghappened = 1;
+  }
+  if (B2.BtnON && (gamestate != STATE_GAMERUN)) {
+    B2.BtnON = 0;
+    gameevent = EVENT_B2PRESS;
+    somethinghappened = 1;
+  }
+  if (B4.BtnON && (gamestate == STATE_GAMERUN)) {
+    B4.BtnON = 0;
+    gameevent = EVENT_B4PRESS;
+    somethinghappened = 1;
+  }
+  if(somethinghappened) somethinghappened = 0;
+  else gameevent = EVENT_NONE;
+}
+
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
  *******************************************************************************
@@ -471,10 +453,11 @@ void ufobattle(void)
 {
   stopgamehandler();
   randinit();
-  gamestate = STATE_MAINMENU;
+  gamestate = STATE_MMSTARTNEWGAME;
     
   while (CFlags.RunGameFl)
   {
-      transition_table[gamestate]();
+    getevent();
+    transition_table[gamestate][gameevent]();
   }
 }
