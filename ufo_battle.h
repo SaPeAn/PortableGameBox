@@ -12,7 +12,7 @@ typedef struct {
   uint8 Const1;
   uint8 Const2;
   uint8 Const3;
-}tGameProc;
+}tGameProcess;
 
 //------------------------------Game objects------------------------------------
 typedef struct
@@ -56,7 +56,7 @@ typedef struct{
 #define EVILSTAR_DISTR_TTL  2
 #define COIN_ANIMCOUNT  16
 
-tGameProc Game;
+tGameProcess Game;
 tGamer Gamer;
 tBullet Bullet[BULLET_MAX] = {0};
 tEvilStar EvilStar[EVILSTAR_MAX] = {0};

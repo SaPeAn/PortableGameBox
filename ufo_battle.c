@@ -5,7 +5,7 @@
 #include "scheduler.h"
 
 /*******************************************************************************
- *                        SCHEDULER EVENT DESCRIPTIONS
+ *                        SCHEDULER EVENT HANDLERS
  * *****************************************************************************
  */
 void gameprogress(uint8 period)
