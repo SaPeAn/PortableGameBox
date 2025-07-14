@@ -26,7 +26,7 @@ void createevilstar(void) {
   static uint8 i = 0;
   if (EvilStar[i].state == 0) {
     EvilStar[i].state = 1;
-    EvilStar[i].cl = 126;
+    EvilStar[i].cl = 127;
     EvilStar[i].ln = getrand(40) + 8;
   }
   i++;
@@ -95,7 +95,7 @@ void movbullet(void) {
   for (uint8 i = 0; i < Max_Bullet; i++) {
     if (Bullet[i].state) {
       Bullet[i].cl += 1;
-      if (Bullet[i].cl > 127) {
+      if (Bullet[i].cl > 126) {
         Bullet[i].state = 0;
         Bullet[i].cl = 0;
       }

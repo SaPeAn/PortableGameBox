@@ -304,9 +304,10 @@ void LCD_printsprite(uint8 startline, int8 startcolumn, tSprite * const Sprite) 
     if (columns_max < 0) columns_max = 0;
     m = (-startcolumn) * Sprite->pages;
     column_shift = -startcolumn;
-  } else {
+  } 
+  else {
     bufcl = startcolumn;
-    columns_max = ((startcolumn + Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
+    columns_max = (((int16)startcolumn + (int16)Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
   }
   bufpg = startline / 8;
   uint8 shift = startline % 8;
