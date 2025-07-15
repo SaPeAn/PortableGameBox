@@ -264,8 +264,6 @@ const uint8 char_8x5[CHAR_NUM][CHAR_W]={
 {0x7C,0x10,0x7C,0x44,0x7C},//[ю]=(254)
 {0x48,0x34,0x14,0x7C,0x00} //[я]=(255)
 };
-
-
 // Индикатор заряда батареи 1
 const uint8  battary_2[6][20] =
 {
@@ -276,7 +274,6 @@ const uint8  battary_2[6][20] =
     0xFF, 0x81, 0xBD, 0xBD, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xC3, 0x3C, 0x00, // 4 
     0xFF, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xC3, 0x3C, 0x00  // 5 
 };
- 
 const unsigned char  gamer[66] =
 {
     0x00, 0x0C, 0x00, 0x12, 0x00, 0x22, 0x00, 0x21, 0x80, 0x41, 0x80, 0x5C, 0x40, 0x54, 0x40, 0x5C, 0xE0, 0x40, 0x18, 0x81, 
@@ -295,11 +292,11 @@ const unsigned char  gamer_gasmask[66] =
 };
 const tSprite gamer_gas_sprite = {2, 33, gamer_gasmask, columns_first};
 
-const uint8  tar_bullet[4] =
+const uint8  gamer_bullet[4] =
 {
     0x40, 0x40, 0x40, 0x40  
 };
-const tSprite bullet_sprite = {1, 4, tar_bullet, columns_first};
+const tSprite bullet_sprite = {1, 4, gamer_bullet, columns_first};
 
 const uint8  evilstar[56] =
 {
@@ -318,7 +315,7 @@ const uint8  distr_evilstar[56] =
 const tSprite distr_evilstar_sprite = {2, 28, distr_evilstar, lines_first};
 
 // 64x56(7 pages)
-const unsigned char Magazin[448] = { /* 0X21,0X01,0X40,0X00,0X38,0X00, */
+const unsigned char Magazin[448] = {
 0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X01,0X08,0X00,0X00,0X40,0X00,0X80,0X01,0X10,
 0X00,0X00,0X40,0X00,0X80,0X01,0X10,0X00,0X00,0X40,0X00,0X80,0X01,0X10,0X00,0X00,
 0X40,0XC1,0X81,0X01,0X10,0X80,0X00,0X40,0XF2,0X87,0X01,0X08,0X80,0X00,0X40,0X32,
@@ -362,11 +359,11 @@ const unsigned char GameStatusBar[128] = { /* 0X21,0X01,0X80,0X00,0X08,0X00, */
 };
 const tSprite gamestatbar_sprite = {1, 128, GameStatusBar, columns_first};
 
-const unsigned char bomb[8] = { /* 0X21,0X01,0X08,0X00,0X08,0X00, */
+const unsigned char bomb[8] = {
 0X00,0X00,0X71,0XD9,0XAE,0XD8,0X70,0X00,};
 const tSprite bomb_sprite = {1, 8, bomb, columns_first};
 
-const unsigned char coin[8] = { /* 0X21,0X01,0X08,0X00,0X08,0X00, */
+const unsigned char coin[8] = {
 0X3C,0X42,0X81,0XA5,0XBF,0X81,0X42,0X3C,};
 const tSprite coin_sprite = {1, 8, coin, columns_first};
 
@@ -374,7 +371,7 @@ const uint8  bright_icon[8] =
 { 0x1F, 0x18, 0x36, 0xF3, 0xC8, 0xA4, 0xB2, 0x91}; // brightness icon
 const tSprite bright_icon_sprite = {1, 8, bright_icon, columns_first};
 
-const unsigned char Lstar[6][8] = {
+const unsigned char lstar[6][8] = {
 0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X00,
 0X00,0X00,0X08,0X1C,0X08,0X00,0X00,0X00,
 0X00,0X08,0X1C,0X3E,0X1C,0X08,0X00,0X00,
@@ -382,12 +379,12 @@ const unsigned char Lstar[6][8] = {
 0X08,0X2A,0X1C,0X7F,0X1C,0X2A,0X08,0X00,
 0X08,0X2A,0X1C,0XFF,0X1C,0X2A,0X08,0X08,};
 
-const tSprite lstar[6] = {1, 8, Lstar[0], columns_first,
-                          1, 8, Lstar[1], columns_first,
-                          1, 8, Lstar[2], columns_first,
-                          1, 8, Lstar[3], columns_first,
-                          1, 8, Lstar[4], columns_first,
-                          1, 8, Lstar[5], columns_first};
+const tSprite lstar_sprite[6] = {1, 8, lstar[0], columns_first,
+                                 1, 8, lstar[1], columns_first,
+                                 1, 8, lstar[2], columns_first,
+                                 1, 8, lstar[3], columns_first,
+                                 1, 8, lstar[4], columns_first,
+                                 1, 8, lstar[5], columns_first};
 
 
 const uint8  bright_lvl[8][15] =

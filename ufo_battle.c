@@ -67,7 +67,8 @@ void gunregen(void) //Energy regen
   if (Gamer.energy < Gamer.energymax) Gamer.energy++;
 }
 
-void movgamer(void) {
+void movgamer(void) 
+{
   if (joystick.oy > 140 && joystick.oy <= 210){Gamer.ln -= 1; if(Gamer.ln < 8) Gamer.ln = 8;}
   if (joystick.oy > 210 && joystick.oy <= 250){Gamer.ln -= 2;if(Gamer.ln < 8) Gamer.ln = 8;}
   if (joystick.oy > 250){Gamer.ln -= 4; if(Gamer.ln < 8)Gamer.ln = 8;}
@@ -224,12 +225,42 @@ void draw_and_screenupdate(void) {
   drawgamer();
   drawbullet();
   drawinfo();
+  smallstarmovedesplay(5);
   screenupdate();
 }
 
 void systemtasks(void) {
   batcheck();
   gameprogress(50);
+}
+//--------Background smallstars animation---------
+void smallstarmovedesplay(uint8 period)
+{
+    //create smallstar
+    static uint8 j = 0;
+    static uint8 l = 0;
+    if(l == 0)
+    {
+        if(SmallStar[j].state == 0){
+        SmallStar[j].state = getrand(1) + 1;
+        SmallStar[j].ln = getrand(60);
+        SmallStar[j].cl = 127;
+        }
+        j++;
+        if(j >= SMALLSTAR_MAX) j = 0;
+        l = period;
+    }
+    l--;
+    //display & move smallstar
+    for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
+    {
+      if(SmallStar[i].state)
+      {
+          LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &lstar_sprite[SmallStar[i].state - 1]);
+          SmallStar[i].cl -= 2;
+          if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
+      }
+    }
 }
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
@@ -323,26 +354,18 @@ void displaymainmenu(void)
   LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
   LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-  static uint8 j = 0;
-  static uint8 lin = 0;
-  static uint8 col = 0;
-  for(uint8 i = 0; i < 20; i ++)
-  {
-    lin = getrand(63);
-    col = getrand(127);
-    j = getrand(5);
-    LCD_printsprite(lin, col, &lstar[j]);
-  }
+  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
-  delay_ms(200);
-  
+  delay_ms(50);
 }
+
 void displaypausemenu(void)
 {
   LCD_printstr8x5((uint8*)"ÏÀÓÇÀ", 0, 5);
   LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
   LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
+  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
   delay_ms(50);
 }
@@ -352,6 +375,7 @@ void displayloadmenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
+  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
   delay_ms(50);
 }
@@ -361,6 +385,7 @@ void displaysavemenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
+  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
   delay_ms(50);
 }

@@ -48,11 +48,22 @@ typedef struct{
   int8   cl;
   uint8 animation_count;
 }tCoin;
+
+typedef struct{
+    uint8 state;
+    uint8 ln;
+    int8  cl;
+    int8  dln;
+    int8  dcl;
+    int16  tg;
+    uint8 animation_count;
+}tSmallStar;
 //------------------------------Game vars & init--------------------------------
 
 #define BULLET_MAX   10
 #define EVILSTAR_MAX 10
 #define COIN_MAX 10
+#define SMALLSTAR_MAX   27
 #define EVILSTAR_DISTR_TTL  2
 #define COIN_ANIMCOUNT  16
 
@@ -61,6 +72,7 @@ tGamer Gamer;
 tBullet Bullet[BULLET_MAX] = {0};
 tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
+tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
 uint8 Max_Bullet = BULLET_MAX;
 uint8 Max_Evilstar = EVILSTAR_MAX;
@@ -118,6 +130,7 @@ void pmexit(void);
 void smslot1(void);
 void smslot2(void);
 void smreturn(void);
+void smallstarmovedesplay(uint8);
 
 void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MMSTARTNEWGAME] [EVENT_NONE]=        mmstartnewgame,
