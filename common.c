@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <xc.h>
-#include <pic18f2550.h>
-#include <builtins.h>
-#include <xc8debug.h>
 
 /*----------------------------------UTILITIES-------------------------------*/
 uint8 clamp(uint8 val, uint8 min, uint8 max)
@@ -32,7 +29,7 @@ uint8 getrand(uint8 N)
   return (rand() % (N + 1));
 }
 
-char dig_to_smb(uint8 dig)
+uint8 dig_to_smb(uint8 dig)
 {
   switch (dig)
   {
@@ -50,9 +47,9 @@ char dig_to_smb(uint8 dig)
   return 0;
 }
 
-void u16_to_str(char* str, uint16 num, uint8 N)
+void u16_to_str(uint8* str, uint16 num, uint8 N)
 { 
-  sprintf(str, "%u", num);
+  sprintf((char*)str, "%u", num);
   /*
   str[0] = dig_to_smb((uint8)(num/10000));
   num %= 10000;
@@ -160,6 +157,7 @@ uint8 getbatlvl(uint8 Ub)
       case 5: Umin = 192; Umax = 204; reslvl = 5; break;
     }
   }
+  return reslvl;
 }
 
 void batcheck(void)
@@ -173,9 +171,9 @@ void ShutDownLB(void)
 {
   LCD_bufupload_buferase();
   LATCbits.LC1 = 0;
-  LCD_printstr8x5("Низкий заряд батареи!", 1, 0);
-  LCD_printstr8x5("Устройство", 3, 0);  
-  LCD_printstr8x5("сейчас выключится!", 5, 0);
+  LCD_printstr8x5((uint8*)"Низкий заряд батареи!", 1, 0);
+  LCD_printstr8x5((uint8*)"Устройство", 3, 0);  
+  LCD_printstr8x5((uint8*)"сейчас выключится!", 5, 0);
   LCD_bufupload_buferase();
   while(1);
 }
@@ -184,7 +182,7 @@ void ShutDown(void)
 {
   LCD_bufupload_buferase();
   LATCbits.LC1 = 0;
-  LCD_printstr8x5("Выключение...", 3, 0);
+  LCD_printstr8x5((uint8*)"Выключение...", 3, 0);
   LCD_bufupload_buferase();
   while(1);
 }
@@ -287,7 +285,7 @@ tButton CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* La
   *(Tris) |= BTN.inputmask;
   *(Tris) &= BTN.outputmask;
   *(Lat)  |= ~BTN.outputmask;
-          
+
   BTN.timecounter = timecounter;
   BTN.BtnFl = 0;
   BTN.BtnON = 0;
@@ -307,29 +305,6 @@ void check_btn_jstk(void) //Test buttons and joystick
   joystick.ox = adc_getval_an0();
   joystick.oy = adc_getval_an1();
   checkjoydir();
-}
-void ClickBtnFunc(tButton* BTN, void (*function(void)))
-{
-  if(BTN->BtnON){
-    BTN->BtnON = 0;
-    function();
-  }
-}
-  
-void HoldBtnFunc(tButton* BTN, void (*function(void)))
-{
-  if(BTN->BtnON || BTN->HoldON){
-    BTN->BtnON = 0;
-    function();
-  }
-}
-  
-void StuckBtnFunc(tButton* BTN, void (*function(void)))
-{
-  if(BTN->BtnON || BTN->HoldON || BTN->StuckON){
-    BTN->BtnON = 0;
-    function();
-  }
 }
 
 void TestBtn(tButton* btn)

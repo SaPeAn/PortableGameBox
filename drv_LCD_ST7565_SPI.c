@@ -120,7 +120,8 @@ void LCD_printsmb8x5(const char ch, uint8 pg, uint8 cl) {
   LCD_writebyte(0x00);
 }
 
-uint8 LCD_printstr8x5(char *str, uint8 pg, uint8 cl) {
+uint8 LCD_printstr8x5(const uint8 *str, uint8 pg, uint8 cl) {
+  uint8 str_null[] = "NULL";
   if (str == NULL) str = str_null;
   uint8 i = 0;
   while (str[i]) {
@@ -155,7 +156,7 @@ void LCD_bufupload_buferase(void) {
 #endif
 }
 
-void LCD_senddata(const char* byte, uint8 N) {
+void LCD_senddata(const uint8* byte, uint8 N) {
 #ifdef BUF_EN
   for (uint8 i = 0; i < N; i++) {
     dispbuffer[bufpg][bufcl + i] |= byte[i];
@@ -221,12 +222,12 @@ void LCD_printmonth(uint8 mon, uint8 pg, uint8 cl) {
 }
 
 void LCD_printclockanddate(uint8 pg, uint8 cl) {
-  char wday[3] = {0};
-  char month[4] = {0};
-  char day[3] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '\0'};
-  char hours[3] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), '\0'};
-  char colon[4] = {0x00, 0x12, 0x00}; // ':' colon
-  char minutes[3] = {dig_to_smb(rtcraw.min / 10), dig_to_smb(rtcraw.min % 10), '\0'};
+  uint8 wday[3] = {0};
+  uint8 month[4] = {0};
+  uint8 day[3] = {dig_to_smb((rtcbcd.day & 0x30) >> 4), dig_to_smb(rtcbcd.day & 0x0F), '\0'};
+  uint8 hours[3] = {dig_to_smb(rtcraw.hour / 10), dig_to_smb(rtcraw.hour % 10), '\0'};
+  uint8 colon[4] = {0x00, 0x12, 0x00}; // ':' colon
+  uint8 minutes[3] = {dig_to_smb(rtcraw.min / 10), dig_to_smb(rtcraw.min % 10), '\0'};
   LCD_printstr8x5(day, pg, cl);
   LCD_printmonth(rtcraw.month, pg, cl + 14);
   LCD_printweekday(rtcraw.weekday, pg, cl + 35);
@@ -294,19 +295,19 @@ void LCD_printhorline(uint8 linelength, uint8 startstring, uint8 cl) {
 /*----------------------------------------------------------------------------*/
 
 /*------------------------------GAME OBJECTS----------------------------------*/
-void LCD_printsprite(uint8 startline, int8 startcolumn, tSprite * const Sprite) {
-  int8 columns_max = 0;
+void LCD_printsprite(uint8 startline, int8 startcolumn, const tSprite * const Sprite) {
+  int16 columns_max = 0;
   uint16 m = 0, mprev = 0;
   uint8 column_shift = 0;
   if (startcolumn < 0) {
     bufcl = 0;
-    columns_max = Sprite->columns + startcolumn;
+    columns_max = (int16)Sprite->columns + (int16)startcolumn;
     if (columns_max < 0) columns_max = 0;
-    m = (-startcolumn) * Sprite->pages;
-    column_shift = -startcolumn;
+    m = (uint16)(-startcolumn) * Sprite->pages;
+    column_shift = (uint8)(-startcolumn);
   } 
   else {
-    bufcl = startcolumn;
+    bufcl = (uint8)startcolumn;
     columns_max = (((int16)startcolumn + (int16)Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
   }
   bufpg = startline / 8;

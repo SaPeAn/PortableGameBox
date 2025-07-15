@@ -1,7 +1,7 @@
 #include "scheduler.h"
 
 
-uint8 SchedulerAddEvent(void (*func)(void), uint32 period)
+uint8 SchedulerAddEvent(void (*func)(void), uint16 period)
 {
   SchedulerEvent[SchedulerRegistredEvents].callfunc = func;
   SchedulerEvent[SchedulerRegistredEvents].period = period;

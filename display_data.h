@@ -374,6 +374,22 @@ const uint8  bright_icon[8] =
 { 0x1F, 0x18, 0x36, 0xF3, 0xC8, 0xA4, 0xB2, 0x91}; // brightness icon
 const tSprite bright_icon_sprite = {1, 8, bright_icon, columns_first};
 
+const unsigned char Lstar[6][8] = {
+0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X00,
+0X00,0X00,0X08,0X1C,0X08,0X00,0X00,0X00,
+0X00,0X08,0X1C,0X3E,0X1C,0X08,0X00,0X00,
+0X00,0X2A,0X1C,0X3E,0X1C,0X2A,0X00,0X00,
+0X08,0X2A,0X1C,0X7F,0X1C,0X2A,0X08,0X00,
+0X08,0X2A,0X1C,0XFF,0X1C,0X2A,0X08,0X08,};
+
+const tSprite lstar[6] = {1, 8, Lstar[0], columns_first,
+                          1, 8, Lstar[1], columns_first,
+                          1, 8, Lstar[2], columns_first,
+                          1, 8, Lstar[3], columns_first,
+                          1, 8, Lstar[4], columns_first,
+                          1, 8, Lstar[5], columns_first};
+
+
 const uint8  bright_lvl[8][15] =
 {
     0xBD, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, // 

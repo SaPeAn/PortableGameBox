@@ -31,7 +31,7 @@ typedef struct
 typedef struct {
   uint8 state;
   uint8 ln;
-  uint8 cl;
+  int8 cl;
 }tBullet;
 
 typedef struct{

@@ -20,7 +20,7 @@ typedef struct {
 tEvent SchedulerEvent[MAX_EVENT];
 
 void  SchedPeriodIncr(void);
-uint8 SchedulerAddEvent(void (*)(void), uint32);
+uint8 SchedulerAddEvent(void (*)(void), uint16);
 void  SchedulerRemoveAllEvents(void);
 void  SchedulerEventProcess(void);
 

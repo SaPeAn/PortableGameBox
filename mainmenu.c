@@ -106,16 +106,16 @@ void setdatetime(void)
     
     LCD_printbutselhint(7, 3, 40);
     LCD_printbutselhint(6, 3, 89);
-    LCD_printstr8x5("âûõ", 7, 85);
-    LCD_printstr8x5("îê", 7, 110);
-    LCD_printstr8x5("-  +", 2, 93); 
+    LCD_printstr8x5((uint8*)"âûõ", 7, 85);
+    LCD_printstr8x5((uint8*)"îê", 7, 110);
+    LCD_printstr8x5((uint8*)"-  +", 2, 93); 
     
     if(displaingSaveFlag) {
       tim = timestamp;
       displaingSaveFlag = 0;
       displaingSaveLatch = 1;
     }
-    if(displaingSaveLatch) LCD_printstr8x5("ÑÎÕĞÀÍÅÍÎ", 7, 2);
+    if(displaingSaveLatch) LCD_printstr8x5((uint8*)"ÑÎÕĞÀÍÅÍÎ", 7, 2);
     if(((timestamp - tim) > 2000) && displaingSaveLatch) {
       LCD_erasestring(128, 7, 0);
       displaingSaveLatch = 0;
@@ -151,21 +151,21 @@ void testscreen(void)
     
     batcheck();
     getjoypos();
-    LCD_printstr8x5("Áàò. = ", 2, 2);
+    LCD_printstr8x5((uint8*)"Áàò. = ", 2, 2);
     u16_to_str(temp, Ubat, DISABLE);
     LCD_printstr8x5(temp, 2, 44);
-    LCD_printstr8x5("ßğê. = ", 3, 2);
+    LCD_printstr8x5((uint8*)"ßğê. = ", 3, 2);
     u16_to_str(temp, brightPWM, DISABLE);
     LCD_printstr8x5(temp, 3, 44);
-    LCD_printstr8x5("Äæ.X = ", 5, 2);
+    LCD_printstr8x5((uint8*)"Äæ.X = ", 5, 2);
     u16_to_str(temp, joystick.ox, DISABLE);
     LCD_printstr8x5(temp, 5, 44);
-    LCD_printstr8x5("Äæ.Y = ", 6, 2);
+    LCD_printstr8x5((uint8*)"Äæ.Y = ", 6, 2);
     u16_to_str(temp, joystick.oy, DISABLE);
     LCD_printstr8x5(temp, 6, 44);
   
     LCD_printbutselhint(1, 2, 89);
-    LCD_printstr8x5("âûõîä", 6, 86);
+    LCD_printstr8x5((uint8*)"âûõîä", 6, 86);
     TestBtn(&B1);
     if(B1.BtnON) {B1.BtnON = 0; return;}
     LCD_bufupload_buferase();
@@ -205,12 +205,12 @@ void MainMenu(void)
     if(CFlags.coursorpos == 2) LCD_printmenucoursor(4, 4);
     if(CFlags.coursorpos == 3) LCD_printmenucoursor(6, 4);
     
-    LCD_printstr8x5("ÈÃĞÀ", 2, 19);
-    LCD_printstr8x5("ÍÀÑÒĞÎÉÊÀ", 4, 19);
-    LCD_printstr8x5("ÂÛÊËŞ×ÈÒÜ", 6, 19);
+    LCD_printstr8x5((uint8*)"ÈÃĞÀ", 2, 19);
+    LCD_printstr8x5((uint8*)"ÍÀÑÒĞÎÉÊÀ", 4, 19);
+    LCD_printstr8x5((uint8*)"ÂÛÊËŞ×ÈÒÜ", 6, 19);
     
     LCD_printbutselhint(0, 2, 89);
-    LCD_printstr8x5("âõîä", 6, 93);
+    LCD_printstr8x5((uint8*)"âõîä", 6, 93);
   }  
   //-------------------------------------------------
   
@@ -254,22 +254,22 @@ void MainMenu(void)
       if(B4.BtnON || B4.HoldON || B4.StuckON) {B4.BtnON = 0; incbright();}      
       LCD_printmenucoursor(2, 4);
       LCD_printbutselhint(4, 2, 89);
-      LCD_printstr8x5("âûõ.", 6, 86);
-      LCD_printstr8x5("-  +", 1, 93);
+      LCD_printstr8x5((uint8*)"âûõ.", 6, 86);
+      LCD_printstr8x5((uint8*)"-  +", 1, 93);
     }
     if(CFlags.coursorpos == 2) {
       LCD_printmenucoursor(4, 4);
       LCD_printbutselhint(5, 2, 89);
-      LCD_printstr8x5("âûõ.âõ.", 6, 86);
+      LCD_printstr8x5((uint8*)"âûõ.âõ.", 6, 86);
     }
     if(CFlags.coursorpos == 3) {
       LCD_printmenucoursor(6, 4);
       LCD_printbutselhint(5, 2, 89);
-      LCD_printstr8x5("âûõ.âõ.", 6, 86);
+      LCD_printstr8x5((uint8*)"âûõ.âõ.", 6, 86);
     }
-    LCD_printstr8x5("ßĞÊÎÑÒÜ", 2, 19);
-    LCD_printstr8x5("ÄÀÒÀ/ÂĞÅÌß", 4, 19);
-    LCD_printstr8x5("ÒÅÑÒ", 6, 19); 
+    LCD_printstr8x5((uint8*)"ßĞÊÎÑÒÜ", 2, 19);
+    LCD_printstr8x5((uint8*)"ÄÀÒÀ/ÂĞÅÌß", 4, 19);
+    LCD_printstr8x5((uint8*)"ÒÅÑÒ", 6, 19); 
   }
   //-------------------------------------------------
   

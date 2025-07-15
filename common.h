@@ -46,7 +46,6 @@ uint8 Ubat;              // ADC data from battery level measurement
 uint8 batlvl;            // battery level for display (0...5)
 uint8 brightlvl;         // brightness level for display (0...7)
 uint8 brightPWM = 220;   // PWM duty cycle value for regulate display brightness
-const uint8 str_null[] = "NULL"; //for show zero pointer
 /*----------------------------------------------------------------------------*/
 
 /*-------------------------SYSTEM FUNCTIONS-----------------------------------*/
@@ -58,8 +57,8 @@ uint8 getbatlvl(uint8);
 void delay_ms(uint32);
 uint8 getrand(uint8);
 void randinit(void);
-char dig_to_smb(uint8);
-void u16_to_str(char*, uint16, uint8);
+uint8 dig_to_smb(uint8);
+void u16_to_str(uint8*, uint16, uint8);
 void BrightPWMgen(uint8);
 void decbright(void);
 void incbright(void);
@@ -125,9 +124,6 @@ uint8 adc_getval_an1(void);
 uint8 adc_getval_an2(void);
 void getjoypos(void);
 void checkjoydir(void);
-void ClickBtnFunc(tButton* BTN, void (*function(void)));
-void HoldBtnFunc(tButton* BTN, void (*function(void)));
-void StuckBtnFunc(tButton* BTN, void (*function(void)));
 void check_btn_jstk(void);
 /*----------------------------------------------------------------------------*/
 

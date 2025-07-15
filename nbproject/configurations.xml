@@ -112,8 +112,9 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="verbose" value="false"/>
-        <property key="warning-level" value="0"/>
+        <property key="warning-level" value="-9"/>
         <property key="what-to-do" value="require"/>
+        <appendMe value="-Xparser -Wno-invalid-source-encoding"/>
       </HI-TECH-COMP>
       <HI-TECH-LINK>
         <property key="additional-options-checksum" value=""/>
