@@ -218,7 +218,6 @@ void move_enemy_objects(void) {
   movcoin();
 }
 
-
 void draw_and_screenupdate(void) {
   drawevilstar();
   drawcoin();
@@ -233,6 +232,7 @@ void systemtasks(void) {
   batcheck();
   gameprogress(50);
 }
+
 //--------Background smallstars animation---------
 void smallstarmovedesplay(uint8 period)
 {
@@ -256,7 +256,7 @@ void smallstarmovedesplay(uint8 period)
     {
       if(SmallStar[i].state)
       {
-          LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &lstar_sprite[SmallStar[i].state - 1]);
+          LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &smallstar_sprite[SmallStar[i].state - 1]);
           SmallStar[i].cl -= 2;
           if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
       }

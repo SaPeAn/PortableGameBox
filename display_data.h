@@ -371,7 +371,7 @@ const uint8  bright_icon[8] =
 { 0x1F, 0x18, 0x36, 0xF3, 0xC8, 0xA4, 0xB2, 0x91}; // brightness icon
 const tSprite bright_icon_sprite = {1, 8, bright_icon, columns_first};
 
-const unsigned char lstar[6][8] = {
+const unsigned char smallstar[6][8] = {
 0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X00,
 0X00,0X00,0X08,0X1C,0X08,0X00,0X00,0X00,
 0X00,0X08,0X1C,0X3E,0X1C,0X08,0X00,0X00,
@@ -379,12 +379,12 @@ const unsigned char lstar[6][8] = {
 0X08,0X2A,0X1C,0X7F,0X1C,0X2A,0X08,0X00,
 0X08,0X2A,0X1C,0XFF,0X1C,0X2A,0X08,0X08,};
 
-const tSprite lstar_sprite[6] = {1, 8, lstar[0], columns_first,
-                                 1, 8, lstar[1], columns_first,
-                                 1, 8, lstar[2], columns_first,
-                                 1, 8, lstar[3], columns_first,
-                                 1, 8, lstar[4], columns_first,
-                                 1, 8, lstar[5], columns_first};
+const tSprite smallstar_sprite[6] = {1, 8, smallstar[0], columns_first,
+                                     1, 8, smallstar[1], columns_first,
+                                     1, 8, smallstar[2], columns_first,
+                                     1, 8, smallstar[3], columns_first,
+                                     1, 8, smallstar[4], columns_first,
+                                     1, 8, smallstar[5], columns_first};
 
 
 const uint8  bright_lvl[8][15] =
