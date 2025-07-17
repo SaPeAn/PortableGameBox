@@ -1,20 +1,20 @@
 #include "scheduler.h"
 
 
-uint8 SchedulerAddEvent(void (*func)(void), uint16 period)
+uint8 SchedAddEvent(void (*func)(void), uint16 period)
 {
   SchedulerEvent[SchedulerRegistredEvents].callfunc = func;
   SchedulerEvent[SchedulerRegistredEvents].period = period;
-  SchedulerEvent[SchedulerRegistredEvents].active = ON;
+  SchedulerEvent[SchedulerRegistredEvents].run_flag = ON;
   return SchedulerRegistredEvents++;
 }
 
-void SchedulerRemoveAllEvents(void)
+void SchedRemoveAllEvents(void)
 {
   SchedulerRegistredEvents = 0;
 }
 
-void SchedulerEventProcess(void)
+void SchedEventProcess(void)
 {
   for(uint8 i = 0; i < SchedulerRegistredEvents; i++)
   {
@@ -28,39 +28,40 @@ void SchedulerEventProcess(void)
 
 void SchedPeriodIncr(void)
 {
-  if(SchedulerCounterToggle){
-    for(uint8 i = 0; i < SchedulerRegistredEvents; i++) {
-      if(SchedulerEvent[i].active) 
-        SchedulerEvent[i].eventcounter++;
-    }
+  for(uint8 i = 0; i < SchedulerRegistredEvents; i++) {
+    if(SchedulerEvent[i].run_flag) 
+      SchedulerEvent[i].eventcounter++;
   }
 }
 
-void  SchedulerRemoveEvent(void (*func)(void))
+void  SchedRemoveEvent(void (*func)(void))
 {
     uint8 temp_fl = 0;
     for(uint8 i = 0; i < SchedulerRegistredEvents; i++){
         if(SchedulerEvent[i].callfunc == func || temp_fl) {
             temp_fl = 1;
             SchedulerEvent[i].callfunc = SchedulerEvent[i+1].callfunc;
+            SchedulerEvent[i].period = SchedulerEvent[i+1].period;
+            SchedulerEvent[i].run_flag = SchedulerEvent[i+1].run_flag;
+            SchedulerEvent[i].eventcounter = SchedulerEvent[i+1].eventcounter;
         }
     }
     SchedulerRegistredEvents--;
 }
 
-void  SchedulerPauseEvent(void (*func)(void))
+void  SchedPauseEvent(void (*func)(void))
 {
     for(uint8 i = 0; i < SchedulerRegistredEvents; i ++){
         if(SchedulerEvent[i].callfunc == func){
-            SchedulerEvent[i].active = OFF;
+            SchedulerEvent[i].run_flag = OFF;
         }
     }
 }
-void  SchedulerResumeEvent(void (*func)(void))
+void  SchedResumeEvent(void (*func)(void))
 {
     for(uint8 i = 0; i < SchedulerRegistredEvents; i ++){
         if(SchedulerEvent[i].callfunc == func){
-            SchedulerEvent[i].active = ON;
+            SchedulerEvent[i].run_flag = ON;
         }
     }
 }

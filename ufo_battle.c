@@ -206,61 +206,98 @@ void drawinfo(void) {
 void screenupdate(void) {
   LCD_bufupload_buferase();
 }
-//--------------------------COMBINED SCHEDULER EVENTS---------------------------
-void check_collision(void) {
-  bullet_evilstar_collision();
-  gamer_evilstar_collision();
-  gamer_coin_collision();
+
+//Background smallstars animation
+void smallstarmovedesplay(uint8 period)
+{
+  //create smallstar
+  static uint8 j = 0;
+  static uint8 l = 0;
+  if(l == 0)
+  {
+    if(SmallStar[j].state == 0){
+      SmallStar[j].state = getrand(1) + 1;
+      SmallStar[j].ln = getrand(60);
+      SmallStar[j].cl = 127;
+    }
+    j++;
+    if(j >= SMALLSTAR_MAX) j = 0;
+  }
+  //display & move smallstar
+  for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
+  {
+    if(SmallStar[i].state)
+    {
+      LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &smallstar_sprite[SmallStar[i].state - 1]);
+      if(l == 0) {
+        SmallStar[i].cl -= 2;
+        if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
+        l = period;
+      }
+    }
+  }
+  l--;
+}
+//EVENT CHECKER
+void getevent(void)
+{
+  check_btn_jstk();
+  static uint8 somethinghappened = 0;
+  if (joystick.down && (gamestate != STATE_GAMERUN)) {
+    joystick.down = 0;
+    gameevent = EVENT_JOYDOWN;
+    somethinghappened = 1;    
+  }
+  if (joystick.up && (gamestate != STATE_GAMERUN)) {
+    joystick.up = 0;
+    gameevent = EVENT_JOYUP;
+    somethinghappened = 1;
+  }
+  if (B2.BtnON && (gamestate != STATE_GAMERUN)) {
+    B2.BtnON = 0;
+    gameevent = EVENT_B2PRESS;
+    somethinghappened = 1;
+  }if (B3.BtnON && (gamestate != STATE_GAMERUN)) {
+    B3.BtnON = 0;
+    gameevent = EVENT_B3PRESS;
+    somethinghappened = 1;
+  }
+  if (B4.BtnON && (gamestate == STATE_GAMERUN)) {
+    B4.BtnON = 0;
+    gameevent = EVENT_B4PRESS;
+    somethinghappened = 1;
+  }
+  if(somethinghappened) somethinghappened = 0;
+  else gameevent = EVENT_NONE;
 }
 
+//--------------------------COMBINED SCHEDULER EVENTS---------------------------
 void move_enemy_objects(void) {
   movevilstar();
   movcoin();
 }
 
-void draw_and_screenupdate(void) {
+void callbacks_100ms_period(void) {
+  createbullet();
+  bullet_evilstar_collision();
+  gamer_evilstar_collision();
+  gamer_coin_collision();
   drawevilstar();
   drawcoin();
   drawgamer();
   drawbullet();
   drawinfo();
-  smallstarmovedesplay(5);
   screenupdate();
 }
 
 void systemtasks(void) {
+  getevent();
   batcheck();
+  movgamer();
+  smallstarmovedesplay(6);
   gameprogress(50);
-}
-
-//--------Background smallstars animation---------
-void smallstarmovedesplay(uint8 period)
-{
-    //create smallstar
-    static uint8 j = 0;
-    static uint8 l = 0;
-    if(l == 0)
-    {
-        if(SmallStar[j].state == 0){
-        SmallStar[j].state = getrand(1) + 1;
-        SmallStar[j].ln = getrand(60);
-        SmallStar[j].cl = 127;
-        }
-        j++;
-        if(j >= SMALLSTAR_MAX) j = 0;
-        l = period;
-    }
-    l--;
-    //display & move smallstar
-    for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
-    {
-      if(SmallStar[i].state)
-      {
-          LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &smallstar_sprite[SmallStar[i].state - 1]);
-          SmallStar[i].cl -= 2;
-          if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
-      }
-    }
+  
+  transition_table[gamestate][gameevent]();
 }
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
@@ -278,16 +315,11 @@ void startnewgame(void)
   Gamer.ln = 16;
   Gamer.cl = 0;
   
-  SchedulerRemoveAllEvents();
-  SchedulerAddEvent(systemtasks, 50);
-  SchedulerAddEvent(gunregen, (uint16)Gamer.energy_regenperiod);
-  SchedulerAddEvent(createevilstar, 800);
-  SchedulerAddEvent(createbullet, 100);
-  SchedulerAddEvent(movgamer, 40);
-  SchedulerAddEvent(movbullet, 5);
-  SchedulerAddEvent(move_enemy_objects, 18);
-  SchedulerAddEvent(check_collision, 100);
-  SchedulerAddEvent(draw_and_screenupdate, 100);
+  SchedAddEvent(gunregen, (uint16)Gamer.energy_regenperiod);
+  SchedAddEvent(createevilstar, 800);
+  SchedAddEvent(movbullet, 5);
+  SchedAddEvent(move_enemy_objects, 18);
+  SchedAddEvent(callbacks_100ms_period, 100);
   
   gamestate = STATE_GAMERUN;
 }
@@ -298,32 +330,33 @@ void savegame(uint8 slot)
 
 void loadgame(uint8 slot)
 {
-  SchedulerRemoveAllEvents();
-  SchedulerAddEvent(systemtasks, 50);
-  SchedulerAddEvent(gunregen, (uint16)Gamer.energy_regenperiod);
-  SchedulerAddEvent(createevilstar, 800);
-  SchedulerAddEvent(createbullet, 100);
-  SchedulerAddEvent(movgamer, 40);
-  SchedulerAddEvent(movbullet, 5);
-  SchedulerAddEvent(move_enemy_objects, 18);
-  SchedulerAddEvent(check_collision, 100);
-  SchedulerAddEvent(draw_and_screenupdate, 100);
+}
+
+void resumegamehandler(void)
+{
+  SchedResumeEvent(gunregen);
+  SchedResumeEvent(createevilstar);
+  SchedResumeEvent(movbullet);
+  SchedResumeEvent(move_enemy_objects);
+  SchedResumeEvent(callbacks_100ms_period);
+  gamestate = STATE_GAMERUN;
 }
 
 void rungame(void)
 {
-  SchedulerCounterToggle = ON;
-  gamestate = STATE_GAMERUN;
-  SchedulerEventProcess();
+  
 }
 
 void stopgamehandler(void)
 {
-  SchedulerRemoveAllEvents();
+  SchedRemoveEvent(gunregen);
+  SchedRemoveEvent(createevilstar);
+  SchedRemoveEvent(movbullet);
+  SchedRemoveEvent(move_enemy_objects);
+  SchedRemoveEvent(callbacks_100ms_period);
   for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
-  SchedulerCounterToggle = OFF;
   gamestate = STATE_MMSTARTNEWGAME;
 }
 
@@ -354,9 +387,7 @@ void displaymainmenu(void)
   LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
   LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
-  delay_ms(50);
 }
 
 void displaypausemenu(void)
@@ -365,9 +396,7 @@ void displaypausemenu(void)
   LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
   LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
-  delay_ms(50);
 }
 void displayloadmenu(void)
 {
@@ -375,9 +404,7 @@ void displayloadmenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
-  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
-  delay_ms(50);
 }
 void displaysavemenu(void)
 {
@@ -385,9 +412,7 @@ void displaysavemenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
-  smallstarmovedesplay(5);
   LCD_bufupload_buferase();
-  delay_ms(50);
 }
 //--------------------------GAME MENU STATES-------------------------------                           
 void mmstartnewgame(void) {
@@ -421,8 +446,12 @@ void lmreturn(void){
   displayloadmenu();
 }
 void pmsave(void){
-  SchedulerCounterToggle = OFF;
   gamestate = STATE_PMSAVE;
+  SchedPauseEvent(gunregen);
+  SchedPauseEvent(createevilstar);
+  SchedPauseEvent(movbullet);
+  SchedPauseEvent(move_enemy_objects);
+  SchedPauseEvent(callbacks_100ms_period);
   LCD_printmenucoursor(2, 4);
   displaypausemenu();
 }
@@ -451,34 +480,6 @@ void smreturn(void){
   LCD_printmenucoursor(6, 4);
   displaysavemenu();
 }
-//-------------------EVENT CHECKER------------------------
-void getevent(void)
-{
-  check_btn_jstk();
-  static uint8 somethinghappened = 0;
-  if (joystick.down && (gamestate != STATE_GAMERUN)) {
-    joystick.down = 0;
-    gameevent = EVENT_JOYDOWN;
-    somethinghappened = 1;    
-  }
-  if (joystick.up && (gamestate != STATE_GAMERUN)) {
-    joystick.up = 0;
-    gameevent = EVENT_JOYUP;
-    somethinghappened = 1;
-  }
-  if (B2.BtnON && (gamestate != STATE_GAMERUN)) {
-    B2.BtnON = 0;
-    gameevent = EVENT_B2PRESS;
-    somethinghappened = 1;
-  }
-  if (B4.BtnON && (gamestate == STATE_GAMERUN)) {
-    B4.BtnON = 0;
-    gameevent = EVENT_B4PRESS;
-    somethinghappened = 1;
-  }
-  if(somethinghappened) somethinghappened = 0;
-  else gameevent = EVENT_NONE;
-}
 
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
@@ -486,13 +487,13 @@ void getevent(void)
  */
 void ufobattle(void)
 {
-  stopgamehandler();
   randinit();
+  
+  SchedAddEvent(systemtasks, 50);
   gamestate = STATE_MMSTARTNEWGAME;
     
   while (CFlags.RunGameFl)
   {
-    getevent();
-    transition_table[gamestate][gameevent]();
+    SchedEventProcess();
   }
 }

@@ -45,7 +45,7 @@ typedef struct{
 typedef struct{
   uint8 state;
   uint8 ln;
-  int8   cl;
+  int8  cl;
   uint8 animation_count;
 }tCoin;
 
@@ -101,6 +101,7 @@ typedef enum{
   EVENT_JOYUP,
   EVENT_JOYDOWN,
   EVENT_B2PRESS,
+  EVENT_B3PRESS,
   EVENT_B4PRESS,
   EVENT_GAMERDEATH,
   EVENT_MAX,
@@ -131,6 +132,7 @@ void smslot1(void);
 void smslot2(void);
 void smreturn(void);
 void smallstarmovedesplay(uint8);
+void resumegamehandler(void);
 
 void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MMSTARTNEWGAME] [EVENT_NONE]=        mmstartnewgame,
@@ -165,6 +167,7 @@ void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     
     [STATE_GAMERUN]        [EVENT_NONE] =       rungame,
     [STATE_GAMERUN]        [EVENT_B4PRESS] =    pmsave,
+    [STATE_GAMERUN]        [EVENT_B3PRESS] =    pmsave,
     [STATE_GAMERUN]        [EVENT_GAMERDEATH] = stopgamehandler,
     
     [STATE_PMSAVE]         [EVENT_NONE] =       pmsave,
@@ -173,7 +176,7 @@ void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_PMSAVE]         [EVENT_JOYUP] =      pmsave,
     
     [STATE_PMRETURN]       [EVENT_NONE] =       pmreturn,
-    [STATE_PMRETURN]       [EVENT_B2PRESS] =    rungame,
+    [STATE_PMRETURN]       [EVENT_B2PRESS] =    resumegamehandler,
     [STATE_PMRETURN]       [EVENT_JOYUP] =      pmsave,
     [STATE_PMRETURN]       [EVENT_JOYDOWN] =    pmexit,
     

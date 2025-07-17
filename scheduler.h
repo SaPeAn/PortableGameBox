@@ -4,29 +4,28 @@
 
 #include "common.h"
 
-#define      MAX_EVENT    10
+#define      MAX_EVENT    8
 #define      ON           1
 #define      OFF          0
 
 static uint8 SchedulerRegistredEvents = 0;
-uint8 SchedulerCounterToggle = OFF;
 
 typedef struct {
   void     (*callfunc)(void);
   uint16   period;
   uint16   eventcounter;
-  uint8    active;
+  uint8    run_flag;
 } tEvent;
 
 tEvent SchedulerEvent[MAX_EVENT];
 
 void  SchedPeriodIncr(void);
-uint8 SchedulerAddEvent(void (*)(void), uint16);
-void  SchedulerRemoveEvent(void (*)(void));
-void  SchedulerRemoveAllEvents(void);
-void  SchedulerPauseEvent(void (*)(void));
-void  SchedulerResumeEvent(void (*)(void));
-void  SchedulerEventProcess(void);
+uint8 SchedAddEvent(void (*)(void), uint16);
+void  SchedRemoveEvent(void (*)(void));
+void  SchedRemoveAllEvents(void);
+void  SchedPauseEvent(void (*)(void));
+void  SchedResumeEvent(void (*)(void));
+void  SchedEventProcess(void);
 
 
 #endif	
