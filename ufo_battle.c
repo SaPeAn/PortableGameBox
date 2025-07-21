@@ -30,20 +30,20 @@ void createevilstar(void) {
     EvilStar[i].ln = getrand(40) + 8;
   }
   i++;
-  if (i >= Max_Evilstar) i = 0;
+  if (i >= EVILSTAR_MAX) i = 0;
 }
 
-void createcoin(tEvilStar Evil_Star) {
+void createcoin(tEvilStar* Evil_Star) {
   static uint8 i = 0;
   if (getrand(2) < 2) return;
   if (Coin[i].state == 0) {
     Coin[i].state = 1;
-    Coin[i].cl = Evil_Star.cl;
-    Coin[i].ln = Evil_Star.ln;
-    Coin[i].animation_count = COIN_ANIMCOUNT;
+    Coin[i].cl = Evil_Star->cl;
+    Coin[i].ln = Evil_Star->ln;
+    Coin[i].animation_count = COIN_ANIMATION_PERIOD;
   }
   i++;
-  if (i >= Max_Coin) i = 0;
+  if (i >= COIN_MAX) i = 0;
 }
 
 void createbullet(void) {
@@ -58,7 +58,7 @@ void createbullet(void) {
       Sounds(400);
     }
     i++;
-    if (i >= Max_Bullet) i = 0;
+    if (i >= BULLET_MAX) i = 0;
   }
 }
 
@@ -69,22 +69,22 @@ void gunregen(void) //Energy regen
 
 void movgamer(void) 
 {
-  if (joystick.oy > 140 && joystick.oy <= 210){Gamer.ln -= 1; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if (joystick.oy > 210 && joystick.oy <= 250){Gamer.ln -= 2;if(Gamer.ln < 8) Gamer.ln = 8;}
-  if (joystick.oy > 250){Gamer.ln -= 4; if(Gamer.ln < 8)Gamer.ln = 8;}
-  if (joystick.oy < 120 && joystick.oy >= 50){Gamer.ln += 1; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.oy < 50 && joystick.oy >= 10){Gamer.ln += 2; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.oy < 10){Gamer.ln += 4; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.ox > 140 && joystick.ox <= 210){Gamer.cl += 1; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox > 210 && joystick.ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox > 250){Gamer.cl += 4; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox < 120 && joystick.ox >= 50){Gamer.cl -= 1; if(Gamer.cl < -8)Gamer.cl = -8;}
-  if (joystick.ox < 50 && joystick.ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
-  if (joystick.ox < 10){Gamer.cl -= 4; if(Gamer.cl < -8)Gamer.cl = -8;}
+  if (joystick.oy > 140 && joystick.oy <= 210){Gamer.ln -= 2; if(Gamer.ln < 8) Gamer.ln = 8;}
+  if (joystick.oy > 210 && joystick.oy <= 250){Gamer.ln -= 4;if(Gamer.ln < 8) Gamer.ln = 8;}
+  if (joystick.oy > 250){Gamer.ln -= 8; if(Gamer.ln < 8)Gamer.ln = 8;}
+  if (joystick.oy < 120 && joystick.oy >= 50){Gamer.ln += 2; if(Gamer.ln > 48)Gamer.ln = 48;}
+  if (joystick.oy < 50 && joystick.oy >= 10){Gamer.ln += 4; if(Gamer.ln > 48)Gamer.ln = 48;}
+  if (joystick.oy < 10){Gamer.ln += 8; if(Gamer.ln > 48)Gamer.ln = 48;}
+  if (joystick.ox > 140 && joystick.ox <= 210){Gamer.cl += 2; if(Gamer.cl > 94)Gamer.cl = 94;}
+  if (joystick.ox > 210 && joystick.ox <= 250){Gamer.cl += 4; if(Gamer.cl > 94)Gamer.cl = 94;}
+  if (joystick.ox > 250){Gamer.cl += 8; if(Gamer.cl > 94)Gamer.cl = 94;}
+  if (joystick.ox < 120 && joystick.ox >= 50){Gamer.cl -= 2; if(Gamer.cl < -8)Gamer.cl = -8;}
+  if (joystick.ox < 50 && joystick.ox >= 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
+  if (joystick.ox < 10){Gamer.cl -= 8; if(Gamer.cl < -8)Gamer.cl = -8;}
 }
 
 void movevilstar(void) {
-  for (uint8 i = 0; i < Max_Evilstar; i++) {
+  for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
     if (EvilStar[i].state == 1) {
       EvilStar[i].cl--;
       if ((EvilStar[i].cl < -29)) EvilStar[i].state = 0;
@@ -93,7 +93,7 @@ void movevilstar(void) {
 }
 
 void movbullet(void) {
-  for (uint8 i = 0; i < Max_Bullet; i++) {
+  for (uint8 i = 0; i < BULLET_MAX; i++) {
     if (Bullet[i].state) {
       Bullet[i].cl += 1;
       if (Bullet[i].cl > 126) {
@@ -105,7 +105,7 @@ void movbullet(void) {
 }
 
 void movcoin(void) {
-  for (uint8 i = 0; i < Max_Coin; i++) {
+  for (uint8 i = 0; i < COIN_MAX; i++) {
     if (Coin[i].state == 1) {
       Coin[i].cl -= 1;
       if (Coin[i].cl < -9) Coin[i].state = 0;
@@ -114,8 +114,8 @@ void movcoin(void) {
 }
 
 void bullet_evilstar_collision(void) {
-  for (uint8 j = 0; j < Max_Bullet; j++) {
-    for (uint8 i = 0; i < Max_Evilstar; i++) {
+  for (uint8 j = 0; j < BULLET_MAX; j++) {
+    for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
       if ((EvilStar[i].cl <= Bullet[j].cl) && (EvilStar[i].ln < (Bullet[j].ln + 6)) &&
               ((EvilStar[i].ln + 10) > Bullet[j].ln) && EvilStar[i].state == 1 &&
               Bullet[j].state) {
@@ -128,7 +128,7 @@ void bullet_evilstar_collision(void) {
 }
 
 void gamer_evilstar_collision(void) {
-  for (uint8 i = 0; i < Max_Evilstar; i++) {
+  for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
     if ((EvilStar[i].cl <= (Gamer.cl + 29)) && ((EvilStar[i].cl + 25) >= Gamer.cl) &&
             ((EvilStar[i].ln + 15) > Gamer.ln) && (EvilStar[i].ln < (Gamer.ln + 15)) &&
             (EvilStar[i].state == 1) && (Gamer.health > 0)) {
@@ -138,7 +138,7 @@ void gamer_evilstar_collision(void) {
     }
   }
 
-  //Gamer's death hendler
+  //Gamer's death handler
   if (Gamer.health <= 0) {
     Sounds(600);
     stopgamehandler();
@@ -146,7 +146,7 @@ void gamer_evilstar_collision(void) {
 }
 
 void gamer_coin_collision(void) {
-  for (uint8 i = 0; i < Max_Coin; i++) {
+  for (uint8 i = 0; i < COIN_MAX; i++) {
     if ((Coin[i].cl <= (Gamer.cl + 29)) && ((Coin[i].cl + 8) >= Gamer.cl) &&
             ((Coin[i].ln + 8) > Gamer.ln) && (Coin[i].ln < (Gamer.ln + 15)) &&
             (Coin[i].state == 1) && (Gamer.health > 0)) {
@@ -158,7 +158,7 @@ void gamer_coin_collision(void) {
 }
 
 void drawevilstar(void) {
-  for (uint8 i = 0; i < Max_Evilstar; i++) {
+  for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
     if (EvilStar[i].state == 1) {
       LCD_printsprite(EvilStar[i].ln, EvilStar[i].cl, &evilstar_sprite);
     }
@@ -167,19 +167,19 @@ void drawevilstar(void) {
       if (EvilStar[i].distr_ttl_count++ >= EVILSTAR_DISTR_TTL) {
         EvilStar[i].distr_ttl_count = 0;
         EvilStar[i].state = 0;
-        createcoin(EvilStar[i]);
+        createcoin(&EvilStar[i]);
       }
     }
   }
 }
 
 void drawcoin(void) {
-  for (uint8 i = 0; i < Max_Coin; i++) {
+  for (uint8 i = 0; i < COIN_MAX; i++) {
     if (Coin[i].state == 1) {
       Coin[i].animation_count--;
-      if (Coin[i].animation_count >= (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln + 1, Coin[i].cl, &coin_sprite);
-      if (Coin[i].animation_count < (COIN_ANIMCOUNT / 2)) LCD_printsprite(Coin[i].ln - 1, Coin[i].cl, &coin_sprite);
-      if (Coin[i].animation_count == 0) Coin[i].animation_count = COIN_ANIMCOUNT;
+      if (Coin[i].animation_count >= (COIN_ANIMATION_PERIOD / 2)) LCD_printsprite(Coin[i].ln + 1, Coin[i].cl, &coin_sprite);
+      if (Coin[i].animation_count < (COIN_ANIMATION_PERIOD / 2)) LCD_printsprite(Coin[i].ln - 1, Coin[i].cl, &coin_sprite);
+      if (Coin[i].animation_count == 0) Coin[i].animation_count = COIN_ANIMATION_PERIOD;
     }
   }
 }
@@ -192,7 +192,7 @@ void drawgamer(void) {
 }
 
 void drawbullet(void) {
-  for (uint8 i = 0; i < Max_Bullet; i++) {
+  for (uint8 i = 0; i < BULLET_MAX; i++) {
     if (Bullet[i].state) {
       LCD_printsprite(Bullet[i].ln, Bullet[i].cl, &bullet_sprite);
     }
@@ -208,12 +208,12 @@ void screenupdate(void) {
 }
 
 //Background smallstars animation
-void smallstarmovedesplay(uint8 period)
+void createsmallstar(uint8 create_period)
 {
-  //create smallstar
   static uint8 j = 0;
-  static uint8 l = 0;
-  if(l == 0)
+  static uint8 k = 0;
+  if(k == 0) k = create_period;
+  if(k == create_period)
   {
     if(SmallStar[j].state == 0){
       SmallStar[j].state = getrand(1) + 1;
@@ -223,35 +223,52 @@ void smallstarmovedesplay(uint8 period)
     j++;
     if(j >= SMALLSTAR_MAX) j = 0;
   }
-  //display & move smallstar
-  for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
-  {
-    if(SmallStar[i].state)
+  k--;
+}
+
+void movesmallstar(uint8 move_period)
+{
+  static uint8 l = 0;
+  if(l == 0) l = move_period;
+  if(l == move_period) {
+    for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
     {
-      LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &smallstar_sprite[SmallStar[i].state - 1]);
-      if(l == 0) {
-        SmallStar[i].cl -= 2;
-        if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
-        l = period;
-      }
+      SmallStar[i].cl -= 1;
+      if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
     }
   }
   l--;
+}
+
+void drawsmallstar(void)
+{
+  for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
+  {
+    if(SmallStar[i].state) {
+      LCD_printsprite(SmallStar[i].ln, SmallStar[i].cl, &smallstar_sprite[SmallStar[i].state - 1]);
+    }
+  }
 }
 //EVENT CHECKER
 void getevent(void)
 {
   check_btn_jstk();
   static uint8 somethinghappened = 0;
-  if (joystick.down && (gamestate != STATE_GAMERUN)) {
-    joystick.down = 0;
-    gameevent = EVENT_JOYDOWN;
-    somethinghappened = 1;    
+  if (joystick.down) {
+    if (gamestate == STATE_GAMERUN) joystick.down = 0;
+    else {
+      joystick.down = 0;
+      gameevent = EVENT_JOYDOWN;
+      somethinghappened = 1;    
+    }
   }
-  if (joystick.up && (gamestate != STATE_GAMERUN)) {
-    joystick.up = 0;
-    gameevent = EVENT_JOYUP;
-    somethinghappened = 1;
+  if (joystick.up) {
+    if (gamestate == STATE_GAMERUN) joystick.up = 0;
+    else {
+      joystick.up = 0;
+      gameevent = EVENT_JOYUP;
+      somethinghappened = 1;
+    }
   }
   if (B2.BtnON && (gamestate != STATE_GAMERUN)) {
     B2.BtnON = 0;
@@ -277,7 +294,8 @@ void move_enemy_objects(void) {
   movcoin();
 }
 
-void callbacks_100ms_period(void) {
+void rungame_events_period100ms(void) {
+  movgamer();
   createbullet();
   bullet_evilstar_collision();
   gamer_evilstar_collision();
@@ -287,17 +305,20 @@ void callbacks_100ms_period(void) {
   drawgamer();
   drawbullet();
   drawinfo();
-  screenupdate();
 }
 
-void systemtasks(void) {
+void system_events_period100ms(void) {
   getevent();
   batcheck();
-  movgamer();
-  smallstarmovedesplay(6);
-  gameprogress(50);
+  createsmallstar(SMALLSTAR_CREATE_PER);
+  gameprogress(PRD_GAMEPROGRESS);
+  drawsmallstar();
+  screenupdate();
   
   transition_table[gamestate][gameevent]();
+}
+void system_events_period25ms(void) {
+  movesmallstar(SMALLSTAR_MOVE_PER);
 }
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
@@ -308,18 +329,17 @@ void startnewgame(void)
   Gamer.health = 24;
   Gamer.energy = 6;
   Gamer.energymax = 6;
-  Gamer.energy_regenperiod = 200;
   Gamer.gasmask_fl = 0;
   Gamer.bombs = 0;
   Gamer.money = 0;
   Gamer.ln = 16;
   Gamer.cl = 0;
   
-  SchedAddEvent(gunregen, (uint16)Gamer.energy_regenperiod);
-  SchedAddEvent(createevilstar, 800);
+  SchedAddEvent(gunregen, PRD_GAMER_ENERGYREGEN);
+  SchedAddEvent(createevilstar, PRD_EVELSTAR_CREATE);
   SchedAddEvent(movbullet, 5);
-  SchedAddEvent(move_enemy_objects, 18);
-  SchedAddEvent(callbacks_100ms_period, 100);
+  SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
+  SchedAddEvent(rungame_events_period100ms, 100);
   
   gamestate = STATE_GAMERUN;
 }
@@ -338,7 +358,7 @@ void resumegamehandler(void)
   SchedResumeEvent(createevilstar);
   SchedResumeEvent(movbullet);
   SchedResumeEvent(move_enemy_objects);
-  SchedResumeEvent(callbacks_100ms_period);
+  SchedResumeEvent(rungame_events_period100ms);
   gamestate = STATE_GAMERUN;
 }
 
@@ -353,7 +373,7 @@ void stopgamehandler(void)
   SchedRemoveEvent(createevilstar);
   SchedRemoveEvent(movbullet);
   SchedRemoveEvent(move_enemy_objects);
-  SchedRemoveEvent(callbacks_100ms_period);
+  SchedRemoveEvent(rungame_events_period100ms);
   for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
@@ -364,6 +384,7 @@ void exitgame(void)
 {
   CFlags.RunGameFl = 0;
   CFlags.MenuFl = 1;
+  SchedRemoveAllEvents();
 }
 
 void loadslot1(void){
@@ -387,7 +408,11 @@ void displaymainmenu(void)
   LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
   LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-  LCD_bufupload_buferase();
+}
+
+void magazenter(void)
+{
+  
 }
 
 void displaypausemenu(void)
@@ -396,7 +421,6 @@ void displaypausemenu(void)
   LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
   LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-  LCD_bufupload_buferase();
 }
 void displayloadmenu(void)
 {
@@ -404,7 +428,6 @@ void displayloadmenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
-  LCD_bufupload_buferase();
 }
 void displaysavemenu(void)
 {
@@ -412,7 +435,6 @@ void displaysavemenu(void)
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
-  LCD_bufupload_buferase();
 }
 //--------------------------GAME MENU STATES-------------------------------                           
 void mmstartnewgame(void) {
@@ -451,7 +473,7 @@ void pmsave(void){
   SchedPauseEvent(createevilstar);
   SchedPauseEvent(movbullet);
   SchedPauseEvent(move_enemy_objects);
-  SchedPauseEvent(callbacks_100ms_period);
+  SchedPauseEvent(rungame_events_period100ms);
   LCD_printmenucoursor(2, 4);
   displaypausemenu();
 }
@@ -488,8 +510,8 @@ void smreturn(void){
 void ufobattle(void)
 {
   randinit();
-  
-  SchedAddEvent(systemtasks, 50);
+  SchedAddEvent(system_events_period25ms, 25);
+  SchedAddEvent(system_events_period100ms, 100);
   gamestate = STATE_MMSTARTNEWGAME;
     
   while (CFlags.RunGameFl)

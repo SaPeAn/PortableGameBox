@@ -65,3 +65,12 @@ void  SchedResumeEvent(void (*func)(void))
         }
     }
 }
+
+void  SchedEventSetPeriod(void (*func)(void), uint16 period)
+{
+    for(uint8 i = 0; i < SchedulerRegistredEvents; i ++){
+        if(SchedulerEvent[i].callfunc == func){
+            SchedulerEvent[i].period = period;
+        }
+    }
+}

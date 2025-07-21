@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-#define      MAX_EVENT    8
+#define      MAX_EVENT    10
 #define      ON           1
 #define      OFF          0
 
@@ -26,7 +26,7 @@ void  SchedRemoveAllEvents(void);
 void  SchedPauseEvent(void (*)(void));
 void  SchedResumeEvent(void (*)(void));
 void  SchedEventProcess(void);
-
+void  SchedEventSetPeriod(void (*)(void), uint16);
 
 #endif	
 

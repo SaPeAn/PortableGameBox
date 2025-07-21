@@ -17,10 +17,9 @@ typedef struct {
 //------------------------------Game objects------------------------------------
 typedef struct
 {
-  int    health;
-  int    energy;
-  int    energymax;
-  uint32 energy_regenperiod;
+  int8    health;
+  int8    energy;
+  int8    energymax;
   uint8  gasmask_fl;
   uint8  bombs;
   uint16 money;
@@ -39,7 +38,6 @@ typedef struct{
   uint8  ln;
   int8   cl;
   uint8  distr_ttl_count;
-  uint8  damage;
 }tEvilStar;
 
 typedef struct{
@@ -53,31 +51,30 @@ typedef struct{
     uint8 state;
     uint8 ln;
     int8  cl;
-    int8  dln;
-    int8  dcl;
-    int16  tg;
-    uint8 animation_count;
 }tSmallStar;
 //------------------------------Game vars & init--------------------------------
 
-#define BULLET_MAX   10
-#define EVILSTAR_MAX 10
-#define COIN_MAX 10
-#define SMALLSTAR_MAX   27
+#define BULLET_MAX   8
+#define EVILSTAR_MAX 5
+#define COIN_MAX 6
+#define SMALLSTAR_MAX   12
+#define SMALLSTAR_MOVE_PER   2
+#define SMALLSTAR_CREATE_PER   7
 #define EVILSTAR_DISTR_TTL  2
-#define COIN_ANIMCOUNT  16
+#define COIN_ANIMATION_PERIOD  16
 
 tGameProcess Game;
+uint32 runtimecounter = 0;
 tGamer Gamer;
 tBullet Bullet[BULLET_MAX] = {0};
 tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
-uint8 Max_Bullet = BULLET_MAX;
-uint8 Max_Evilstar = EVILSTAR_MAX;
-uint8 Max_Coin = COIN_MAX;
-uint32 counter = 0;
+uint16 PRD_EVELSTAR_CREATE = 1600;
+uint8  PRD_ENEMY_MOVE = 18;
+uint8  PRD_GAMER_ENERGYREGEN = 200;
+uint8  PRD_GAMEPROGRESS = 50;
 
 typedef enum {
   STATE_MMSTARTNEWGAME,
@@ -93,6 +90,7 @@ typedef enum {
   STATE_SMSLOT1,
   STATE_SMSLOT2,
   STATE_SMRETURN,
+  STATE_MAGAZ,
   STATE_MAX,
 } tGAME_STATE;
 
@@ -100,10 +98,13 @@ typedef enum{
   EVENT_NONE,
   EVENT_JOYUP,
   EVENT_JOYDOWN,
+  EVENT_JOYLEFT,
+  EVENT_JOYRIGHT,
   EVENT_B2PRESS,
   EVENT_B3PRESS,
   EVENT_B4PRESS,
   EVENT_GAMERDEATH,
+  EVENT_MAGAZ,
   EVENT_MAX,
 } tGAME_EVENT;
 
@@ -131,8 +132,11 @@ void pmexit(void);
 void smslot1(void);
 void smslot2(void);
 void smreturn(void);
-void smallstarmovedesplay(uint8);
+void createsmallstar(uint8 create_period);
+void movesmallstar(uint8 move_period);
+void drawsmallstar(void);
 void resumegamehandler(void);
+void magazenter(void);
 
 void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MMSTARTNEWGAME] [EVENT_NONE]=        mmstartnewgame,
@@ -169,6 +173,7 @@ void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_GAMERUN]        [EVENT_B4PRESS] =    pmsave,
     [STATE_GAMERUN]        [EVENT_B3PRESS] =    pmsave,
     [STATE_GAMERUN]        [EVENT_GAMERDEATH] = stopgamehandler,
+    [STATE_GAMERUN]        [EVENT_MAGAZ] =      magazenter,
     
     [STATE_PMSAVE]         [EVENT_NONE] =       pmsave,
     [STATE_PMSAVE]         [EVENT_B2PRESS] =    smslot1,

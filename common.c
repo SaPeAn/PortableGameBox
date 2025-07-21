@@ -252,8 +252,8 @@ void rtcbcdtoraw(void)
 /*----------------------------------------------------------------------------*/
 
 /*-----------------------------BUTTONS FUNCTIONS------------------------------*/
-#define  HOLD_ON_DEL    100
-#define  STUCK_ON_DEL   2000
+#define  BTN_HOLD_ON_DELAY    75
+#define  BTN_STUCK_ON_DELAY   2000
  
 tButton CreateBtn(volatile uint8* Tris, volatile uint8* Port, volatile uint8* Lat, const uint8 inputbit, const uint8 outputbit, const uint32* timecounter)
 {
@@ -324,12 +324,12 @@ void TestBtn(tButton* btn)
     btn->StuckON = 0;
     btn->btnTimer = *(btn->timecounter);
   }
-  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > HOLD_ON_DEL) && ((*(btn->timecounter) - btn->btnTimer) <= STUCK_ON_DEL)) {
+  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > BTN_HOLD_ON_DELAY) && ((*(btn->timecounter) - btn->btnTimer) <= BTN_STUCK_ON_DELAY)) {
     btn->HoldON = 1;
     if(btn->Toggle) btn->Toggle = 0; 
     else btn->Toggle = 1;
   }
-  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > STUCK_ON_DEL)) {
+  if (!(*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > BTN_STUCK_ON_DELAY)) {
     btn->HoldON = 0;
     btn->StuckON = 1;
     if(btn->Toggle) btn->Toggle = 0; 
@@ -384,15 +384,25 @@ void getjoypos(void)
 void checkjoydir(void)
 {
     getjoypos();
-    if(joystick.oy > 150 && joystick.joyFl == 0) {joystick.up = 1; joystick.joyFl = 1;}
-    if(joystick.oy < 100 && joystick.joyFl == 0) {joystick.down = 1; joystick.joyFl = 1;}
-    if(joystick.ox > 150 && joystick.joyFl == 0) {joystick.right = 1; joystick.joyFl = 1;}
-    if(joystick.ox < 100 && joystick.joyFl == 0) {joystick.left = 1; joystick.joyFl = 1;}
+    if(joystick.oy > 150 && joystick.joyFl == 0) {
+        joystick.up = 1; 
+        joystick.joyFl = 1;
+    }
+    if(joystick.oy < 100 && joystick.joyFl == 0) {
+        joystick.down = 1; 
+        joystick.joyFl = 1;
+    }
+    if(joystick.ox > 150 && joystick.joyFl == 0) {
+        joystick.right = 1; 
+        joystick.joyFl = 1;
+    }
+    if(joystick.ox < 100 && joystick.joyFl == 0) {
+        joystick.left = 1; 
+        joystick.joyFl = 1;
+    }
     if(joystick.oy < 150 && joystick.oy > 100 && joystick.ox < 150 && joystick.ox > 100) joystick.joyFl = 0;
 }
-
 /*----------------------------------------------------------------------------*/
-
 
 /*---------------------------SAVE/LOAD FUNCTIONS------------------------------*/
 
