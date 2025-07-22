@@ -252,7 +252,7 @@ void drawsmallstar(void)
 //EVENT CHECKER
 void getevent(void)
 {
-    check_btn_jstk();
+    
     if (joystick.down) {
       joystick.down = 0;
       gameevent = EVENT_JOYDOWN;
@@ -305,7 +305,7 @@ void rungame_events_period100ms(void) {
 }
 
 void system_events_period100ms(void) {
-  getevent();
+  check_btn_jstk();
   batcheck();
   createsmallstar(SMALLSTAR_CREATE_PER);
   gameprogress(PRD_GAMEPROGRESS);
