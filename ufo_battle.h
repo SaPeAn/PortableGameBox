@@ -54,14 +54,15 @@ typedef struct{
 }tSmallStar;
 //------------------------------Game vars & init--------------------------------
 
-#define BULLET_MAX   8
-#define EVILSTAR_MAX 5
-#define COIN_MAX 6
-#define SMALLSTAR_MAX   12
-#define SMALLSTAR_MOVE_PER   2
+#define BULLET_MAX             8
+#define EVILSTAR_MAX           5
+#define COIN_MAX               6
+#define SMALLSTAR_MAX          12
+#define SMALLSTAR_MOVE_PER     2
 #define SMALLSTAR_CREATE_PER   7
-#define EVILSTAR_DISTR_TTL  2
+#define EVILSTAR_DISTR_TTL     2
 #define COIN_ANIMATION_PERIOD  16
+#define BULLET_ENERGY_COST     2
 
 tGameProcess Game;
 uint32 runtimecounter = 0;
@@ -73,8 +74,9 @@ tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
 uint16 PRD_EVELSTAR_CREATE = 1600;
 uint8  PRD_ENEMY_MOVE = 18;
-uint8  PRD_GAMER_ENERGYREGEN = 200;
+uint16 PRD_GAMER_ENERGYREGEN = 400;
 uint8  PRD_GAMEPROGRESS = 50;
+uint8  GAME_STORY_STRING_NUM = 0;
 
 typedef enum {
   STATE_MMSTARTNEWGAME,
@@ -91,6 +93,7 @@ typedef enum {
   STATE_SMSLOT2,
   STATE_SMRETURN,
   STATE_MAGAZ,
+  STATE_STARTNEWGAME,
   STATE_MAX,
 } tGAME_STATE;
 
@@ -100,6 +103,7 @@ typedef enum{
   EVENT_JOYDOWN,
   EVENT_JOYLEFT,
   EVENT_JOYRIGHT,
+  EVENT_B1PRESS,
   EVENT_B2PRESS,
   EVENT_B3PRESS,
   EVENT_B4PRESS,
@@ -110,6 +114,7 @@ typedef enum{
 
 tGAME_STATE gamestate = STATE_MMSTARTNEWGAME;
 tGAME_EVENT gameevent = EVENT_NONE;
+tGAME_EVENT gameevent_prev = EVENT_NONE;
 
 void rungame(void);
 void exitgame(void);
@@ -169,9 +174,21 @@ void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_LMRETURN]       [EVENT_JOYUP] =      lmslot2,
     [STATE_LMRETURN]       [EVENT_JOYDOWN] =    lmreturn,
     
+    [STATE_STARTNEWGAME]   [EVENT_NONE] =       startnewgame,
+    [STATE_STARTNEWGAME]   [EVENT_B1PRESS] =    startnewgame,
+    [STATE_STARTNEWGAME]   [EVENT_B2PRESS] =    startnewgame,
+    [STATE_STARTNEWGAME]   [EVENT_B3PRESS] =    startnewgame,
+    [STATE_STARTNEWGAME]   [EVENT_B4PRESS] =    startnewgame,
+    
     [STATE_GAMERUN]        [EVENT_NONE] =       rungame,
-    [STATE_GAMERUN]        [EVENT_B4PRESS] =    pmsave,
+    [STATE_GAMERUN]        [EVENT_B1PRESS] =    rungame,
+    [STATE_GAMERUN]        [EVENT_B2PRESS] =    rungame,
     [STATE_GAMERUN]        [EVENT_B3PRESS] =    pmsave,
+    [STATE_GAMERUN]        [EVENT_B4PRESS] =    pmsave,
+    [STATE_GAMERUN]        [EVENT_JOYUP] =      rungame,
+    [STATE_GAMERUN]        [EVENT_JOYDOWN] =    rungame,
+    [STATE_GAMERUN]        [EVENT_JOYLEFT] =    rungame,
+    [STATE_GAMERUN]        [EVENT_JOYRIGHT] =   rungame,
     [STATE_GAMERUN]        [EVENT_GAMERDEATH] = stopgamehandler,
     [STATE_GAMERUN]        [EVENT_MAGAZ] =      magazenter,
     
