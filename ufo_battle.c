@@ -54,7 +54,7 @@ void createbullet(void) {
       Gamer.energy -= BULLET_ENERGY_COST;
       Bullet[i].state = 1;
       Bullet[i].ln = Gamer.ln;
-      Bullet[i].cl = Gamer.cl + 28;
+      Bullet[i].cl = Gamer.cl + 24;
       Sounds(400);
     }
     i++;
@@ -95,8 +95,8 @@ void movevilstar(void) {
 void movbullet(void) {
   for (uint8 i = 0; i < BULLET_MAX; i++) {
     if (Bullet[i].state) {
-      Bullet[i].cl += 1;
-      if (Bullet[i].cl > 126) {
+      Bullet[i].cl += 2;
+      if (Bullet[i].cl > 126 || Bullet[i].cl <= 0) {
         Bullet[i].state = 0;
         Bullet[i].cl = 0;
       }
@@ -319,16 +319,19 @@ void rungame_events_period100ms(void) {
   drawbullet();
   drawinfo();
 }
-
+void FSM_transition_table(void)
+{
+    if(FSM_ENABLE) transition_table[gamestate][gameevent]();
+}
 void system_events_period100ms(void) {
   getevent();
   batcheck();
   createsmallstar(SMALLSTAR_CREATE_PER);
   gameprogress(PRD_GAMEPROGRESS);
-  drawsmallstar();
-  screenupdate();
+  FSM_transition_table();
+  drawsmallstar();  
   
-  transition_table[gamestate][gameevent]();
+  screenupdate();
 }
 void system_events_period25ms(void) {
   movesmallstar(SMALLSTAR_MOVE_PER);
@@ -366,7 +369,7 @@ void startnewgame(void)
     Gamer.cl = 0;
     SchedAddEvent(gunregen, PRD_GAMER_ENERGYREGEN);
     SchedAddEvent(createevilstar, PRD_EVELSTAR_CREATE);
-    SchedAddEvent(movbullet, 5);
+    SchedAddEvent(movbullet, 20);
     SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
     SchedAddEvent(rungame_events_period100ms, 100);
     gamestate = STATE_GAMERUN;
@@ -392,7 +395,7 @@ void resumegamehandler(void)
 
 void rungame(void)
 {
-  
+    gamestate = STATE_GAMERUN;
 }
 
 void stopgamehandler(void)

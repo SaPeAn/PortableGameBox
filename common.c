@@ -216,7 +216,7 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  uint16 j;
+  /*uint16 j;
   for(uint8 i = 0; i < (delay/10); i++)
   {  
     LATCbits.LC2 = 0;
@@ -225,7 +225,7 @@ void Sounds(uint16 delay)
     LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }
+  }*/
 }
 
 void rtcrawtobcd(void)

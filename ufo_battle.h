@@ -113,6 +113,7 @@ typedef enum{
 tGAME_STATE gamestate = STATE_MMSTARTNEWGAME;
 tGAME_EVENT gameevent = EVENT_NONE;
 tGAME_EVENT gameevent_prev = EVENT_NONE;
+uint8 FSM_ENABLE = 1;
 
 void rungame(void);
 void exitgame(void);
@@ -140,6 +141,7 @@ void movesmallstar(uint8 move_period);
 void drawsmallstar(void);
 void resumegamehandler(void);
 void magazenter(void);
+void createbullet(void);
 
 void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MMSTARTNEWGAME] [EVENT_NONE]=        mmstartnewgame,
