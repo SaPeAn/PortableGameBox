@@ -252,54 +252,49 @@ void drawsmallstar(void)
 //EVENT CHECKER
 void getevent(void)
 {
-  if(gameevent_prev != gameevent) {
-    gameevent_prev = gameevent; 
-    return;
-  }
   check_btn_jstk();   
   static uint8 somethinghappen = 0;
   if (joystick.down) {
     joystick.down = 0;
-    gameevent = EVENT_JOYDOWN;
+    menuevent = EVENT_JOYDOWN;
     somethinghappen = 1;
   }
   if (joystick.up){
     joystick.up = 0;
-    gameevent = EVENT_JOYUP;
+    menuevent = EVENT_JOYUP;
     somethinghappen = 1;
   }
   if (joystick.left) {
     joystick.left = 0;
-    gameevent = EVENT_JOYLEFT; 
+    menuevent = EVENT_JOYLEFT; 
     somethinghappen = 1;
   }
   if (joystick.right){
     joystick.right = 0;
-    gameevent = EVENT_JOYRIGHT;
+    menuevent = EVENT_JOYRIGHT;
     somethinghappen = 1;
   }
   if (B1.BtnON) {
     B1.BtnON = 0;
-    gameevent = EVENT_B1PRESS;
+    menuevent = EVENT_B1PRESS;
     somethinghappen = 1;
   }
   if (B2.BtnON) {
     B2.BtnON = 0;
-    gameevent = EVENT_B2PRESS;
+    menuevent = EVENT_B2PRESS;
     somethinghappen = 1;
   }if (B3.BtnON) {
     B3.BtnON = 0;
-    gameevent = EVENT_B3PRESS;
+    menuevent = EVENT_B3PRESS;
     somethinghappen = 1;
   }
   if (B4.BtnON) {
     B4.BtnON = 0;
-    gameevent = EVENT_B4PRESS;
+    menuevent = EVENT_B4PRESS;
     somethinghappen = 1;
   }
   if(somethinghappen) somethinghappen = 0;
-  else gameevent = EVENT_NONE;
-  gameevent_prev = gameevent;
+  else menuevent = EVENT_NONE;
 }
 //--------------------------COMBINED SCHEDULER EVENTS---------------------------
 void move_enemy_objects(void) {
@@ -321,7 +316,7 @@ void rungame_events_period100ms(void) {
 }
 void FSM_transition_table(void)
 {
-    if(FSM_ENABLE) transition_table[gamestate][gameevent]();
+    if(FSM_ENABLE) transition_table[menustate][menuevent]();
 }
 void system_events_period100ms(void) {
   getevent();
@@ -343,7 +338,7 @@ void system_events_period25ms(void) {
  */
 void startnewgame(void)
 {
-  gamestate = STATE_STARTNEWGAME;
+  menustate = STATE_STARTNEWGAME;
  /* if(GAME_STORY_STRING_NUM < 4)
   {
     if(GAME_STORY_STRING_NUM == 3) LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 3, 0);
@@ -372,15 +367,7 @@ void startnewgame(void)
     SchedAddEvent(movbullet, 20);
     SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
     SchedAddEvent(rungame_events_period100ms, 100);
-    gamestate = STATE_GAMERUN;
-}
-
-void savegame(uint8 slot) 
-{
-}
-
-void loadgame(uint8 slot)
-{
+    menustate = STATE_GAMERUN;
 }
 
 void resumegamehandler(void)
@@ -390,12 +377,12 @@ void resumegamehandler(void)
   SchedResumeEvent(movbullet);
   SchedResumeEvent(move_enemy_objects);
   SchedResumeEvent(rungame_events_period100ms);
-  gamestate = STATE_GAMERUN;
+  menustate = STATE_GAMERUN;
 }
 
 void rungame(void)
 {
-    gamestate = STATE_GAMERUN;
+    menustate = STATE_GAMERUN;
 }
 
 void stopgamehandler(void)
@@ -409,7 +396,7 @@ void stopgamehandler(void)
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   GAME_STORY_STRING_NUM = 0;
-  gamestate = STATE_MMSTARTNEWGAME;
+  menustate = STATE_MMSTARTNEWGAME;
 }
 
 void exitgame(void)
@@ -419,88 +406,81 @@ void exitgame(void)
   SchedRemoveAllEvents();
 }
 
-void loadslot1(void){
-  loadgame(SLOT1);
-  gamestate = STATE_GAMERUN;
-}
-void loadslot2(void){
-  loadgame(SLOT2);    
-  gamestate = STATE_GAMERUN;
-}
-void saveslot1(void){
-  savegame(SLOT1);
-}
-void saveslot2(void){
-  savegame(SLOT2);
-}
-
-void displaymainmenu(void)
+void mmHandler(void)
 {
-  LCD_printstr8x5((uint8*)"ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
-  LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
-  LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
-  LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-}
-
-void magazenter(void)
-{
-  
-}
-
-void displaypausemenu(void)
-{
-  LCD_printstr8x5((uint8*)"ÏÀÓÇÀ", 0, 5);
-  LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
-  LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
-  LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
-}
-void displayloadmenu(void)
-{
-  LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
-  LCD_printstr8x5(gameslot1, 2, 19);
-  LCD_printstr8x5(gameslot2, 4, 19);
-  LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
-}
-void displaysavemenu(void)
-{
-  LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
-  LCD_printstr8x5(gameslot1, 2, 19);
-  LCD_printstr8x5(gameslot2, 4, 19);
-  LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
+  switch(menustate)
+  {
+    case STATE_MAINMENU:
+      LCD_printstr8x5((uint8*)"ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
+      LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
+      LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
+      LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
+      break;
+    case STATE_PAUSEMENU:
+      LCD_printstr8x5((uint8*)"ÏÀÓÇÀ", 0, 5);
+      LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
+      LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
+      LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
+      break;
+    case STATE_LOADMENU:  
+      LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
+      LCD_printstr8x5(gameslot1, 2, 19);
+      LCD_printstr8x5(gameslot2, 4, 19);
+      LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
+      break;
+    case STATE_SAVEMENU:
+      LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
+      LCD_printstr8x5(gameslot1, 2, 19);
+      LCD_printstr8x5(gameslot2, 4, 19);
+      LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
+      break;      
+  }
+  switch(coursorstate)
+  {
+    case CSTATE_0:
+      LCD_printmenucoursor(2, 4);
+      break;
+    case CSTATE_1:
+      LCD_printmenucoursor(4, 4);
+      break;
+    case CSTATE_2:  
+      LCD_printmenucoursor(6, 4);
+      break;
+  }
 }
 //--------------------------GAME MENU STATES-------------------------------                           
 void mmstartnewgame(void) {
-  gamestate = STATE_MMSTARTNEWGAME;
+  menustate = STATE_MMSTARTNEWGAME;
   LCD_printmenucoursor(2, 4);
   displaymainmenu();
 }
 void mmloadgame(void){
-  gamestate = STATE_MMLOADGAME;
+  menustate = STATE_MMLOADGAME;
   LCD_printmenucoursor(4, 4);
   displaymainmenu();
 }
 void mmexitgame(void){
-  gamestate = STATE_MMEXIT;
+  menustate = STATE_MMEXIT;
   LCD_printmenucoursor(6, 4);
   displaymainmenu();
 }
 void lmslot1(void){
-  gamestate = STATE_LMSLOT1;
+  menustate = STATE_LMSLOT1;
   LCD_printmenucoursor(2, 4);
   displayloadmenu();
 }
 void lmslot2(void){
-  gamestate = STATE_LMSLOT2;
+  menustate = STATE_LMSLOT2;
   LCD_printmenucoursor(4, 4);
   displayloadmenu();
 }
 void lmreturn(void){
-  gamestate = STATE_LMRETURN;
+  menustate = STATE_LMRETURN;
   LCD_printmenucoursor(6, 4);
   displayloadmenu();
 }
 void pmsave(void){
-  gamestate = STATE_PMSAVE;
+  menustate = STATE_PMSAVE;
   SchedPauseEvent(gunregen);
   SchedPauseEvent(createevilstar);
   SchedPauseEvent(movbullet);
@@ -510,27 +490,27 @@ void pmsave(void){
   displaypausemenu();
 }
 void pmreturn(void){
-  gamestate = STATE_PMRETURN;
+  menustate = STATE_PMRETURN;
   LCD_printmenucoursor(4, 4);
   displaypausemenu();
 }
 void pmexit(void){
-  gamestate = STATE_PMEXIT;
+  menustate = STATE_PMEXIT;
   LCD_printmenucoursor(6, 4);
   displaypausemenu();
 }
 void smslot1(void){
-  gamestate = STATE_SMSLOT1;
+  menustate = STATE_SMSLOT1;
   LCD_printmenucoursor(2, 4);
   displaysavemenu();
 }
 void smslot2(void){
-  gamestate = STATE_SMSLOT2;
+  menustate = STATE_SMSLOT2;
   LCD_printmenucoursor(4, 4);
   displaysavemenu();
 }
 void smreturn(void){
-  gamestate = STATE_SMRETURN;
+  menustate = STATE_SMRETURN;
   LCD_printmenucoursor(6, 4);
   displaysavemenu();
 }
@@ -543,7 +523,8 @@ void ufobattle(void)
   randinit();
   SchedAddEvent(system_events_period25ms, 25);
   SchedAddEvent(system_events_period100ms, 100);
-  gamestate = STATE_MMSTARTNEWGAME;
+  menustate = STATE_MAINMENU;
+  coursorstate = CSTATE_0;
     
   while (CFlags.RunGameFl)
   {
