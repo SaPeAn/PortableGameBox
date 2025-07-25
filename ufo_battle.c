@@ -318,19 +318,6 @@ void FSM_transition_table(void)
 {
     if(FSM_ENABLE) transition_table[menustate][menuevent]();
 }
-void system_events_period100ms(void) {
-  getevent();
-  batcheck();
-  createsmallstar(SMALLSTAR_CREATE_PER);
-  gameprogress(PRD_GAMEPROGRESS);
-  FSM_transition_table();
-  drawsmallstar();  
-  
-  screenupdate();
-}
-void system_events_period25ms(void) {
-  movesmallstar(SMALLSTAR_MOVE_PER);
-}
 
 /*******************************************************************************
  *                              GAME MENU HANDLERS                            
@@ -514,6 +501,21 @@ void smreturn(void){
   LCD_printmenucoursor(6, 4);
   displaysavemenu();
 }
+
+void system_events_period100ms(void) {
+  getevent();
+  batcheck();
+  createsmallstar(SMALLSTAR_CREATE_PER);
+  gameprogress(PRD_GAMEPROGRESS);
+  FSM_transition_table();
+  drawsmallstar();  
+  
+  screenupdate();
+}
+void system_events_period25ms(void) {
+  movesmallstar(SMALLSTAR_MOVE_PER);
+}
+
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
  *******************************************************************************

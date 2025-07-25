@@ -88,10 +88,10 @@ typedef enum {
 } tMENU_STATE;
 
 typedef enum {
-  CSTATE_0,
-  CSTATE_1,
-  CSTATE_2,
-  CSTATE_3,
+  CSTATE_POS_0,
+  CSTATE_POS_1,
+  CSTATE_POS_2,
+  CSTATE_POS_3,
 } tCOURSOR_STATE;
 
 typedef enum{
@@ -99,27 +99,38 @@ typedef enum{
   EVENT_SELPOS_0,
   EVENT_SELPOS_1,
   EVENT_SELPOS_2,
+  EVENT_MAX,
 } tMENU_EVENT;
 
 tMENU_STATE menustate = STATE_MAINMENU;
-tCOURSOR_STATE coursorstate = CSTATE_0;
+tCOURSOR_STATE coursorstate = CSTATE_POS_0;
 tMENU_EVENT menuevent = EVENT_NONE;
 uint8 FSM_ENABLE = 1;
 
 
 
 void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
-    [STATE_MAINMENU]   [EVENT_NONE]=        mmHandler,
-    [STATE_MAINMENU]   [SELPOS_0]=          mmEnterHandler,
-    [STATE_MAINMENU]   [SELPOS_1]=          mmExitHandler,
+    [STATE_MAINMENU]        [EVENT_NONE]=              handler_menumain,
+    [STATE_MAINMENU]        [EVENT_SELPOS_0]=          handler_gamestart,
+    [STATE_MAINMENU]        [EVENT_SELPOS_1]=          handler_menuload,
+    [STATE_MAINMENU]        [EVENT_SELPOS_2]=          handler_gameexit,
     
-    [STATE_LOADMENU]   [EVENT_NONE]=        mmloadgame,
+    [STATE_LOADMENU]        [EVENT_NONE]=              handler_menuload,
+    [STATE_LOADMENU]        [EVENT_SELPOS_0]=          handler_loadfslot,
+    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadsslot,
+    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_menumain,
     
-    [STATE_PAUSEMENU]  [EVENT_NONE] =       mmexitgame,
+    [STATE_PAUSEMENU]       [EVENT_NONE] =             handler_menumain,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_0]=          handler_menusave,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_1]=          handler_gameresume,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_2]=          handler_gamestop,
         
-    [STATE_SAVEMENU]   [EVENT_NONE] =       lmslot1,
+    [STATE_SAVEMENU]        [EVENT_NONE] =             handler_menusave,
+    [STATE_LOADMENU]        [EVENT_SELPOS_0]=          handler_loadfslot,
+    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadsslot,
+    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_menumain,
 
-    [STATE_SELLSWORM]  [EVENT_NONE] =       lmslot2,
+    [STATE_SELLSWORM]       [EVENT_NONE] =       lmslot2,
     };
 
 #define   SLOT1    0
