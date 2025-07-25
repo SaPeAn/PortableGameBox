@@ -2,7 +2,6 @@
 #include "common.h"
 #include "drv_LCD_ST7565_SPI.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <xc.h>
 
 /*----------------------------------UTILITIES-------------------------------*/
@@ -49,8 +48,8 @@ uint8 dig_to_smb(uint8 dig)
 
 void u16_to_str(uint8* str, uint16 num, uint8 N)
 { 
-  sprintf((char*)str, "%u", num);
-  /*
+  //sprintf((char*)str, "%u", num);
+  
   str[0] = dig_to_smb((uint8)(num/10000));
   num %= 10000;
   str[1] = dig_to_smb((uint8)(num/1000));
@@ -81,7 +80,7 @@ void u16_to_str(uint8* str, uint16 num, uint8 N)
   {
     for(uint8 i = 0; i <= N; i++) 
       str[i] = str[5 - N + i];
-  }*/
+  }
 }
 /*----------------------------------------------------------------------------*/
 
@@ -216,7 +215,7 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  /*uint16 j;
+  uint16 j;
   for(uint8 i = 0; i < (delay/10); i++)
   {  
     LATCbits.LC2 = 0;
@@ -225,7 +224,7 @@ void Sounds(uint16 delay)
     LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }*/
+  }
 }
 
 void rtcrawtobcd(void)

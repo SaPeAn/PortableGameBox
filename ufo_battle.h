@@ -30,7 +30,7 @@ typedef struct
 typedef struct {
   uint8 state;
   uint8 ln;
-  int8 cl;
+  int8  cl;
 }tBullet;
 
 typedef struct{
@@ -83,6 +83,7 @@ typedef enum {
   STATE_LOADMENU,
   STATE_PAUSEMENU,
   STATE_SAVEMENU,
+  STATE_STARTGAME,
   STATE_MAGAZIN,
   STATE_MAX,
 } tMENU_STATE;
@@ -123,7 +124,6 @@ void handler_saveslot_0(void);
 void handler_saveslot_1(void);
 void handler_magazin(void);
 void handler_gamepause(void);
-void gamemenu(void);
 
 void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MAINMENU]        [EVENT_NONE]=              handler_menumain,
@@ -146,6 +146,8 @@ void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_SAVEMENU]        [EVENT_SELPOS_2]=          handler_saveslot_1,
     [STATE_SAVEMENU]        [EVENT_SELPOS_3]=          handler_menupause,
 
+    [STATE_STARTGAME]       [EVENT_NONE] =             handler_gamenewstart,
+    
     [STATE_MAGAZIN]         [EVENT_NONE] =             handler_magazin,
     };
 
@@ -154,6 +156,8 @@ uint8 gameslot2[20] = "-осярн-";
 
 
 void ufobattle(void);
+
+void gamemenu(void);
 
 #endif	/* UFO_BATTLE_H */
 

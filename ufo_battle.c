@@ -282,12 +282,15 @@ void rungame_events_period100ms(void) {
  */
 void handler_gamenewstart(void)
 {
- /* if(GAME_STORY_STRING_NUM < 4)
+  menustate = STATE_STARTGAME;
+  menuevent = EVENT_NONE;
+ 
+  if(GAME_STORY_STRING_NUM < 4)
   {
     if(GAME_STORY_STRING_NUM == 3) LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 3, 0);
     else LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 0, 0);
     LCD_printstr8x5((uint8*)"äàëåå...", 7, 78);
-    if(!B1.BtnON && !B2.BtnON && !B3.BtnON && !B4.BtnON)
+    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)
     {
       B1.BtnON = 0;
       B2.BtnON = 0;
@@ -296,7 +299,8 @@ void handler_gamenewstart(void)
       GAME_STORY_STRING_NUM++;
     }
   }
-  */
+  else
+  {
     Gamer.health = 24;
     Gamer.energy = 2;
     Gamer.energymax = 2;
@@ -311,6 +315,7 @@ void handler_gamenewstart(void)
     SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
     SchedAddEvent(rungame_events_period100ms, 100);
     SchedPauseEvent(gamemenu);
+  }
 }
 
 void handler_loadslot_0(void)
@@ -475,55 +480,50 @@ void coursormovdisp(void)
 
 void handler_menumain(void)
 {
-  
   menustate = STATE_MAINMENU;
-  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
-  menustate_prev = menustate;
   menu_getevent();
   LCD_printstr8x5((uint8*)"ÃÀËÀÊÒÈ×ÅÑÊÈÉ ÇÂÅÇÄÅÖ", 0, 0);
   LCD_printstr8x5((uint8*)"ÍÎÂÀß ÈÃÐÀ", 2, 19);
   LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÈÒÜ ÈÃÐÓ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
   coursormovdisp();
+  if(menuevent == EVENT_SELPOS_2) coursorpos = COURS_POS_1; // coursor position when entering the load menu in "SLOT1"
 }
 
 void handler_menuload(void)
 { 
   menustate = STATE_LOADMENU;
-  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
-  menustate_prev = menustate;
   menu_getevent();
   LCD_printstr8x5((uint8*)"ÇÀÃÐÓÇÊÀ ÈÃÐÛ", 0, 5);
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
   coursormovdisp();
+  if(menuevent == EVENT_SELPOS_3) coursorpos = COURS_POS_2; // coursor position when returning to the main menu in "LOAD"
 }
 
 void handler_menupause(void)
 {
   menustate = STATE_PAUSEMENU;
-  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
-  menustate_prev = menustate;
   menu_getevent();
   LCD_printstr8x5((uint8*)"ÏÀÓÇÀ", 0, 5);
   LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÈÒÜ", 2, 19);
   LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
   coursormovdisp();
+  
 }
 
 void handler_menusave(void)
 {
   menustate = STATE_SAVEMENU;
-  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
-  menustate_prev = menustate;
   menu_getevent();
   LCD_printstr8x5((uint8*)"ÑÎÕÐÀÍÅÍÈÅ ÈÃÐÛ", 0, 5);
   LCD_printstr8x5(gameslot1, 2, 19);
   LCD_printstr8x5(gameslot2, 4, 19);
   LCD_printstr8x5((uint8*)"ÍÀÇÀÄ", 6, 19);
   coursormovdisp();
+  if(menuevent == EVENT_SELPOS_3) coursorpos = COURS_POS_1; // coursor position when returning to the pause menu in "SAVE"
 }
 
 void handler_saveslot_0(void)

@@ -125,12 +125,13 @@ uint8 LCD_printstr8x5(const uint8 *str, uint8 pg, uint8 cl) {
   if (str == NULL) str = str_null;
   uint8 i = 0;
   while (str[i]) {
+    if(str[i] == '\n') {cl = 0; pg++; i++; continue;}
     LCD_printsmb8x5(str[i], pg, cl);
     cl += 6;
-    if (cl > 122) {
+    /*if (cl > 122) {
       pg++;
       cl = 0;
-    }
+    }*/
     if (pg > 7) return 0;
     i++;
   }
