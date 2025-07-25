@@ -5,7 +5,7 @@
 #include "scheduler.h"
 
 /*******************************************************************************
- *                        SCHEDULER EVENT HANDLERS
+ *                        SCHEDULER GAME EVENT HANDLERS
  * *****************************************************************************
  */
 void gameprogress(uint8 period)
@@ -141,7 +141,7 @@ void gamer_evilstar_collision(void) {
   //Gamer's death handler
   if (Gamer.health <= 0) {
     Sounds(600);
-    stopgamehandler();
+    handler_gamestop();
   }
 }
 
@@ -249,53 +249,6 @@ void drawsmallstar(void)
     }
   }
 }
-//EVENT CHECKER
-void getevent(void)
-{
-  check_btn_jstk();   
-  static uint8 somethinghappen = 0;
-  if (joystick.down) {
-    joystick.down = 0;
-    menuevent = EVENT_JOYDOWN;
-    somethinghappen = 1;
-  }
-  if (joystick.up){
-    joystick.up = 0;
-    menuevent = EVENT_JOYUP;
-    somethinghappen = 1;
-  }
-  if (joystick.left) {
-    joystick.left = 0;
-    menuevent = EVENT_JOYLEFT; 
-    somethinghappen = 1;
-  }
-  if (joystick.right){
-    joystick.right = 0;
-    menuevent = EVENT_JOYRIGHT;
-    somethinghappen = 1;
-  }
-  if (B1.BtnON) {
-    B1.BtnON = 0;
-    menuevent = EVENT_B1PRESS;
-    somethinghappen = 1;
-  }
-  if (B2.BtnON) {
-    B2.BtnON = 0;
-    menuevent = EVENT_B2PRESS;
-    somethinghappen = 1;
-  }if (B3.BtnON) {
-    B3.BtnON = 0;
-    menuevent = EVENT_B3PRESS;
-    somethinghappen = 1;
-  }
-  if (B4.BtnON) {
-    B4.BtnON = 0;
-    menuevent = EVENT_B4PRESS;
-    somethinghappen = 1;
-  }
-  if(somethinghappen) somethinghappen = 0;
-  else menuevent = EVENT_NONE;
-}
 //--------------------------COMBINED SCHEDULER EVENTS---------------------------
 void move_enemy_objects(void) {
   movevilstar();
@@ -313,19 +266,22 @@ void rungame_events_period100ms(void) {
   drawgamer();
   drawbullet();
   drawinfo();
-}
-void FSM_transition_table(void)
-{
-    if(FSM_ENABLE) transition_table[menustate][menuevent]();
+  
+  gameprogress(PRD_GAMEPROGRESS);
+  
+  
+  if(B4.BtnON) {
+    B4.BtnON = 0;
+    handler_gamepause();
+  }
 }
 
 /*******************************************************************************
- *                              GAME MENU HANDLERS                            
+ *                              GAME HANDLERS                            
  *******************************************************************************
  */
-void startnewgame(void)
+void handler_gamenewstart(void)
 {
-  menustate = STATE_STARTNEWGAME;
  /* if(GAME_STORY_STRING_NUM < 4)
   {
     if(GAME_STORY_STRING_NUM == 3) LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 3, 0);
@@ -354,25 +310,45 @@ void startnewgame(void)
     SchedAddEvent(movbullet, 20);
     SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
     SchedAddEvent(rungame_events_period100ms, 100);
-    menustate = STATE_GAMERUN;
+    SchedPauseEvent(gamemenu);
 }
 
-void resumegamehandler(void)
+void handler_loadslot_0(void)
+{
+  handler_gamenewstart();
+}
+
+void handler_loadslot_1(void)
+{
+  handler_gamenewstart();
+}
+  
+void handler_gamepause(void)
+{
+  SchedPauseEvent(gunregen);
+  SchedPauseEvent(createevilstar);
+  SchedPauseEvent(movbullet);
+  SchedPauseEvent(move_enemy_objects);
+  SchedPauseEvent(rungame_events_period100ms);
+  
+  SchedResumeEvent(gamemenu);
+  menustate = STATE_PAUSEMENU;
+  menuevent = EVENT_NONE;
+  coursorpos = COURS_POS_1;
+}
+
+void handler_gameresume(void)
 {
   SchedResumeEvent(gunregen);
   SchedResumeEvent(createevilstar);
   SchedResumeEvent(movbullet);
   SchedResumeEvent(move_enemy_objects);
   SchedResumeEvent(rungame_events_period100ms);
-  menustate = STATE_GAMERUN;
+  
+  SchedPauseEvent(gamemenu);
 }
 
-void rungame(void)
-{
-    menustate = STATE_GAMERUN;
-}
-
-void stopgamehandler(void)
+void handler_gamestop(void)
 {
   SchedRemoveEvent(gunregen);
   SchedRemoveEvent(createevilstar);
@@ -383,139 +359,205 @@ void stopgamehandler(void)
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   GAME_STORY_STRING_NUM = 0;
-  menustate = STATE_MMSTARTNEWGAME;
+  
+  SchedResumeEvent(gamemenu);
+  menustate = STATE_MAINMENU;
+  menuevent = EVENT_NONE;
+  coursorpos = COURS_POS_1;
 }
 
-void exitgame(void)
+void handler_gameexit(void)
 {
   CFlags.RunGameFl = 0;
   CFlags.MenuFl = 1;
   SchedRemoveAllEvents();
 }
 
-void mmHandler(void)
+/*******************************************************************************
+ *                              GAME MENU HANDLERS                            
+ *******************************************************************************
+ */
+//EVENT CHECKER
+void menu_getevent(void)
 {
-  switch(menustate)
-  {
-    case STATE_MAINMENU:
-      LCD_printstr8x5((uint8*)"√¿À¿ “»◊≈— »… «¬≈«ƒ≈÷", 0, 0);
-      LCD_printstr8x5((uint8*)"ÕŒ¬¿ﬂ »√–¿", 2, 19);
-      LCD_printstr8x5((uint8*)"«¿√–”«»“‹ »√–”", 4, 19);
-      LCD_printstr8x5((uint8*)"¬€…“»", 6, 19);
-      break;
-    case STATE_PAUSEMENU:
-      LCD_printstr8x5((uint8*)"œ¿”«¿", 0, 5);
-      LCD_printstr8x5((uint8*)"—Œ’–¿Õ»“‹", 2, 19);
-      LCD_printstr8x5((uint8*)"¬≈–Õ”“‹—ﬂ   »√–≈", 4, 19);
-      LCD_printstr8x5((uint8*)"¬€…“»", 6, 19);
-      break;
-    case STATE_LOADMENU:  
-      LCD_printstr8x5((uint8*)"«¿√–”« ¿ »√–€", 0, 5);
-      LCD_printstr8x5(gameslot1, 2, 19);
-      LCD_printstr8x5(gameslot2, 4, 19);
-      LCD_printstr8x5((uint8*)"Õ¿«¿ƒ", 6, 19);
-      break;
-    case STATE_SAVEMENU:
-      LCD_printstr8x5((uint8*)"—Œ’–¿Õ≈Õ»≈ »√–€", 0, 5);
-      LCD_printstr8x5(gameslot1, 2, 19);
-      LCD_printstr8x5(gameslot2, 4, 19);
-      LCD_printstr8x5((uint8*)"Õ¿«¿ƒ", 6, 19);
-      break;      
+  static uint8 somethinghappen = 0;
+  if (B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) {
+    B1.BtnON = 0;
+    B2.BtnON = 0;
+    B3.BtnON = 0;
+    B4.BtnON = 0;
+    switch(coursorpos)
+    {
+      case COURS_POS_1:
+        menuevent = EVENT_SELPOS_1;
+        break;
+      case COURS_POS_2:
+        menuevent = EVENT_SELPOS_2;
+        break;
+      case COURS_POS_3:
+        menuevent = EVENT_SELPOS_3;
+        break;
+      case COURS_POS_4:
+        menuevent = EVENT_SELPOS_4;
+        break;
+    }
+    somethinghappen = 1;
   }
-  switch(coursorstate)
-  {
-    case CSTATE_0:
-      LCD_printmenucoursor(2, 4);
-      break;
-    case CSTATE_1:
-      LCD_printmenucoursor(4, 4);
-      break;
-    case CSTATE_2:  
-      LCD_printmenucoursor(6, 4);
-      break;
-  }
-}
-//--------------------------GAME MENU STATES-------------------------------                           
-void mmstartnewgame(void) {
-  menustate = STATE_MMSTARTNEWGAME;
-  LCD_printmenucoursor(2, 4);
-  displaymainmenu();
-}
-void mmloadgame(void){
-  menustate = STATE_MMLOADGAME;
-  LCD_printmenucoursor(4, 4);
-  displaymainmenu();
-}
-void mmexitgame(void){
-  menustate = STATE_MMEXIT;
-  LCD_printmenucoursor(6, 4);
-  displaymainmenu();
-}
-void lmslot1(void){
-  menustate = STATE_LMSLOT1;
-  LCD_printmenucoursor(2, 4);
-  displayloadmenu();
-}
-void lmslot2(void){
-  menustate = STATE_LMSLOT2;
-  LCD_printmenucoursor(4, 4);
-  displayloadmenu();
-}
-void lmreturn(void){
-  menustate = STATE_LMRETURN;
-  LCD_printmenucoursor(6, 4);
-  displayloadmenu();
-}
-void pmsave(void){
-  menustate = STATE_PMSAVE;
-  SchedPauseEvent(gunregen);
-  SchedPauseEvent(createevilstar);
-  SchedPauseEvent(movbullet);
-  SchedPauseEvent(move_enemy_objects);
-  SchedPauseEvent(rungame_events_period100ms);
-  LCD_printmenucoursor(2, 4);
-  displaypausemenu();
-}
-void pmreturn(void){
-  menustate = STATE_PMRETURN;
-  LCD_printmenucoursor(4, 4);
-  displaypausemenu();
-}
-void pmexit(void){
-  menustate = STATE_PMEXIT;
-  LCD_printmenucoursor(6, 4);
-  displaypausemenu();
-}
-void smslot1(void){
-  menustate = STATE_SMSLOT1;
-  LCD_printmenucoursor(2, 4);
-  displaysavemenu();
-}
-void smslot2(void){
-  menustate = STATE_SMSLOT2;
-  LCD_printmenucoursor(4, 4);
-  displaysavemenu();
-}
-void smreturn(void){
-  menustate = STATE_SMRETURN;
-  LCD_printmenucoursor(6, 4);
-  displaysavemenu();
+  if(somethinghappen) somethinghappen = 0;
+  else menuevent = EVENT_NONE;
 }
 
-void system_events_period100ms(void) {
-  getevent();
+void coursormovdisp(void)
+{
+  //move coursor
+  if(menustate != STATE_MAGAZIN)
+  {
+    if (joystick.down) {
+      joystick.down = 0;
+      coursorpos++; 
+      if(coursorpos >= COURS_POS_3) coursorpos = COURS_POS_3;
+    }
+    if (joystick.up){
+      joystick.up = 0;
+      if(coursorpos != COURS_POS_1) coursorpos--; 
+    }
+  }
+  else
+  {
+    if (joystick.right) {
+      joystick.right = 0;
+      if(coursorpos >= COURS_POS_4) coursorpos = COURS_POS_4;
+      else coursorpos++; 
+    }
+    if (joystick.left){
+      joystick.left = 0;
+      if(coursorpos != COURS_POS_1) coursorpos--; 
+    }
+  }
+  //display coursor
+  if(menustate != STATE_MAGAZIN)
+  {
+    switch(coursorpos)
+    {
+      case COURS_POS_1:
+        LCD_printmenucoursor(2, 4);
+        break;
+      case COURS_POS_2:
+        LCD_printmenucoursor(4, 4);
+        break;
+      case COURS_POS_3:  
+        LCD_printmenucoursor(6, 4);
+        break;
+      case COURS_POS_4:  
+        LCD_printmenucoursor(6, 4);
+        break;
+    }
+  }
+  else
+  {
+    switch(coursorpos)
+    {
+      case COURS_POS_1:
+        LCD_printhorline(14, 55, 15);
+        break;
+      case COURS_POS_2:
+        LCD_printhorline(14, 55, 30);
+        break;
+      case COURS_POS_3:  
+        LCD_printhorline(14, 55, 45);
+        break;
+      case COURS_POS_4:  
+        LCD_printhorline(14, 55, 60);
+        break;
+    }
+  }
+}
+
+void handler_menumain(void)
+{
+  
+  menustate = STATE_MAINMENU;
+  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
+  menustate_prev = menustate;
+  menu_getevent();
+  LCD_printstr8x5((uint8*)"√¿À¿ “»◊≈— »… «¬≈«ƒ≈÷", 0, 0);
+  LCD_printstr8x5((uint8*)"ÕŒ¬¿ﬂ »√–¿", 2, 19);
+  LCD_printstr8x5((uint8*)"«¿√–”«»“‹ »√–”", 4, 19);
+  LCD_printstr8x5((uint8*)"¬€…“»", 6, 19);
+  coursormovdisp();
+}
+
+void handler_menuload(void)
+{ 
+  menustate = STATE_LOADMENU;
+  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
+  menustate_prev = menustate;
+  menu_getevent();
+  LCD_printstr8x5((uint8*)"«¿√–”« ¿ »√–€", 0, 5);
+  LCD_printstr8x5(gameslot1, 2, 19);
+  LCD_printstr8x5(gameslot2, 4, 19);
+  LCD_printstr8x5((uint8*)"Õ¿«¿ƒ", 6, 19);
+  coursormovdisp();
+}
+
+void handler_menupause(void)
+{
+  menustate = STATE_PAUSEMENU;
+  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
+  menustate_prev = menustate;
+  menu_getevent();
+  LCD_printstr8x5((uint8*)"œ¿”«¿", 0, 5);
+  LCD_printstr8x5((uint8*)"—Œ’–¿Õ»“‹", 2, 19);
+  LCD_printstr8x5((uint8*)"¬≈–Õ”“‹—ﬂ   »√–≈", 4, 19);
+  LCD_printstr8x5((uint8*)"¬€…“»", 6, 19);
+  coursormovdisp();
+}
+
+void handler_menusave(void)
+{
+  menustate = STATE_SAVEMENU;
+  if(menustate_prev != menustate) coursorpos = COURS_POS_1;
+  menustate_prev = menustate;
+  menu_getevent();
+  LCD_printstr8x5((uint8*)"—Œ’–¿Õ≈Õ»≈ »√–€", 0, 5);
+  LCD_printstr8x5(gameslot1, 2, 19);
+  LCD_printstr8x5(gameslot2, 4, 19);
+  LCD_printstr8x5((uint8*)"Õ¿«¿ƒ", 6, 19);
+  coursormovdisp();
+}
+
+void handler_saveslot_0(void)
+{
+  menuevent = EVENT_NONE;
+}
+void handler_saveslot_1(void)
+{
+  menuevent = EVENT_NONE;
+}
+void handler_magazin(void)
+{
+  
+}
+//--------------------------SYSTEM FUNCTIONS-------------------------------  
+void system_events_period100ms(void) 
+{
+  check_btn_jstk();
   batcheck();
   createsmallstar(SMALLSTAR_CREATE_PER);
-  gameprogress(PRD_GAMEPROGRESS);
-  FSM_transition_table();
   drawsmallstar();  
   
   screenupdate();
 }
-void system_events_period25ms(void) {
-  movesmallstar(SMALLSTAR_MOVE_PER);
+
+void gamemenu(void)
+{
+  menu_transition_table[menustate][menuevent]();
 }
 
+void system_events_period25ms(void) 
+{
+  movesmallstar(SMALLSTAR_MOVE_PER);
+}
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
  *******************************************************************************
@@ -524,10 +566,12 @@ void ufobattle(void)
 {
   randinit();
   SchedAddEvent(system_events_period25ms, 25);
+  SchedAddEvent(gamemenu, 75);
   SchedAddEvent(system_events_period100ms, 100);
   menustate = STATE_MAINMENU;
-  coursorstate = CSTATE_0;
-    
+  menuevent = EVENT_NONE;
+  coursorpos = COURS_POS_1;
+  
   while (CFlags.RunGameFl)
   {
     SchedEventProcess();

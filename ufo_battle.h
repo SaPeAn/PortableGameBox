@@ -83,58 +83,72 @@ typedef enum {
   STATE_LOADMENU,
   STATE_PAUSEMENU,
   STATE_SAVEMENU,
-  STATE_SELLSWORM,
+  STATE_MAGAZIN,
   STATE_MAX,
 } tMENU_STATE;
 
 typedef enum {
-  CSTATE_POS_0,
-  CSTATE_POS_1,
-  CSTATE_POS_2,
-  CSTATE_POS_3,
-} tCOURSOR_STATE;
+  COURS_POS_1,
+  COURS_POS_2,
+  COURS_POS_3,
+  COURS_POS_4,        
+} tCOURSOR_POS;
 
 typedef enum{
   EVENT_NONE,
-  EVENT_SELPOS_0,
   EVENT_SELPOS_1,
   EVENT_SELPOS_2,
+  EVENT_SELPOS_3,
+  EVENT_SELPOS_4,
   EVENT_MAX,
 } tMENU_EVENT;
 
 tMENU_STATE menustate = STATE_MAINMENU;
-tCOURSOR_STATE coursorstate = CSTATE_POS_0;
+tMENU_STATE menustate_prev = STATE_MAINMENU;
+tCOURSOR_POS coursorpos = COURS_POS_1;
 tMENU_EVENT menuevent = EVENT_NONE;
-uint8 FSM_ENABLE = 1;
+uint8 MENU_ENABLE = 1;
 
+void handler_menumain(void);
+void handler_gamenewstart(void);
+void handler_menuload(void);
+void handler_gameexit(void);
+void handler_loadslot_0(void);
+void handler_loadslot_1(void);
+void handler_menupause(void);
+void handler_menusave(void);
+void handler_gameresume(void);
+void handler_gamestop(void);
+void handler_saveslot_0(void);
+void handler_saveslot_1(void);
+void handler_magazin(void);
+void handler_gamepause(void);
+void gamemenu(void);
 
-
-void (*const transition_table[STATE_MAX][EVENT_MAX])(void) = {
+void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
     [STATE_MAINMENU]        [EVENT_NONE]=              handler_menumain,
-    [STATE_MAINMENU]        [EVENT_SELPOS_0]=          handler_gamestart,
-    [STATE_MAINMENU]        [EVENT_SELPOS_1]=          handler_menuload,
-    [STATE_MAINMENU]        [EVENT_SELPOS_2]=          handler_gameexit,
+    [STATE_MAINMENU]        [EVENT_SELPOS_1]=          handler_gamenewstart,
+    [STATE_MAINMENU]        [EVENT_SELPOS_2]=          handler_menuload,
+    [STATE_MAINMENU]        [EVENT_SELPOS_3]=          handler_gameexit,
     
     [STATE_LOADMENU]        [EVENT_NONE]=              handler_menuload,
-    [STATE_LOADMENU]        [EVENT_SELPOS_0]=          handler_loadfslot,
-    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadsslot,
-    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_menumain,
+    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadslot_0,
+    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_loadslot_1,
+    [STATE_LOADMENU]        [EVENT_SELPOS_3]=          handler_menumain,
     
-    [STATE_PAUSEMENU]       [EVENT_NONE] =             handler_menumain,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_0]=          handler_menusave,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_1]=          handler_gameresume,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_2]=          handler_gamestop,
+    [STATE_PAUSEMENU]       [EVENT_NONE] =             handler_menupause,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_1]=          handler_menusave,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_2]=          handler_gameresume,
+    [STATE_PAUSEMENU]       [EVENT_SELPOS_3]=          handler_gamestop,
         
     [STATE_SAVEMENU]        [EVENT_NONE] =             handler_menusave,
-    [STATE_LOADMENU]        [EVENT_SELPOS_0]=          handler_loadfslot,
-    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadsslot,
-    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_menumain,
+    [STATE_SAVEMENU]        [EVENT_SELPOS_1]=          handler_saveslot_0,
+    [STATE_SAVEMENU]        [EVENT_SELPOS_2]=          handler_saveslot_1,
+    [STATE_SAVEMENU]        [EVENT_SELPOS_3]=          handler_menupause,
 
-    [STATE_SELLSWORM]       [EVENT_NONE] =       lmslot2,
+    [STATE_MAGAZIN]         [EVENT_NONE] =             handler_magazin,
     };
 
-#define   SLOT1    0
-#define   SLOT2    1
 uint8 gameslot1[20] = "-осярн-";
 uint8 gameslot2[20] = "-осярн-";
 
