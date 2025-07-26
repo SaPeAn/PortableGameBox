@@ -47,7 +47,7 @@ void createcoin(tEvilStar* Evil_Star) {
 }
 
 void createbullet(void) {
-  if (B2.BtnON || B2.HoldON || B2.StuckON) {
+  if ((B2.BtnON || B2.HoldON || B2.StuckON) && (Gamer.health > 0)) {
     B2.BtnON = 0;
     static uint8 i = 0;
     if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= 2)) {
@@ -64,23 +64,26 @@ void createbullet(void) {
 
 void gunregen(void) //Energy regen
 {
-  if (Gamer.energy < Gamer.energymax) Gamer.energy++;
+  if ((Gamer.energy < Gamer.energymax) && (Gamer.health > 0)) Gamer.energy++;
 }
 
 void movgamer(void) 
 {
-  if (joystick.oy > 140 && joystick.oy <= 210){Gamer.ln -= 2; if(Gamer.ln < 8) Gamer.ln = 8;}
-  if (joystick.oy > 210 && joystick.oy <= 250){Gamer.ln -= 4;if(Gamer.ln < 8) Gamer.ln = 8;}
-  if (joystick.oy > 250){Gamer.ln -= 8; if(Gamer.ln < 8)Gamer.ln = 8;}
-  if (joystick.oy < 120 && joystick.oy >= 50){Gamer.ln += 2; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.oy < 50 && joystick.oy >= 10){Gamer.ln += 4; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.oy < 10){Gamer.ln += 8; if(Gamer.ln > 48)Gamer.ln = 48;}
-  if (joystick.ox > 140 && joystick.ox <= 210){Gamer.cl += 2; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox > 210 && joystick.ox <= 250){Gamer.cl += 4; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox > 250){Gamer.cl += 8; if(Gamer.cl > 94)Gamer.cl = 94;}
-  if (joystick.ox < 120 && joystick.ox >= 50){Gamer.cl -= 2; if(Gamer.cl < -8)Gamer.cl = -8;}
-  if (joystick.ox < 50 && joystick.ox >= 10){Gamer.cl -= 4; if(Gamer.cl < -8) Gamer.cl = -8;}
-  if (joystick.ox < 10){Gamer.cl -= 8; if(Gamer.cl < -8)Gamer.cl = -8;}
+  if(Gamer.health > 0)
+  {
+    if (joystick.oy > 140 && joystick.oy <= 210){Gamer.ln -= 1; if(Gamer.ln < 8) Gamer.ln = 8;}
+    if (joystick.oy > 210 && joystick.oy <= 250){Gamer.ln -= 2;if(Gamer.ln < 8) Gamer.ln = 8;}
+    if (joystick.oy > 250){Gamer.ln -= 5; if(Gamer.ln < 8)Gamer.ln = 8;}
+    if (joystick.oy < 120 && joystick.oy >= 50){Gamer.ln += 1; if(Gamer.ln > 48)Gamer.ln = 48;}
+    if (joystick.oy < 50 && joystick.oy >= 10){Gamer.ln += 2; if(Gamer.ln > 48)Gamer.ln = 48;}
+    if (joystick.oy < 10){Gamer.ln += 5; if(Gamer.ln > 48)Gamer.ln = 48;}
+    if (joystick.ox > 140 && joystick.ox <= 210){Gamer.cl += 1; if(Gamer.cl > 94)Gamer.cl = 94;}
+    if (joystick.ox > 210 && joystick.ox <= 250){Gamer.cl += 2; if(Gamer.cl > 94)Gamer.cl = 94;}
+    if (joystick.ox > 250){Gamer.cl += 5; if(Gamer.cl > 94)Gamer.cl = 94;}
+    if (joystick.ox < 120 && joystick.ox >= 50){Gamer.cl -= 1; if(Gamer.cl < -8)Gamer.cl = -8;}
+    if (joystick.ox < 50 && joystick.ox >= 10){Gamer.cl -= 2; if(Gamer.cl < -8) Gamer.cl = -8;}
+    if (joystick.ox < 10){Gamer.cl -= 5; if(Gamer.cl < -8)Gamer.cl = -8;}
+  }
 }
 
 void movevilstar(void) {
@@ -136,12 +139,6 @@ void gamer_evilstar_collision(void) {
       Gamer.health -= 4;
       Sounds(600);
     }
-  }
-
-  //Gamer's death handler
-  if (Gamer.health <= 0) {
-    Sounds(600);
-    handler_gamestop();
   }
 }
 
@@ -255,40 +252,18 @@ void move_enemy_objects(void) {
   movcoin();
 }
 
-void rungame_events_period100ms(void) {
-  movgamer();
-  createbullet();
-  bullet_evilstar_collision();
-  gamer_evilstar_collision();
-  gamer_coin_collision();
-  drawevilstar();
-  drawcoin();
-  drawgamer();
-  drawbullet();
-  drawinfo();
-  
-  gameprogress(PRD_GAMEPROGRESS);
-  
-  
-  if(B4.BtnON) {
-    B4.BtnON = 0;
-    handler_gamepause();
-  }
-}
-
 /*******************************************************************************
  *                              GAME HANDLERS                            
  *******************************************************************************
  */
-void handler_gamenewstart(void)
+void statehandler_gameinitnew(void)
 {
   menustate = STATE_STARTGAME;
   menuevent = EVENT_NONE;
  
   if(GAME_STORY_STRING_NUM < 4)
   {
-    if(GAME_STORY_STRING_NUM == 3) LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 3, 0);
-    else LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 0, 0);
+    LCD_printstr8x5(gamestory_string[GAME_STORY_STRING_NUM], 0, 0);
     LCD_printstr8x5((uint8*)"‰‡ÎÂÂ...", 7, 78);
     if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)
     {
@@ -313,65 +288,89 @@ void handler_gamenewstart(void)
     SchedAddEvent(createevilstar, PRD_EVELSTAR_CREATE);
     SchedAddEvent(movbullet, 20);
     SchedAddEvent(move_enemy_objects, PRD_ENEMY_MOVE);
-    SchedAddEvent(rungame_events_period100ms, 100);
-    SchedPauseEvent(gamemenu);
+    menuevent = EVENT_EXIT; 
   }
 }
 
-void handler_loadslot_0(void)
+void statehandler_gameload(void)
 {
-  handler_gamenewstart();
+  statehandler_gameinitnew();
 }
 
-void handler_loadslot_1(void)
+void statehandler_gamerun(void)
 {
-  handler_gamenewstart();
-}
+  if(menustate == STATE_PAUSEMENU)
+  {
+    SchedResumeEvent(gunregen);
+    SchedResumeEvent(createevilstar);
+    SchedResumeEvent(movbullet);
+    SchedResumeEvent(move_enemy_objects);
+  }
   
-void handler_gamepause(void)
-{
-  SchedPauseEvent(gunregen);
-  SchedPauseEvent(createevilstar);
-  SchedPauseEvent(movbullet);
-  SchedPauseEvent(move_enemy_objects);
-  SchedPauseEvent(rungame_events_period100ms);
+  static uint8 deadgamerdrawcounter = 20;
   
-  SchedResumeEvent(gamemenu);
-  menustate = STATE_PAUSEMENU;
-  menuevent = EVENT_NONE;
-  coursorpos = COURS_POS_1;
+  menustate = STATE_RUNGAME;
+  if(Gamer.health > 0)
+  {
+    if(B4.BtnON) {
+      B4.BtnON = 0;
+      menuevent = EVENT_PAUSE;
+    }
+    else menuevent = EVENT_NONE;
+  }
+  else   // draw dead player
+  {
+    if(deadgamerdrawcounter >= 10){
+      LCD_printsprite(Gamer.ln, Gamer.cl, &gamer_dead_0_sprite);
+       deadgamerdrawcounter--;
+    }
+    if(deadgamerdrawcounter < 10 && deadgamerdrawcounter > 0) {
+      LCD_printsprite(Gamer.ln, Gamer.cl, &gamer_dead_1_sprite);
+      deadgamerdrawcounter--;
+    }
+    if(deadgamerdrawcounter == 0)
+    {
+      LCD_printstr8x5((uint8*)"«¬≈«ƒ¿Õ”À—ﬂ", 3, 30); 
+      LCD_printstr8x5((uint8*)"Õ¿—Ã≈–“‹!", 4, 36);
+      if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)
+      {
+        B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;
+        deadgamerdrawcounter = 20;
+        menuevent = EVENT_EXIT;
+      }
+    }
+  }
+  
+  movgamer();
+  createbullet();
+  bullet_evilstar_collision();
+  gamer_evilstar_collision();
+  gamer_coin_collision();
+  drawevilstar();
+  drawcoin();
+  drawgamer();
+  drawbullet();
+  drawinfo();
+  
+  gameprogress(PRD_GAMEPROGRESS);  
 }
 
-void handler_gameresume(void)
-{
-  SchedResumeEvent(gunregen);
-  SchedResumeEvent(createevilstar);
-  SchedResumeEvent(movbullet);
-  SchedResumeEvent(move_enemy_objects);
-  SchedResumeEvent(rungame_events_period100ms);
-  
-  SchedPauseEvent(gamemenu);
-}
-
-void handler_gamestop(void)
+void stateinit_gamestop(void)
 {
   SchedRemoveEvent(gunregen);
   SchedRemoveEvent(createevilstar);
   SchedRemoveEvent(movbullet);
   SchedRemoveEvent(move_enemy_objects);
-  SchedRemoveEvent(rungame_events_period100ms);
   for(uint8 i = 0; i < EVILSTAR_MAX; i++) EvilStar[i].state = 0;
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   GAME_STORY_STRING_NUM = 0;
-  
-  SchedResumeEvent(gamemenu);
   menustate = STATE_MAINMENU;
   menuevent = EVENT_NONE;
   coursorpos = COURS_POS_1;
 }
 
-void handler_gameexit(void)
+void stateinit_gameexit(void)
 {
   CFlags.RunGameFl = 0;
   CFlags.MenuFl = 1;
@@ -478,7 +477,7 @@ void coursormovdisp(void)
   }
 }
 
-void handler_menumain(void)
+void statehandler_menumain(void)
 {
   menustate = STATE_MAINMENU;
   menu_getevent();
@@ -490,7 +489,7 @@ void handler_menumain(void)
   if(menuevent == EVENT_SELPOS_2) coursorpos = COURS_POS_1; // coursor position when entering the load menu in "SLOT1"
 }
 
-void handler_menuload(void)
+void statehandler_menuload(void)
 { 
   menustate = STATE_LOADMENU;
   menu_getevent();
@@ -502,9 +501,17 @@ void handler_menuload(void)
   if(menuevent == EVENT_SELPOS_3) coursorpos = COURS_POS_2; // coursor position when returning to the main menu in "LOAD"
 }
 
-void handler_menupause(void)
+void statehandler_menupause(void)
 {
+  if(menustate == STATE_RUNGAME)
+  {
+    SchedPauseEvent(gunregen);
+    SchedPauseEvent(createevilstar);
+    SchedPauseEvent(movbullet);
+    SchedPauseEvent(move_enemy_objects);
+  }
   menustate = STATE_PAUSEMENU;
+  
   menu_getevent();
   LCD_printstr8x5((uint8*)"œ¿”«¿", 0, 5);
   LCD_printstr8x5((uint8*)"—Œ’–¿Õ»“‹", 2, 19);
@@ -514,7 +521,7 @@ void handler_menupause(void)
   
 }
 
-void handler_menusave(void)
+void statehandler_menusave(void)
 {
   menustate = STATE_SAVEMENU;
   menu_getevent();
@@ -526,17 +533,14 @@ void handler_menusave(void)
   if(menuevent == EVENT_SELPOS_3) coursorpos = COURS_POS_1; // coursor position when returning to the pause menu in "SAVE"
 }
 
-void handler_saveslot_0(void)
+void statehandler_gamesave(void)
 {
   menuevent = EVENT_NONE;
 }
-void handler_saveslot_1(void)
+
+void statehandler_magazin(void)
 {
   menuevent = EVENT_NONE;
-}
-void handler_magazin(void)
-{
-  
 }
 //--------------------------SYSTEM FUNCTIONS-------------------------------  
 void system_events_period100ms(void) 

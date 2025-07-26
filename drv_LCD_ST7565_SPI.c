@@ -314,7 +314,7 @@ void LCD_printsprite(uint8 startline, int8 startcolumn, const tSprite * const Sp
   bufpg = startline / 8;
   uint8 shift = startline % 8;
   switch (Sprite->direct) {
-    case columns_first:
+    case COLUMNS_FIRST:
       for (uint8 j = 0; j < columns_max; j++) {
         for (uint8 i = 0; i < (shift ? (Sprite->pages + 1) : Sprite->pages); i++) {
           if (i == 0) {
@@ -333,7 +333,7 @@ void LCD_printsprite(uint8 startline, int8 startcolumn, const tSprite * const Sp
         }
       }
       break;
-    case lines_first:
+    case LINES_FIRST:
       for (uint8 i = 0; i < (shift ? (Sprite->pages + 1) : Sprite->pages); i++) {
         for (uint8 j = 0; j < columns_max; j++) {
           if (i == 0) {

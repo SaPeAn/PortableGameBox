@@ -281,7 +281,7 @@ const unsigned char  gamer[66] =
     0x02, 0xB9, 0x02, 0xA9, 0x04, 0xB9, 0x18, 0x81, 0xE0, 0x40, 0x40, 0x5C, 0x40, 0x54, 0x80, 0x5C, 0xC0, 0x41, 0x40, 0x21, 
     0x40, 0x22, 0xE0, 0x12, 0xA0, 0x0C
 };
-const tSprite gamer_sprite = {2, 33, gamer, columns_first};
+const tSprite gamer_sprite = {2, 33, gamer, COLUMNS_FIRST};
 
 const unsigned char  gamer_gasmask[66] =
 {
@@ -290,13 +290,31 @@ const unsigned char  gamer_gasmask[66] =
     0xFE, 0xBB, 0x3E, 0xAA, 0xFC, 0xBB, 0xF8, 0x81, 0xE0, 0x40, 0x40, 0x5C, 0x40, 0x54, 0x80, 0x5C, 0xC0, 0x41, 0x40, 0x21, 
     0x40, 0x22, 0xE0, 0x12, 0xA0, 0x0C
 };
-const tSprite gamer_gas_sprite = {2, 33, gamer_gasmask, columns_first};
+const tSprite gamer_gas_sprite = {2, 33, gamer_gasmask, COLUMNS_FIRST};
+
+const unsigned char gamer_dead_0[66] =
+{
+    0x00, 0x0F, 0x02, 0x70, 0x06, 0x00, 0x40, 0x10, 0x40, 0x32, 0x80, 0xC2, 0x10, 0x09, 0x32, 0x15, 0x22, 0x49, 0x06, 0x81,
+    0x04, 0xB0, 0xC2, 0x28, 0x01, 0x19, 0x15, 0x83, 0x09, 0x82, 0x95, 0xB2, 0x81, 0xAA, 0x95, 0x9A, 0x89, 0x82, 0x15, 0x82,
+    0x01, 0x13, 0x02, 0x29, 0xC2, 0x38, 0x02, 0x01, 0x02, 0x01, 0x11, 0x89, 0x60, 0x54, 0x80, 0x0C, 0x88, 0x01, 0x04, 0x21,
+    0x83, 0x60, 0x84, 0x80, 0x02, 0x00
+};
+const tSprite gamer_dead_0_sprite = {2, 33, gamer_dead_0, COLUMNS_FIRST};
+
+const unsigned char gamer_dead_1[66] =
+{
+    0x06, 0x0F, 0x03, 0x70, 0x61, 0x00, 0x40, 0x10, 0x00, 0x10, 0x00, 0x46, 0x10, 0x04, 0x32, 0x01, 0x20, 0x48, 0x00, 0x80,
+    0x00, 0xB0, 0x00, 0x20, 0x01, 0x10, 0x15, 0x81, 0x00, 0x81, 0x04, 0xB0, 0x00, 0xA0, 0x04, 0x90, 0x40, 0x80, 0x05, 0x81,
+    0x01, 0x00, 0x02, 0x28, 0x40, 0x20, 0x00, 0x00, 0x02, 0x00, 0x01, 0x81, 0x00, 0x40, 0x00, 0x02, 0x80, 0x00, 0x00, 0x20,
+    0x03, 0x20, 0x04, 0x80, 0x82, 0x99
+};    
+const tSprite gamer_dead_1_sprite = {2, 33, gamer_dead_1, COLUMNS_FIRST};
 
 const uint8  gamer_bullet[4] =
 {
     0x40, 0x40, 0x40, 0x40  
 };
-const tSprite bullet_sprite = {1, 4, gamer_bullet, columns_first};
+const tSprite bullet_sprite = {1, 4, gamer_bullet, COLUMNS_FIRST};
 
 const uint8  evilstar[56] =
 {
@@ -304,7 +322,7 @@ const uint8  evilstar[56] =
    0x90, 0x88, 0x88, 0x48, 0x48, 0x48, 0x24, 0x24, 0x00, 0x01, 0xC2, 0xA4, 0x98, 0x86, 0x49, 0x2D, 0x29, 0x2B, 0x29, 0x2D, 
    0x49, 0x86, 0x98, 0xA4, 0xC2, 0x01, 0x04, 0x04, 0x04, 0x08, 0x08, 0x08, 0x12, 0x12, 0x12, 0x12
 };
-const tSprite evilstar_sprite = {2, 28, evilstar, lines_first};
+const tSprite evilstar_sprite = {2, 28, evilstar, LINES_FIRST};
 
 const uint8  distr_evilstar[56] =
 {
@@ -312,7 +330,7 @@ const uint8  distr_evilstar[56] =
     0x00, 0x00, 0x08, 0x08, 0x12, 0x08, 0x04, 0x04, 0x00, 0x09, 0xCC, 0xA0, 0x80, 0x84, 0x00, 0x05, 0x01, 0x08, 0x08, 0x05, 
     0x49, 0x86, 0x80, 0xA0, 0xC2, 0x01, 0x04, 0x34, 0x20, 0x00, 0x00, 0x08, 0x08, 0x12, 0x12, 0x12 
 };
-const tSprite distr_evilstar_sprite = {2, 28, distr_evilstar, lines_first};
+const tSprite distr_evilstar_sprite = {2, 28, distr_evilstar, LINES_FIRST};
 
 // 64x56(7 pages)
 const unsigned char Magazin[448] = {
@@ -345,7 +363,7 @@ const unsigned char Magazin[448] = {
 0XFF,0X41,0XFF,0X8F,0X01,0X10,0X00,0X00,0X40,0X00,0X80,0X01,0X10,0X00,0X00,0X40,
 0X00,0X80,0X01,0X08,0X00,0X00,0X40,0X00,0X80,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,
 };
-const tSprite magazin_sprite = {7, 64, Magazin, columns_first};
+const tSprite magazin_sprite = {7, 64, Magazin, COLUMNS_FIRST};
 
 const unsigned char GameStatusBar[128] = { /* 0X21,0X01,0X80,0X00,0X08,0X00, */
 0XFF,0XE7,0XE7,0X81,0X81,0XE7,0XE7,0XFF,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,
@@ -357,19 +375,19 @@ const unsigned char GameStatusBar[128] = { /* 0X21,0X01,0X80,0X00,0X08,0X00, */
 0XD5,0XD5,0XDD,0XFF,0XFF,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,
 0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0X81,0XFF,
 };
-const tSprite gamestatbar_sprite = {1, 128, GameStatusBar, columns_first};
+const tSprite gamestatbar_sprite = {1, 128, GameStatusBar, COLUMNS_FIRST};
 
 const unsigned char bomb[8] = {
 0X00,0X00,0X71,0XD9,0XAE,0XD8,0X70,0X00,};
-const tSprite bomb_sprite = {1, 8, bomb, columns_first};
+const tSprite bomb_sprite = {1, 8, bomb, COLUMNS_FIRST};
 
 const unsigned char coin[8] = {
 0X3C,0X42,0X81,0XA5,0XBF,0X81,0X42,0X3C,};
-const tSprite coin_sprite = {1, 8, coin, columns_first};
+const tSprite coin_sprite = {1, 8, coin, COLUMNS_FIRST};
 
 const uint8  bright_icon[8] =
 { 0x1F, 0x18, 0x36, 0xF3, 0xC8, 0xA4, 0xB2, 0x91}; // brightness icon
-const tSprite bright_icon_sprite = {1, 8, bright_icon, columns_first};
+const tSprite bright_icon_sprite = {1, 8, bright_icon, COLUMNS_FIRST};
 
 const unsigned char smallstar[6][8] = {
 0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X00,
@@ -379,12 +397,12 @@ const unsigned char smallstar[6][8] = {
 0X08,0X2A,0X1C,0X7F,0X1C,0X2A,0X08,0X00,
 0X08,0X2A,0X1C,0XFF,0X1C,0X2A,0X08,0X08,};
 
-const tSprite smallstar_sprite[6] = {1, 8, smallstar[0], columns_first,
-                                     1, 8, smallstar[1], columns_first,
-                                     1, 8, smallstar[2], columns_first,
-                                     1, 8, smallstar[3], columns_first,
-                                     1, 8, smallstar[4], columns_first,
-                                     1, 8, smallstar[5], columns_first};
+const tSprite smallstar_sprite[6] = {1, 8, smallstar[0], COLUMNS_FIRST,
+                                     1, 8, smallstar[1], COLUMNS_FIRST,
+                                     1, 8, smallstar[2], COLUMNS_FIRST,
+                                     1, 8, smallstar[3], COLUMNS_FIRST,
+                                     1, 8, smallstar[4], COLUMNS_FIRST,
+                                     1, 8, smallstar[5], COLUMNS_FIRST};
 
 
 const uint8  bright_lvl[8][15] =
@@ -403,7 +421,7 @@ const uint8  menu_pointer[8] =
 {
     0xFF, 0xFF, 0x7E, 0x7E, 0x3C, 0x3C, 0x18, 0x18
 };
-const tSprite menu_pointer_sprite = {8, 1, menu_pointer, columns_first};
+const tSprite menu_pointer_sprite = {8, 1, menu_pointer, COLUMNS_FIRST};
 
 const uint8  but_sel_hint[8][128] =
 {
@@ -432,7 +450,7 @@ const uint8 gamestory_string[12][150] =
   "\n\n    Давным-давно\n  в далекой-далекой\n     галактике...",
   "Короче, возвращается\nИнопланентянин на\nсвою родную планенту,\nа там все захватили\nЗлые Звезды. Везде\nлетают, все ломают.\nВ общем хулиганят.",
   "И теперь\nИнопланетянину\nпридется во что бы\nто ни стало победить\nвсех Злых Звезд,\nиначе на его планенте\nнаступит...",
-  "ГАЛАКТИЧЕСКИЙ ЗВЕЗДЕЦ",
+  "\n\n\nГАЛАКТИЧЕСКИЙ ЗВЕЗДЕЦ",
   "МАЙ",
   "ИЮН",
   "ИЮЛ",

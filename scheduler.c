@@ -46,7 +46,7 @@ void  SchedRemoveEvent(void (*func)(void))
             SchedulerEvent[i].eventcounter = SchedulerEvent[i+1].eventcounter;
         }
     }
-    SchedulerRegistredEvents--;
+    if(temp_fl) SchedulerRegistredEvents--;
 }
 
 void  SchedPauseEvent(void (*func)(void))

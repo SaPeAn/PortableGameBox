@@ -14,8 +14,8 @@
 #include "ufo_battle.h"
 
   typedef enum {
-  lines_first,
-  columns_first
+  LINES_FIRST,
+  COLUMNS_FIRST
 }tDirect;
 
 typedef struct{

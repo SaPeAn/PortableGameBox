@@ -4,7 +4,6 @@
 
 #include "common.h"
 
-
 typedef struct {
   uint8 level;
   uint8 level_progress;
@@ -12,46 +11,46 @@ typedef struct {
   uint8 Const1;
   uint8 Const2;
   uint8 Const3;
-}tGameProcess;
+} tGameProcess;
 
 //------------------------------Game objects------------------------------------
-typedef struct
-{
-  int8    health;
-  int8    energy;
-  int8    energymax;
-  uint8  gasmask_fl;
-  uint8  bombs;
+
+typedef struct {
+  int8 health;
+  int8 energy;
+  int8 energymax;
+  uint8 gasmask_fl;
+  uint8 bombs;
   uint16 money;
-  uint8  ln;
-  int8   cl;
-}tGamer;
+  uint8 ln;
+  int8 cl;
+} tGamer;
 
 typedef struct {
   uint8 state;
   uint8 ln;
-  int8  cl;
-}tBullet;
+  int8 cl;
+} tBullet;
 
-typedef struct{
-  uint8  state;  // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
-  uint8  ln;
-  int8   cl;
-  uint8  distr_ttl_count;
-}tEvilStar;
+typedef struct {
+  uint8 state; // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
+  uint8 ln;
+  int8 cl;
+  uint8 distr_ttl_count;
+} tEvilStar;
 
-typedef struct{
+typedef struct {
   uint8 state;
   uint8 ln;
-  int8  cl;
+  int8 cl;
   uint8 animation_count;
-}tCoin;
+} tCoin;
 
-typedef struct{
-    uint8 state;
-    uint8 ln;
-    int8  cl;
-}tSmallStar;
+typedef struct {
+  uint8 state;
+  uint8 ln;
+  int8 cl;
+} tSmallStar;
 //------------------------------Game vars & init--------------------------------
 
 #define BULLET_MAX             8
@@ -73,17 +72,20 @@ tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
 uint16 PRD_EVELSTAR_CREATE = 1600;
-uint8  PRD_ENEMY_MOVE = 18;
+uint8 PRD_ENEMY_MOVE = 18;
 uint16 PRD_GAMER_ENERGYREGEN = 400;
-uint8  PRD_GAMEPROGRESS = 50;
-uint8  GAME_STORY_STRING_NUM = 0;
+uint8 PRD_GAMEPROGRESS = 50;
+uint8 GAME_STORY_STRING_NUM = 0;
 
 typedef enum {
   STATE_MAINMENU,
   STATE_LOADMENU,
+  STATE_LOADGAME,
   STATE_PAUSEMENU,
   STATE_SAVEMENU,
+  STATE_SAVEGAME,
   STATE_STARTGAME,
+  STATE_RUNGAME,
   STATE_MAGAZIN,
   STATE_MAX,
 } tMENU_STATE;
@@ -92,15 +94,18 @@ typedef enum {
   COURS_POS_1,
   COURS_POS_2,
   COURS_POS_3,
-  COURS_POS_4,        
+  COURS_POS_4,
 } tCOURSOR_POS;
 
-typedef enum{
+typedef enum {
   EVENT_NONE,
   EVENT_SELPOS_1,
   EVENT_SELPOS_2,
   EVENT_SELPOS_3,
   EVENT_SELPOS_4,
+  EVENT_PAUSE,
+  EVENT_EXIT,
+  EVENT_GAMERDEATH,
   EVENT_MAX,
 } tMENU_EVENT;
 
@@ -110,46 +115,54 @@ tCOURSOR_POS coursorpos = COURS_POS_1;
 tMENU_EVENT menuevent = EVENT_NONE;
 uint8 MENU_ENABLE = 1;
 
-void handler_menumain(void);
-void handler_gamenewstart(void);
-void handler_menuload(void);
-void handler_gameexit(void);
-void handler_loadslot_0(void);
-void handler_loadslot_1(void);
-void handler_menupause(void);
-void handler_menusave(void);
-void handler_gameresume(void);
-void handler_gamestop(void);
-void handler_saveslot_0(void);
-void handler_saveslot_1(void);
-void handler_magazin(void);
-void handler_gamepause(void);
+void statehandler_menumain(void);
+void statehandler_gameinitnew(void);
+void statehandler_menuload(void);
+void stateinit_gameexit(void);
+void statehandler_gameload(void);
+void statehandler_menupause(void);
+void statehandler_menusave(void);
+void stateinit_gamestop(void);
+void statehandler_gamesave(void);
+void statehandler_magazin(void);
+void statehandler_gamerun(void);
 
 void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
-    [STATE_MAINMENU]        [EVENT_NONE]=              handler_menumain,
-    [STATE_MAINMENU]        [EVENT_SELPOS_1]=          handler_gamenewstart,
-    [STATE_MAINMENU]        [EVENT_SELPOS_2]=          handler_menuload,
-    [STATE_MAINMENU]        [EVENT_SELPOS_3]=          handler_gameexit,
-    
-    [STATE_LOADMENU]        [EVENT_NONE]=              handler_menuload,
-    [STATE_LOADMENU]        [EVENT_SELPOS_1]=          handler_loadslot_0,
-    [STATE_LOADMENU]        [EVENT_SELPOS_2]=          handler_loadslot_1,
-    [STATE_LOADMENU]        [EVENT_SELPOS_3]=          handler_menumain,
-    
-    [STATE_PAUSEMENU]       [EVENT_NONE] =             handler_menupause,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_1]=          handler_menusave,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_2]=          handler_gameresume,
-    [STATE_PAUSEMENU]       [EVENT_SELPOS_3]=          handler_gamestop,
-        
-    [STATE_SAVEMENU]        [EVENT_NONE] =             handler_menusave,
-    [STATE_SAVEMENU]        [EVENT_SELPOS_1]=          handler_saveslot_0,
-    [STATE_SAVEMENU]        [EVENT_SELPOS_2]=          handler_saveslot_1,
-    [STATE_SAVEMENU]        [EVENT_SELPOS_3]=          handler_menupause,
+  [STATE_MAINMENU] [EVENT_NONE] = statehandler_menumain,
+  [STATE_MAINMENU] [EVENT_SELPOS_1] = statehandler_gameinitnew,
+  [STATE_MAINMENU] [EVENT_SELPOS_2] = statehandler_menuload,
+  [STATE_MAINMENU] [EVENT_SELPOS_3] = stateinit_gameexit,
 
-    [STATE_STARTGAME]       [EVENT_NONE] =             handler_gamenewstart,
-    
-    [STATE_MAGAZIN]         [EVENT_NONE] =             handler_magazin,
-    };
+  [STATE_LOADMENU] [EVENT_NONE] = statehandler_menuload,
+  [STATE_LOADMENU] [EVENT_SELPOS_1] = statehandler_gameload,
+  [STATE_LOADMENU] [EVENT_SELPOS_2] = statehandler_gameload,
+  [STATE_LOADMENU] [EVENT_SELPOS_3] = statehandler_menumain,
+
+  [STATE_LOADGAME] [EVENT_NONE] = statehandler_gameload,
+  [STATE_LOADGAME] [EVENT_EXIT] = statehandler_gamerun,
+  
+  [STATE_PAUSEMENU] [EVENT_NONE] = statehandler_menupause,
+  [STATE_PAUSEMENU] [EVENT_SELPOS_1] = statehandler_menusave,
+  [STATE_PAUSEMENU] [EVENT_SELPOS_2] = statehandler_gamerun,
+  [STATE_PAUSEMENU] [EVENT_SELPOS_3] = stateinit_gamestop,
+
+  [STATE_SAVEMENU] [EVENT_NONE] = statehandler_menusave,
+  [STATE_SAVEMENU] [EVENT_SELPOS_1] = statehandler_gamesave,
+  [STATE_SAVEMENU] [EVENT_SELPOS_2] = statehandler_gamesave,
+  [STATE_SAVEMENU] [EVENT_SELPOS_3] = statehandler_menupause,
+  
+  [STATE_SAVEGAME] [EVENT_NONE] = statehandler_gamesave,
+  [STATE_SAVEGAME] [EVENT_EXIT] = statehandler_menusave,
+
+  [STATE_STARTGAME] [EVENT_NONE] = statehandler_gameinitnew,
+  [STATE_STARTGAME] [EVENT_EXIT] = statehandler_gamerun,
+
+  [STATE_RUNGAME] [EVENT_NONE] = statehandler_gamerun,
+  [STATE_RUNGAME] [EVENT_PAUSE] = statehandler_menupause,
+  [STATE_RUNGAME] [EVENT_EXIT] = stateinit_gamestop,
+
+  [STATE_MAGAZIN] [EVENT_NONE] = statehandler_magazin,
+};
 
 uint8 gameslot1[20] = "-осярн-";
 uint8 gameslot2[20] = "-осярн-";
