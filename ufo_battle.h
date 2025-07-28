@@ -68,12 +68,22 @@ typedef struct {
 #define COIN_MAX                        6
 #define COIN_ANIMATION_PERIOD           10
 
-#define MAGAZIN_INTROANIMATION_PERIOD   20
+#define MAGAZIN_INTROANIMATION_PERIOD   21
 #define MAGAZIN_FIRSTENTERINFO_PERIOD   10
 
-#define DAMAGE_BOMB            10
-#define DAMAGE_BOMBSHARD       5
-#define DAMAGE_GASCLOUD        1
+#define BOMB_COST              10
+#define GASMASK_COST           10
+#define BATTERY_COST           10
+#define BATTERY_BUST           4
+#define HEALTH_COST            10
+#define HEALTH_REGEN           4
+#define BOMB_DAMAGE            10
+#define BOMBSHARD_DAMAGE       5
+#define GASCLOUD_DAMAGE        1
+
+#define GAMER_HEALTH_MAX       24
+#define GAMER_ENERGY_MAX       24
+#define GAMERDEATH_ANIMATION_PERIOD     20
 
 tGameProcess Game;
 uint32 runtimecounter = 0;
@@ -83,11 +93,11 @@ tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
-uint16 PRD_EVELSTAR_CREATE = 1600;
-uint8 PRD_ENEMY_MOVE = 18;
-uint16 PRD_GAMER_ENERGYREGEN = 400;
-uint8 PRD_GAMEPROGRESS = 50;
-uint8 GAME_STORY_STRING_NUM = 0;
+uint16  PRD_EVELSTAR_CREATE = 900;
+uint8   PRD_ENEMY_MOVE = 17;
+uint16  PRD_GAMER_ENERGYREGEN = 3;
+uint8   PRD_GAMEPROGRESS = 50;
+uint8   GAME_STORY_STRING_NUM = 0;
 
 typedef union{
     uint8 gameflagsreg;
@@ -116,7 +126,7 @@ typedef enum {
   STATE_RUNGAME,
   STATE_MAGAZIN,
   STATE_MAX,
-} tMENU_STATE;
+} tGAME_STATE;
 
 typedef enum {
   COURS_POS_1,
@@ -137,12 +147,12 @@ typedef enum {
   EVENT_ENTERMAGAZ,
   EVENT_GAMERDEATH,
   EVENT_MAX,
-} tMENU_EVENT;
+} tGAME_EVENT;
 
-tMENU_STATE menustate = STATE_MAINMENU;
-tMENU_STATE menustate_prev = STATE_MAINMENU;
+tGAME_STATE gamestate = STATE_MAINMENU;
+tGAME_STATE gamestate_prev = STATE_MAINMENU;
 tCOURSOR_POS coursorpos = COURS_POS_1;
-tMENU_EVENT menuevent = EVENT_NONE;
+tGAME_EVENT gameevent = EVENT_NONE;
 uint8 MENU_ENABLE = 1;
 
 void statehandler_menumain(void);
@@ -156,6 +166,10 @@ void stateinit_gamestop(void);
 void statehandler_gamesave(void);
 void statehandler_magazin(void);
 void statehandler_gamerun(void);
+void magaz_buybomb(void);
+void magaz_buygasmask(void);
+void magaz_buyenergy(void);
+void magaz_buyhealth(void);
 
 void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_MAINMENU] [EVENT_NONE] = statehandler_menumain,
@@ -193,6 +207,11 @@ void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_RUNGAME] [EVENT_ENTERMAGAZ] = statehandler_magazin,
   
   [STATE_MAGAZIN] [EVENT_NONE] = statehandler_magazin,
+  [STATE_MAGAZIN] [EVENT_ENTERMAGAZ] = statehandler_magazin,
+  [STATE_MAGAZIN] [EVENT_SELPOS_1] = magaz_buybomb,
+  [STATE_MAGAZIN] [EVENT_SELPOS_2] = magaz_buygasmask,
+  [STATE_MAGAZIN] [EVENT_SELPOS_3] = magaz_buyenergy,
+  [STATE_MAGAZIN] [EVENT_SELPOS_4] = magaz_buyhealth,
   [STATE_MAGAZIN] [EVENT_EXIT] = statehandler_gamerun,
 };
 

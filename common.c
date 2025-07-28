@@ -401,6 +401,11 @@ void checkjoydir(void)
     }
     if(joystick.oy < 150 && joystick.oy > 100 && joystick.ox < 150 && joystick.ox > 100) joystick.joyFl = 0;
 }
+
+void resetbuttons(void) 
+{
+  if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) { B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;}
+}
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------SAVE/LOAD FUNCTIONS------------------------------*/
