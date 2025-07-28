@@ -51,20 +51,26 @@ typedef struct {
   uint8 ln;
   int8 cl;
 } tSmallStar;
-//------------------------------Game vars & init--------------------------------
+//------------------------------Game const & vars-------------------------------
 
-#define BULLET_MAX                   8
-#define EVILSTAR_MAX                 5
-#define COIN_MAX                     6
-#define SMALLSTAR_MAX                12
-#define SMALLSTAR_MOVE_PERIOD        2
-#define SMALLSTAR_CREATE_PERIOD      5
-#define EVILSTAR_DEATHANIMATION_TTL  2
-#define COIN_ANIMATION_PERIOD        10
-#define BULLET_ENERGY_COST           2
+#define EVILSTAR_MAX                    5
+#define EVILSTAR_DEATHANIMATION_PERIOD  2
+#define EVILSTAR_DAMAGE                 2
 
-#define DAMAGE_EVILSTAR        2
-#define DAMAGE_BULLET          2
+#define BULLET_MAX                      8
+#define BULLET_ENERGY_COST              2
+#define BULLET_DAMAGE                   2
+
+#define SMALLSTAR_MAX                   12
+#define SMALLSTAR_MOVE_PERIOD           2
+#define SMALLSTAR_CREATE_PERIOD         5
+
+#define COIN_MAX                        6
+#define COIN_ANIMATION_PERIOD           10
+
+#define MAGAZIN_INTROANIMATION_PERIOD   20
+#define MAGAZIN_FIRSTENTERINFO_PERIOD   10
+
 #define DAMAGE_BOMB            10
 #define DAMAGE_BOMBSHARD       5
 #define DAMAGE_GASCLOUD        1
@@ -83,13 +89,21 @@ uint16 PRD_GAMER_ENERGYREGEN = 400;
 uint8 PRD_GAMEPROGRESS = 50;
 uint8 GAME_STORY_STRING_NUM = 0;
 
-struct GAMEPROCESFLAGS
-{
-  unsigned EVELSTAR_ENABLE  :1;
-  unsigned CHEMIST_ENABLE   :1;
-};
-struct GAMEPROCESFLAGS GameFlags = {1, 1};
-
+typedef union{
+    uint8 gameflagsreg;
+    struct 
+    {
+      unsigned EvilstarCreateEnable  :1;
+      unsigned ChemistCreateEnable   :1;
+      unsigned FirstMagazEnter       :1;
+      unsigned MagazEnter            :1;
+      unsigned Flag1       :1;
+      unsigned Flag2       :1;
+      unsigned Flag3       :1;
+      unsigned Flag4       :1;
+    };
+} tGAMEPROCESFLAGS;
+tGAMEPROCESFLAGS GameFlags;
 
 typedef enum {
   STATE_MAINMENU,
@@ -109,6 +123,7 @@ typedef enum {
   COURS_POS_2,
   COURS_POS_3,
   COURS_POS_4,
+  COURS_POS_5,
 } tCOURSOR_POS;
 
 typedef enum {
@@ -178,6 +193,7 @@ void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_RUNGAME] [EVENT_ENTERMAGAZ] = statehandler_magazin,
   
   [STATE_MAGAZIN] [EVENT_NONE] = statehandler_magazin,
+  [STATE_MAGAZIN] [EVENT_EXIT] = statehandler_gamerun,
 };
 
 uint8 gameslot1[20] = "-осярн-";

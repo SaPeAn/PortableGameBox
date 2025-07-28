@@ -14,15 +14,22 @@ void gameprogress(uint8 period)
   if(counter == period)
   {
     Game.level_progress++;
-    if(Game.level_progress == Game.Const1)
-    {
+    counter = 0;
+  }
+  counter++;
+  
+  if(Game.level_progress == Game.Const1)
+  {
+    if(GameFlags.MagazEnter){
       menuevent = EVENT_ENTERMAGAZ;
+      GameFlags.MagazEnter = 0;
     }
+
+  }
+  else GameFlags.MagazEnter = 1;
+  
     if(Game.level_progress > Game.Const2){}
     if(Game.level_progress > Game.Const3){}
-  }
-  else{counter = 0;}
-  counter++;
 }
 
 void createevilstar(void) {
@@ -164,7 +171,7 @@ void drawevilstar(void) {
     }
     if (EvilStar[i].state == 2) {
       LCD_printsprite(EvilStar[i].ln, EvilStar[i].cl, &distr_evilstar_sprite);
-      if (EvilStar[i].distr_ttl_count++ >= EVILSTAR_DEATHANIMATION_TTL) {
+      if (EvilStar[i].distr_ttl_count++ >= EVILSTAR_DEATHANIMATION_PERIOD) {
         EvilStar[i].distr_ttl_count = 0;
         EvilStar[i].state = 0;
         createcoin(&EvilStar[i]);
@@ -290,8 +297,11 @@ void statehandler_gameinitnew(void)
     Gamer.money = 0;
     Gamer.ln = 16;
     Gamer.cl = 0;
-    Game.level = 0;
-    Game.Const1 = 10;
+    
+    Game.level_progress = 0;
+    Game.Const1 = 2;
+    GameFlags.gameflagsreg = 0b00001101;
+    
     SchedAddEvent(gunregen, PRD_GAMER_ENERGYREGEN);
     SchedAddEvent(createevilstar, PRD_EVELSTAR_CREATE);
     SchedAddEvent(movbullet, 20);
@@ -549,16 +559,42 @@ void statehandler_gamesave(void)
 
 void statehandler_magazin(void)
 {
-  static k = ANIM;
-  if(menuevent == EVENT_ENTERMAGAZ)
+  if(menuevent == EVENT_ENTERMAGAZ) // entering magazin animation
   {
-    
+    static uint8 j = MAGAZIN_INTROANIMATION_PERIOD;
+    static uint8 k = MAGAZIN_FIRSTENTERINFO_PERIOD;
+    if(GameFlags.FirstMagazEnter) {
+      LCD_printstr8x5(gamestory_string[4], 1, 0);
+      if(k == 0){
+        LCD_printstr8x5((uint8*)"далее...", 7, 78);
+        if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) { 
+          B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;
+          GameFlags.FirstMagazEnter = 0;
+          k = MAGAZIN_FIRSTENTERINFO_PERIOD;
+        }
+      }
+      else {
+        if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) { B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;}
+        k--;
+      }
+    }
+    else {
+      LCD_printsprite(8, (64 + (int8)j), &magazin_sprite);
+      j--;
+      if(j == 0) {
+        menustate = STATE_MAGAZIN; 
+        menuevent = EVENT_NONE;
+        j = MAGAZIN_INTROANIMATION_PERIOD;
+      }
+    }
   }
   else
   {
-    menustate = STATE_MAGAZIN;
-    menuevent = EVENT_NONE;
-
+    LCD_printsprite(8, 64, &magazin_sprite);
+    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) {
+      B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; 
+      menuevent = EVENT_EXIT;
+    }
   }
 }
 //--------------------------SYSTEM FUNCTIONS-------------------------------  
