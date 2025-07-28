@@ -53,15 +53,21 @@ typedef struct {
 } tSmallStar;
 //------------------------------Game vars & init--------------------------------
 
-#define BULLET_MAX             8
-#define EVILSTAR_MAX           5
-#define COIN_MAX               6
-#define SMALLSTAR_MAX          12
-#define SMALLSTAR_MOVE_PER     2
-#define SMALLSTAR_CREATE_PER   7
-#define EVILSTAR_DISTR_TTL     2
-#define COIN_ANIMATION_PERIOD  16
-#define BULLET_ENERGY_COST     2
+#define BULLET_MAX                   8
+#define EVILSTAR_MAX                 5
+#define COIN_MAX                     6
+#define SMALLSTAR_MAX                12
+#define SMALLSTAR_MOVE_PERIOD        2
+#define SMALLSTAR_CREATE_PERIOD      5
+#define EVILSTAR_DEATHANIMATION_TTL  2
+#define COIN_ANIMATION_PERIOD        10
+#define BULLET_ENERGY_COST           2
+
+#define DAMAGE_EVILSTAR        2
+#define DAMAGE_BULLET          2
+#define DAMAGE_BOMB            10
+#define DAMAGE_BOMBSHARD       5
+#define DAMAGE_GASCLOUD        1
 
 tGameProcess Game;
 uint32 runtimecounter = 0;
@@ -76,6 +82,14 @@ uint8 PRD_ENEMY_MOVE = 18;
 uint16 PRD_GAMER_ENERGYREGEN = 400;
 uint8 PRD_GAMEPROGRESS = 50;
 uint8 GAME_STORY_STRING_NUM = 0;
+
+struct GAMEPROCESFLAGS
+{
+  unsigned EVELSTAR_ENABLE  :1;
+  unsigned CHEMIST_ENABLE   :1;
+};
+struct GAMEPROCESFLAGS GameFlags = {1, 1};
+
 
 typedef enum {
   STATE_MAINMENU,
@@ -105,6 +119,7 @@ typedef enum {
   EVENT_SELPOS_4,
   EVENT_PAUSE,
   EVENT_EXIT,
+  EVENT_ENTERMAGAZ,
   EVENT_GAMERDEATH,
   EVENT_MAX,
 } tMENU_EVENT;
@@ -160,7 +175,8 @@ void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_RUNGAME] [EVENT_NONE] = statehandler_gamerun,
   [STATE_RUNGAME] [EVENT_PAUSE] = statehandler_menupause,
   [STATE_RUNGAME] [EVENT_EXIT] = stateinit_gamestop,
-
+  [STATE_RUNGAME] [EVENT_ENTERMAGAZ] = statehandler_magazin,
+  
   [STATE_MAGAZIN] [EVENT_NONE] = statehandler_magazin,
 };
 

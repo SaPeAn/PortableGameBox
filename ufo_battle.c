@@ -14,7 +14,10 @@ void gameprogress(uint8 period)
   if(counter == period)
   {
     Game.level_progress++;
-    if(Game.level_progress > Game.Const1){}
+    if(Game.level_progress == Game.Const1)
+    {
+      menuevent = EVENT_ENTERMAGAZ;
+    }
     if(Game.level_progress > Game.Const2){}
     if(Game.level_progress > Game.Const3){}
   }
@@ -161,7 +164,7 @@ void drawevilstar(void) {
     }
     if (EvilStar[i].state == 2) {
       LCD_printsprite(EvilStar[i].ln, EvilStar[i].cl, &distr_evilstar_sprite);
-      if (EvilStar[i].distr_ttl_count++ >= EVILSTAR_DISTR_TTL) {
+      if (EvilStar[i].distr_ttl_count++ >= EVILSTAR_DEATHANIMATION_TTL) {
         EvilStar[i].distr_ttl_count = 0;
         EvilStar[i].state = 0;
         createcoin(&EvilStar[i]);
@@ -207,18 +210,19 @@ void screenupdate(void) {
 //Background smallstars animation
 void createsmallstar(uint8 create_period)
 {
-  static uint8 j = 0;
   static uint8 k = 0;
   if(k == 0) k = create_period;
   if(k == create_period)
   {
-    if(SmallStar[j].state == 0){
-      SmallStar[j].state = getrand(1) + 1;
-      SmallStar[j].ln = getrand(60);
-      SmallStar[j].cl = 127;
+    for(int i = 0; i < SMALLSTAR_MAX; i++)
+    {
+      if(SmallStar[i].state == 0){
+        SmallStar[i].state = getrand(1) + 1;
+        SmallStar[i].ln = getrand(60);
+        SmallStar[i].cl = 127;
+        break;
+      }
     }
-    j++;
-    if(j >= SMALLSTAR_MAX) j = 0;
   }
   k--;
 }
@@ -230,8 +234,10 @@ void movesmallstar(uint8 move_period)
   if(l == move_period) {
     for(uint8 i = 0; i < SMALLSTAR_MAX; i++)
     {
+      if(SmallStar[i].state != 0) {
       SmallStar[i].cl -= 1;
-      if(SmallStar[i].cl < 1) SmallStar[i].state = 0;
+      if(SmallStar[i].cl < -2) SmallStar[i].state = 0;
+      }
     }
   }
   l--;
@@ -284,6 +290,8 @@ void statehandler_gameinitnew(void)
     Gamer.money = 0;
     Gamer.ln = 16;
     Gamer.cl = 0;
+    Game.level = 0;
+    Game.Const1 = 10;
     SchedAddEvent(gunregen, PRD_GAMER_ENERGYREGEN);
     SchedAddEvent(createevilstar, PRD_EVELSTAR_CREATE);
     SchedAddEvent(movbullet, 20);
@@ -327,6 +335,7 @@ void statehandler_gamerun(void)
     if(deadgamerdrawcounter < 10 && deadgamerdrawcounter > 0) {
       LCD_printsprite(Gamer.ln, Gamer.cl, &gamer_dead_1_sprite);
       deadgamerdrawcounter--;
+      if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) { B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;} 
     }
     if(deadgamerdrawcounter == 0)
     {
@@ -540,14 +549,24 @@ void statehandler_gamesave(void)
 
 void statehandler_magazin(void)
 {
-  menuevent = EVENT_NONE;
+  static k = ANIM;
+  if(menuevent == EVENT_ENTERMAGAZ)
+  {
+    
+  }
+  else
+  {
+    menustate = STATE_MAGAZIN;
+    menuevent = EVENT_NONE;
+
+  }
 }
 //--------------------------SYSTEM FUNCTIONS-------------------------------  
 void system_events_period100ms(void) 
 {
   check_btn_jstk();
   batcheck();
-  createsmallstar(SMALLSTAR_CREATE_PER);
+  createsmallstar(SMALLSTAR_CREATE_PERIOD);
   drawsmallstar();  
   
   screenupdate();
@@ -560,7 +579,7 @@ void gamemenu(void)
 
 void system_events_period25ms(void) 
 {
-  movesmallstar(SMALLSTAR_MOVE_PER);
+  movesmallstar(SMALLSTAR_MOVE_PERIOD);
 }
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     
