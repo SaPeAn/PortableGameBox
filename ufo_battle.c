@@ -61,10 +61,10 @@ void createbullet(uint8 period) {
     B2.BtnON = 0;
     static uint8 i = 0;
     static uint8 prd = 0;
-    if(prd < (period - 1)) prd++;
+    if(prd < period) prd++;
     else{
       prd = 0;
-      if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= 2)) {
+      if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= BULLET_ENERGY_COST)) {
         Gamer.energy -= BULLET_ENERGY_COST;
         Bullet[i].state = 1;
         Bullet[i].ln = Gamer.ln;
@@ -329,7 +329,7 @@ void statehandler_gameload(void)
 
 void statehandler_gamerun(void)
 {
-  if(gamestate == STATE_PAUSEMENU || gamestate == STATE_MAGAZIN)
+  if(gamestate == STATE_PAUSEMENU)
   {
     SchedResumeEvent(createevilstar);
     SchedResumeEvent(movbullet);
@@ -612,7 +612,7 @@ void statehandler_gamesave(void)
   gameevent = EVENT_NONE;
 }
 
-//------------------magazin buy goods functions----------------------
+//------------------magazin buygoods functions----------------------
 void magaz_buybomb(void)
 {
   if(Gamer.money >= BOMB_COST && Gamer.bombs < 9){
@@ -677,7 +677,7 @@ void statehandler_magazin(void)
       }
     }
     else {
-      LCD_printsprite(8, (64 + (int8)j * 3), &magazin_sprite);
+      LCD_printsprite(8, (64 + (int8)j * 4), &magazin_sprite);
       j--;
       IF_ANY_BTN_PRESS()
       if(j == 0) {
@@ -692,7 +692,7 @@ void statehandler_magazin(void)
     magaz_getevent();
     LCD_printsprite(8, 64, &magazin_sprite);
     LCD_printstr8x5((uint8*)"ÖÅÍÀ:", 3, 94);
-    LCD_printstr8x5((uint8*)"ìàãàçèí:", 1, 80);
+    LCD_printstr8x5((uint8*)"ìàãàçèí", 1, 80);
     LCD_printstr8x5((uint8*)"ÂÛÕ.", 7, 38);
     uint8 price[5];
     switch(coursorpos)
@@ -701,12 +701,12 @@ void statehandler_magazin(void)
         LCD_printstr8x5((uint8*)"Äî\nñâèäàíèÿ!", 2, 0);
         break;
       case COURS_POS_2:
-        LCD_printstr8x5((uint8*)"ÁÎËÜØÎÉ\nÁÀÄÀÁÓÌ!", 2, 0);
+        LCD_printstr8x5((uint8*)"<ÁÎÌÁÀ!!!\nÁÎËÜØÎÉ\nÁÀÄÀÁÓÌ!", 2, 0);
         u16_to_str(price, BOMB_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
       case COURS_POS_3:
-        LCD_printstr8x5((uint8*)"Çà÷åì\nâ êîñìîñå\nïðîòèâîãàç?", 2, 0);
+        LCD_printstr8x5((uint8*)"Çà÷åì\nïðîòèâîãàç\nâ êîñìîñå?", 2, 0);
         u16_to_str(price, GASMASK_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
@@ -721,13 +721,28 @@ void statehandler_magazin(void)
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
     }
-    //IF_ANY_BTN_PRESS()
   }
   #if 1
   if(Gamer.cl > 8) Gamer.cl -= 4; else Gamer.cl = 0;
   if(Gamer.ln < 40) Gamer.ln += 4; else Gamer.ln = 47;
   drawgamer();
   #endif
+  drawinfo();
+}
+
+void stateinit_exitmagazin(void)
+{
+  static uint8 counter = 0;
+  if(++counter < 15) LCD_printsprite((8 + counter * 4), 64, &magazin_sprite);
+  else {
+    counter = 0;
+    gamestate = STATE_RUNGAME;
+    gameevent = EVENT_NONE;
+    SchedResumeEvent(createevilstar);
+    SchedResumeEvent(movbullet);
+    SchedResumeEvent(move_enemy_objects);    
+  }
+  drawgamer();
   drawinfo();
 }
 //--------------------------SYSTEM FUNCTIONS-------------------------------  

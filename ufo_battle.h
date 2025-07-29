@@ -57,7 +57,7 @@ typedef struct {
 #define EVILSTAR_DEATHANIMATION_PERIOD  2
 #define EVILSTAR_DAMAGE                 2
 
-#define BULLET_MAX                      8
+#define BULLET_MAX                      18
 #define BULLET_ENERGY_COST              2
 #define BULLET_DAMAGE                   2
 #define BULLET_GENERATE_PERIOD          1
@@ -69,7 +69,7 @@ typedef struct {
 #define COIN_MAX                        6
 #define COIN_ANIMATION_PERIOD           10
 
-#define MAGAZIN_INTROANIMATION_PERIOD   21
+#define MAGAZIN_INTROANIMATION_PERIOD   16
 #define MAGAZIN_FIRSTENTERINFO_PERIOD   10
 
 #define BOMB_COST              10
@@ -171,6 +171,7 @@ void magaz_buybomb(void);
 void magaz_buygasmask(void);
 void magaz_buyenergy(void);
 void magaz_buyhealth(void);
+void stateinit_exitmagazin(void);
 
 void (*const gamestate_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_MAINMENU] [EVENT_NONE] = statehandler_menumain,
@@ -213,7 +214,7 @@ void (*const gamestate_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_MAGAZIN] [EVENT_SELPOS_2] = magaz_buygasmask,
   [STATE_MAGAZIN] [EVENT_SELPOS_3] = magaz_buyenergy,
   [STATE_MAGAZIN] [EVENT_SELPOS_4] = magaz_buyhealth,
-  [STATE_MAGAZIN] [EVENT_EXIT] = statehandler_gamerun,
+  [STATE_MAGAZIN] [EVENT_EXIT] = stateinit_exitmagazin,
 };
 
 uint8 gameslot1[20] = "-осярн-";

@@ -215,16 +215,16 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  /*uint16 j;
+  uint16 j;
   for(uint8 i = 0; i < (delay/10); i++)
   {  
-    LATCbits.LC2 = 0;
+    //LATCbits.LC2 = 0;
     j = delay;
     while(j--);
-    LATCbits.LC2 = 1;
+    //LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }*/
+  }
 }
 
 void rtcrawtobcd(void)
@@ -317,7 +317,7 @@ void TestBtn(tButton* btn)
     btn->btnTimer = *(btn->timecounter); 
     btn->BtnON = 1;
   }
-  if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 100)) {
+  if ((*(btn->Port) & btn->inputmask) && btn->BtnFl && ((*(btn->timecounter) - btn->btnTimer) > 75)) {
     btn->BtnFl = 0;
     btn->HoldON = 0;
     btn->StuckON = 0;
