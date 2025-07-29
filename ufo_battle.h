@@ -29,27 +29,27 @@ typedef struct {
 typedef struct {
   uint8 state;
   uint8 ln;
-  int8 cl;
+  int8  cl;
 } tBullet;
 
 typedef struct {
   uint8 state; // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
   uint8 ln;
-  int8 cl;
+  int8  cl;
   uint8 distr_ttl_count;
 } tEvilStar;
 
 typedef struct {
   uint8 state;
   uint8 ln;
-  int8 cl;
+  int8  cl;
   uint8 animation_count;
 } tCoin;
 
 typedef struct {
   uint8 state;
   uint8 ln;
-  int8 cl;
+  int8  cl;
 } tSmallStar;
 //------------------------------Game const & vars-------------------------------
 
@@ -60,6 +60,7 @@ typedef struct {
 #define BULLET_MAX                      8
 #define BULLET_ENERGY_COST              2
 #define BULLET_DAMAGE                   2
+#define BULLET_GENERATE_PERIOD          1
 
 #define SMALLSTAR_MAX                   12
 #define SMALLSTAR_MOVE_PERIOD           2
@@ -171,7 +172,7 @@ void magaz_buygasmask(void);
 void magaz_buyenergy(void);
 void magaz_buyhealth(void);
 
-void (*const menu_transition_table[STATE_MAX][EVENT_MAX])(void) = {
+void (*const gamestate_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_MAINMENU] [EVENT_NONE] = statehandler_menumain,
   [STATE_MAINMENU] [EVENT_SELPOS_1] = statehandler_gameinitnew,
   [STATE_MAINMENU] [EVENT_SELPOS_2] = statehandler_menuload,

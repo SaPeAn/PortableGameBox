@@ -4,7 +4,7 @@
 #include "display_data.h"
 #include "scheduler.h"
 
-#define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON){B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; a;}
+#define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON){B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; a}
 
 /*******************************************************************************
  *                        SCHEDULER GAME EVENT HANDLERS
@@ -56,19 +56,24 @@ void createcoin(tEvilStar* Evil_Star) {
   if (i >= COIN_MAX) i = 0;
 }
 
-void createbullet(void) {
+void createbullet(uint8 period) {
   if ((B2.BtnON || B2.HoldON || B2.StuckON) && (Gamer.health > 0)) {
     B2.BtnON = 0;
     static uint8 i = 0;
-    if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= 2)) {
-      Gamer.energy -= BULLET_ENERGY_COST;
-      Bullet[i].state = 1;
-      Bullet[i].ln = Gamer.ln;
-      Bullet[i].cl = Gamer.cl + 24;
-      Sounds(400);
+    static uint8 prd = 0;
+    if(prd < (period - 1)) prd++;
+    else{
+      prd = 0;
+      if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= 2)) {
+        Gamer.energy -= BULLET_ENERGY_COST;
+        Bullet[i].state = 1;
+        Bullet[i].ln = Gamer.ln;
+        Bullet[i].cl = Gamer.cl + 24;
+        Sounds(400);
+      }
+      i++;
+      if (i >= BULLET_MAX) i = 0;
     }
-    i++;
-    if (i >= BULLET_MAX) i = 0;
   }
 }
 
@@ -77,7 +82,7 @@ void gunregen(uint16 period) //Energy regen
   static uint16 prd = 0;
   if ((Gamer.energy < Gamer.energymax) && (Gamer.health > 0)) 
   {
-    if(prd < period) prd++;
+    if(prd < (period- 1)) prd++;
     else { 
       prd = 0; 
       Gamer.energy++;
@@ -366,7 +371,7 @@ void statehandler_gamerun(void)
   
   movgamer();
   gunregen(PRD_GAMER_ENERGYREGEN);
-  createbullet();
+  createbullet(BULLET_GENERATE_PERIOD);
   bullet_evilstar_collision();
   gamer_evilstar_collision();
   gamer_coin_collision();
@@ -515,10 +520,10 @@ void coursormovdisp(void)
     switch(coursorpos)
     {
       case COURS_POS_1:
-        LCD_printhorline(14, 61, 50);
-        LCD_printhorline(14, 62, 50);
-        LCD_printvertline(3, 58, 50);
-        LCD_printvertline(3, 58, 64);
+        LCD_printhorline(26, 63, 36);
+        LCD_printhorline(26, 54, 36);
+        LCD_printvertline(9, 54, 36);
+        LCD_printvertline(9, 54, 62);
         break;
       case COURS_POS_2:
         LCD_printhorline(12, 61, 66);
@@ -588,7 +593,6 @@ void statehandler_menupause(void)
   LCD_printstr8x5((uint8*)"ÂÅÐÍÓÒÜÑß Ê ÈÃÐÅ", 4, 19);
   LCD_printstr8x5((uint8*)"ÂÛÉÒÈ", 6, 19);
   coursormovdisp();
-  
 }
 
 void statehandler_menusave(void)
@@ -608,6 +612,7 @@ void statehandler_gamesave(void)
   gameevent = EVENT_NONE;
 }
 
+//------------------magazin buy goods functions----------------------
 void magaz_buybomb(void)
 {
   if(Gamer.money >= BOMB_COST && Gamer.bombs < 9){
@@ -629,6 +634,7 @@ void magaz_buyenergy(void)
   if(Gamer.money >= BATTERY_COST && Gamer.energymax < GAMER_ENERGY_MAX){
     Gamer.money -= BATTERY_COST;
     Gamer.energymax += BATTERY_BUST;
+    Gamer.energy = Gamer.energymax;
     if(Gamer.energymax > GAMER_ENERGY_MAX) Gamer.energymax = GAMER_ENERGY_MAX;
   }
   gameevent = EVENT_NONE;
@@ -643,6 +649,7 @@ void magaz_buyhealth(void)
   gameevent = EVENT_NONE;
 }
 
+//-----------------------------MAGAZIN MENU HANDLER---------------------------
 void statehandler_magazin(void)
 {
   if(gamestate == STATE_RUNGAME){
@@ -684,14 +691,51 @@ void statehandler_magazin(void)
     coursormovdisp();
     magaz_getevent();
     LCD_printsprite(8, 64, &magazin_sprite);
-    IF_ANY_BTN_PRESS()
+    LCD_printstr8x5((uint8*)"ÖÅÍÀ:", 3, 94);
+    LCD_printstr8x5((uint8*)"ìàãàçèí:", 1, 80);
+    LCD_printstr8x5((uint8*)"ÂÛÕ.", 7, 38);
+    uint8 price[5];
+    switch(coursorpos)
+    {
+      case COURS_POS_1:
+        LCD_printstr8x5((uint8*)"Äî\nñâèäàíèÿ!", 2, 0);
+        break;
+      case COURS_POS_2:
+        LCD_printstr8x5((uint8*)"ÁÎËÜØÎÉ\nÁÀÄÀÁÓÌ!", 2, 0);
+        u16_to_str(price, BOMB_COST, 2);
+        LCD_printstr8x5((uint8*)price, 4, 94);
+        break;
+      case COURS_POS_3:
+        LCD_printstr8x5((uint8*)"Çà÷åì\nâ êîñìîñå\nïðîòèâîãàç?", 2, 0);
+        u16_to_str(price, GASMASK_COST, 2);
+        LCD_printstr8x5((uint8*)price, 4, 94);
+        break;
+      case COURS_POS_4:
+        LCD_printstr8x5((uint8*)"Áàòàðåéêà!", 2, 0);
+        u16_to_str(price, BATTERY_COST, 2);
+        LCD_printstr8x5((uint8*)price, 4, 94);
+        break;
+      case COURS_POS_5:
+        LCD_printstr8x5((uint8*)"Àïòå÷êà!", 2, 0);
+        u16_to_str(price, HEALTH_COST, 2);
+        LCD_printstr8x5((uint8*)price, 4, 94);
+        break;
+    }
+    //IF_ANY_BTN_PRESS()
   }
-  if(Gamer.cl > 8) Gamer.cl -= 4; else Gamer.cl = 1;
+  #if 1
+  if(Gamer.cl > 8) Gamer.cl -= 4; else Gamer.cl = 0;
   if(Gamer.ln < 40) Gamer.ln += 4; else Gamer.ln = 47;
   drawgamer();
+  #endif
   drawinfo();
 }
 //--------------------------SYSTEM FUNCTIONS-------------------------------  
+void system_events_period25ms(void) 
+{
+  movesmallstar(SMALLSTAR_MOVE_PERIOD);
+}
+
 void system_events_period100ms(void) 
 {
   check_btn_jstk();
@@ -704,12 +748,7 @@ void system_events_period100ms(void)
 
 void gamemenu(void)
 {
-  menu_transition_table[gamestate][gameevent]();
-}
-
-void system_events_period25ms(void) 
-{
-  movesmallstar(SMALLSTAR_MOVE_PERIOD);
+  gamestate_transition_table[gamestate][gameevent]();
 }
 /*******************************************************************************
  *                              MAIN ENTRY - GAME CYCLE                     

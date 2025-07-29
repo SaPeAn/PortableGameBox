@@ -125,7 +125,6 @@ uint8 adc_getval_an2(void);
 void getjoypos(void);
 void checkjoydir(void);
 void check_btn_jstk(void);
-void resetbuttons(void);
 /*----------------------------------------------------------------------------*/
 
 #endif	/* COMMON_H */

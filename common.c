@@ -215,7 +215,7 @@ void BrightPWMgen(uint8 duty_cycle)
 
 void Sounds(uint16 delay)
 {
-  uint16 j;
+  /*uint16 j;
   for(uint8 i = 0; i < (delay/10); i++)
   {  
     LATCbits.LC2 = 0;
@@ -224,7 +224,7 @@ void Sounds(uint16 delay)
     LATCbits.LC2 = 1;
     j = delay;
     while(j--);
-  }
+  }*/
 }
 
 void rtcrawtobcd(void)
@@ -400,11 +400,6 @@ void checkjoydir(void)
         joystick.joyFl = 1;
     }
     if(joystick.oy < 150 && joystick.oy > 100 && joystick.ox < 150 && joystick.ox > 100) joystick.joyFl = 0;
-}
-
-void resetbuttons(void) 
-{
-  if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON) { B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0;}
 }
 /*----------------------------------------------------------------------------*/
 
