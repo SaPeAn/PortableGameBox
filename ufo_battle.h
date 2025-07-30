@@ -47,6 +47,13 @@ typedef struct {
 } tCoin;
 
 typedef struct {
+  uint8 state; // 0 - none, 1 - bomb, 2- , 3- , 4- , 5- , 
+  uint8 ln;
+  int8  cl;
+  uint16 animation_count;
+} tBomb;
+
+typedef struct {
   uint8 state;
   uint8 ln;
   int8  cl;
@@ -72,24 +79,29 @@ typedef struct {
 #define MAGAZIN_INTROANIMATION_PERIOD   16
 #define MAGAZIN_FIRSTENTERINFO_PERIOD   10
 
-#define BOMB_COST              10
-#define GASMASK_COST           10
-#define BATTERY_COST           10
-#define BATTERY_BUST           4
-#define HEALTH_COST            10
-#define HEALTH_REGEN           4
-#define BOMB_DAMAGE            10
-#define BOMBSHARD_DAMAGE       5
-#define GASCLOUD_DAMAGE        1
+#define BOMB_MONEY_COST                 15
+#define GASMASK_MONEY_COST              10
+#define BATTERY_MONEY_COST              30
+#define HEALTH_MONEY_COST               5
 
-#define GAMER_HEALTH_MAX       24
-#define GAMER_ENERGY_MAX       24
+#define BATTERY_ENERGY_BUST             4
+#define HEALTH_REGEN                    4
+#define BOMB_DAMAGE                     10
+#define BOMBSHARD_DAMAGE                5
+#define BOMB_ANIMATION_PERIOD           4
+#define BOMB_GENERATE_PERIOD            1
+
+#define GASCLOUD_DAMAGE                 1
+
+#define GAMER_HEALTH_MAX                24
+#define GAMER_ENERGY_MAX                24
 #define GAMERDEATH_ANIMATION_PERIOD     20
 
 tGameProcess Game;
 uint32 runtimecounter = 0;
 tGamer Gamer;
 tDispObj Bullet[BULLET_MAX] = {0};
+tBomb    Bomb = {0};
 tDispObj MinMagaz = {0, 8, 127};
 tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};

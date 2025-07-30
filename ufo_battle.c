@@ -6,6 +6,11 @@
 
 #define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)\
                                 {B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; a}
+#define  IF_BTN_B2_PRESS(a)     if(B2.BtnON || B2.HoldON || B2.StuckON)\
+                                 {B2.BtnON = 0; a}
+#define  IF_BTN_B1_PRESS(a)     if(B1.BtnON || B1.HoldON || B1.StuckON)\
+                                 {B1.BtnON = 0; a}
+
 
 /*******************************************************************************
  *                        SCHEDULER GAME EVENT HANDLERS
@@ -36,24 +41,46 @@ void createcoin(tEvilStar* Evil_Star) {
 }
 
 void createbullet(uint8 period) {
-  if ((B2.BtnON || B2.HoldON || B2.StuckON) && (Gamer.health > 0)) {
-    B2.BtnON = 0;
-    static uint8 i = 0;
-    static uint8 prd = 0;
-    if(prd < period) prd++;
-    else{
-      prd = 0;
-      if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= BULLET_ENERGY_COST)) {
-        Gamer.energy -= BULLET_ENERGY_COST;
-        Bullet[i].state = 1;
-        Bullet[i].ln = Gamer.ln;
-        Bullet[i].cl = Gamer.cl + 24;
-        Sounds(400);
+  if(Gamer.health > 0){
+    IF_BTN_B2_PRESS(
+      static uint8 i = 0;
+      static uint8 prd = 0;
+      if(prd < period) prd++;
+      else{
+        prd = 0;
+        if (!Bullet[i].state && (Gamer.health > 0) && (Gamer.energy >= BULLET_ENERGY_COST)) {
+          Gamer.energy -= BULLET_ENERGY_COST;
+          Bullet[i].state = 1;
+          Bullet[i].ln = Gamer.ln;
+          Bullet[i].cl = Gamer.cl + 24;
+          Sounds(400);
+        }
+        i++;
+        if (i >= BULLET_MAX) i = 0;
       }
-      i++;
-      if (i >= BULLET_MAX) i = 0;
-    }
+    )
   }
+  else IF_BTN_B2_PRESS();
+}
+
+void createbomb(uint8 period) {
+  if(Gamer.health > 0){
+    IF_BTN_B1_PRESS(
+      static uint8 prd = 0;
+      if(prd < period) prd++;
+      else{
+        prd = 0;
+        if (!Bomb.state && (Gamer.health > 0) && Gamer.bombs) {
+          Gamer.bombs --;
+          Bomb.state = 1;
+          Bomb.ln = Gamer.ln;
+          Bomb.cl = Gamer.cl + 24;
+          Sounds(1000);
+        }
+      }
+    )
+  }
+  else IF_BTN_B1_PRESS();
 }
 
 void gunregen(uint16 period) //Energy regen
@@ -109,6 +136,27 @@ void movbullet(void) {
   }
 }
 
+void movbomb(void) {
+  static uint8 explosionanimcount = 20; 
+  if (Bomb.state == 1){
+    Bomb.cl += 4;
+    if (Bomb.cl > 85) {
+      Bomb.state = 2;
+      Bomb.cl -= 16;
+      Bomb.ln -= 16;
+      Sounds(1200);
+    }
+  }
+  if(Bomb.state > 1){
+    if(explosionanimcount >= 18) Bomb.state = 2;
+    if(explosionanimcount < 18 && explosionanimcount >= 10) Bomb.state = 3;
+    if(explosionanimcount < 10) Bomb.state = 4;
+    if(explosionanimcount == 0) Bomb.state = 0;
+    explosionanimcount--;
+  }
+  else explosionanimcount = 20;
+}
+
 void movcoin(void) {
   for (uint8 i = 0; i < COIN_MAX; i++) {
     if (Coin[i].state == 1) {
@@ -141,6 +189,18 @@ void bullet_evilstar_collision(void) {
               Bullet[j].state) {
         EvilStar[i].state = 2;
         Bullet[j].state = 0;
+        Sounds(500);
+      }
+    }
+  }
+}
+
+void bomb_evilstar_collision(void) {
+  if(Bomb.state > 1){
+    for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
+      if (((EvilStar[i].cl + 25) >= Bomb.cl) && (EvilStar[i].cl <= (Bomb.cl + 35)) && (EvilStar[i].ln <= (Bomb.ln + 35)) &&
+              ((EvilStar[i].ln + 10) > Bomb.ln) && EvilStar[i].state == 1) {
+        EvilStar[i].state = 2;
         Sounds(500);
       }
     }
@@ -226,6 +286,35 @@ void drawbullet(void) {
   for (uint8 i = 0; i < BULLET_MAX; i++) {
     if (Bullet[i].state) {
       LCD_printsprite(Bullet[i].ln, Bullet[i].cl, &bullet_sprite);
+    }
+  }
+}
+
+void drawbomb(uint16 period) 
+{
+  if (Bomb.state) {
+    if(Bomb.state < 2){
+      if (Bomb.animation_count >= (3 * period / 4)) LCD_printsprite(Bomb.ln, Bomb.cl, &bomb_sprite[0]);
+      if ((Bomb.animation_count < (3 * period / 4)) && 
+         (Bomb.animation_count >= (2 * period / 4))) LCD_printsprite(Bomb.ln, Bomb.cl, &bomb_sprite[1]);
+      if ((Bomb.animation_count < (2 * period / 4)) && 
+         (Bomb.animation_count >= (period / 4))) LCD_printsprite(Bomb.ln, Bomb.cl, &bomb_sprite[2]);
+      if (Bomb.animation_count < (period / 4)) LCD_printsprite(Bomb.ln, Bomb.cl, &bomb_sprite[3]);
+      if (Bomb.animation_count == 0) Bomb.animation_count = period;
+      Bomb.animation_count--;
+    }
+    else{
+      switch(Bomb.state){
+        case 2:
+          LCD_printsprite(Bomb.ln, Bomb.cl, &bombshards_sprite[0]);
+          break;
+        case 3:
+          LCD_printsprite(Bomb.ln, Bomb.cl, &bombshards_sprite[1]);
+          break;
+        case 4: 
+          LCD_printsprite(Bomb.ln, Bomb.cl, &bombshards_sprite[2]);
+          break;
+      }
     }
   }
 }
@@ -408,14 +497,18 @@ void statehandler_gamerun(void)
   movgamer();
   gunregen(PRD_GAMER_ENERGYREGEN);
   createbullet(BULLET_GENERATE_PERIOD);
+  createbomb(BOMB_GENERATE_PERIOD);  
+  movbomb();
   bullet_evilstar_collision();
   gamer_evilstar_collision();
   gamer_coin_collision();
   gamer_minmagaz_collision();
+  bomb_evilstar_collision();
   drawevilstar();
   drawcoin();
   drawminmagaz();
   drawbullet();
+  drawbomb(BOMB_ANIMATION_PERIOD);
   drawgamer();
   drawinfo();
   
@@ -654,25 +747,25 @@ void statehandler_gamesave(void)
 //------------------magazin buygoods functions----------------------
 void magaz_buybomb(void)
 {
-  if(Gamer.money >= BOMB_COST && Gamer.bombs < 9){
-    Gamer.money -= BOMB_COST;
+  if(Gamer.money >= BOMB_MONEY_COST && Gamer.bombs < 9){
+    Gamer.money -= BOMB_MONEY_COST;
     Gamer.bombs++;
   }
   gameevent = EVENT_NONE;
 }
 void magaz_buygasmask(void)
 {
-  if(Gamer.money >= GASMASK_COST && !Gamer.gasmask_fl){
-    Gamer.money -= GASMASK_COST;
+  if(Gamer.money >= GASMASK_MONEY_COST && !Gamer.gasmask_fl){
+    Gamer.money -= GASMASK_MONEY_COST;
     Gamer.gasmask_fl = 1;
   }
   gameevent = EVENT_NONE;
 }
 void magaz_buyenergy(void)
 {
-  if(Gamer.money >= BATTERY_COST && Gamer.energymax < GAMER_ENERGY_MAX){
-    Gamer.money -= BATTERY_COST;
-    Gamer.energymax += BATTERY_BUST;
+  if(Gamer.money >= BATTERY_MONEY_COST && Gamer.energymax < GAMER_ENERGY_MAX){
+    Gamer.money -= BATTERY_MONEY_COST;
+    Gamer.energymax += BATTERY_ENERGY_BUST;
     Gamer.energy = Gamer.energymax;
     if(Gamer.energymax > GAMER_ENERGY_MAX) Gamer.energymax = GAMER_ENERGY_MAX;
   }
@@ -680,8 +773,8 @@ void magaz_buyenergy(void)
 }
 void magaz_buyhealth(void)
 {
-  if(Gamer.money >= HEALTH_COST && Gamer.health < GAMER_HEALTH_MAX){
-    Gamer.money -= HEALTH_COST;
+  if(Gamer.money >= HEALTH_MONEY_COST && Gamer.health < GAMER_HEALTH_MAX){
+    Gamer.money -= HEALTH_MONEY_COST;
     Gamer.health += HEALTH_REGEN; 
     if(Gamer.health > GAMER_HEALTH_MAX) Gamer.health = GAMER_HEALTH_MAX;
   }
@@ -741,22 +834,22 @@ void statehandler_magazin(void)
         break;
       case COURS_POS_2:
         LCD_printstr8x5((uint8*)"<ÁÎÌÁÀ!!!\nÁÎËÜØÎÉ\nÁÀÄÀÁÓÌ!", 2, 0);
-        u16_to_str(price, BOMB_COST, 2);
+        u16_to_str(price, BOMB_MONEY_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
       case COURS_POS_3:
         LCD_printstr8x5((uint8*)"Çà÷åì\nïðîòèâîãàç\nâ êîñìîñå?", 2, 0);
-        u16_to_str(price, GASMASK_COST, 2);
+        u16_to_str(price, GASMASK_MONEY_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
       case COURS_POS_4:
         LCD_printstr8x5((uint8*)"Áàòàðåéêà!", 2, 0);
-        u16_to_str(price, BATTERY_COST, 2);
+        u16_to_str(price, BATTERY_MONEY_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
       case COURS_POS_5:
         LCD_printstr8x5((uint8*)"Àïòå÷êà!", 2, 0);
-        u16_to_str(price, HEALTH_COST, 2);
+        u16_to_str(price, HEALTH_MONEY_COST, 2);
         LCD_printstr8x5((uint8*)price, 4, 94);
         break;
     }

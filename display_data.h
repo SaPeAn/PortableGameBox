@@ -445,7 +445,7 @@ const unsigned char BombShards[3][200] = {
 0X02,0X1E,0XC0,0X01,0X00,0X02,0X0C,0XE0,0X01,0X00,0X03,0X0C,0X00,0X03,0X00,0X03,
 0X08,0X00,0X04,0X80,0X01,0X08,0X00,0X00,
 };
-const tSprite bombshards_sprite[4] = {5, 40, BombShards[0], COLUMNS_FIRST,
+const tSprite bombshards_sprite[3] = {5, 40, BombShards[0], COLUMNS_FIRST,
                                       5, 40, BombShards[1], COLUMNS_FIRST,
                                       5, 40, BombShards[2], COLUMNS_FIRST,
 };
