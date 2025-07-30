@@ -30,7 +30,7 @@ typedef struct {
   uint8 state;
   uint8 ln;
   int8  cl;
-} tBullet;
+} tDispObj;
 
 typedef struct {
   uint8 state; // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
@@ -89,7 +89,8 @@ typedef struct {
 tGameProcess Game;
 uint32 runtimecounter = 0;
 tGamer Gamer;
-tBullet Bullet[BULLET_MAX] = {0};
+tDispObj Bullet[BULLET_MAX] = {0};
+tDispObj MinMagaz = {0, 8, 127};
 tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};

@@ -4,34 +4,13 @@
 #include "display_data.h"
 #include "scheduler.h"
 
-#define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON){B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; a}
+#define  IF_ANY_BTN_PRESS(a)    if(B1.BtnON || B2.BtnON || B3.BtnON || B4.BtnON)\
+                                {B1.BtnON = 0; B2.BtnON = 0; B3.BtnON = 0; B4.BtnON = 0; a}
 
 /*******************************************************************************
  *                        SCHEDULER GAME EVENT HANDLERS
  * *****************************************************************************
  */
-void gameprogress(uint8 period)
-{
-  static uint8 counter = 0;
-  if(Gamer.health > 0)
-  {
-    if(counter == period)
-    {
-      Game.level_progress++;
-      counter = 0;
-    }
-
-    if(Game.level_progress == Game.Const1 && counter == 0){
-        gameevent = EVENT_ENTERMAGAZ;
-    }
-
-    if(Game.level_progress > Game.Const2){}
-    if(Game.level_progress > Game.Const3){}
-
-    counter++;
-  }
-}
-
 void createevilstar(void) {
   static uint8 i = 0;
   if (EvilStar[i].state == 0) {
@@ -139,6 +118,21 @@ void movcoin(void) {
   }
 }
 
+void movminmagaz(void){
+  static uint8 prd = 0;
+  if(MinMagaz.state){
+    if(++prd == 12)
+    {
+      prd = 0;
+      MinMagaz.cl -= 3;
+      if(MinMagaz.cl < -34) {
+        MinMagaz.state = 0;
+        SchedResumeEvent(createevilstar);
+      }
+    }
+  }
+}
+
 void bullet_evilstar_collision(void) {
   for (uint8 j = 0; j < BULLET_MAX; j++) {
     for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
@@ -177,6 +171,17 @@ void gamer_coin_collision(void) {
   }
 }
 
+void gamer_minmagaz_collision(void) {
+  if(MinMagaz.state){
+    if ((MinMagaz.cl <= (Gamer.cl + 29)) && ((MinMagaz.cl + 30) >= Gamer.cl) &&
+            ((MinMagaz.ln + 28) > Gamer.ln) && (MinMagaz.ln < (Gamer.ln + 15)) &&
+            (Gamer.health > 0)) {
+      MinMagaz.state = 0;
+      gameevent = EVENT_ENTERMAGAZ;
+    }
+  }
+}
+
 void drawevilstar(void) {
   for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
     if (EvilStar[i].state == 1) {
@@ -202,6 +207,12 @@ void drawcoin(void) {
       if (Coin[i].animation_count == 0) Coin[i].animation_count = COIN_ANIMATION_PERIOD;
     }
   }
+}
+
+void drawminmagaz(void) {
+    if (MinMagaz.state) {
+      LCD_printsprite(MinMagaz.ln, MinMagaz.cl, &minimag_sprite);
+    }
 }
 
 void drawgamer(void) {
@@ -272,10 +283,35 @@ void drawsmallstar(void)
     }
   }
 }
+
+void gameprogress(uint8 period)
+{
+  static uint8 counter = 0;
+  if(Gamer.health > 0)
+  {
+    if(counter == period)
+    {
+      Game.level_progress++;
+      counter = 0;
+    }
+
+    if(Game.level_progress == Game.Const1 && counter == 0){
+      MinMagaz.state = 1;
+      MinMagaz.cl = 127;
+      SchedPauseEvent(createevilstar);
+    }
+
+    if(Game.level_progress > Game.Const2){}
+    if(Game.level_progress > Game.Const3){}
+
+    counter++;
+  }
+}
 //--------------------------COMBINED SCHEDULER EVENTS---------------------------
 void move_enemy_objects(void) {
   movevilstar();
   movcoin();
+  movminmagaz();
 }
 
 /*******************************************************************************
@@ -375,8 +411,10 @@ void statehandler_gamerun(void)
   bullet_evilstar_collision();
   gamer_evilstar_collision();
   gamer_coin_collision();
+  gamer_minmagaz_collision();
   drawevilstar();
   drawcoin();
+  drawminmagaz();
   drawbullet();
   drawgamer();
   drawinfo();
@@ -393,6 +431,7 @@ void stateinit_gamestop(void)
   for(uint8 i = 0; i < COIN_MAX; i++) Coin[i].state = 0;
   for(uint8 i = 0; i < BULLET_MAX; i++) Bullet[i].state = 0;
   GAME_STORY_STRING_NUM = 0;
+  Game.level_progress = 0;
   gamestate = STATE_MAINMENU;
   gameevent = EVENT_NONE;
   coursorpos = COURS_POS_1;
