@@ -2,6 +2,7 @@
 #include "drv_LCD_ST7565_SPI.h"
 #include "common.h"
 #include "ufo_battle.h"
+#include "math.h"
 
 
 void setdatetime(void)

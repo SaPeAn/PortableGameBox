@@ -22,40 +22,40 @@ typedef struct {
   uint8 gasmask_fl;
   uint8 bombs;
   uint16 money;
-  uint8 ln;
+  int8 ln;
   int8 cl;
 } tGamer;
 
 typedef struct {
   uint8 state;
-  uint8 ln;
+  int8 ln;
   int8  cl;
 } tDispObj;
 
 typedef struct {
   uint8 state; // 0 - Comet disable; 1 - Comet enable; 2 - Comet distroed
-  uint8 ln;
+  int8 ln;
   int8  cl;
   uint8 distr_ttl_count;
 } tEvilStar;
 
 typedef struct {
   uint8 state;
-  uint8 ln;
+  int8 ln;
   int8  cl;
   uint8 animation_count;
 } tCoin;
 
 typedef struct {
   uint8 state; // 0 - none, 1 - bomb, 2- , 3- , 4- , 5- , 
-  uint8 ln;
+  int8 ln;
   int8  cl;
   uint16 animation_count;
 } tBomb;
 
 typedef struct {
   uint8 state;
-  uint8 ln;
+  int8 ln;
   int8  cl;
 } tSmallStar;
 //------------------------------Game const & vars-------------------------------
@@ -109,7 +109,7 @@ tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
 uint16  PRD_EVELSTAR_CREATE = 900;
 uint8   PRD_ENEMY_MOVE = 17;
-uint16  PRD_GAMER_ENERGYREGEN = 3;
+uint16  PRD_GAMER_ENERGYREGEN = 1;
 uint8   PRD_GAMEPROGRESS = 50;
 uint8   GAME_STORY_STRING_NUM = 0;
 

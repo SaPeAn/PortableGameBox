@@ -21,7 +21,7 @@ void createevilstar(void) {
   if (EvilStar[i].state == 0) {
     EvilStar[i].state = 1;
     EvilStar[i].cl = 127;
-    EvilStar[i].ln = getrand(40) + 8;
+    EvilStar[i].ln = (int8)getrand(40) + 8;
   }
   i++;
   if (i >= EVILSTAR_MAX) i = 0;
@@ -338,7 +338,7 @@ void createsmallstar(uint8 create_period)
     {
       if(SmallStar[i].state == 0){
         SmallStar[i].state = getrand(1) + 1;
-        SmallStar[i].ln = getrand(60);
+        SmallStar[i].ln = (int8)getrand(60);
         SmallStar[i].cl = 127;
         break;
       }
@@ -385,9 +385,9 @@ void gameprogress(uint8 period)
     }
 
     if(Game.level_progress == Game.Const1 && counter == 0){
-      MinMagaz.state = 1;
-      MinMagaz.cl = 127;
-      SchedPauseEvent(createevilstar);
+      //MinMagaz.state = 1;
+      //MinMagaz.cl = 127;
+      //SchedPauseEvent(createevilstar);
     }
 
     if(Game.level_progress > Game.Const2){}
@@ -428,10 +428,10 @@ void statehandler_gameinitnew(void)
   else
   {
     Gamer.health = 24;
-    Gamer.energy = 2;
-    Gamer.energymax = 4;
+    Gamer.energy = 24;
+    Gamer.energymax = 24;
     Gamer.gasmask_fl = 0;
-    Gamer.bombs = 0;
+    Gamer.bombs = 999;
     Gamer.money = 999;
     Gamer.ln = 16;
     Gamer.cl = 0;
@@ -865,7 +865,7 @@ void statehandler_magazin(void)
 void stateinit_exitmagazin(void)
 {
   static uint8 counter = 0;
-  if(++counter < 15) LCD_printsprite((8 + counter * 4), 64, &magazin_sprite);
+  if(++counter < 15) LCD_printsprite((int8)(8 + counter * 4), 64, &magazin_sprite);
   else {
     counter = 0;
     gamestate = STATE_RUNGAME;
