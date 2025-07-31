@@ -9,6 +9,7 @@
 #include "drv_RTC_I2C.h"
 #include "mainmenu.h"
 #include "scheduler.h"
+#include "display_data.h"
 /*----------------------------------------------------------------------------*/
 
 /*---------------------------------INTERRAPTS---------------------------------*/
@@ -24,7 +25,15 @@ void __interrupt() systemTick_int(void)
   }
 }
 /*----------------------------------------------------------------------------*/
-
+  void printsprite(void){
+    static int8 startln = -39;
+    static int8 startcl = 0;
+    LCD_printsprite(startln, startcl, &bombshards_sprite[2]);
+    startln += 1;
+    if(startln > 62) {startln = -39; startcl += 15;}
+    if(startcl > 112) startcl = 0;
+    LCD_bufupload_buferase();
+  }
 /*-----------------------------------MAIN-------------------------------------*/
 void main(void) 
 {
@@ -43,10 +52,13 @@ void main(void)
   uint8 adr = 0;
   uint8 byte = 0;
   uint8 str[6];
+
+  //SchedAddEvent(printsprite, 80);
 /*-------------------------------MAIN CYCLE-----------------------------------*/
   while(1)
   {
     MainMenu();
+    //SchedEventProcess();
   }
 /*----------------------------------------------------------------------------*/
 }

@@ -1,4 +1,4 @@
-/******************************************************************************/
+ /******************************************************************************/
 //      
 //    LCD display
 //    Controller - ST7565
@@ -301,7 +301,8 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
   uint16 m = 0, mprev = 0;
   uint8 column_shift = 0;
   uint8 line_shift = (uint8)startline % 8;
-  uint8 pages_max = Sprite->pages;
+  int8 pages_max = (int8)Sprite->pages;
+  uint8 page_shift = 0;
   bufpg = (uint8)startline / 8;
   if (startcolumn < 0) {
     if(startline >= 0) {
@@ -318,9 +319,10 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       m = (uint16)(-startcolumn) * Sprite->pages;
       column_shift = (uint8)(-startcolumn);
       
-      line_shift = (uint8)8 + startline % 8;
+      //line_shift = (uint8)7 + startline % 8;
       bufpg = 0;
-      pages_max = (uint8)((int8)Sprite->pages + startline/8 - 1);
+      pages_max = (int8)Sprite->pages + startline/8;
+      page_shift =  - startline/8;
     }
   }
   else {
@@ -332,9 +334,10 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       bufcl = (uint8)startcolumn;
       columns_max = (((int16)startcolumn + (int16)Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
       
-      line_shift = (uint8)8 + startline % 8;
+      //line_shift = (uint8)7 + startline % 8;
       bufpg = 0;
-      pages_max = (uint8)((int8)Sprite->pages + startline/8 - 1);
+      pages_max = (int8)Sprite->pages + startline/8;
+      page_shift =  -startline/8;
     }
   }
   
@@ -343,17 +346,28 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       for (uint8 j = 0; j < columns_max; j++) {
         for (uint8 i = 0; i < (line_shift ? (pages_max + 1) : pages_max); i++) {
           if (i == 0) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[m] << line_shift;
-            mprev = m;
-            m++;
+            if(startline >= 0){ 
+              if((bufpg + i) < 8 && (bufcl + j) <= 127)  dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[m] << line_shift;
+              mprev = m;
+              m++;
+            }
+            if(startline < 0){
+              mprev = m;
+              m++;
+              if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift * j] >> (8 - line_shift)) | (Sprite->sprite[m + page_shift * j] << line_shift);
+              mprev = m;
+              m++;
+            }
           }
           if ((i > 0) && (i < pages_max)) {
-            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev] >> (8 - line_shift)) | (Sprite->sprite[m] << line_shift);
+            if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift * j] >> (8 - line_shift)) | (Sprite->sprite[m + page_shift * j] << line_shift);
             mprev = m;
             m++;
           }
           if (i == pages_max) {
-            dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[mprev] >> (8 - line_shift);
+            if(startline >= 0){
+              if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[mprev] >> (8 - line_shift);
+            }
           }
         }
       }

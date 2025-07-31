@@ -88,7 +88,7 @@ void gunregen(uint16 period) //Energy regen
   static uint16 prd = 0;
   if ((Gamer.energy < Gamer.energymax) && (Gamer.health > 0)) 
   {
-    if(prd < (period- 1)) prd++;
+    if(prd < (period - 1)) prd++;
     else { 
       prd = 0; 
       Gamer.energy++;
@@ -137,7 +137,7 @@ void movbullet(void) {
 }
 
 void movbomb(void) {
-  static uint8 explosionanimcount = 20; 
+  static uint8 explosionanimcount = 10; 
   if (Bomb.state == 1){
     Bomb.cl += 4;
     if (Bomb.cl > 85) {
@@ -148,13 +148,13 @@ void movbomb(void) {
     }
   }
   if(Bomb.state > 1){
-    if(explosionanimcount >= 18) Bomb.state = 2;
-    if(explosionanimcount < 18 && explosionanimcount >= 10) Bomb.state = 3;
-    if(explosionanimcount < 10) Bomb.state = 4;
+    if(explosionanimcount >= 8) Bomb.state = 2;
+    if(explosionanimcount < 8 && explosionanimcount >= 6) Bomb.state = 3;
+    if(explosionanimcount < 6) Bomb.state = 4;
     if(explosionanimcount == 0) Bomb.state = 0;
     explosionanimcount--;
   }
-  else explosionanimcount = 20;
+  else explosionanimcount = 10;
 }
 
 void movcoin(void) {
@@ -196,12 +196,23 @@ void bullet_evilstar_collision(void) {
 }
 
 void bomb_evilstar_collision(void) {
-  if(Bomb.state > 1){
+  
+  if(Bomb.state){
     for (uint8 i = 0; i < EVILSTAR_MAX; i++) {
-      if (((EvilStar[i].cl + 25) >= Bomb.cl) && (EvilStar[i].cl <= (Bomb.cl + 35)) && (EvilStar[i].ln <= (Bomb.ln + 35)) &&
-              ((EvilStar[i].ln + 10) > Bomb.ln) && EvilStar[i].state == 1) {
-        EvilStar[i].state = 2;
-        Sounds(500);
+      if(Bomb.state == 1){
+        if(((EvilStar[i].cl + 27) >= Bomb.cl) && (EvilStar[i].cl <= (Bomb.cl + 7)) && (EvilStar[i].ln <= (Bomb.ln + 7)) &&
+              ((EvilStar[i].ln + 15) > Bomb.ln) && EvilStar[i].state == 1){
+          Bomb.state = 2;
+          Bomb.cl -= 16;
+          Bomb.ln -= 16;
+        }    
+      }
+      if(Bomb.state > 1){
+        if (((EvilStar[i].cl + 27) >= Bomb.cl) && (EvilStar[i].cl <= (Bomb.cl + 39)) && (EvilStar[i].ln <= (Bomb.ln + 39)) &&
+                ((EvilStar[i].ln + 15) > Bomb.ln) && EvilStar[i].state == 1) {
+          EvilStar[i].state = 2;
+          Sounds(500);
+        }
       }
     }
   }
@@ -431,7 +442,7 @@ void statehandler_gameinitnew(void)
     Gamer.energy = 24;
     Gamer.energymax = 24;
     Gamer.gasmask_fl = 0;
-    Gamer.bombs = 999;
+    Gamer.bombs = 255;
     Gamer.money = 999;
     Gamer.ln = 16;
     Gamer.cl = 0;
