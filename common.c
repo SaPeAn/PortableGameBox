@@ -218,7 +218,7 @@ void Sounds(uint16 delay)
   uint16 j;
   for(uint16 i = 0; i < (15000/delay); i++)
   {  
-    LATCbits.LC2 = 0;
+    //LATCbits.LC2 = 0;
     j = delay;
     while(j--);
     LATCbits.LC2 = 1;

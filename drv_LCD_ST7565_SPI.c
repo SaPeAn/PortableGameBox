@@ -316,13 +316,15 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       bufcl = 0;
       columns_max = (int16)Sprite->columns + (int16)startcolumn;
       if (columns_max < 0) columns_max = 0;
-      m = (uint16)(-startcolumn) * Sprite->pages;
+      //m = (uint16)(-startcolumn) * Sprite->pages + ;
       column_shift = (uint8)(-startcolumn);
       
-      line_shift = (uint8)-startline % 8;
+      line_shift = 8 - (uint8)-startline % 8;
       bufpg = 0;
-      pages_max = (int8)Sprite->pages + startline/8;
-      page_shift =  - startline/8;
+      pages_max = (int8)Sprite->pages + startline/8 - 1;
+      page_shift =  -startline/8 + 1;
+      
+      m = (uint16)(-startcolumn) * Sprite->pages + page_shift;
     }
   }
   else {
@@ -334,10 +336,11 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       bufcl = (uint8)startcolumn;
       columns_max = (((int16)startcolumn + (int16)Sprite->columns) > 127) ? (127 - startcolumn) : Sprite->columns;
       
-      line_shift = (uint8)-startline % 8;
+      line_shift = 8 - (uint8)-startline % 8;
       bufpg = 0;
-      pages_max = (int8)Sprite->pages + startline/8;
-      page_shift =  -startline/8;
+      pages_max = (int8)Sprite->pages + startline/8 - 1;
+      page_shift =  -startline/8 + 1;
+      m = page_shift;
     }
   }
   
@@ -352,22 +355,22 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
               m++;
             }
             if(startline < 0){
-              mprev = m;
-              m++;
-              if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift] >> (8 - line_shift)) | (Sprite->sprite[m + page_shift] << line_shift);
+              mprev = m - 1;
+              if((bufpg + i) < 8 && (bufcl + j) <= 127)  dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift * j] >> (8 - line_shift))|
+                                                                                             (Sprite->sprite[m + page_shift * j] << line_shift);
               mprev = m;
               m++;
             }
           }
           if ((i > 0) && (i < pages_max)) {
-            if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift] >> (8 - line_shift)) | (Sprite->sprite[m + page_shift] << line_shift);
+            if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[mprev + page_shift * j] >> (8 - line_shift))| 
+                                                                                          (Sprite->sprite[m + page_shift * j] << line_shift);
             mprev = m;
             m++;
           }
           if (i == pages_max) {
-            if(startline >= 0){
-              if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[mprev] >> (8 - line_shift);
-            }
+            
+            if((bufpg + i) < 8 && (bufcl + j) <= 127) dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[mprev + page_shift * j] >> (8 - line_shift);
           }
         }
       }
@@ -379,7 +382,8 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
             dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[j + column_shift] << line_shift;
           }
           if ((i > 0) && (i < pages_max)) {
-            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[(i - 1) * Sprite->columns + j + column_shift] >> (8 - line_shift)) | (Sprite->sprite[i * Sprite->columns + j + column_shift] << line_shift);
+            dispbuffer[bufpg + i][bufcl + j] |= (Sprite->sprite[(i - 1) * Sprite->columns + j + column_shift] >> (8 - line_shift)) | 
+                                                (Sprite->sprite[i * Sprite->columns + j + column_shift] << line_shift);
           }
           if (i == pages_max) {
             dispbuffer[bufpg + i][bufcl + j] |= Sprite->sprite[(i - 1) * Sprite->columns + j + column_shift] >> (8 - line_shift);

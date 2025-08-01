@@ -139,7 +139,7 @@ void movbullet(void) {
 void movbomb(void) {
   static uint8 explosionanimcount = 10; 
   if (Bomb.state == 1){
-    Bomb.cl += 4;
+    Bomb.cl += 6;
     if (Bomb.cl > 85) {
       Bomb.state = 2;
       Bomb.cl -= 16;

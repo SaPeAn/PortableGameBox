@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/drv_LCD_ST7565_SPI.c</file>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/ufo_battle.c</file>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/common.h</file>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/ufo_battle.h</file>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/drv_LCD_ST7565_SPI.h</file>
-            <file>file:/D:/_Complete_projects/PortableGameBox/GameBox/main.c</file>
+            <file>file:/C:/Projects_MCU/Microchip/GameBox/common.c</file>
+            <file>file:/C:/Projects_MCU/Microchip/GameBox/main.c</file>
+            <file>file:/C:/Projects_MCU/Microchip/GameBox/ufo_battle.c</file>
+            <file>file:/C:/Projects_MCU/Microchip/GameBox/ufo_battle.h</file>
         </group>
     </open-files>
 </project-private>
