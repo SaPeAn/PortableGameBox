@@ -25,7 +25,7 @@ void __interrupt() systemTick_int(void)
   }
 }
 /*----------------------------------------------------------------------------*/
-  void printsprite(void){
+  /*void printsprite(void){
     static int8 startln = -40;
     static int8 startcl = -10;
     LCD_printsprite(startln, startcl, &bombshards_sprite[2]);
@@ -33,7 +33,7 @@ void __interrupt() systemTick_int(void)
     if(startln > 10) {startln = -40; startcl += 15;}
     if(startcl > 100) startcl = 0;
     LCD_bufupload_buferase();
-  }
+  }*/
 /*-----------------------------------MAIN-------------------------------------*/
 void main(void) 
 {

@@ -322,7 +322,7 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       line_shift = 8 - (uint8)-startline % 8;
       bufpg = 0;
       pages_max = (int8)Sprite->pages + startline/8 - 1;
-      page_shift =  -startline/8 + 1;
+      page_shift = (uint8)-startline/8 + 1;
       
       m = (uint16)(-startcolumn) * Sprite->pages + page_shift;
     }
@@ -339,7 +339,7 @@ void LCD_printsprite(int8 startline, int8 startcolumn, const tSprite * const Spr
       line_shift = 8 - (uint8)-startline % 8;
       bufpg = 0;
       pages_max = (int8)Sprite->pages + startline/8 - 1;
-      page_shift =  -startline/8 + 1;
+      page_shift = (uint8)-startline/8 + 1;
       m = page_shift;
     }
   }

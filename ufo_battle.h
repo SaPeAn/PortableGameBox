@@ -19,7 +19,7 @@ typedef struct {
   int8 health;
   int8 energy;
   int8 energymax;
-  uint8 gasmask_fl;
+  int8 gasmask_health;
   uint8 bombs;
   uint16 money;
   int8 ln;
@@ -60,7 +60,7 @@ typedef struct {
 } tSmallStar;
 //------------------------------Game const & vars-------------------------------
 
-#define EVILSTAR_MAX                    5
+#define EVILSTAR_MAX                    10
 #define EVILSTAR_DEATHANIMATION_PERIOD  2
 #define EVILSTAR_DAMAGE                 2
 
@@ -68,20 +68,22 @@ typedef struct {
 #define BULLET_ENERGY_COST              2
 #define BULLET_DAMAGE                   2
 #define BULLET_GENERATE_PERIOD          1
+#define BULLET_MOVE_PERIOD              13
 
 #define SMALLSTAR_MAX                   12
 #define SMALLSTAR_MOVE_PERIOD           2
 #define SMALLSTAR_CREATE_PERIOD         5
 
-#define COIN_MAX                        6
+#define COIN_MAX                        10
 #define COIN_ANIMATION_PERIOD           10
 
 #define MAGAZIN_INTROANIMATION_PERIOD   16
 #define MAGAZIN_FIRSTENTERINFO_PERIOD   10
+#define MINMAGAZ_MOVE_PERIOD            10
 
-#define BOMB_MONEY_COST                 15
-#define GASMASK_MONEY_COST              10
-#define BATTERY_MONEY_COST              30
+#define BOMB_MONEY_COST                 5
+#define GASMASK_MONEY_COST              15
+#define BATTERY_MONEY_COST              50
 #define HEALTH_MONEY_COST               5
 
 #define BATTERY_ENERGY_BUST             4
@@ -90,14 +92,16 @@ typedef struct {
 #define BOMBSHARD_DAMAGE                5
 #define BOMB_ANIMATION_PERIOD           4
 #define BOMB_GENERATE_PERIOD            1
+#define BOMB_MOVE_SPEED                 7
 
 #define GASCLOUD_DAMAGE                 1
 
 #define GAMER_HEALTH_MAX                24
 #define GAMER_ENERGY_MAX                24
 #define GAMERDEATH_ANIMATION_PERIOD     20
+#define GAME_PROGRESS_PERIOD            20
 
-tGameProcess Game;
+tGameProcess Game;                         
 uint32 runtimecounter = 0;
 tGamer Gamer;
 tDispObj Bullet[BULLET_MAX] = {0};
@@ -107,10 +111,11 @@ tEvilStar EvilStar[EVILSTAR_MAX] = {0};
 tCoin Coin[COIN_MAX] = {0};
 tSmallStar SmallStar[SMALLSTAR_MAX] = {0};
 
-uint16  PRD_EVELSTAR_CREATE = 900;
-uint8   PRD_ENEMY_MOVE = 17;
-uint16  PRD_GAMER_ENERGYREGEN = 1;
-uint8   PRD_GAMEPROGRESS = 50;
+uint16  PRD_EVILSTAR_CREATE = 1400;
+uint16  PRD_EVILSTAR_CREATE_PREV = 1400;
+uint8   PRD_ENEMY_MOVE = 24;
+uint8   PRD_ENEMY_MOVE_PREV = 24;
+uint16  PRD_GAMER_ENERGYREGEN = 4;
 uint8   GAME_STORY_STRING_NUM = 0;
 
 typedef union{
@@ -121,7 +126,7 @@ typedef union{
       unsigned ChemistCreateEnable   :1;
       unsigned FirstMagazEnter       :1;
       unsigned MagazEnter            :1;
-      unsigned Flag1       :1;
+      unsigned WinTheGame            :1;
       unsigned Flag2       :1;
       unsigned Flag3       :1;
       unsigned Flag4       :1;
@@ -160,6 +165,7 @@ typedef enum {
   EVENT_EXIT,
   EVENT_ENTERMAGAZ,
   EVENT_GAMERDEATH,
+  EVENT_YOU_ARE_WINNER,
   EVENT_MAX,
 } tGAME_EVENT;
 
@@ -219,6 +225,7 @@ void (*const gamestate_transition_table[STATE_MAX][EVENT_MAX])(void) = {
   [STATE_RUNGAME] [EVENT_NONE] = statehandler_gamerun,
   [STATE_RUNGAME] [EVENT_PAUSE] = statehandler_menupause,
   [STATE_RUNGAME] [EVENT_EXIT] = stateinit_gamestop,
+  [STATE_RUNGAME] [EVENT_YOU_ARE_WINNER] = statehandler_gamerun,
   [STATE_RUNGAME] [EVENT_ENTERMAGAZ] = statehandler_magazin,
   
   [STATE_MAGAZIN] [EVENT_NONE] = statehandler_magazin,
@@ -236,7 +243,7 @@ uint8 gameslot2[20] = "-осярн-";
 
 void ufobattle(void);
 
-void gamemenu(void);
+void gamestatesprocess(void);
 
 #endif	/* UFO_BATTLE_H */
 
